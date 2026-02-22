@@ -127,30 +127,31 @@ export default function Home() {
                 </Button>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="flex gap-8 items-center border-t border-border pt-8">
+              <motion.div variants={fadeUp} className="flex flex-row gap-4 sm:gap-8 items-center border-t border-border pt-8">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent-foreground">
-                    <Building2 className="w-6 h-6" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent-foreground shrink-0">
+                    <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <div className="font-display font-bold text-foreground text-2xl">50+</div>
-                    <div className="text-muted-foreground text-xs uppercase tracking-wider">Bisnis Bergabung</div>
+                    <div className="font-display font-bold text-foreground text-xl sm:text-2xl">50+</div>
+                    <div className="text-muted-foreground text-[10px] sm:text-xs uppercase tracking-wider">Bisnis Bergabung</div>
                   </div>
                 </div>
+                <div className="w-px h-10 bg-border hidden sm:block"></div>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
-                    <Users className="w-6 h-6" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary shrink-0">
+                    <Users className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <div className="font-display font-bold text-foreground text-2xl">500+</div>
-                    <div className="text-muted-foreground text-xs uppercase tracking-wider">Pekerja Aktif</div>
+                    <div className="font-display font-bold text-foreground text-xl sm:text-2xl">500+</div>
+                    <div className="text-muted-foreground text-[10px] sm:text-xs uppercase tracking-wider">Pekerja Aktif</div>
                   </div>
                 </div>
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Right: Asymmetric Image Grid */}
+          {/* Right: Asymmetric Image Grid - Hidden on very small mobile, shown on md+ */}
           <div className="w-full md:w-[55%] relative z-10 hidden md:block">
             <motion.div 
               style={{ y: y1 }}
