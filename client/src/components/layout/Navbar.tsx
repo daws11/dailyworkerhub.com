@@ -8,7 +8,7 @@ export function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 mix-blend-difference text-white"
+      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md bg-background/70 text-foreground border-b border-border/50"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -27,7 +27,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" className="hidden sm:flex border-white/20 bg-white/10 hover:bg-white hover:text-primary rounded-full px-6 font-sub tracking-wide transition-all duration-300">
+          <Button variant="outline" className="hidden sm:flex border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300">
             Log In
           </Button>
           <Button className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group">

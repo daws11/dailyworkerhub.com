@@ -1,0 +1,118 @@
+🎨 Design Style Guide - Daily Worker Hub
+
+Core Design Philosophy
+
+"Bali's warmth × Tech precision. Authentic, not artificial."
+
+
+🎭 Visual Identity
+
+Color System (Not Your Typical Startup)
+
+Primary Palette:
+├── Deep Bali Blue:    #0C4A6E  (ocean depth, premium feel)
+├── Sunset Coral:      #E11D48  (dynamic, energetic, human)
+├── Sand Gold:         #D4AF37  (Bali temples, warmth, prosperity)
+├── Jungle Green:      #047857  (growth, reliability, nature)
+
+Secondary Palette:
+├── Cream White:       #FFFBEB  (natural warmth, not clinical white)
+├── Deep Charcoal:     #18181B  (elegant contrast)
+├── Soft Mist:         #F1F5F9  (subtle backgrounds)
+├── Terracotta:        #C2410C  (earth tones, authenticity)
+
+Accent:
+└── Electric Indigo:   #4F46E5  (CTA buttons - stand out)Usage Rules:
+
+• 60% Cream White + Sand Gold (warmth)
+• 30% Deep Bali Blue + Jungle Green (trust)
+• 10% Sunset Coral + Electric Indigo (action/emphasis)
+Typography - Bold & Unconventional
+
+/* Not your typical Inter/Poppins combo */
+Font Stack:
+├── Headlines:  "Clash Display" (Google Fonts alternate: "Space Grotesk Bold")
+├── Subheadings: "Syne" (Google Fonts alternate: "Outfit Medium")
+├── Body:       "DM Sans" (clean but personality)
+├── Accent:     "Playfair Display" (for quotes, "Our Story" section)Typography Scale:
+
+Hero Headline:      4.5rem (72px) - Tight tracking (-2%)
+Section Headline:   3rem (48px) - Bold, asymmetric
+Subhead:            1.5rem (24px) - Medium weight, uppercase tracking (+15%)
+Body:               1.125rem (18px) - Regular, generous line-height (1.7)Text Styles:
+
+• Headlines: Asymmetric alignment (not always left), break lines intentionally
+• Pull Quotes: Italic Playfair Display, left border with accent color
+• Numbers: Large display numerals for stats (e.g., "50+" in 4rem)
+
+🌊 Layout & Composition
+
+Break the Grid - Intentionally
+
+┌─────────────────────────────────────────────┐
+│  Hero Section Layout (Desktop)              │
+│                                              │
+│  ┌──────┐       ┌──────────────────────┐    │
+│  │Head- │       │   IMAGE GRID        │    │
+│  │line  │       │  ┌─────┐ ┌─────┐   │    │
+│  │left  │       │  │IMG1 │ │IMG2 │   │    │
+│  │align │  →    │  └─────┘ └─────┘   │    │
+│  └──────┘       │  ┌─────┐ ┌─────┐   │    │
+│                 │  │IMG3 │ │IMG4 │   │    │
+│                 │  └─────┘ └─────┘   │    │
+│                 └──────────────────────┘    │
+└─────────────────────────────────────────────┘Principles:
+
+• Asymmetric compositions — not 50/50 splits
+• Diagonal flow — visual elements guide eye at angles
+• Overlapping elements — images slightly overlap text, creating depth
+• Negative space as design element — generous margins, not clutter
+Section Transitions
+
+Hero Section → Smooth scroll parallax → Value Props
+    ↓
+Diagonal divider (SVG wave/curved line)
+    ↓
+Split section (image left 60%, text right 40% - inverted)
+    ↓
+Staggered grid for features (not uniform cards)
+    ↓
+Interactive timeline for "How It Works" (vertical, not steps)
+    ↓
+Masonry layout for testimonials
+✨ Dynamic Elements & Micro-Animations
+
+Scroll Animations (GSAP-style)
+
+// Smooth reveal patterns
+const animations = {
+  hero: {
+    headline: "stagger-up 0.6s",
+    subhead: "fade-up 0.4s delay-200ms",
+    cta: "scale-in 0.3s delay-400ms"
+  },
+  
+  scrollTrigger: {
+    valueProps: "stagger-reveal 0.2s each",
+    testimonials: "horizontal-scroll 0.5s parallax",
+    stats: "count-up numbers 2s"
+  }
+}Interaction States:
+
+• Hover: Cards lift 8px with soft shadow (not generic scale)
+• CTA: Button ripple effect, not just color change
+• Images: Parallax subtle movement on scroll
+• Text: Words animate in individually (not block fade)
+Custom Cursor (Desktop)
+
+.cursor {
+  /* Not a simple circle - custom blend */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(14, 165, 233, 0.5);
+  
+  /* Hover state expansion */
+  &:hover {

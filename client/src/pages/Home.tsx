@@ -84,113 +84,112 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative h-[100dvh] w-full flex items-center overflow-hidden bg-primary clip-diagonal">
-        {/* Parallax Background - Split Screen */}
-        <motion.div 
-          className="absolute inset-0 z-0 hidden md:flex"
-          style={{ y: y1 }}
-        >
-          {/* Left: Business */}
-          <div className="relative w-1/2 h-full">
-            <div className="absolute inset-0 bg-primary/70 mix-blend-multiply z-10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-transparent z-10" />
-            <img 
-              src={actionImg} 
-              alt="Hospitality Business in Bali" 
-              className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
-            />
-          </div>
-          {/* Right: Worker */}
-          <div className="relative w-1/2 h-full">
-            <div className="absolute inset-0 bg-primary/40 mix-blend-multiply z-10" />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-primary/20 to-primary/80 z-10" />
-            <img 
-              src={portraitImg} 
-              alt="Hospitality Worker in Bali" 
-              className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
-            />
-          </div>
-        </motion.div>
-        
-        {/* Mobile Background */}
-        <motion.div 
-          className="absolute inset-0 z-0 w-full md:hidden"
-          style={{ y: y1 }}
-        >
-          <div className="absolute inset-0 bg-primary/60 mix-blend-multiply z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/40 z-10" />
-          <img 
-            src={portraitImg} 
-            alt="Hospitality Worker in Bali" 
-            className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
-          />
-        </motion.div>
-
-        <div className="relative z-20 max-w-7xl mx-auto px-4 md:px-8 w-full pt-20">
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="max-w-xl"
-          >
-            <motion.div variants={fadeUp} className="mb-6 flex items-center gap-4">
-              <span className="h-[1px] w-12 bg-secondary block"></span>
-              <span className="font-sub uppercase tracking-[0.2em] text-secondary font-medium text-sm">
-                Community-First Platform
-              </span>
-            </motion.div>
-            
-            <motion.h1 
-              variants={fadeUp}
-              className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight mb-8 text-balance"
+      <section className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-background">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-32 pb-20 flex flex-col md:flex-row items-center gap-12">
+          {/* Left: Content */}
+          <div className="w-full md:w-[45%] relative z-20">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
             >
-              Temukan Pekerja Harian Profesional di Bali.<br />
-              <span className="text-secondary italic font-serif font-light">Hari Ini.</span>
-            </motion.h1>
+              <motion.div variants={fadeUp} className="mb-6 flex items-center gap-4">
+                <span className="h-[2px] w-12 bg-secondary block"></span>
+                <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm">
+                  Community-First Platform
+                </span>
+              </motion.div>
+              
+              <motion.h1 
+                variants={fadeUp}
+                className="font-display text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.05] tracking-tight mb-8 text-balance"
+              >
+                Temukan<br />Pekerja Harian<br />Profesional<br />
+                di Bali.<br />
+                <span className="text-secondary italic font-serif font-light">Hari Ini.</span>
+              </motion.h1>
 
-            <motion.p 
-              variants={fadeUp}
-              className="text-lg md:text-xl text-white/80 font-sans font-light leading-relaxed mb-12 text-balance"
-            >
-              Platform yang menghubungkan hotel, villa & restoran dengan pekerja harian terpercaya. Rate Bali adil, reliability score transparan, 100% legal sesuai PP 35/2021.
-            </motion.p>
+              <motion.p 
+                variants={fadeUp}
+                className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.7] mb-12 text-balance max-w-lg"
+              >
+                Platform yang menghubungkan hotel, villa & restoran dengan pekerja harian terpercaya. Rate Bali adil, reliability score transparan, 100% legal sesuai PP 35/2021.
+              </motion.p>
 
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-6 mb-12">
-              <div className="flex flex-col gap-2">
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-8 h-14 text-lg font-sub tracking-wide shadow-xl shadow-secondary/20 group justify-between w-full sm:w-auto">
+              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto">
                   <span>🏢 Daftar Gratis (Bisnis)</span>
                   <ArrowUpRight className="ml-4 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </Button>
-              </div>
-              <div className="flex flex-col gap-2">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white hover:text-primary rounded-full px-8 h-14 text-lg font-sub tracking-wide bg-transparent backdrop-blur-sm justify-between w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-8 h-14 text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-colors">
                   <span>👷 Buat Profil (Pekerja)</span>
                   <ArrowUpRight className="ml-4 w-5 h-5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
                 </Button>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            <motion.div variants={fadeUp} className="flex gap-8 items-center border-t border-white/10 pt-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-secondary">
-                  <Building2 className="w-5 h-5" />
+              <motion.div variants={fadeUp} className="flex gap-8 items-center border-t border-border pt-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent-foreground">
+                    <Building2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="font-display font-bold text-foreground text-2xl">50+</div>
+                    <div className="text-muted-foreground text-xs uppercase tracking-wider">Bisnis Bergabung</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-display font-bold text-white text-xl">50+</div>
-                  <div className="text-white/60 text-xs uppercase tracking-wider">Bisnis Bergabung</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="font-display font-bold text-foreground text-2xl">500+</div>
+                    <div className="text-muted-foreground text-xs uppercase tracking-wider">Pekerja Aktif</div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Right: Asymmetric Image Grid */}
+          <div className="w-full md:w-[55%] relative z-10 hidden md:block">
+            <motion.div 
+              style={{ y: y1 }}
+              className="grid grid-cols-2 gap-4 h-[600px] relative"
+            >
+              {/* Decorative Blur */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/30 rounded-full blur-[80px] -z-10"></div>
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-[80px] -z-10"></div>
+
+              {/* Column 1 - Shifts Down */}
+              <div className="flex flex-col gap-4 pt-12">
+                <div className="rounded-[2rem] overflow-hidden h-[300px] shadow-2xl relative group">
+                  <div className="absolute inset-0 bg-primary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
+                  <img src={actionImg} alt="Hotel Business" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
+                <div className="rounded-[2rem] overflow-hidden h-[240px] shadow-2xl relative group">
+                  <div className="absolute inset-0 bg-secondary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
+                  <img src={heroBg} alt="Hospitality Scene" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-secondary">
-                  <Users className="w-5 h-5" />
+
+              {/* Column 2 - Shifts Up */}
+              <div className="flex flex-col gap-4 pb-12">
+                <div className="rounded-[2rem] overflow-hidden h-[240px] shadow-2xl relative group">
+                  <div className="absolute inset-0 bg-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
+                  <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 object-top" />
                 </div>
-                <div>
-                  <div className="font-display font-bold text-white text-xl">500+</div>
-                  <div className="text-white/60 text-xs uppercase tracking-wider">Pekerja Terverifikasi</div>
+                <div className="glass-card rounded-[2rem] h-[300px] p-8 flex flex-col justify-between border-border/50 bg-white/60">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+                    <Star className="w-6 h-6 fill-current" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif italic text-2xl text-foreground mb-2">"Quality of service starts with quality of people."</h3>
+                    <p className="font-sub text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
