@@ -85,18 +85,31 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative h-[100dvh] w-full flex items-center overflow-hidden bg-primary clip-diagonal">
-        {/* Parallax Background */}
+        {/* Parallax Background - Split Screen */}
         <motion.div 
-          className="absolute inset-0 z-0 w-1/2 right-0 hidden md:block"
+          className="absolute inset-0 z-0 hidden md:flex"
           style={{ y: y1 }}
         >
-          <div className="absolute inset-0 bg-primary/20 mix-blend-multiply z-10" />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-primary z-10" />
-          <img 
-            src={heroBg} 
-            alt="Hospitality Worker in Bali" 
-            className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
-          />
+          {/* Left: Business */}
+          <div className="relative w-1/2 h-full">
+            <div className="absolute inset-0 bg-primary/70 mix-blend-multiply z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-transparent z-10" />
+            <img 
+              src={actionImg} 
+              alt="Hospitality Business in Bali" 
+              className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
+            />
+          </div>
+          {/* Right: Worker */}
+          <div className="relative w-1/2 h-full">
+            <div className="absolute inset-0 bg-primary/40 mix-blend-multiply z-10" />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-primary/20 to-primary/80 z-10" />
+            <img 
+              src={portraitImg} 
+              alt="Hospitality Worker in Bali" 
+              className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
+            />
+          </div>
         </motion.div>
         
         {/* Mobile Background */}
@@ -107,7 +120,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-primary/60 mix-blend-multiply z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/40 z-10" />
           <img 
-            src={heroBg} 
+            src={portraitImg} 
             alt="Hospitality Worker in Bali" 
             className="w-full h-[120%] object-cover object-center transform -translate-y-[10%]"
           />
