@@ -5,9 +5,9 @@ import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import heroBg from "@/assets/images/hero-hospitality.jpg";
-import actionImg from "@/assets/images/kitchen-action.jpg";
-import portraitImg from "@/assets/images/portrait-worker.jpg";
+import heroBg from "@/assets/images/hero-bg.png";
+import actionImg from "@/assets/images/hotel-action.png";
+import portraitImg from "@/assets/images/worker-portrait.png";
 
 // Animation variants
 const fadeUp = {
