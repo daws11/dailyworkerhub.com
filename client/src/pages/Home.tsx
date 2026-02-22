@@ -395,15 +395,15 @@ export default function Home() {
               className="relative"
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
-                <img src={portraitImg} alt="Worker" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent flex flex-col justify-end p-8 text-white">
-                  <div className="mb-4">
+                <img src={portraitImg} alt="Worker" className="w-full h-full object-cover object-top" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent flex flex-col justify-end p-8 text-white">
+                  <div className="mb-4 relative z-10">
                     <div className="flex text-accent mb-3">
                       <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
                     </div>
-                    <p className="font-bold text-lg leading-snug">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
+                    <p className="font-bold text-lg leading-snug drop-shadow-md">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
                   </div>
-                  <p className="font-sub text-sm text-accent uppercase tracking-widest">— I Made, Housekeeper</p>
+                  <p className="font-sub text-sm text-accent uppercase tracking-widest relative z-10 drop-shadow-md">— I Made, Housekeeper</p>
                 </div>
               </div>
             </motion.div>
