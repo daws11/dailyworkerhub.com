@@ -296,27 +296,11 @@ export default function Home() {
               Start Reliability.
             </h2>
             
-            <div className="space-y-3 mb-10 text-muted-foreground font-sans">
-              <p className="flex items-start gap-3"><span className="text-secondary mt-1">😫</span> Pekerja tidak datang last minute?</p>
-              <p className="flex items-start gap-3"><span className="text-secondary mt-1">❓</span> Tidak ada data kehandalan sebelum booking?</p>
-              <p className="flex items-start gap-3"><span className="text-secondary mt-1">⚖️</span> Takut salah hitung PP 35/2021 (21 hari limit)?</p>
-              <p className="flex items-start gap-3"><span className="text-secondary mt-1">⏱️</span> Rekrut manual butuh waktu berjam-jam?</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-12">
-              {[
-                "Filter by skill & score",
-                "One-tap booking & notif real-time",
-                "QR check-in absensi otomatis",
-                "Compliance alert (day 15-18)",
-                "Wallet system: bayar otomatis",
-                "Digital contract PDF per shift"
-              ].map((feature, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-secondary shrink-0" />
-                  <span className="font-sans text-primary font-medium">{feature}</span>
-                </div>
-              ))}
+            <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
+              <p>
+                Platform kami memfilter pekerja berdasarkan <strong className="text-primary">Reliability Score</strong> nyata. 
+                Sistem otomatis menangani absensi via QR, pembayaran transparan, dan memastikan kepatuhan PP 35/2021 tanpa ribet.
+              </p>
             </div>
 
             <div className="glass-card bg-primary/5 p-6 rounded-2xl mb-10 w-full flex items-center justify-between border-primary/10">
@@ -349,27 +333,11 @@ export default function Home() {
               Perlindungan Nyata.
             </h2>
             
-            <div className="space-y-3 mb-10 text-muted-foreground font-sans">
-              <p className="flex items-start gap-3"><span className="text-destructive mt-1">📅</span> Job tidak stabil, banyak hari kosong?</p>
-              <p className="flex items-start gap-3"><span className="text-destructive mt-1">💸</span> Upah rendah dan lelah negosiasi?</p>
-              <p className="flex items-start gap-3"><span className="text-destructive mt-1">🏥</span> Tidak ada jaminan sosial/kesehatan?</p>
-              <p className="flex items-start gap-3"><span className="text-destructive mt-1">⭐</span> Reputasi bagus tidak diakui di tempat baru?</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-12">
-              {[
-                "Browse jobs terdekat dengan filter",
-                "'Rate Bali' standar - tanpa tawar",
-                "Build score untuk job premium",
-                "Instant payout ke wallet",
-                "BPJS & asuransi dari Community Fund",
-                "Review system - reputasi ikut kamu"
-              ].map((feature, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-accent shrink-0" />
-                  <span className="font-sans text-primary font-medium">{feature}</span>
-                </div>
-              ))}
+            <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
+              <p>
+                Dapatkan pekerjaan dengan <strong className="text-primary">Rate Bali standar</strong> tanpa negosiasi alot. 
+                Nikmati pencairan instan, review yang membangun reputasi Anda, dan perlindungan dari Community Fund.
+              </p>
             </div>
 
             <div className="glass-card bg-white p-6 rounded-2xl mb-10 w-full flex items-center justify-between border-white">
