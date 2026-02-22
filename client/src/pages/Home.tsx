@@ -340,27 +340,7 @@ export default function Home() {
 
       {/* For Workers (Supply Side) */}
       <section className="py-24 md:py-32 px-4 md:px-8 bg-background overflow-hidden relative">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 md:gap-24">
-          <div className="w-full lg:w-1/2">
-            <motion.div 
-              style={{ y: y1 }}
-              className="relative"
-            >
-              <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
-                <img src={portraitImg} alt="Worker" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent flex flex-col justify-end p-8 text-white">
-                  <div className="mb-4">
-                    <div className="flex text-accent mb-3">
-                      <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
-                    </div>
-                    <p className="font-bold text-lg leading-snug">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
-                  </div>
-                  <p className="font-sub text-sm text-accent uppercase tracking-widest">— I Made, Housekeeper</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
+        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16 md:gap-24">
           <div className="w-full lg:w-1/2 flex flex-col items-start">
             <span className="font-sub uppercase tracking-[0.2em] text-accent font-bold text-sm mb-4">Untuk Pekerja</span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 tracking-tight text-balance">
