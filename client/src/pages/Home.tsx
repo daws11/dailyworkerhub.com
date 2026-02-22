@@ -85,7 +85,13 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-background">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-32 pb-20 flex flex-col md:flex-row items-center gap-12">
+        {/* Mobile Decorative Backgrounds */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none md:hidden z-0">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-[80px]"></div>
+          <div className="absolute top-1/2 -left-24 w-72 h-72 bg-accent/20 rounded-full blur-[60px]"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-32 pb-20 flex flex-col md:flex-row items-center gap-12 relative z-10">
           {/* Left: Content */}
           <div className="w-full md:w-[45%] relative z-20">
             <motion.div 
@@ -151,41 +157,40 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Right: Asymmetric Image Grid - Hidden on very small mobile, shown on md+ */}
-          <div className="w-full md:w-[55%] relative z-10 hidden md:block">
+          {/* Right: Asymmetric Image Grid */}
+          <div className="w-full md:w-[55%] relative z-10 mt-8 md:mt-0">
             <motion.div 
-              style={{ y: y1 }}
-              className="grid grid-cols-2 gap-4 h-[600px] relative"
+              className="grid grid-cols-2 gap-3 sm:gap-4 h-[400px] sm:h-[500px] md:h-[600px] relative"
             >
               {/* Decorative Blur */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/30 rounded-full blur-[80px] -z-10"></div>
-              <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-[80px] -z-10"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-accent/30 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
+              <div className="absolute bottom-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-secondary/20 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
 
               {/* Column 1 - Shifts Down */}
-              <div className="flex flex-col gap-4 pt-12">
-                <div className="rounded-[2rem] overflow-hidden h-[300px] shadow-2xl relative group">
+              <div className="flex flex-col gap-3 sm:gap-4 pt-6 md:pt-12">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[180px] sm:h-[240px] md:h-[300px] shadow-2xl relative group">
                   <div className="absolute inset-0 bg-primary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={actionImg} alt="Hotel Business" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
-                <div className="rounded-[2rem] overflow-hidden h-[240px] shadow-2xl relative group">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[140px] sm:h-[180px] md:h-[240px] shadow-2xl relative group hidden sm:block md:hidden lg:block">
                   <div className="absolute inset-0 bg-secondary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={heroBg} alt="Hospitality Scene" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
               </div>
 
               {/* Column 2 - Shifts Up */}
-              <div className="flex flex-col gap-4 pb-12">
-                <div className="rounded-[2rem] overflow-hidden h-[240px] shadow-2xl relative group">
+              <div className="flex flex-col gap-3 sm:gap-4 pb-6 md:pb-12">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[140px] sm:h-[180px] md:h-[240px] shadow-2xl relative group">
                   <div className="absolute inset-0 bg-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 object-top" />
                 </div>
-                <div className="glass-card rounded-[2rem] h-[300px] p-8 flex flex-col justify-between border-border/50 bg-white/60">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    <Star className="w-6 h-6 fill-current" />
+                <div className="glass-card rounded-2xl md:rounded-[2rem] h-[180px] sm:h-[240px] md:h-[300px] p-4 sm:p-6 md:p-8 flex flex-col justify-between border-border/50 bg-white/60">
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2 md:mb-4">
+                    <Star className="w-4 h-4 md:w-6 md:h-6 fill-current" />
                   </div>
                   <div>
-                    <h3 className="font-serif italic text-2xl text-foreground mb-2">"Quality of service starts with quality of people."</h3>
-                    <p className="font-sub text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
+                    <h3 className="font-serif italic text-base sm:text-xl md:text-2xl text-foreground mb-1 md:mb-2 line-clamp-3 md:line-clamp-none">"Quality of service starts with quality of people."</h3>
+                    <p className="font-sub text-[10px] md:text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
                   </div>
                 </div>
               </div>
