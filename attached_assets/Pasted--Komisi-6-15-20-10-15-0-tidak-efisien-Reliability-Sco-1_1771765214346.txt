@@ -1,0 +1,113 @@
+| Komisi            | 6%               | 15-20%   | 10-15%  | 0% (tidak efisien) |
+| Reliability Score | ✅                | ❌        | ❌       | ❌                  |
+| Compliance Guard  | ✅                | ❌        | ❌       | ❌                  |
+| Instant Payout    | ✅                | ❌        | ⚠️      | ❌                  |
+| Community Fund    | ✅                | ❌        | ❌       | ❌                  |
+🛡️ Trust & Compliance Section
+
+Headline:
+100% Legal. 100% Aman.
+
+Key Points:
+
+• ✅ Sesuai PP 35/2021 (PKWT harian lepas)
+• ✅ Batas 21 hari otomatis dijaga algoritma
+• ✅ Digital contract per shift
+• ✅ BPJS Ketenagakerjaan untuk pekerja aktif
+• ✅ KYC Verifikasi (KTP OCR + Liveness)
+• ✅ Data privacy: Comply PDPA Indonesia
+Certifications/Badges (placeholder):
+
+• [Badge: Kominfo Registered]
+• [Badge: BPJS Partner]
+• [Badge: ISO 27001 Security] (future)
+
+🎭 About / Story Section
+
+Headline:
+Built in Bali. For Bali.
+
+Copy (short & punchy):
+"Daily Worker Hub lahir dari kebutuhan nyata. David, co-founder kami, melihat industri hospitality Bali kesulitan mencari pekerja harian yang reliable. Sementara pekerja profesional struggle dengan income tidak stabil & tidak ada jaminan sosial.
+
+Jadi kami bangun platform ini. Bukan sekadar marketplace — tapi komunitas yang adil, transparan, dan menghargai setiap shift. Rate Bali standar. Reliability score real. Community protection nyata.
+
+Kami tidak sekadar menghubungkan. Kami membangun ekosistem."
+
+Team Photo / Founders:
+
+• [Photo David] + [Avatar Sasha]
+• David — Founder & Developer
+• Sasha — AI Co-founder
+
+❓ FAQ Section (Accordion)
+
+For Businesses:
+
+• Q: Berapa lama proses verifikasi bisnis?
+• Q: Bagaimana sistem komisi bekerja?
+• Q: Apakah ada kontrak jangka panjang?
+• Q: Bagaimana jika worker no-show?
+For Workers:
+
+• Q: Bagaimana cara membangun reliability score?
+• Q: Berapa lama proses payout?
+• Q: Apakah Community Fund mengurangi gaji saya?
+• Q: Apakah ada biaya withdrawal?
+General:
+
+• Q: Apakah data saya aman?
+• Q: Apakah platform ini legal sesuai aturan ketenagakerjaan?
+
+🚀 Final CTA Section
+
+Headline:
+Siap Mengubah Cara Anda Menemukan Pekerja?
+
+CTA Buttons:
+
+• [🏢 Daftar Bisnis Gratis] → [Form sign up]
+• [👷 Gabung Sebagai Pekerja] → [Form sign up]
+Supporting Text:
+"Join 50+ businesses & 500+ workers. Booking hari ini, kerja hari ini."
+
+
+📱 Footer
+
+Columns:
+
+• Produk — Untuk Bisnis, Untuk Pekerja, Pricing
+• Perusahaan — About Us, Karir, Blog
+• Bantuan — FAQ, Contact, Terms, Privacy
+• Legal — KBLI 63122, Compliance Info
+Social Media:
+
+• [Instagram] [LinkedIn] [Twitter/X]
+Badge:
+
+• "Built with ❤️ in Bali"
+
+🎨 Design Notes (Visual Direction)
+
+Color Palette:
+
+• Primary: Bali Blue (#0EA5E9) — trust, professional
+• Secondary: Bali Gold (#F59E0B) — warmth, prosperity
+• Accent: Green (#10B981) — success, compliance
+• Neutral: Clean White/Gray — modern, clean
+Typography:
+
+• Headline: Inter Bold (modern, readable)
+• Body: Inter Regular (clean, approachable)
+Visual Style:
+
+• Authentic photos of Bali workers & hospitality settings (not stock fake)
+• Simple icons with rounded corners (friendly, approachable)
+• Plenty of white space (not cluttered)
+• Mobile-first design (workers mostly on mobile)
+Interactive Elements:
+
+• Sticky CTA on mobile
+• Smooth scroll animations
+• Tabbed interface for How It Works
+• Accordion for FAQ

@@ -1,0 +1,126 @@
+🎨 Landing Page Daily Worker Hub - Struktur Konten
+
+Sebagai copywriter & designer, ini struktur yang aku sarankan:
+
+
+🚀 Hero Section (Above the Fold)
+
+Headline:
+"Temukan Pekerja Harian Profesional di Bali. Hari Ini."
+
+Subheadline:
+Platform community-first yang menghubungkan hotel, villa & restoran dengan pekerja harian terpercaya. Rate Bali adil, reliability score transparan, 100% legal sesuai PP 35/2021.
+
+CTA Buttons:
+
+• [🏢 Untuk Bisnis] → [Daftar Gratis]
+• [👷 Untuk Pekerja] → [Buat Profil]
+Supporting Element:
+
+• Trust badge: "50+ Bisnis Bergabung", "500+ Pekerja Terverifikasi" (update sesuai data real)
+• Visual: Split screen — bisnis di kiri, pekerja di kanan dengan smile authentic
+
+💎 Value Proposition Section (The "Why Us")
+
+Headline:
+"Bukan Sekadar Marketplace. Ini Ekosistem."
+
+3 Cards with Icon + Short Copy:
+
+1. Reliability Score™
+"Score 1-5 berdasarkan kehadiran & ketepatan waktu. Lihat, jangan tebak."
+2. Compliance Guard™
+"Proteksi otomatis PP 35/2021. Tidak ada risiko pelanggaran 21 hari."
+3. Rate Bali Adil
+"Upah terstandarisasi berbasis UMK. Pekerja dapat fair, bisnis jelas."
+
+🎯 Split: For Businesses (Demand Side)
+
+Headline:
+Stop No-Show. Start Reliability.
+
+Pain Points Bullet Points (agitate):
+
+• Pekerja tidak datang last minute? 😫
+• Tidak ada data kehandalan sebelum booking?
+• Takut salah hitung PP 35/2021 (21 hari limit)?
+• Rekrut manual butuh waktu berjam-jam?
+Features Grid (3x2):
+
+• [✅] Filter by skill, location, reliability score
+• [✅] One-tap booking dengan notifikasi real-time
+• [✅] QR check-in untuk absensi otomatis
+• [✅] Compliance alert (warning di day 15-18)
+• [✅] Wallet system — top-up, pakai, bayar otomatis
+• [✅] Digital contract per shift (download PDF)
+Social Proof (placeholder):
+
+• Testimonial: "Daily Worker Hub cut our no-show rate from 30% to 5%. Game changer." — Hotel Manager, Ubud
+• Stats: "Avg. 2.4 stars reliability score → 4.6 stars after platform"
+CTA: [Daftar Gratis → Booking Pekerja Hari Ini]
+
+
+🎯 Split: For Workers (Supply Side)
+
+Headline:
+Kerja Fleksibel. Income Stabil. Perlindungan Nyata.
+
+Pain Points Bullet Points (agitate):
+
+• Job tidak stabil, hari kosong?
+• Upah rendah, negosiasi capek?
+• Tidak ada jaminan sosial?
+• Reputasi tidak diakui?
+Features Grid (3x2):
+
+• [✅] Browse jobs terdekat dengan filter posisi & tanggal
+• [✅] "Rate Bali" standar — tidak perlu tawar lagi
+• [✅] Build reliability score untuk dapat job lebih premium
+• [✅] Instant payout ke wallet — tarik kapan saja
+• [✅] BPJS & asuransi dari Community Fund™
+• [✅] Review system — reputasi ikut kamu
+Social Proof (placeholder):
+
+• Testimonial: "Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate lebih tinggi." — I Made, Housekeeper
+• Stats: "Avg. income Rp 3.2jt/bulan → Rp 5.8jt/bulan"
+CTA: [Daftar Gratis → Dapat Job Hari Ini]
+
+
+📖 How It Works (2 Paths)
+
+Tabbed Interface: [Untuk Bisnis] | [Untuk Pekerja]
+
+Path 1: Bisnis
+
+1. Sign up — Verifikasi bisnis (5 menit)
+2. Post job — Input posisi, tanggal, jumlah worker
+3. Match & book — Filter by reliability, kirim request
+4. Confirm & track — Worker accept, QR check-in
+5. Auto-pay — Wallet system, transparan
+Path 2: Pekerja
+
+1. Create profile — Upload skill, foto, KYC (10 menit)
+2. Browse jobs — Filter posisi, area, tanggal
+3. Apply with tap — One-click, notif real-time
+4. Check-in — Scan QR di lokasi
+5. Get paid — Instant to wallet, withdraw anytime
+
+💰 Pricing / Transparency Section
+
+Headline:
+Transparan. Tidak Ada Hidden Fee.
+
+For Businesses:
+
+• Komisi 6% per transaksi
+• Biaya: Rp 0 — top-up gratis via QRIS
+• Biaya: Rp 0 — no subscription, no hidden cost
+For Workers:
+
+• Komisi 0% — full "Rate Bali" ke kamu
+• Community Fund 1-2% — otomatis dialokasikan untuk BPJS & asuransi
+• Withdrawal: Gratis 1x/week, Rp 2.500 for instant payout
+Comparison Table:
+
+| Feature           | Daily Worker Hub | Staffinc | MyRobin | Manual             |
+| ----------------- | ---------------- | -------- | ------- | ------------------ |
