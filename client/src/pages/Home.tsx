@@ -91,24 +91,24 @@ export default function Home() {
           <div className="absolute top-1/2 -left-24 w-72 h-72 bg-accent/20 rounded-full blur-[60px]"></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-32 pb-20 flex flex-col md:flex-row items-center gap-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-24 md:pt-32 pb-20 flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
           {/* Left: Content */}
-          <div className="w-full md:w-[45%] relative z-20">
+          <div className="w-full md:w-[45%] relative z-20 order-2 md:order-1">
             <motion.div 
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
             >
-              <motion.div variants={fadeUp} className="mb-6 flex items-center gap-4">
-                <span className="h-[2px] w-12 bg-secondary block"></span>
-                <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm">
+              <motion.div variants={fadeUp} className="mb-4 md:mb-6 flex items-center gap-4">
+                <span className="h-[2px] w-8 md:w-12 bg-secondary block"></span>
+                <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-xs md:text-sm">
                   Community-First Platform
                 </span>
               </motion.div>
               
               <motion.h1 
                 variants={fadeUp}
-                className="font-display text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.05] tracking-tight mb-8 text-balance"
+                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance"
               >
                 Temukan<br />Pekerja Harian<br />Profesional<br />
                 di Bali.<br />
@@ -117,23 +117,23 @@ export default function Home() {
 
               <motion.p 
                 variants={fadeUp}
-                className="text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.7] mb-12 text-balance max-w-lg"
+                className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
                 Platform yang menghubungkan hotel, villa & restoran dengan pekerja harian terpercaya. Rate Bali adil, reliability score transparan, 100% legal sesuai PP 35/2021.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 mb-12">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto">
-                  <span>🏢 Daftar Gratis (Bisnis)</span>
+              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto">
+                  <span>🏢 Daftar (Bisnis)</span>
                   <ArrowUpRight className="ml-4 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-8 h-14 text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-colors">
-                  <span>👷 Buat Profil (Pekerja)</span>
+                <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-colors">
+                  <span>👷 Profil (Pekerja)</span>
                   <ArrowUpRight className="ml-4 w-5 h-5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
                 </Button>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="flex flex-row gap-4 sm:gap-8 items-center border-t border-border pt-8">
+              <motion.div variants={fadeUp} className="flex flex-row gap-4 sm:gap-8 items-center border-t border-border pt-6 md:pt-8">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent-foreground shrink-0">
                     <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -158,39 +158,39 @@ export default function Home() {
           </div>
 
           {/* Right: Asymmetric Image Grid */}
-          <div className="w-full md:w-[55%] relative z-10 mt-8 md:mt-0">
+          <div className="w-full md:w-[55%] relative z-10 order-1 md:order-2">
             <motion.div 
-              className="grid grid-cols-2 gap-3 sm:gap-4 h-[400px] sm:h-[500px] md:h-[600px] relative"
+              className="grid grid-cols-2 gap-3 sm:gap-4 h-[280px] sm:h-[400px] md:h-[600px] relative"
             >
               {/* Decorative Blur */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-accent/30 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
               <div className="absolute bottom-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-secondary/20 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
 
               {/* Column 1 - Shifts Down */}
-              <div className="flex flex-col gap-3 sm:gap-4 pt-6 md:pt-12">
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[180px] sm:h-[240px] md:h-[300px] shadow-2xl relative group">
+              <div className="flex flex-col gap-3 sm:gap-4 pt-4 md:pt-12">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[160px] sm:h-[200px] md:h-[300px] shadow-2xl relative group">
                   <div className="absolute inset-0 bg-primary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={actionImg} alt="Hotel Business" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[140px] sm:h-[180px] md:h-[240px] shadow-2xl relative group hidden sm:block md:hidden lg:block">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group">
                   <div className="absolute inset-0 bg-secondary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={heroBg} alt="Hospitality Scene" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
               </div>
 
               {/* Column 2 - Shifts Up */}
-              <div className="flex flex-col gap-3 sm:gap-4 pb-6 md:pb-12">
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[140px] sm:h-[180px] md:h-[240px] shadow-2xl relative group">
+              <div className="flex flex-col gap-3 sm:gap-4 pb-4 md:pb-12">
+                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group">
                   <div className="absolute inset-0 bg-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
                   <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 object-top" />
                 </div>
-                <div className="glass-card rounded-2xl md:rounded-[2rem] h-[180px] sm:h-[240px] md:h-[300px] p-4 sm:p-6 md:p-8 flex flex-col justify-between border-border/50 bg-white/60">
-                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-2 md:mb-4">
+                <div className="glass-card rounded-2xl md:rounded-[2rem] h-[140px] sm:h-[200px] md:h-[300px] p-4 sm:p-6 md:p-8 flex flex-col justify-between border-border/50 bg-white/80 md:bg-white/60">
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-1 md:mb-4 shrink-0">
                     <Star className="w-4 h-4 md:w-6 md:h-6 fill-current" />
                   </div>
                   <div>
-                    <h3 className="font-serif italic text-base sm:text-xl md:text-2xl text-foreground mb-1 md:mb-2 line-clamp-3 md:line-clamp-none">"Quality of service starts with quality of people."</h3>
-                    <p className="font-sub text-[10px] md:text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
+                    <h3 className="font-serif italic text-sm sm:text-lg md:text-2xl text-foreground mb-1 md:mb-2 leading-snug">"Quality of service starts with quality of people."</h3>
+                    <p className="font-sub text-[9px] md:text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
                   </div>
                 </div>
               </div>
