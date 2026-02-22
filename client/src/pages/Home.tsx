@@ -93,7 +93,7 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-24 md:pt-32 pb-20 flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
           {/* Left: Content */}
-          <div className="w-full md:w-[45%] relative z-20 order-2 md:order-1">
+          <div className="w-full md:w-[45%] relative z-20 order-1 mt-8 md:mt-0">
             <motion.div 
               variants={staggerContainer}
               initial="hidden"
@@ -158,7 +158,7 @@ export default function Home() {
           </div>
 
           {/* Right: Asymmetric Image Grid */}
-          <div className="w-full md:w-[55%] relative z-10 order-1 md:order-2">
+          <div className="w-full md:w-[55%] relative z-10 order-2">
             <motion.div 
               className="grid grid-cols-2 gap-3 sm:gap-4 h-[280px] sm:h-[400px] md:h-[600px] relative"
             >
