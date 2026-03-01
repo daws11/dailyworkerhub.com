@@ -1,9 +1,12 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Magnet } from "@/components/animations/Magnet";
+import { ScrubText } from "@/components/animations/ScrubText";
+import { FloatingElements } from "@/components/animations/FloatingElements";
 
 import heroBg from "@/assets/images/hero-bg.png";
 import actionImg from "@/assets/images/hotel-action.png";
@@ -12,16 +15,30 @@ import portraitImg from "@/assets/images/worker-portrait.png";
 // Animation variants
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
-};
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+} as any;
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { staggerChildren: 0.1 }
   }
 };
+
+const charVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const tiltVariants = {
+  hover: {
+    rotateX: 5,
+    rotateY: -5,
+    scale: 1.02,
+    transition: { duration: 0.2, ease: "easeOut" }
+  }
+} as any;
 
 function CountUp({ end, label, suffix = "" }: { end: number, label: string, suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -72,32 +89,76 @@ function CountUp({ end, label, suffix = "" }: { end: number, label: string, suff
 }
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll();
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const y1 = useTransform(smoothProgress, [0, 1], [0, 200]);
+  const y2 = useTransform(smoothProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(smoothProgress, [0, 0.2], [1, 0.95]);
+
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const heroBgY = useTransform(heroScroll, [0, 1], ["0%", "30%"]);
+  const heroTextY = useTransform(heroScroll, [0, 1], ["0%", isMobile ? "10%" : "50%"]);
+
+  // Localized parallax for image grid items - reduced on mobile to prevent overlap
+  const p1 = useTransform(heroScroll, [0, 1], [0, isMobile ? -20 : -60]);
+  const p2 = useTransform(heroScroll, [0, 1], [0, isMobile ? 15 : 40]);
+  const p3 = useTransform(heroScroll, [0, 1], [0, isMobile ? -10 : -30]);
+  const p4 = useTransform(heroScroll, [0, 1], [0, isMobile ? 25 : 80]);
 
   return (
-    <main className="min-h-screen bg-background overflow-hidden relative">
+    <main className="min-h-screen bg-background overflow-hidden relative perspective-1000">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-secondary z-[100] origin-left"
+        style={{ scaleX: smoothProgress }}
+      />
+
       {/* Texture overlay */}
       <div className="fixed inset-0 pointer-events-none z-50 bg-noise opacity-50 mix-blend-overlay"></div>
-      
+
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-background">
-        {/* Mobile Decorative Backgrounds */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none md:hidden z-0">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-[80px]"></div>
-          <div className="absolute top-1/2 -left-24 w-72 h-72 bg-accent/20 rounded-full blur-[60px]"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-24 md:pt-32 pb-20 flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
+      <section ref={heroRef} className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-background">
+        {/* Decorative Background */}
+        <motion.div
+          style={{ y: heroBgY }}
+          className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0"
+        >
+          <FloatingElements />
+        </motion.div>
+
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-28 md:pt-32 pb-32 md:pb-20 flex flex-col md:flex-row items-center gap-16 md:gap-12 relative z-10">
           {/* Left: Content */}
-          <div className="w-full md:w-[45%] relative z-20 order-1 mt-8 md:mt-0">
-            <motion.div 
+          <motion.div
+            style={{ y: heroTextY, opacity }}
+            className="w-full md:w-[45%] relative z-20 order-1 mt-8 md:mt-0"
+          >
+            <motion.div
               variants={staggerContainer}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true }}
             >
               <motion.div variants={fadeUp} className="mb-4 md:mb-6 flex items-center gap-4">
                 <span className="h-[2px] w-8 md:w-12 bg-secondary block"></span>
@@ -105,17 +166,23 @@ export default function Home() {
                   Community-First Platform
                 </span>
               </motion.div>
-              
-              <motion.h1 
-                variants={fadeUp}
+
+              <motion.h1
                 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance"
               >
-                Temukan<br />Pekerja Harian<br />Profesional<br />
-                di Bali.<br />
-                <span className="text-secondary italic font-serif font-light">Hari Ini.</span>
+                <ScrubText
+                  text="Temukan Pekerja Harian Profesional di Bali."
+                  variant="reveal"
+                />
+                <motion.span
+                  variants={charVariants}
+                  className="text-secondary italic font-serif font-light block mt-2"
+                >
+                  Hari Ini.
+                </motion.span>
               </motion.h1>
 
-              <motion.p 
+              <motion.p
                 variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
@@ -123,14 +190,39 @@ export default function Home() {
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto">
-                  <span>🏢 Daftar (Bisnis)</span>
-                  <ArrowUpRight className="ml-4 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </Button>
-                <Button size="lg" variant="outline" className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-colors">
-                  <span>👷 Profil (Pekerja)</span>
-                  <ArrowUpRight className="ml-4 w-5 h-5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
-                </Button>
+                <Magnet strength={isMobile ? 0.05 : 0.2}>
+                  <Button
+                    size="lg"
+                    asChild
+                    className="w-full sm:w-auto"
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto flex items-center"
+                    >
+                      <span>🏢 Daftar (Bisnis)</span>
+                      <ArrowUpRight className="ml-4 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </motion.button>
+                  </Button>
+                </Magnet>
+                <Magnet strength={isMobile ? 0.05 : 0.2}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    asChild
+                    className="w-full sm:w-auto"
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
+                      whileTap={{ scale: 0.98 }}
+                      className="border-border text-foreground rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-all flex items-center"
+                    >
+                      <span>👷 Profil (Pekerja)</span>
+                      <ArrowUpRight className="ml-4 w-5 h-5 transition-all" />
+                    </motion.button>
+                  </Button>
+                </Magnet>
               </motion.div>
 
               <motion.div variants={fadeUp} className="flex flex-row gap-4 sm:gap-8 items-center border-t border-border pt-6 md:pt-8">
@@ -155,36 +247,55 @@ export default function Home() {
                 </div>
               </motion.div>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right: Asymmetric Image Grid */}
           <div className="w-full md:w-[55%] relative z-10 order-2">
-            <motion.div 
+            <motion.div
               className="grid grid-cols-2 gap-3 sm:gap-4 h-[280px] sm:h-[400px] md:h-[600px] relative"
             >
-              {/* Decorative Blur */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-accent/30 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
-              <div className="absolute bottom-0 right-0 w-48 h-48 md:w-64 md:h-64 bg-secondary/20 rounded-full blur-[60px] md:blur-[80px] -z-10"></div>
 
-              {/* Column 1 - Shifts Down */}
+              {/* Column 1 */}
               <div className="flex flex-col gap-3 sm:gap-4 pt-4 md:pt-12">
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[160px] sm:h-[200px] md:h-[300px] shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-primary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
+                <motion.div
+                  style={{ y: p1 }}
+                  initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                  whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[160px] sm:h-[200px] md:h-[300px] shadow-2xl relative group"
+                >
                   <img src={actionImg} alt="Hotel Business" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                </div>
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-secondary/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
+                </motion.div>
+                <motion.div
+                  style={{ y: p2 }}
+                  initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                  whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
+                >
                   <img src={heroBg} alt="Hospitality Scene" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                </div>
+                </motion.div>
               </div>
 
-              {/* Column 2 - Shifts Up */}
+              {/* Column 2 */}
               <div className="flex flex-col gap-3 sm:gap-4 pb-4 md:pb-12">
-                <div className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-accent/20 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 z-10" />
-                  <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 object-top" />
-                </div>
-                <div className="glass-card rounded-2xl md:rounded-[2rem] h-[140px] sm:h-[200px] md:h-[300px] p-4 sm:p-6 md:p-8 flex flex-col justify-between border-border/50 bg-white/80 md:bg-white/60">
+                <motion.div
+                  style={{ y: p3 }}
+                  initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+                  whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+                  transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
+                >
+                  <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                </motion.div>
+                <motion.div
+                  style={{ y: p4 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="glass-card rounded-2xl md:rounded-[2rem] h-[140px] sm:h-[200px] md:h-[300px] p-4 sm:p-6 md:p-8 flex flex-col justify-between border-border/50 bg-white/80 md:bg-white/60"
+                >
                   <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-1 md:mb-4 shrink-0">
                     <Star className="w-4 h-4 md:w-6 md:h-6 fill-current" />
                   </div>
@@ -192,7 +303,7 @@ export default function Home() {
                     <h3 className="font-serif italic text-sm sm:text-lg md:text-2xl text-foreground mb-1 md:mb-2 leading-snug">"Quality of service starts with quality of people."</h3>
                     <p className="font-sub text-[9px] md:text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
@@ -210,13 +321,19 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover="hover"
+              variants={tiltVariants}
               transition={{ duration: 0.6 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 hover:-translate-y-2 transition-transform duration-500"
+              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
             >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
+                initial={false}
+              />
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
                 <Star className="w-8 h-8" />
               </div>
@@ -226,13 +343,19 @@ export default function Home() {
               </p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover="hover"
+              variants={tiltVariants}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 hover:-translate-y-2 transition-transform duration-500"
+              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
             >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
+                initial={false}
+              />
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
                 <ShieldCheck className="w-8 h-8" />
               </div>
@@ -242,13 +365,19 @@ export default function Home() {
               </p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
+              whileHover="hover"
+              variants={tiltVariants}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 hover:-translate-y-2 transition-transform duration-500"
+              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
             >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
+                initial={false}
+              />
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
                 <Wallet className="w-8 h-8" />
               </div>
@@ -265,7 +394,7 @@ export default function Home() {
       <section className="py-24 md:py-32 px-4 md:px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 md:gap-24">
           <div className="w-full lg:w-1/2">
-            <motion.div 
+            <motion.div
               style={{ y: y2 }}
               className="relative"
             >
@@ -295,10 +424,10 @@ export default function Home() {
               Stop No-Show.<br />
               Start Reliability.
             </h2>
-            
+
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Platform kami memfilter pekerja berdasarkan <strong className="text-primary">Reliability Score</strong> nyata. 
+                Platform kami memfilter pekerja berdasarkan <strong className="text-primary">Reliability Score</strong> nyata.
                 Sistem otomatis menangani absensi via QR, pembayaran transparan, dan memastikan kepatuhan PP 35/2021 tanpa ribet.
               </p>
             </div>
@@ -332,10 +461,10 @@ export default function Home() {
               <span className="text-accent">Income Stabil.</span><br />
               Perlindungan Nyata.
             </h2>
-            
+
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Dapatkan pekerjaan dengan <strong className="text-primary">Rate Bali standar</strong> tanpa negosiasi alot. 
+                Dapatkan pekerjaan dengan <strong className="text-primary">Rate Bali standar</strong> tanpa negosiasi alot.
                 Nikmati pencairan instan, review yang membangun reputasi Anda, dan perlindungan dari Community Fund.
               </p>
             </div>
@@ -358,7 +487,7 @@ export default function Home() {
           </div>
 
           <div className="w-full lg:w-1/2">
-            <motion.div 
+            <motion.div
               style={{ y: y1 }}
               className="relative"
             >
@@ -395,7 +524,7 @@ export default function Home() {
                 <TabsTrigger value="pekerja" className="rounded-full px-8 py-3 text-lg font-sub data-[state=active]:bg-accent data-[state=active]:text-primary">Untuk Pekerja</TabsTrigger>
               </TabsList>
             </div>
-            
+
             <TabsContent value="bisnis" className="mt-0 outline-none">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-8">
                 {[
@@ -405,7 +534,7 @@ export default function Home() {
                   { step: "4", title: "Confirm", desc: "Worker accept, pantau QR check-in.", icon: CheckCircle2 },
                   { step: "5", title: "Auto-pay", desc: "Wallet system, transparan tanpa ribet.", icon: Wallet }
                 ].map((item, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -423,7 +552,7 @@ export default function Home() {
                 ))}
               </div>
             </TabsContent>
-            
+
             <TabsContent value="pekerja" className="mt-0 outline-none">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-8">
                 {[
@@ -433,7 +562,7 @@ export default function Home() {
                   { step: "4", title: "Check-in", desc: "Scan QR di lokasi untuk absen.", icon: Clock },
                   { step: "5", title: "Get Paid", desc: "Instant ke wallet, withdraw kapan saja.", icon: Wallet }
                 ].map((item, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -469,7 +598,10 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
             {/* Business Pricing */}
-            <div className="bg-background rounded-[2rem] p-8 md:p-12 border border-border">
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="bg-background rounded-[2rem] p-8 md:p-12 border border-border shadow-lg hover:shadow-2xl transition-all"
+            >
               <h3 className="font-display text-2xl font-bold text-primary mb-6 flex items-center gap-3">
                 <Building2 className="w-6 h-6 text-secondary" /> Untuk Bisnis
               </h3>
@@ -487,11 +619,14 @@ export default function Home() {
                   <span className="font-bold text-primary text-xl">Rp 0</span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* Worker Pricing */}
-            <div className="bg-primary text-white rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -z-0"></div>
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="bg-primary text-white rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group/pricing"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -z-0 group-hover/pricing:scale-150 transition-transform duration-700"></div>
               <h3 className="font-display text-2xl font-bold text-accent mb-6 flex items-center gap-3 relative z-10">
                 <Users className="w-6 h-6" /> Untuk Pekerja
               </h3>
@@ -515,7 +650,7 @@ export default function Home() {
                   <span className="font-bold text-white text-xl">Rp 2.500 <span className="text-sm font-normal text-white/60">/instant</span></span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
           </div>
 
           {/* Comparison Table */}
@@ -575,7 +710,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-32 px-4 md:px-8 relative z-20">
         <div className="max-w-5xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -583,7 +718,7 @@ export default function Home() {
           >
             {/* Decorative BG */}
             <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-transparent to-transparent"></div>
-            
+
             <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8 relative z-10 tracking-tight">
               Mulai Bangun Tim <span className="text-accent italic font-serif font-light">Solid</span> Anda
             </h2>
@@ -624,16 +759,16 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      
+
       {/* Mobile Fixed CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-xl border-t border-border z-50 flex gap-2">
-         <Button className="flex-1 bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-sub shadow-xl">
-            Untuk Bisnis
-         </Button>
-         <Button variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
-            Untuk Pekerja
-         </Button>
+        <Button className="flex-1 bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-sub shadow-xl">
+          Untuk Bisnis
+        </Button>
+        <Button variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
+          Untuk Pekerja
+        </Button>
       </div>
-    </main>
+    </main >
   );
 }
