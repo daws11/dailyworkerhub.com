@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Menu, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoImg from "@/assets/images/logo-only.webp";
 
 export function Navbar() {
   return (
@@ -12,9 +13,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-primary font-bold font-display tracking-tighter">
-            DH
-          </div>
+          <img src={logoImg} alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
           <span className="font-display font-bold text-xl tracking-tight hidden sm:block">
             Daily Worker Hub
           </span>

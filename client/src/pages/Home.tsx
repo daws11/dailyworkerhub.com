@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { useEffect, useState, useRef } from "react";
@@ -8,9 +8,10 @@ import { Magnet } from "@/components/animations/Magnet";
 import { ScrubText } from "@/components/animations/ScrubText";
 import { FloatingElements } from "@/components/animations/FloatingElements";
 
-import heroBg from "@/assets/images/hero-bg.png";
-import actionImg from "@/assets/images/hotel-action.png";
-import portraitImg from "@/assets/images/worker-portrait.png";
+import heroBg from "@/assets/images/hero-bg.webp";
+import actionImg from "@/assets/images/hotel-action.webp";
+import logoImg from "@/assets/images/logo-only-white.webp";
+import workerPortrait from "@/assets/images/worker-portrait.webp";
 
 // Animation variants
 const fadeUp = {
@@ -39,6 +40,134 @@ const tiltVariants = {
     transition: { duration: 0.2, ease: "easeOut" }
   }
 } as any;
+
+// Step card animation variants
+const stepCardVariants = {
+  hidden: { opacity: 0, y: 36, scale: 0.94, filter: "blur(6px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.75,
+      delay: i * 0.09,
+      ease: [0.22, 1, 0.36, 1],
+    }
+  }),
+  exit: { opacity: 0, y: -16, scale: 0.96, filter: "blur(4px)", transition: { duration: 0.35, ease: [0.55, 0, 1, 0.45] } }
+} as any;
+
+const tabPanelVariants = {
+  hidden: { opacity: 0, x: 24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, x: -24, transition: { duration: 0.3, ease: [0.55, 0, 1, 0.45] } }
+} as any;
+
+function HowItWorksTabs() {
+  const [activeTab, setActiveTab] = useState<"bisnis" | "pekerja">("bisnis");
+
+  const bisniSteps = [
+    { step: "1", title: "Sign Up", desc: "Verifikasi bisnis dalam 5 menit.", icon: FileText },
+    { step: "2", title: "Post Job", desc: "Input posisi, tanggal & jumlah worker.", icon: Building2 },
+    { step: "3", title: "Match", desc: "Filter by reliability, kirim request.", icon: Search },
+    { step: "4", title: "Confirm", desc: "Worker accept, pantau QR check-in.", icon: CheckCircle2 },
+    { step: "5", title: "Auto-pay", desc: "Wallet system, transparan tanpa ribet.", icon: Wallet }
+  ];
+
+  const pekerjaaSteps = [
+    { step: "1", title: "Create Profile", desc: "Upload skill, foto, & verifikasi KYC.", icon: Users },
+    { step: "2", title: "Browse Jobs", desc: "Filter posisi, area, & ketersediaan.", icon: Search },
+    { step: "3", title: "1-Tap Apply", desc: "Satu klik apply, notif real-time.", icon: CheckCircle2 },
+    { step: "4", title: "Check-in", desc: "Scan QR di lokasi untuk absen.", icon: Clock },
+    { step: "5", title: "Get Paid", desc: "Instant ke wallet, withdraw kapan saja.", icon: Wallet }
+  ];
+
+  const steps = activeTab === "bisnis" ? bisniSteps : pekerjaaSteps;
+
+  return (
+    <div className="w-full">
+      {/* Tab switcher */}
+      <div className="flex justify-center mb-16">
+        <div className="bg-black/10 p-1.5 rounded-full border border-white/20 flex gap-1">
+          {(["bisnis", "pekerja"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="relative rounded-full px-8 py-3 text-lg font-sub transition-colors duration-300 focus:outline-none"
+              style={{ color: activeTab === tab ? undefined : "rgba(255,255,255,0.6)" }}
+            >
+              {activeTab === tab && (
+                <motion.span
+                  layoutId="how-tab-pill"
+                  className={`absolute inset-0 rounded-full ${tab === "bisnis" ? "bg-secondary" : "bg-white"}`}
+                  transition={{ type: "spring", stiffness: 380, damping: 34 }}
+                />
+              )}
+              <span
+                className="relative z-10 font-sub"
+                style={{
+                  color: activeTab === tab
+                    ? tab === "bisnis" ? "white" : "var(--color-primary)"
+                    : "rgba(255,255,255,0.6)"
+                }}
+              >
+                {tab === "bisnis" ? "Untuk Bisnis" : "Untuk Pekerja"}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Cards with AnimatePresence */}
+      <div className="relative min-h-[320px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            variants={tabPanelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6"
+          >
+            {steps.map((item, idx) => (
+              <motion.div
+                key={idx}
+                custom={idx}
+                variants={stepCardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                whileHover={{
+                  y: -6,
+                  scale: 1.03,
+                  backgroundColor: "rgba(255,255,255,0.22)",
+                  borderColor: "rgba(255,255,255,0.4)",
+                  transition: { duration: 0.28, ease: "easeOut" }
+                }}
+                className="bg-white/10 border border-white/20 rounded-2xl p-6 text-center shadow-lg backdrop-blur-sm cursor-default"
+              >
+                <motion.div
+                  className="w-14 h-14 rounded-full bg-white text-primary mx-auto flex items-center justify-center mb-5 shadow-2xl"
+                  whileHover={{
+                    scale: 1.15,
+                    boxShadow: "0 0 24px 4px rgba(255,255,255,0.35)",
+                    transition: { duration: 0.25, ease: "easeOut" }
+                  }}
+                >
+                  <item.icon className="w-7 h-7" />
+                </motion.div>
+                <div className="font-display text-white/60 text-xs font-bold mb-3 tracking-widest">STEP 0{item.step}</div>
+                <h3 className="font-sub font-bold text-xl mb-3 text-white">{item.title}</h3>
+                <p className="text-white/80 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
 
 function CountUp({ end, label, suffix = "" }: { end: number, label: string, suffix?: string }) {
   const [count, setCount] = useState(0);
@@ -148,11 +277,11 @@ export default function Home() {
           <FloatingElements />
         </motion.div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-28 md:pt-32 pb-32 md:pb-20 flex flex-col md:flex-row items-center gap-16 md:gap-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-20 md:pt-32 pb-32 md:pb-20 flex flex-col md:flex-row items-center gap-16 md:gap-12 relative z-10">
           {/* Left: Content */}
           <motion.div
             style={{ y: heroTextY, opacity }}
-            className="w-full md:w-[45%] relative z-20 order-1 mt-8 md:mt-0"
+            className="w-full md:w-[45%] relative z-20 order-1 mt-0"
           >
             <motion.div
               variants={staggerContainer}
@@ -199,10 +328,10 @@ export default function Home() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group justify-between w-full sm:w-auto flex items-center"
+                      className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
                     >
                       <span>🏢 Daftar (Bisnis)</span>
-                      <ArrowUpRight className="ml-4 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </motion.button>
                   </Button>
                 </Magnet>
@@ -216,10 +345,10 @@ export default function Home() {
                     <motion.button
                       whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
                       whileTap={{ scale: 0.98 }}
-                      className="border-border text-foreground rounded-full px-8 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent justify-between w-full sm:w-auto transition-all flex items-center"
+                      className="border-border text-foreground rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
                     >
                       <span>👷 Profil (Pekerja)</span>
-                      <ArrowUpRight className="ml-4 w-5 h-5 transition-all" />
+                      <ArrowUpRight className="w-5 h-5 transition-all" />
                     </motion.button>
                   </Button>
                 </Magnet>
@@ -287,7 +416,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src={portraitImg} alt="Worker Portrait" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                  <img src={actionImg} alt="Worker Context" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
                 <motion.div
                   style={{ y: p4 }}
@@ -395,24 +524,20 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 md:gap-24">
           <div className="w-full lg:w-1/2">
             <motion.div
-              style={{ y: y2 }}
+              style={{ y: isMobile ? 0 : y2 }}
               className="relative"
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
+                <div className="absolute inset-0 bg-primary/10"></div>
                 <img src={actionImg} alt="Hotel Management" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8 text-white">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                      <img src={portraitImg} alt="Manager" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
+                  <div className="mb-4 relative z-10">
+                    <div className="flex text-accent mb-3">
+                      <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
                     </div>
-                    <div>
-                      <div className="flex text-accent mb-1">
-                        <Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" />
-                      </div>
-                      <p className="font-bold text-sm">"No-show rate turun drastis dari 30% ke 5%. Game changer untuk operasional kami."</p>
-                    </div>
+                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">"No-show rate turun drastis dari 30% ke 5%. Game changer untuk operasional kami."</p>
                   </div>
-                  <p className="font-sub text-xs text-white/70 uppercase tracking-widest">— Hotel Manager, Ubud</p>
+                  <p className="font-sub text-sm text-white/80 uppercase tracking-widest relative z-10 drop-shadow-md">— Hotel Manager, Ubud</p>
                 </div>
               </div>
             </motion.div>
@@ -444,7 +569,7 @@ export default function Home() {
               <TrendingUp className="text-secondary w-12 h-12 opacity-20" />
             </div>
 
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-lg font-sub shadow-xl w-full sm:w-auto">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
               Daftar Gratis → Booking Hari Ini
             </Button>
           </div>
@@ -454,11 +579,11 @@ export default function Home() {
       {/* For Workers (Supply Side) */}
       <section className="py-24 md:py-32 px-4 md:px-8 bg-background overflow-hidden relative">
         <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16 md:gap-24">
-          <div className="w-full lg:w-1/2 flex flex-col items-start">
-            <span className="font-sub uppercase tracking-[0.2em] text-accent font-bold text-sm mb-4">Untuk Pekerja</span>
+          <div className="w-full lg:w-1/2 flex flex-col items-start pt-8 md:pt-0">
+            <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm mb-4">Untuk Pekerja</span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 tracking-tight text-balance">
               Kerja Fleksibel.<br />
-              <span className="text-accent">Income Stabil.</span><br />
+              <span className="text-secondary opacity-70">Income Stabil.</span><br />
               Perlindungan Nyata.
             </h2>
 
@@ -481,26 +606,27 @@ export default function Home() {
               <Wallet className="text-accent w-12 h-12 opacity-20" />
             </div>
 
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary rounded-full px-8 h-14 text-lg font-sub font-bold shadow-xl w-full sm:w-auto">
+            <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary rounded-full px-8 h-14 text-base md:text-lg font-sub font-bold shadow-xl w-full sm:w-auto">
               Daftar Gratis → Dapat Job Hari Ini
             </Button>
           </div>
 
           <div className="w-full lg:w-1/2">
             <motion.div
-              style={{ y: y1 }}
+              style={{ y: isMobile ? 0 : y1 }}
               className="relative"
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
-                <img src={portraitImg} alt="Worker" className="w-full h-full object-cover object-top" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent flex flex-col justify-end p-8 text-white">
+                <div className="absolute inset-0 bg-primary/10"></div>
+                <img src={workerPortrait} alt="Pekerja Harian Profesional" className="w-full h-full object-cover object-top" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
-                    <div className="flex text-accent mb-3">
+                    <div className="flex text-white mb-3">
                       <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
                     </div>
-                    <p className="font-bold text-lg leading-snug drop-shadow-md">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
+                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
                   </div>
-                  <p className="font-sub text-sm text-accent uppercase tracking-widest relative z-10 drop-shadow-md">— I Made, Housekeeper</p>
+                  <p className="font-sub text-sm text-white/80 uppercase tracking-widest relative z-10 drop-shadow-md">— Ayu, Housekeeper</p>
                 </div>
               </div>
             </motion.div>
@@ -509,78 +635,26 @@ export default function Home() {
       </section>
 
       {/* Interactive "How it Works" Tabs */}
-      <section id="how-it-works" className="py-24 md:py-32 bg-primary text-white relative pb-32">
+      <section id="how-it-works" className="py-24 md:py-32 bg-primary text-white relative pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay"></div>
+
+        {/* Ambient glow decorations */}
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-white/5 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] pointer-events-none" />
+
         <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          >
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">Cara Kerja</h2>
             <p className="font-serif italic text-xl text-white/70">Seamless precision meets human connection.</p>
-          </div>
+          </motion.div>
 
-          <Tabs defaultValue="bisnis" className="w-full">
-            <div className="flex justify-center mb-16">
-              <TabsList className="bg-white/10 p-1 rounded-full border border-white/20 h-16">
-                <TabsTrigger value="bisnis" className="rounded-full px-8 py-3 text-lg font-sub data-[state=active]:bg-secondary data-[state=active]:text-white">Untuk Bisnis</TabsTrigger>
-                <TabsTrigger value="pekerja" className="rounded-full px-8 py-3 text-lg font-sub data-[state=active]:bg-accent data-[state=active]:text-primary">Untuk Pekerja</TabsTrigger>
-              </TabsList>
-            </div>
-
-            <TabsContent value="bisnis" className="mt-0 outline-none">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-8">
-                {[
-                  { step: "1", title: "Sign Up", desc: "Verifikasi bisnis dalam 5 menit.", icon: FileText },
-                  { step: "2", title: "Post Job", desc: "Input posisi, tanggal & jumlah worker.", icon: Building2 },
-                  { step: "3", title: "Match", desc: "Filter by reliability, kirim request.", icon: Search },
-                  { step: "4", title: "Confirm", desc: "Worker accept, pantau QR check-in.", icon: CheckCircle2 },
-                  { step: "5", title: "Auto-pay", desc: "Wallet system, transparan tanpa ribet.", icon: Wallet }
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.1 }}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-secondary/20 text-secondary mx-auto flex items-center justify-center mb-4 border border-secondary/30">
-                      <item.icon className="w-6 h-6" />
-                    </div>
-                    <div className="font-display text-white/40 text-sm font-bold mb-2">STEP 0{item.step}</div>
-                    <h3 className="font-sub font-bold text-xl mb-2">{item.title}</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="pekerja" className="mt-0 outline-none">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-8">
-                {[
-                  { step: "1", title: "Create Profile", desc: "Upload skill, foto, & verifikasi KYC.", icon: Users },
-                  { step: "2", title: "Browse Jobs", desc: "Filter posisi, area, & ketersediaan.", icon: Search },
-                  { step: "3", title: "1-Tap Apply", desc: "Satu klik apply, notif real-time.", icon: CheckCircle2 },
-                  { step: "4", title: "Check-in", desc: "Scan QR di lokasi untuk absen.", icon: Clock },
-                  { step: "5", title: "Get Paid", desc: "Instant ke wallet, withdraw kapan saja.", icon: Wallet }
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.1 }}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 transition-colors"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-accent/20 text-accent mx-auto flex items-center justify-center mb-4 border border-accent/30">
-                      <item.icon className="w-6 h-6" />
-                    </div>
-                    <div className="font-display text-white/40 text-sm font-bold mb-2">STEP 0{item.step}</div>
-                    <h3 className="font-sub font-bold text-xl mb-2 text-accent">{item.title}</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+          <HowItWorksTabs />
         </div>
       </section>
 
@@ -726,11 +800,11 @@ export default function Home() {
               Bergabung dengan ekosistem hospitality terbesar dan terpercaya di Bali.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-16 text-lg font-sub shadow-xl group">
-                🏢 Daftar Gratis (Bisnis)
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
+                <span className="flex items-center gap-2">🏢 Daftar Gratis (Bisnis)</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10 rounded-full px-10 h-16 text-lg font-sub bg-transparent">
+              <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
                 👷 Buat Profil (Pekerja)
               </Button>
             </div>
@@ -742,9 +816,7 @@ export default function Home() {
       <footer className="bg-foreground text-white py-12 px-4 md:px-8 font-sans">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-t border-white/10 pt-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-primary font-bold font-display tracking-tighter">
-              DH
-            </div>
+            <img src={logoImg} alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
             <span className="font-display font-bold text-xl tracking-tight">
               Daily Worker Hub
             </span>

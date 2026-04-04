@@ -37,41 +37,41 @@
 }
 
 :root {
-  /* Cream White */
-  --background: hsl(48 100% 96%);
-  /* Deep Charcoal */
-  --foreground: hsl(240 6% 10%);
+  /* Gojek/Grab App White */
+  --background: hsl(0 0% 100%);
+  /* Dark Text */
+  --foreground: hsl(240 10% 10%);
   
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 6% 10%);
+  --card-foreground: hsl(240 10% 10%);
   
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 6% 10%);
+  --popover-foreground: hsl(240 10% 10%);
   
-  /* Deep Bali Blue */
-  --primary: hsl(202 80% 24%);
-  --primary-foreground: hsl(48 100% 96%);
+  /* Gojek/Grab Vibrant Green */
+  --primary: hsl(135 100% 34%);
+  --primary-foreground: hsl(0 0% 100%);
   
-  /* Sunset Coral */
-  --secondary: hsl(347 77% 50%);
+  /* Dark Secondary */
+  --secondary: hsl(240 5% 15%);
   --secondary-foreground: hsl(0 0% 100%);
   
-  /* Soft Mist */
-  --muted: hsl(210 40% 96%);
+  /* Light Gray Muted */
+  --muted: hsl(240 5% 96%);
   --muted-foreground: hsl(240 5% 40%);
   
-  /* Sand Gold */
-  --accent: hsl(46 65% 52%);
-  --accent-foreground: hsl(240 6% 10%);
+  /* Light Green Accent */
+  --accent: hsl(135 20% 92%);
+  --accent-foreground: hsl(135 100% 25%);
   
-  /* Terracotta / Sunset Coral */
-  --destructive: hsl(22 89% 40%);
+  /* Destructive Red */
+  --destructive: hsl(0 84% 60%);
   --destructive-foreground: hsl(0 0% 100%);
 
-  --border: hsl(210 40% 90%);
-  --input: hsl(210 40% 90%);
-  /* Electric Indigo */
-  --ring: hsl(243 75% 59%);
+  --border: hsl(240 5% 90%);
+  --input: hsl(240 5% 90%);
+  /* Primary Green Ring */
+  --ring: hsl(135 100% 34%);
 
   --radius: 1rem;
 }
