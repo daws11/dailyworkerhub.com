@@ -20,18 +20,20 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-8 font-sub text-sm uppercase tracking-wider">
-          <a href="#about" className="hover:text-secondary transition-colors">Philosophy</a>
-          <a href="#how-it-works" className="hover:text-secondary transition-colors">How It Works</a>
-          <a href="#stories" className="hover:text-secondary transition-colors">Stories</a>
+          <a href="#how-it-works" className="hover:text-secondary transition-colors">Cara Kerja</a>
+          <a href="#pricing" className="hover:text-secondary transition-colors">Biaya</a>
+          <a href="https://community.dailyworkerhub.com" className="hover:text-secondary transition-colors">Komunitas</a>
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="outline" className="hidden sm:flex border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300">
-            Log In
+          <Button variant="outline" asChild className="hidden sm:flex border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300">
+            <a href="https://staging.dailyworkerhub.com/auth/login">Masuk</a>
           </Button>
-          <Button className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group">
-            Hire Talent
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          <Button asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group">
+            <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+              Pasang Lowongan
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </a>
           </Button>
           <button className="md:hidden p-2">
             <Menu className="w-6 h-6" />

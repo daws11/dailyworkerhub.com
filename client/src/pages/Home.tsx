@@ -1,9 +1,8 @@
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X, Handshake, MessageCircle, Trophy } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Magnet } from "@/components/animations/Magnet";
 import { ScrubText } from "@/components/animations/ScrubText";
 import { FloatingElements } from "@/components/animations/FloatingElements";
@@ -41,7 +40,6 @@ const tiltVariants = {
   }
 } as any;
 
-// Step card animation variants
 const stepCardVariants = {
   hidden: { opacity: 0, y: 36, scale: 0.94, filter: "blur(6px)" },
   visible: (i: number) => ({
@@ -67,23 +65,23 @@ const tabPanelVariants = {
 function HowItWorksTabs() {
   const [activeTab, setActiveTab] = useState<"bisnis" | "pekerja">("bisnis");
 
-  const bisniSteps = [
-    { step: "1", title: "Sign Up", desc: "Verifikasi bisnis dalam 5 menit.", icon: FileText },
-    { step: "2", title: "Post Job", desc: "Input posisi, tanggal & jumlah worker.", icon: Building2 },
-    { step: "3", title: "Match", desc: "Filter by reliability, kirim request.", icon: Search },
-    { step: "4", title: "Confirm", desc: "Worker accept, pantau QR check-in.", icon: CheckCircle2 },
-    { step: "5", title: "Auto-pay", desc: "Wallet system, transparan tanpa ribet.", icon: Wallet }
+  const bisnisSteps = [
+    { step: "1", title: "Daftar & Verifikasi", desc: "Proses verifikasi bisnis dalam hitungan menit.", icon: FileText },
+    { step: "2", title: "Pasang Lowongan", desc: "Tentukan posisi, tanggal, jumlah worker, dan budget.", icon: Building2 },
+    { step: "3", title: "Pilih Worker", desc: "Lihat reputasi dan histori pekerja sebelum memilih.", icon: Search },
+    { step: "4", title: "Konfirmasi & Pantau", desc: "Worker check-in via QR code di lokasi.", icon: CheckCircle2 },
+    { step: "5", title: "Pembayaran Otomatis", desc: "Dana ditransfer otomatis setelah shift selesai.", icon: Wallet }
   ];
 
-  const pekerjaaSteps = [
-    { step: "1", title: "Create Profile", desc: "Upload skill, foto, & verifikasi KYC.", icon: Users },
-    { step: "2", title: "Browse Jobs", desc: "Filter posisi, area, & ketersediaan.", icon: Search },
-    { step: "3", title: "1-Tap Apply", desc: "Satu klik apply, notif real-time.", icon: CheckCircle2 },
-    { step: "4", title: "Check-in", desc: "Scan QR di lokasi untuk absen.", icon: Clock },
-    { step: "5", title: "Get Paid", desc: "Instant ke wallet, withdraw kapan saja.", icon: Wallet }
+  const pekerjaSteps = [
+    { step: "1", title: "Buat Profil", desc: "Unggah informasi dasar, foto, dan mulai verifikasi.", icon: Users },
+    { step: "2", title: "Jelajahi Lowongan", desc: "Filter berdasarkan posisi, area, dan ketersediaan.", icon: Search },
+    { step: "3", title: "Lamar Sekali Klik", desc: "Tidak perlu kirim pesan atau hubungi calo.", icon: CheckCircle2 },
+    { step: "4", title: "Check-in di Lokasi", desc: "Scan QR code untuk konfirmasi kehadiran.", icon: Clock },
+    { step: "5", title: "Dana Masuk Langsung", desc: "Pembayaran ditransfer ke wallet setelah shift.", icon: Wallet }
   ];
 
-  const steps = activeTab === "bisnis" ? bisniSteps : pekerjaaSteps;
+  const steps = activeTab === "bisnis" ? bisnisSteps : pekerjaSteps;
 
   return (
     <div className="w-full">
@@ -157,7 +155,7 @@ function HowItWorksTabs() {
                 >
                   <item.icon className="w-7 h-7" />
                 </motion.div>
-                <div className="font-display text-white/60 text-xs font-bold mb-3 tracking-widest">STEP 0{item.step}</div>
+                <div className="font-display text-white/60 text-xs font-bold mb-3 tracking-widest">LANGKAH 0{item.step}</div>
                 <h3 className="font-sub font-bold text-xl mb-3 text-white">{item.title}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -165,54 +163,6 @@ function HowItWorksTabs() {
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
-  );
-}
-
-function CountUp({ end, label, suffix = "" }: { end: number, label: string, suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      let start = 0;
-      const duration = 2000;
-      const increment = end / (duration / 16);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
-      return () => clearInterval(timer);
-    }
-  }, [isVisible, end]);
-
-  return (
-    <div ref={ref} className="flex flex-col">
-      <span className="font-display text-5xl md:text-7xl font-bold text-primary">
-        {count}{suffix}
-      </span>
-      <span className="font-sub text-muted-foreground mt-2 uppercase tracking-widest text-sm">
-        {label}
-      </span>
     </div>
   );
 }
@@ -237,7 +187,6 @@ export default function Home() {
   const y1 = useTransform(smoothProgress, [0, 1], [0, 200]);
   const y2 = useTransform(smoothProgress, [0, 1], [0, -100]);
   const opacity = useTransform(smoothProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(smoothProgress, [0, 0.2], [1, 0.95]);
 
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({
@@ -248,7 +197,6 @@ export default function Home() {
   const heroBgY = useTransform(heroScroll, [0, 1], ["0%", "30%"]);
   const heroTextY = useTransform(heroScroll, [0, 1], ["0%", isMobile ? "10%" : "50%"]);
 
-  // Localized parallax for image grid items - reduced on mobile to prevent overlap
   const p1 = useTransform(heroScroll, [0, 1], [0, isMobile ? -20 : -60]);
   const p2 = useTransform(heroScroll, [0, 1], [0, isMobile ? 15 : 40]);
   const p3 = useTransform(heroScroll, [0, 1], [0, isMobile ? -10 : -30]);
@@ -267,9 +215,10 @@ export default function Home() {
 
       <Navbar />
 
-      {/* Hero Section */}
+      {/* ============================================================ */}
+      {/* HERO SECTION */}
+      {/* ============================================================ */}
       <section ref={heroRef} className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-background">
-        {/* Decorative Background */}
         <motion.div
           style={{ y: heroBgY }}
           className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0"
@@ -292,88 +241,60 @@ export default function Home() {
               <motion.div variants={fadeUp} className="mb-4 md:mb-6 flex items-center gap-4">
                 <span className="h-[2px] w-8 md:w-12 bg-secondary block"></span>
                 <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-xs md:text-sm">
-                  Community-First Platform
+                  Platform Komunitas Tenaga Kerja Harian
                 </span>
               </motion.div>
 
-              <motion.h1
-                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance"
-              >
+              <motion.h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance">
                 <ScrubText
-                  text="Temukan Pekerja Harian Profesional di Bali."
+                  text="Temukan Pekerja Harian Terpercaya, Tanpa Perantara."
                   variant="reveal"
                 />
-                <motion.span
-                  variants={charVariants}
-                  className="text-secondary italic font-serif font-light block mt-2"
-                >
-                  Hari Ini.
-                </motion.span>
               </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-4 md:mb-6 text-balance max-w-lg"
+              >
+                Banyak bisnis merekrut daily worker melalui jaringan informal seperti calo atau grup WhatsApp. Keterbatasan sistem ini: worker yang tidak terhubung sulit mendapat pekerjaan, dan bisnis memiliki sedikit informasi tentang rekam jejak calon worker.
+              </motion.p>
 
               <motion.p
                 variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
-                Platform yang menghubungkan hotel, villa & restoran dengan pekerja harian terpercaya. Rate Bali adil, reliability score transparan, 100% legal sesuai PP 35/2021.
+                Daily Worker Hub menyediakan alternatif yang terstruktur — di mana pekerja dan bisnis terhubung secara langsung dengan sistem verifikasi reputasi dan perlindungan yang terstruktur.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
-                  <Button
-                    size="lg"
-                    asChild
-                    className="w-full sm:w-auto"
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
-                    >
-                      <span>🏢 Daftar (Bisnis)</span>
-                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </motion.button>
+                  <Button size="lg" asChild className="w-full sm:w-auto">
+                    <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
+                      >
+                        <span>Pasang Lowongan</span>
+                        <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </motion.button>
+                    </a>
                   </Button>
                 </Magnet>
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    asChild
-                    className="w-full sm:w-auto"
-                  >
-                    <motion.button
-                      whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
-                      whileTap={{ scale: 0.98 }}
-                      className="border-border text-foreground rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
-                    >
-                      <span>👷 Profil (Pekerja)</span>
-                      <ArrowUpRight className="w-5 h-5 transition-all" />
-                    </motion.button>
+                  <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
+                    <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
+                      <motion.button
+                        whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
+                        whileTap={{ scale: 0.98 }}
+                        className="border-border text-foreground rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
+                      >
+                        <span>Bergabung sebagai Worker</span>
+                        <ArrowUpRight className="w-5 h-5 transition-all" />
+                      </motion.button>
+                    </a>
                   </Button>
                 </Magnet>
-              </motion.div>
-
-              <motion.div variants={fadeUp} className="flex flex-row gap-4 sm:gap-8 items-center border-t border-border pt-6 md:pt-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent-foreground shrink-0">
-                    <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-foreground text-xl sm:text-2xl">50+</div>
-                    <div className="text-muted-foreground text-[10px] sm:text-xs uppercase tracking-wider">Bisnis Bergabung</div>
-                  </div>
-                </div>
-                <div className="w-px h-10 bg-border hidden sm:block"></div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary shrink-0">
-                    <Users className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-foreground text-xl sm:text-2xl">500+</div>
-                    <div className="text-muted-foreground text-[10px] sm:text-xs uppercase tracking-wider">Pekerja Aktif</div>
-                  </div>
-                </div>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -394,7 +315,7 @@ export default function Home() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[160px] sm:h-[200px] md:h-[300px] shadow-2xl relative group"
                 >
-                  <img src={actionImg} alt="Hotel Business" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={actionImg} alt="Bisnis Hospitality" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
                 <motion.div
                   style={{ y: p2 }}
@@ -403,7 +324,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src={heroBg} alt="Hospitality Scene" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={heroBg} alt="Pekerja Harian" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
               </div>
 
@@ -416,7 +337,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src={actionImg} alt="Worker Context" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                  <img src={actionImg} alt="Tim Kerja" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
                 <motion.div
                   style={{ y: p4 }}
@@ -429,8 +350,7 @@ export default function Home() {
                     <Star className="w-4 h-4 md:w-6 md:h-6 fill-current" />
                   </div>
                   <div>
-                    <h3 className="font-serif italic text-sm sm:text-lg md:text-2xl text-foreground mb-1 md:mb-2 leading-snug">"Quality of service starts with quality of people."</h3>
-                    <p className="font-sub text-[9px] md:text-sm text-muted-foreground uppercase tracking-widest">— The Bali Way</p>
+                    <h3 className="font-serif italic text-sm sm:text-lg md:text-2xl text-foreground mb-1 md:mb-2 leading-snug">"Kualitas layanan dimulai dari kualitas orang."</h3>
                   </div>
                 </motion.div>
               </div>
@@ -439,17 +359,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Value Proposition Section */}
+      {/* ============================================================ */}
+      {/* VALUE PROPOSITION SECTION */}
+      {/* ============================================================ */}
       <section className="py-24 md:py-32 px-4 md:px-8 relative z-10 -mt-20">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
               Bukan Sekadar Marketplace.<br />
-              <span className="font-serif italic text-secondary font-light">Ini Ekosistem.</span>
+              <span className="font-serif italic text-secondary font-light">Ini Komunitas.</span>
             </h2>
+            <p className="font-sans text-lg text-muted-foreground max-w-2xl mx-auto">
+              Platform yang menghubungkan pekerja dan bisnis — dengan perlindungan, transparansi, dan suara yang didengar.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: Akses Terbuka */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -464,14 +390,15 @@ export default function Home() {
                 initial={false}
               />
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
-                <Star className="w-8 h-8" />
+                <Users className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Reliability Score™</h3>
+              <h3 className="font-display text-2xl font-bold text-primary mb-4">Akses Tanpa Perantara</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                Score 1-5 berdasarkan kehadiran & ketepatan waktu. Lihat track record asli, jangan sekadar menebak.
+                Tidak perlu mengenal calo atau bergabung dengan grup tertentu untuk mendapatkan pekerjaan harian. Daftar, verifikasi, dan mulai ambil shift — semuanya melalui satu platform.
               </p>
             </motion.div>
 
+            {/* Card 2: Protection Pool */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -488,12 +415,13 @@ export default function Home() {
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
                 <ShieldCheck className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Compliance Guard™</h3>
+              <h3 className="font-display text-2xl font-bold text-primary mb-4">Protection Pool</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                Proteksi otomatis PP 35/2021. Tidak ada risiko pelanggaran limit 21 hari dengan sistem tracking pintar kami.
+                1% dari setiap transaksi dialokasikan ke Protection Pool — dana yang dirancang untuk melindungi worker ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
               </p>
             </motion.div>
 
+            {/* Card 3: Reputasi & Partisipasi */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -508,18 +436,20 @@ export default function Home() {
                 initial={false}
               />
               <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-secondary mb-8">
-                <Wallet className="w-8 h-8" />
+                <MessageCircle className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Rate Bali Adil</h3>
+              <h3 className="font-display text-2xl font-bold text-primary mb-4">Reputasi & Partisipasi</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                Upah terstandarisasi berbasis UMK. Pekerja mendapatkan bayaran fair, bisnis memiliki kejelasan budget.
+                Setiap worker memiliki skor kepercayaan yang dibangun berdasarkan umpan balik dari bisnis. Sebagai anggota komunitas, worker dan bisnis dapat memberikan masukan dan voting untuk pengembangan fitur platform.
               </p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* For Businesses (Demand Side) */}
+      {/* ============================================================ */}
+      {/* SIDE INCOME SECTION */}
+      {/* ============================================================ */}
       <section className="py-24 md:py-32 px-4 md:px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 md:gap-24">
           <div className="w-full lg:w-1/2">
@@ -529,85 +459,70 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <img src={actionImg} alt="Hotel Management" className="w-full h-full object-cover" />
+                <img src={workerPortrait} alt="Worker Fleksibel" className="w-full h-full object-cover object-top" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
-                    <div className="flex text-accent mb-3">
-                      <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calendar className="w-5 h-5 text-accent" />
+                      <span className="text-accent font-sub font-bold text-sm uppercase tracking-widest">Fleksibel</span>
                     </div>
-                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">"No-show rate turun drastis dari 30% ke 5%. Game changer untuk operasional kami."</p>
+                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">Ambil shift sesuai waktu luangmu. Tidak ada minimum jam kerja. Tidak ada kewajiban harian.</p>
                   </div>
-                  <p className="font-sub text-sm text-white/80 uppercase tracking-widest relative z-10 drop-shadow-md">— Hotel Manager, Ubud</p>
                 </div>
               </div>
             </motion.div>
           </div>
 
           <div className="w-full lg:w-1/2 flex flex-col items-start">
-            <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm mb-4">Untuk Bisnis</span>
+            <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm mb-4">Income Tambahan</span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 tracking-tight text-balance">
-              Stop No-Show.<br />
-              Start Reliability.
+              Penghasilan Tambahan<br />
+              <span className="text-secondary opacity-70">Tanpa Konflik.</span>
             </h2>
 
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Platform kami memfilter pekerja berdasarkan <strong className="text-primary">Reliability Score</strong> nyata.
-                Sistem otomatis menangani absensi via QR, pembayaran transparan, dan memastikan kepatuhan PP 35/2021 tanpa ribet.
+                Daily Worker Hub dirancang untuk mereka yang memiliki komitmen lain — pelajar, mahasiswa, pekerja paruh waktu, atau siapa pun yang ingin mendapatkan penghasilan tambahan tanpa harus terikat kontrak penuh waktu.
+              </p>
+              <p>
+                Ambil shift sesuai waktu luangmu. Tidak ada minimum jam kerja. Tidak ada kewajiban harian. Yang kamu butuhkan: smartphone, koneksi internet, dan kemauan untuk bekerja.
               </p>
             </div>
 
-            <div className="glass-card bg-primary/5 p-6 rounded-2xl mb-10 w-full flex items-center justify-between border-primary/10">
-              <div>
-                <p className="text-sm text-muted-foreground font-sub uppercase tracking-wider mb-1">Rata-rata Reliability Score</p>
-                <div className="flex items-center gap-4">
-                  <span className="font-display text-3xl text-primary font-bold line-through opacity-50">2.4</span>
-                  <ArrowRight className="text-secondary w-5 h-5" />
-                  <span className="font-display text-4xl text-primary font-bold">4.6<span className="text-lg text-muted-foreground">/5.0</span></span>
-                </div>
-              </div>
-              <TrendingUp className="text-secondary w-12 h-12 opacity-20" />
-            </div>
-
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
-              Daftar Gratis → Booking Hari Ini
+            <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
+              <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
+                Bergabung sebagai Worker <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* For Workers (Supply Side) */}
+      {/* ============================================================ */}
+      {/* FOR BUSINESSES SECTION */}
+      {/* ============================================================ */}
       <section className="py-24 md:py-32 px-4 md:px-8 bg-background overflow-hidden relative">
         <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16 md:gap-24">
           <div className="w-full lg:w-1/2 flex flex-col items-start pt-8 md:pt-0">
-            <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm mb-4">Untuk Pekerja</span>
+            <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-sm mb-4">Untuk Bisnis</span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 tracking-tight text-balance">
-              Kerja Fleksibel.<br />
-              <span className="text-secondary opacity-70">Income Stabil.</span><br />
-              Perlindungan Nyata.
+              Rekrut dengan<br />
+              <span className="text-secondary opacity-70">Kepercayaan.</span>
             </h2>
 
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Dapatkan pekerjaan dengan <strong className="text-primary">Rate Bali standar</strong> tanpa negosiasi alot.
-                Nikmati pencairan instan, review yang membangun reputasi Anda, dan perlindungan dari Community Fund.
+                Temukan pekerja harian dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
+              </p>
+              <p>
+                Absensi via QR code, pembayaran otomatis setelah shift selesai, dan monitoring kepatuhan regulasi yang terintegrasi. Semua dalam satu platform.
               </p>
             </div>
 
-            <div className="glass-card bg-white p-6 rounded-2xl mb-10 w-full flex items-center justify-between border-white">
-              <div>
-                <p className="text-sm text-muted-foreground font-sub uppercase tracking-wider mb-1">Rata-rata Pendapatan</p>
-                <div className="flex items-center gap-4">
-                  <span className="font-display text-2xl text-primary font-bold line-through opacity-50">Rp 3.2jt</span>
-                  <ArrowRight className="text-accent w-5 h-5" />
-                  <span className="font-display text-3xl text-primary font-bold text-accent">Rp 5.8jt<span className="text-sm text-muted-foreground">/bln</span></span>
-                </div>
-              </div>
-              <Wallet className="text-accent w-12 h-12 opacity-20" />
-            </div>
-
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary rounded-full px-8 h-14 text-base md:text-lg font-sub font-bold shadow-xl w-full sm:w-auto">
-              Daftar Gratis → Dapat Job Hari Ini
+            <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
+              <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+                Pasang Lowongan <ArrowRight className="w-5 h-5 ml-2" />
+              </a>
             </Button>
           </div>
 
@@ -618,15 +533,15 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <img src={workerPortrait} alt="Pekerja Harian Profesional" className="w-full h-full object-cover object-top" />
+                <img src={actionImg} alt="Manajemen Bisnis" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
-                    <div className="flex text-white mb-3">
-                      <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                    <div className="flex items-center gap-2 mb-3">
+                      <Building2 className="w-5 h-5 text-accent" />
+                      <span className="text-accent font-sub font-bold text-sm uppercase tracking-widest">Terstruktur</span>
                     </div>
-                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">"Dulu 2-3 job/week. Sekarang 20+ shift/bulan dengan rate yang jauh lebih tinggi dan pasti dibayar."</p>
+                    <p className="font-bold text-lg md:text-xl leading-snug drop-shadow-md">Rekrutmen yang terstruktur, pembayaran yang transparan, dan perlindungan regulasi yang otomatis.</p>
                   </div>
-                  <p className="font-sub text-sm text-white/80 uppercase tracking-widest relative z-10 drop-shadow-md">— Ayu, Housekeeper</p>
                 </div>
               </div>
             </motion.div>
@@ -634,11 +549,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interactive "How it Works" Tabs */}
+      {/* ============================================================ */}
+      {/* HOW IT WORKS SECTION */}
+      {/* ============================================================ */}
       <section id="how-it-works" className="py-24 md:py-32 bg-primary text-white relative pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay"></div>
 
-        {/* Ambient glow decorations */}
         <div className="absolute top-1/4 left-10 w-72 h-72 bg-white/5 rounded-full blur-[80px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] pointer-events-none" />
 
@@ -651,26 +567,28 @@ export default function Home() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">Cara Kerja</h2>
-            <p className="font-serif italic text-xl text-white/70">Seamless precision meets human connection.</p>
+            <p className="font-serif italic text-xl text-white/70">Proses yang sederhana, hasil yang terstruktur.</p>
           </motion.div>
 
           <HowItWorksTabs />
         </div>
       </section>
 
-      {/* Pricing / Transparency Section */}
-      <section className="py-24 md:py-32 px-4 md:px-8 bg-white relative">
+      {/* ============================================================ */}
+      {/* PRICING / TRANSPARENCY SECTION */}
+      {/* ============================================================ */}
+      <section id="pricing" className="py-24 md:py-32 px-4 md:px-8 bg-white relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-4">
-              Transparan.<br />Tidak Ada Hidden Fee.
+              Transparan.<br />Tidak Ada Biaya Tersembunyi.
             </h2>
             <p className="font-sans text-xl text-muted-foreground max-w-2xl mx-auto">
-              Fairness is built into our code.
+              Struktur biaya yang jelas untuk semua pihak.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Business Pricing */}
             <motion.div
               whileHover={{ y: -10, scale: 1.02 }}
@@ -681,7 +599,7 @@ export default function Home() {
               </h3>
               <ul className="space-y-4">
                 <li className="flex justify-between items-center border-b border-border pb-4">
-                  <span className="font-medium text-muted-foreground">Komisi per transaksi</span>
+                  <span className="font-medium text-muted-foreground">Biaya transaksi</span>
                   <span className="font-bold text-primary text-xl">6%</span>
                 </li>
                 <li className="flex justify-between items-center border-b border-border pb-4">
@@ -689,7 +607,7 @@ export default function Home() {
                   <span className="font-bold text-primary text-xl">Rp 0</span>
                 </li>
                 <li className="flex justify-between items-center pb-2">
-                  <span className="font-medium text-muted-foreground">Subscription / Hidden Cost</span>
+                  <span className="font-medium text-muted-foreground">Biaya langganan</span>
                   <span className="font-bold text-primary text-xl">Rp 0</span>
                 </li>
               </ul>
@@ -711,77 +629,27 @@ export default function Home() {
                 </li>
                 <li className="flex justify-between items-center border-b border-white/20 pb-4">
                   <div className="flex flex-col">
-                    <span className="font-medium text-white/80">Community Fund</span>
-                    <span className="text-xs text-white/50">Untuk alokasi BPJS & Asuransi</span>
+                    <span className="font-medium text-white/80">Protection Pool</span>
+                    <span className="text-xs text-white/50">Dana perlindungan untuk semua anggota</span>
                   </div>
-                  <span className="font-bold text-white text-xl">1-2%</span>
+                  <span className="font-bold text-white text-xl">1%</span>
                 </li>
                 <li className="flex justify-between items-center pb-2">
                   <div className="flex flex-col">
-                    <span className="font-medium text-white/80">Withdrawal fee</span>
-                    <span className="text-xs text-white/50">Gratis 1x/minggu</span>
+                    <span className="font-medium text-white/80">Pencairan dana</span>
+                    <span className="text-xs text-white/50">Transfer ke rekening bank</span>
                   </div>
-                  <span className="font-bold text-white text-xl">Rp 2.500 <span className="text-sm font-normal text-white/60">/instant</span></span>
+                  <span className="font-bold text-white text-xl">Rp 5.000 — 10.000</span>
                 </li>
               </ul>
             </motion.div>
           </div>
-
-          {/* Comparison Table */}
-          <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-xl">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-background/50">
-                  <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Feature</th>
-                  <th className="p-6 font-display font-bold text-xl text-primary border-b border-border bg-primary/5">Daily Worker Hub</th>
-                  <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Staffinc</th>
-                  <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">MyRobin</th>
-                  <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Manual / WA</th>
-                </tr>
-              </thead>
-              <tbody className="font-sans text-primary">
-                <tr>
-                  <td className="p-6 border-b border-border font-medium">Fokus Industri</td>
-                  <td className="p-6 border-b border-border bg-primary/5 font-bold text-secondary">Hospitality Bali</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">General (Retail/F&B)</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Blue Collar Umum</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Hospitality</td>
-                </tr>
-                <tr>
-                  <td className="p-6 border-b border-border font-medium">Reliability Score</td>
-                  <td className="p-6 border-b border-border bg-primary/5"><Check className="text-secondary w-6 h-6" /></td>
-                  <td className="p-6 border-b border-border text-muted-foreground">-</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">-</td>
-                  <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
-                </tr>
-                <tr>
-                  <td className="p-6 border-b border-border font-medium">Kepatuhan PP 35/2021</td>
-                  <td className="p-6 border-b border-border bg-primary/5 font-bold">Auto-Guard System</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Tersedia</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Tersedia</td>
-                  <td className="p-6 border-b border-border text-destructive">Risiko Tinggi</td>
-                </tr>
-                <tr>
-                  <td className="p-6 border-b border-border font-medium">Asuransi / BPJS</td>
-                  <td className="p-6 border-b border-border bg-primary/5 font-bold">Community Fund</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Via Agency</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Via Agency</td>
-                  <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
-                </tr>
-                <tr>
-                  <td className="p-6 border-b border-border font-medium">Rate Pekerja</td>
-                  <td className="p-6 border-b border-border bg-primary/5 font-bold">100% (Tanpa Potongan)</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">N/A</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">N/A</td>
-                  <td className="p-6 border-b border-border text-muted-foreground">Sering dinego</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ============================================================ */}
+      {/* COMMUNITY CTA SECTION */}
+      {/* ============================================================ */}
       <section className="py-32 px-4 md:px-8 relative z-20">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -790,29 +658,44 @@ export default function Home() {
             viewport={{ once: true }}
             className="bg-primary rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl"
           >
-            {/* Decorative BG */}
             <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-transparent to-transparent"></div>
 
+            <div className="flex justify-center mb-8 relative z-10">
+              <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center">
+                <Handshake className="w-10 h-10 text-accent" />
+              </div>
+            </div>
+
             <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-8 relative z-10 tracking-tight">
-              Mulai Bangun Tim <span className="text-accent italic font-serif font-light">Solid</span> Anda
+              Bangun Bersama Komunitas<br />
+              <span className="text-accent italic font-serif font-light">Tenaga Kerja Indonesia</span>
             </h2>
             <p className="font-sans text-xl text-white/80 mb-12 max-w-2xl mx-auto relative z-10">
-              Bergabung dengan ekosistem hospitality terbesar dan terpercaya di Bali.
+              Daily Worker Hub bukan sekadar platform — ini adalah komunitas di mana worker dan bisnis saling melindungi dan membangun standar kerja yang lebih baik. Bergabunglah di tahap awal. Suara dan partisipasi kamu akan membentuk bagaimana platform ini berkembang.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-              <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
-                <span className="flex items-center gap-2">🏢 Daftar Gratis (Bisnis)</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Button size="lg" asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
+                <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+                  <span className="flex items-center gap-2">Pasang Lowongan</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
-                👷 Buat Profil (Pekerja)
+              <Button size="lg" variant="outline" asChild className="border-accent text-accent hover:bg-accent/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
+                <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
+                  Bergabung sebagai Worker
+                </a>
               </Button>
             </div>
+            <p className="font-sub text-sm text-white/50 mt-8 relative z-10">
+              Forum diskusi, leaderboard, dan governance poll akan tersedia di community.dailyworkerhub.com
+            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ============================================================ */}
+      {/* FOOTER */}
+      {/* ============================================================ */}
       <footer className="bg-foreground text-white py-12 px-4 md:px-8 font-sans">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-t border-white/10 pt-8">
           <div className="flex items-center gap-2">
@@ -822,25 +705,28 @@ export default function Home() {
             </span>
           </div>
           <div className="flex gap-6 font-sub text-sm uppercase tracking-widest text-white/60">
-            <a href="#" className="hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+            <a href="#" className="hover:text-white transition-colors">Kebijakan Privasi</a>
+            <a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a>
+            <a href="https://community.dailyworkerhub.com" className="hover:text-white transition-colors">Komunitas</a>
+            <a href="#" className="hover:text-white transition-colors">Hubungi Kami</a>
           </div>
           <div className="text-white/50 text-sm">
-            © 2026 Daily Worker Hub. Built in Bali.
+            &copy; 2026 Daily Worker Hub
           </div>
         </div>
       </footer>
 
-      {/* Mobile Fixed CTA */}
+      {/* ============================================================ */}
+      {/* MOBILE FIXED CTA */}
+      {/* ============================================================ */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-xl border-t border-border z-50 flex gap-2">
-        <Button className="flex-1 bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-sub shadow-xl">
-          Untuk Bisnis
+        <Button asChild className="flex-1 bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-sub shadow-xl">
+          <a href="https://staging.dailyworkerhub.com/auth/register?role=business">Untuk Bisnis</a>
         </Button>
-        <Button variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
-          Untuk Pekerja
+        <Button asChild variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
+          <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">Untuk Pekerja</a>
         </Button>
       </div>
-    </main >
+    </main>
   );
 }
