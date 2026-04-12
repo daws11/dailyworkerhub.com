@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Magnet } from "@/components/animations/Magnet";
 import { ScrubText } from "@/components/animations/ScrubText";
 import { FloatingElements } from "@/components/animations/FloatingElements";
+import { LogoMarquee, StatsCounter, Testimonials, FAQ, ComparisonTable } from "@/components/sections";
 
 import heroBg from "@/assets/images/hero-bg.webp";
 import actionImg from "@/assets/images/hotel-action.webp";
@@ -347,9 +348,19 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* LOGO MARQUEE — social proof */}
+      {/* ============================================================ */}
+      <LogoMarquee />
+
+      {/* ============================================================ */}
+      {/* STATS COUNTER — traksi komunitas */}
+      {/* ============================================================ */}
+      <StatsCounter />
+
+      {/* ============================================================ */}
       {/* VALUE PROPOSITION SECTION */}
       {/* ============================================================ */}
-      <section className="py-24 md:py-32 px-4 md:px-8 relative z-10 -mt-20">
+      <section className="py-24 md:py-32 px-4 md:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
@@ -562,6 +573,11 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* TESTIMONIALS — suara komunitas */}
+      {/* ============================================================ */}
+      <Testimonials />
+
+      {/* ============================================================ */}
       {/* PRICING / TRANSPARENCY SECTION */}
       {/* ============================================================ */}
       <section id="pricing" className="py-24 md:py-32 px-4 md:px-8 bg-white relative">
@@ -614,115 +630,19 @@ export default function Home() {
                   <span className="font-medium text-white/80">Komisi potongan upah</span>
                   <span className="font-bold text-accent text-xl">0%</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-white/20 pb-4">
+                <li className="flex justify-between items-center pb-2">
                   <div className="flex flex-col">
                     <span className="font-medium text-white/80">Protection Pool</span>
                     <span className="text-xs text-white/50">Dana perlindungan untuk semua anggota</span>
                   </div>
                   <span className="font-bold text-white text-xl">1%</span>
                 </li>
-                <li className="flex justify-between items-center pb-2">
-                  <div className="flex flex-col">
-                    <span className="font-medium text-white/80">Pencairan dana</span>
-                    <span className="text-xs text-white/50">Transfer ke rekening bank</span>
-                  </div>
-                  <span className="font-bold text-white text-xl">Rp 5.000 — 10.000</span>
-                </li>
               </ul>
             </motion.div>
           </div>
 
           {/* Comparison Table */}
-          <div className="mt-20">
-            <h3 className="font-display text-2xl font-bold text-primary text-center mb-8">
-              Mengapa Daily Worker Hub?
-            </h3>
-            <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-xl">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-background/50">
-                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Fitur</th>
-                    <th className="p-6 font-display font-bold text-xl text-primary border-b border-border bg-primary/5">Daily Worker Hub</th>
-                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Staffinc</th>
-                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">MyRobin</th>
-                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Sistem Calo / WA</th>
-                  </tr>
-                </thead>
-                <tbody className="font-sans text-primary">
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Akses terbuka — siapa pun bisa daftar tanpa perantara</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Tanpa komisi platform — 1% hanya untuk Protection Pool komunitas</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Protection Pool komunitas (dana darurat anggota)</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Suara & partisipasi worker dalam kebijakan platform</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Transparansi upah publik sebelum apply (rate/jam terbuka)</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Payment escrow — dana dijamin hingga shift selesai</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Review dua arah worker ↔ bisnis, publik</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">QR check-in & verifikasi kehadiran real-time di lokasi</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Jaminan hak kerja otomatis sesuai aturan (upah minimum, lembur, jam istirahat)</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Fleksibel per-shift untuk side income (tanpa kontrak jangka panjang)</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><Check className="w-6 h-6 text-secondary" /></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ComparisonTable />
         </div>
       </section>
 
@@ -771,6 +691,11 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/* FAQ — menjawab keberatan terakhir sebelum footer */}
+      {/* ============================================================ */}
+      <FAQ />
 
       {/* ============================================================ */}
       {/* FOOTER */}

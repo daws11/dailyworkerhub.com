@@ -117,4 +117,18 @@
   .glass-card {
     @apply bg-white/40 backdrop-blur-md border border-white/20 shadow-lg;
   }
+
+  @keyframes marquee-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .animate-marquee-x {
+    animation: marquee-x 35s linear infinite;
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
 }
