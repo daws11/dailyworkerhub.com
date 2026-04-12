@@ -10,7 +10,7 @@ import { FloatingElements } from "@/components/animations/FloatingElements";
 
 import heroBg from "@/assets/images/hero-bg.webp";
 import actionImg from "@/assets/images/hotel-action.webp";
-import logoImg from "@/assets/images/logo-only-white.webp";
+import logoImg from "@/assets/images/logo-new.png";
 import workerPortrait from "@/assets/images/worker-portrait.webp";
 
 // Animation variants

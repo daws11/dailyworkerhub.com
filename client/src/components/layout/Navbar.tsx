@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Menu, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoImg from "@/assets/images/logo-only.webp";
+import logoImg from "@/assets/images/logo-new.png";
 
 export function Navbar() {
   return (
