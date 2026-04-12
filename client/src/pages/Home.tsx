@@ -241,13 +241,13 @@ export default function Home() {
               <motion.div variants={fadeUp} className="mb-4 md:mb-6 flex items-center gap-4">
                 <span className="h-[2px] w-8 md:w-12 bg-secondary block"></span>
                 <span className="font-sub uppercase tracking-[0.2em] text-secondary font-bold text-xs md:text-sm">
-                  Platform Komunitas Tenaga Kerja Harian
+                  Community First Platform
                 </span>
               </motion.div>
 
               <motion.h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance">
                 <ScrubText
-                  text="Temukan Pekerja Harian Terpercaya, Tanpa Perantara."
+                  text="Temukan Daily Worker Terpercaya, Tanpa Perantara."
                   variant="reveal"
                 />
               </motion.h1>
@@ -261,32 +261,26 @@ export default function Home() {
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
-                  <Button size="lg" asChild className="w-full sm:w-auto">
-                    <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
-                      >
-                        <span>Pasang Lowongan</span>
-                        <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      </motion.button>
-                    </a>
-                  </Button>
+                  <motion.a
+                    href="https://staging.dailyworkerhub.com/auth/register?role=business"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 md:px-10 h-14 text-sm md:text-base font-sub tracking-wide whitespace-nowrap shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
+                  >
+                    <span>Pasang Lowongan</span>
+                    <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </motion.a>
                 </Magnet>
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
-                  <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
-                    <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
-                      <motion.button
-                        whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
-                        whileTap={{ scale: 0.98 }}
-                        className="border-border text-foreground rounded-full px-10 h-14 text-base md:text-lg font-sub tracking-wide bg-transparent transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
-                      >
-                        <span>Bergabung sebagai Worker</span>
-                        <ArrowUpRight className="w-5 h-5 transition-all" />
-                      </motion.button>
-                    </a>
-                  </Button>
+                  <motion.a
+                    href="https://staging.dailyworkerhub.com/auth/register?role=worker"
+                    whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
+                    whileTap={{ scale: 0.98 }}
+                    className="border border-border text-foreground rounded-full px-8 md:px-10 h-14 text-sm md:text-base font-sub tracking-wide whitespace-nowrap bg-transparent hover:bg-foreground hover:text-white transition-colors flex items-center justify-center gap-3 w-full sm:w-auto"
+                  >
+                    <span>Bergabung sebagai Worker</span>
+                    <ArrowUpRight className="w-5 h-5 transition-all" />
+                  </motion.a>
                 </Magnet>
               </motion.div>
             </motion.div>
@@ -317,7 +311,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src={heroBg} alt="Pekerja Harian" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={heroBg} alt="Daily Worker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
               </div>
 
@@ -505,7 +499,7 @@ export default function Home() {
 
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Temukan pekerja harian dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
+                Temukan daily worker dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
               </p>
               <p>
                 Absensi via QR code, pembayaran otomatis setelah shift selesai, dan monitoring kepatuhan regulasi yang terintegrasi. Semua dalam satu platform.
@@ -656,63 +650,70 @@ export default function Home() {
                 </thead>
                 <tbody className="font-sans text-primary">
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Akses terbuka tanpa koneksi calo</td>
+                    <td className="p-6 border-b border-border font-medium">Akses terbuka — siapa pun bisa daftar tanpa perantara</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Komisi 0% untuk worker (100% wage)</td>
-                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
-                    <td className="p-6 border-b border-border"><Check className="w-6 h-6 text-secondary" /></td>
-                  </tr>
-                  <tr>
-                    <td className="p-6 border-b border-border font-medium">Protection pool untuk semua anggota</td>
+                    <td className="p-6 border-b border-border font-medium">Tanpa komisi platform — 1% hanya untuk Protection Pool komunitas</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Partisipasi suara untuk pengembangan platform</td>
+                    <td className="p-6 border-b border-border font-medium">Protection Pool komunitas (dana darurat anggota)</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Side income friendly (fleksibel, tanpa komitmen)</td>
+                    <td className="p-6 border-b border-border font-medium">Suara & partisipasi worker dalam kebijakan platform</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Payment escrow (dana aman sebelum shift selesai)</td>
+                    <td className="p-6 border-b border-border font-medium">Transparansi upah publik sebelum apply (rate/jam terbuka)</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">QR code attendance / check-in di lokasi</td>
+                    <td className="p-6 border-b border-border font-medium">Payment escrow — dana dijamin hingga shift selesai</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Monitoring kepatuhan regulasi otomatis (PP 35/2021)</td>
+                    <td className="p-6 border-b border-border font-medium">Review dua arah worker ↔ bisnis, publik</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                   </tr>
                   <tr>
-                    <td className="p-6 border-b border-border font-medium">Tanpa komitmen biaya bulanan</td>
+                    <td className="p-6 border-b border-border font-medium">QR check-in & verifikasi kehadiran real-time di lokasi</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Jaminan hak kerja otomatis sesuai aturan (upah minimum, lembur, jam istirahat)</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                    <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Fleksibel per-shift untuk side income (tanpa kontrak jangka panjang)</td>
                     <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
                     <td className="p-6 border-b border-border"><X className="w-6 h-6 text-destructive" /></td>
