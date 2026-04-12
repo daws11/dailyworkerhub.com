@@ -254,16 +254,9 @@ export default function Home() {
 
               <motion.p
                 variants={fadeUp}
-                className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-4 md:mb-6 text-balance max-w-lg"
-              >
-                Banyak bisnis merekrut daily worker melalui jaringan informal seperti calo atau grup WhatsApp. Keterbatasan sistem ini: worker yang tidak terhubung sulit mendapat pekerjaan, dan bisnis memiliki sedikit informasi tentang rekam jejak calon worker.
-              </motion.p>
-
-              <motion.p
-                variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
-                Daily Worker Hub menyediakan alternatif yang terstruktur — di mana pekerja dan bisnis terhubung secara langsung dengan sistem verifikasi reputasi dan perlindungan yang terstruktur.
+                Daily Worker Hub menghubungkan pekerja dan bisnis secara langsung — dengan sistem verifikasi reputasi, perlindungan via Protection Pool, dan transparansi untuk semua pihak.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
