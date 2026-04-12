@@ -637,6 +637,78 @@ export default function Home() {
               </ul>
             </motion.div>
           </div>
+
+          {/* Comparison Table */}
+          <div className="mt-20">
+            <h3 className="font-display text-2xl font-bold text-primary text-center mb-8">
+              Mengapa Daily Worker Hub?
+            </h3>
+            <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-xl">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-background/50">
+                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Fitur</th>
+                    <th className="p-6 font-display font-bold text-xl text-primary border-b border-border bg-primary/5">Daily Worker Hub</th>
+                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Platform Lain</th>
+                    <th className="p-6 font-sub font-bold text-muted-foreground border-b border-border">Sistem Calo / WA Group</th>
+                  </tr>
+                </thead>
+                <tbody className="font-sans text-primary">
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Akses terbuka tanpa koneksi calo</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Sistem verifikasi reputasi worker</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Protection pool untuk semua anggota</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Payment escrow (dana aman)</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">QR code attendance / check-in</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Transparansi biaya penuh</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Komitmen biaya bulanan</td>
+                    <td className="p-6 border-b border-border bg-primary/5 text-secondary">Tidak ada</td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Bisa ada</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                  <tr>
+                    <td className="p-6 border-b border-border font-medium">Partisipasi suara untuk pengembangan platform</td>
+                    <td className="p-6 border-b border-border bg-primary/5"><Check className="w-6 h-6 text-secondary" /></td>
+                    <td className="p-6 border-b border-border text-muted-foreground">Varies</td>
+                    <td className="p-6 border-b border-border text-destructive"><X className="w-6 h-6" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-muted-foreground text-center mt-4 font-sans">
+              * "Varies" berarti fitur ini tersedia di beberapa platform lain dengan spesifikasi yang berbeda-beda.
+            </p>
+          </div>
         </div>
       </section>
 
