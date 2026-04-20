@@ -28,6 +28,13 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-emerald-accent: var(--emerald-accent);
+  --color-emerald-primary: var(--emerald-primary);
+  --color-emerald-light: var(--emerald-light);
+  --color-emerald-dark: var(--emerald-dark);
+  --color-dark-primary: var(--dark-primary);
+  --color-dark-secondary: var(--dark-secondary);
+  --color-dark-tertiary: var(--dark-tertiary);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -41,29 +48,29 @@
   --background: hsl(0 0% 100%);
   /* Dark Text */
   --foreground: hsl(240 10% 10%);
-  
+
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(240 10% 10%);
-  
+
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(240 10% 10%);
-  
+
   /* Gojek/Grab Vibrant Green */
   --primary: hsl(135 100% 34%);
   --primary-foreground: hsl(0 0% 100%);
-  
+
   /* Dark Secondary */
   --secondary: hsl(240 5% 15%);
   --secondary-foreground: hsl(0 0% 100%);
-  
+
   /* Light Gray Muted */
   --muted: hsl(240 5% 96%);
   --muted-foreground: hsl(240 5% 40%);
-  
+
   /* Light Green Accent */
   --accent: hsl(135 20% 92%);
   --accent-foreground: hsl(135 100% 25%);
-  
+
   /* Destructive Red */
   --destructive: hsl(0 84% 60%);
   --destructive-foreground: hsl(0 0% 100%);
@@ -74,6 +81,55 @@
   --ring: hsl(135 100% 34%);
 
   --radius: 1rem;
+
+  /* Emerald Accent for community dark theme */
+  --emerald-accent: hsl(157 100% 50%);
+  --emerald-primary: hsl(160 84% 39%);
+  --emerald-light: hsl(162 88% 52%);
+  --emerald-dark: hsl(161 93% 31%);
+  --dark-primary: hsl(222 47% 11%);
+  --dark-secondary: hsl(222 47% 5%);
+  --dark-tertiary: hsl(217 33% 17%);
+}
+
+/* Dark Theme (Community Platform - PRD Section 7.1) */
+.dark {
+  --background: hsl(222 47% 5%);          /* slate-950 / Background Primary */
+  --foreground: hsl(210 40% 98%);        /* slate-50 / Text Primary */
+
+  --card: hsl(222 47% 11%);              /* slate-900 / Background Secondary */
+  --card-foreground: hsl(210 40% 98%);  /* slate-50 / Text Primary */
+
+  --popover: hsl(222 47% 11%);
+  --popover-foreground: hsl(210 40% 98%);
+
+  --primary: hsl(160 84% 39%);          /* emerald-500 / Primary Green */
+  --primary-foreground: hsl(0 0% 100%);
+
+  --secondary: hsl(217 33% 17%);         /* slate-800 / Background Tertiary */
+  --secondary-foreground: hsl(210 40% 98%);
+
+  --muted: hsl(217 33% 17%);            /* slate-800 */
+  --muted-foreground: hsl(215 20% 65%); /* slate-400 / Text Secondary */
+
+  --accent: hsl(160 84% 39%);
+  --accent-foreground: hsl(0 0% 100%);
+
+  --destructive: hsl(0 63% 60%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  --border: hsl(217 33% 17%);           /* slate-800 / Border */
+  --input: hsl(217 33% 17%);            /* slate-800 */
+  --ring: hsl(160 84% 39%);             /* emerald-500 / Border Focus */
+
+  /* Dark theme specific colors */
+  --emerald-accent: hsl(157 100% 50%);  /* #00FF94 - Neon accents */
+  --emerald-primary: hsl(160 84% 39%);  /* emerald-500 */
+  --emerald-light: hsl(162 88% 52%);    /* emerald-400 */
+  --emerald-dark: hsl(161 93% 31%);     /* emerald-600 */
+  --dark-primary: hsl(222 47% 5%);       /* slate-950 */
+  --dark-secondary: hsl(222 47% 11%);   /* slate-900 */
+  --dark-tertiary: hsl(217 33% 17%);    /* slate-800 */
 }
 
 @layer base {
@@ -96,12 +152,18 @@
   }
 }
 
+/* Dark theme base styles */
+.dark body {
+  background-color: var(--dark-primary);
+  color: var(--foreground);
+}
+
 /* Custom utilities for the specific design requests */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
   }
@@ -109,13 +171,60 @@
   .clip-diagonal {
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
   }
-  
+
   .clip-diagonal-reverse {
     clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
   }
 
   .glass-card {
     @apply bg-white/40 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+
+  .dark .glass-card {
+    @apply bg-slate-900/40 backdrop-blur-md border border-slate-700/20 shadow-lg;
+  }
+
+  /* Community dark theme glow effects */
+  .glow-green {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(0, 255, 148, 0.15);
+  }
+
+  /* Gradient text for dark theme */
+  .gradient-text {
+    @apply bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  /* Card hover effect for dark theme */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .dark .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  }
+
+  /* Grid pattern background */
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(30, 41, 59, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30, 41, 59, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+  }
+
+  /* Radial gradient background for hero section */
+  .bg-radial-green {
+    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
   }
 
   @keyframes marquee-x {
@@ -130,5 +239,20 @@
   .marquee-mask {
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  /* Page transition animations */
+  .page-transition {
+    animation: fadeIn 0.3s ease-out, slideUp 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 }
