@@ -38,6 +38,20 @@ interface CommentItemProps {
   isReply?: boolean;
 }
 
+// Depth-based indentation classes - flatline at level 4 (depth >= 3)
+const getDepthIndentClass = (depth: number): string => {
+  switch (depth) {
+    case 0:
+      return "ml-0";  // Top-level comment - no indent
+    case 1:
+      return "ml-8"; // Level 2 (first reply) - standard indent
+    case 2:
+      return "ml-12"; // Level 3 - deeper indent
+    default:
+      return "ml-16"; // Level 4+ - flatline at max depth
+  }
+};
+
 export function CommentItem({
   id,
   content,
@@ -197,7 +211,7 @@ export function CommentItem({
       </div>
 
       {replies && replies.length > 0 && (
-        <div className="ml-8 space-y-3">
+        <div className={`space-y-3 ${getDepthIndentClass(depth)}`}>
           {replies.map((reply) => (
             <CommentItem
               key={reply.id}

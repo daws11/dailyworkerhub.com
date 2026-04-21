@@ -22,6 +22,20 @@ interface Comment {
   replies?: Comment[];
 }
 
+// Depth-based indentation classes - flatline at level 4 (depth >= 3)
+const getDepthIndentClass = (depth: number): string => {
+  switch (depth) {
+    case 0:
+      return "ml-0";  // Top-level comment - no indent
+    case 1:
+      return "ml-8"; // Level 2 (first reply) - standard indent
+    case 2:
+      return "ml-12"; // Level 3 - deeper indent
+    default:
+      return "ml-16"; // Level 4+ - flatline at max depth
+  }
+};
+
 interface CommentSectionProps {
   discussionId: string;
   comments: Comment[];
@@ -129,7 +143,7 @@ export function CommentSection({
 
   // Render a comment with its replies
   const renderComment = useCallback(
-    (comment: Comment, isReply = false) => (
+    (comment: Comment, isReply = false, depth = 0) => (
       <div key={comment.id} className="space-y-4">
         {editingId === comment.id ? (
           // Edit mode
@@ -174,12 +188,13 @@ export function CommentSection({
             onLike={handleLike}
             onMarkSolution={onMarkSolution ? handleMarkSolution : undefined}
             isReply={isReply}
+            depth={depth}
           />
         )}
 
         {/* Reply form */}
         {replyingTo === comment.id && (
-          <div className="ml-8">
+          <div className={getDepthIndentClass(depth)}>
             <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3 text-sm text-slate-400">
                 <span>Membalas</span>
@@ -199,8 +214,8 @@ export function CommentSection({
 
         {/* Nested replies */}
         {comment.replies && comment.replies.length > 0 && (
-          <div className="ml-8 space-y-3">
-            {comment.replies.map((reply) => renderComment(reply, true))}
+          <div className={`space-y-3 ${getDepthIndentClass(depth)}`}>
+            {comment.replies.map((reply) => renderComment(reply, true, depth + 1))}
           </div>
         )}
       </div>
