@@ -140,6 +140,7 @@ export type Database = {
           author_id: string
           discussion_id: string
           parent_id: string | null
+          depth: number
           is_solution: boolean
           likes_count: number
           created_at: string
@@ -151,6 +152,7 @@ export type Database = {
           author_id: string
           discussion_id: string
           parent_id?: string | null
+          depth?: number
           is_solution?: boolean
           likes_count?: number
           created_at?: string
