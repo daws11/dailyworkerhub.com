@@ -2,22 +2,24 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Plus, Filter, Search, X, MessageSquare, Loader2 } from "lucide-react";
+import { Plus, Search, X, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
 import { FeedbackCard } from "@/components/feedback/FeedbackCard";
+import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/feedback/FeedbackFilters";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<FeedbackStatus>("all");
+  const [sortBy, setSortBy] = useState<FeedbackSortBy>("votes");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
 
   const { data: feedbackData, isLoading, error } = useFeedbackItems({
-    status: selectedStatus || undefined,
+    status: selectedStatus === "all" ? undefined : selectedStatus,
     category: selectedCategory || undefined,
-    sortBy: "votes",
+    sortBy,
   });
 
   const { data: statsData } = useFeedbackStats();
@@ -109,27 +111,18 @@ export default function FeedbackPage() {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
-              <Filter className="w-4 h-4" />
-              Filter:
-            </div>
-            <select
-              value={selectedStatus || ""}
-              onChange={(e) => setSelectedStatus(e.target.value || null)}
-              className="px-3 py-1.5 text-sm bg-slate-800 border border-slate-700 rounded-lg text-slate-300"
-            >
-              <option value="">Semua Status</option>
-              <option value="under_review">Under Review</option>
-              <option value="planned">Planned</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="declined">Declined</option>
-            </select>
+          <div className="flex flex-wrap gap-4 mb-8">
+            <FeedbackFilters
+              selectedStatus={selectedStatus}
+              onStatusChange={setSelectedStatus}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              className="flex-1"
+            />
             <select
               value={selectedCategory || ""}
               onChange={(e) => setSelectedCategory(e.target.value || null)}
-              className="px-3 py-1.5 text-sm bg-slate-800 border border-slate-700 rounded-lg text-slate-300"
+              className="px-3 py-2 text-sm bg-slate-900 border border-slate-800 rounded-lg text-slate-300"
             >
               <option value="">Semua Kategori</option>
               <option value="feature">Feature</option>
