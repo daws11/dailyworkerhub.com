@@ -1,133 +1,136 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { ArrowUp, Plus, Clock, Filter, Search, X, MessageSquare } from "lucide-react";
+import { Plus, Search, X, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-
-interface FeedbackItem {
-  id: string;
-  title: string;
-  description: string;
-  author: {
-    username: string;
-    avatar_url: string | null;
-  };
-  category: "feature" | "bug" | "improvement";
-  status: "under_review" | "planned" | "in_progress" | "completed" | "declined";
-  votes_count: number;
-  comments_count: number;
-  created_at: string;
-}
-
-const mockFeedback: FeedbackItem[] = [
-  {
-    id: "1",
-    title: "Fitur notifikasi push untuk update lowongan baru",
-    description: "Biar bisa dapat notifikasi langsung saat ada lowongan baru yang match dengan skill dan lokasi kita. Saat ini harus check manual terus.",
-    author: { username: "budi_santoso", avatar_url: null },
-    category: "feature",
-    status: "planned",
-    votes_count: 234,
-    comments_count: 45,
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "2",
-    title: "Tombol 'Copy' untuk nomor WhatsApp employer",
-    description: "Repot kalau mau copy nomor employer harus select manual. Tambahkan button copy yang appear saat hover.",
-    author: { username: "siti_rahmah", avatar_url: null },
-    category: "improvement",
-    status: "in_progress",
-    votes_count: 189,
-    comments_count: 23,
-    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "3",
-    title: "Error saat upload foto profil",
-    description: "Setiap kali upload foto profil selalu failed. Sudah coba berbagai format dan ukuran.",
-    author: { username: "joko_wibowo", avatar_url: null },
-    category: "bug",
-    status: "under_review",
-    votes_count: 156,
-    comments_count: 34,
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "4",
-    title: "Dark mode untuk halaman community",
-    description: "Matanya lelah kalau baca di bright mode. Please add dark mode!",
-    author: { username: "rina_melati", avatar_url: null },
-    category: "feature",
-    status: "under_review",
-    votes_count: 345,
-    comments_count: 67,
-    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "5",
-    title: "Tambahkan filter bahasa untuk lowongan",
-    description: "Some employers post in English. Would be nice to filter by language requirement.",
-    author: { username: "robert_tanaka", avatar_url: null },
-    category: "improvement",
-    status: "under_review",
-    votes_count: 98,
-    comments_count: 12,
-    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "6",
-    title: "Integrasi dengan Gojek/Grab untuk tracking",
-    description: " Biar bisa track pekerjaan langsung dari apps Gojek/Grab yang sudah familiar.",
-    author: { username: "dewi_lestari", avatar_url: null },
-    category: "feature",
-    status: "declined",
-    votes_count: 234,
-    comments_count: 89,
-    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-];
-
-const statusConfig = {
-  under_review: { label: "Under Review", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
-  planned: { label: "Planned", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-  in_progress: { label: "In Progress", color: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
-  completed: { label: "Completed", color: "bg-green-500/10 text-green-400 border-green-500/20" },
-  declined: { label: "Declined", color: "bg-red-500/10 text-red-400 border-red-500/20" },
-};
-
-const categoryConfig = {
-  feature: { label: "Feature", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
-  bug: { label: "Bug", color: "bg-red-500/10 text-red-400 border-red-500/20" },
-  improvement: { label: "Improvement", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-};
+import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
+import { useToggleVote } from "@/lib/feedback/mutation-hooks";
+import { FeedbackCard } from "@/components/feedback/FeedbackCard";
+import { FeedbackForm } from "@/components/feedback/FeedbackForm";
+import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/feedback/FeedbackFilters";
+import { useCurrentUser } from "@/lib/auth/hooks";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<FeedbackStatus>("all");
+  const [sortBy, setSortBy] = useState<FeedbackSortBy>("votes");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
+  const [votesOptimistic, setVotesOptimistic] = useState<Record<string, number>>({});
+  const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
+  const [feedbackStatuses, setFeedbackStatuses] = useState<Record<string, string>>({});
+  const [userVotesLoaded, setUserVotesLoaded] = useState(false);
 
-  const filteredFeedback = mockFeedback.filter((f) => {
-    if (selectedStatus && f.status !== selectedStatus) return false;
-    if (selectedCategory && f.category !== selectedCategory) return false;
-    if (searchQuery && !f.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-    return true;
+  const { user, isAdmin } = useCurrentUser();
+  const toggleVoteMutation = useToggleVote();
+
+  // Fetch user's votes on mount or user change
+  useEffect(() => {
+    async function fetchUserVotes() {
+      if (!user) {
+        setVotedItems(new Set());
+        setUserVotesLoaded(true);
+        return;
+      }
+
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('votes')
+        .select('target_id')
+        .eq('user_id', user.id)
+        .eq('target_type', 'feedback');
+
+      if (!error && data) {
+        const typedData = data as { target_id: string }[];
+        const votedIds = new Set(typedData.map((v) => v.target_id));
+        setVotedItems(votedIds);
+      }
+      setUserVotesLoaded(true);
+    }
+
+    fetchUserVotes();
+  }, [user]);
+
+  const { data: feedbackData, isLoading, error } = useFeedbackItems({
+    status: selectedStatus === "all" ? undefined : selectedStatus,
+    category: (selectedCategory || undefined) as "feature" | "bug" | "improvement" | undefined,
+    sortBy,
   });
 
-  const handleVote = (id: string) => {
+  const { data: statsData } = useFeedbackStats();
+
+  const feedbackList = feedbackData?.data ?? [];
+
+  const filteredFeedback = useMemo(() => {
+    if (!searchQuery) return feedbackList;
+    return feedbackList.filter((f) =>
+      f.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [feedbackList, searchQuery]);
+
+  const handleVote = (id: string, currentVotesCount: number) => {
+    if (!user) {
+      toast.error("Please sign in to vote");
+      return;
+    }
+
+    const isCurrentlyVoted = votedItems.has(id);
+    const voteDelta = isCurrentlyVoted ? -1 : 1;
+    const newVotesCount = (votesOptimistic[id] ?? currentVotesCount) + voteDelta;
+
+    // Optimistic update - immediately update UI
+    setVotesOptimistic((prev) => ({ ...prev, [id]: newVotesCount }));
     setVotedItems((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(id)) {
+      if (isCurrentlyVoted) {
         newSet.delete(id);
       } else {
         newSet.add(id);
       }
       return newSet;
     });
+
+    // Call mutation
+    toggleVoteMutation.mutate(
+      {
+        user_id: user.id,
+        target_id: id,
+        value: 1,
+      },
+      {
+        onError: (err) => {
+          // Revert optimistic update on error
+          setVotesOptimistic((prev) => {
+            const newOptimistic = { ...prev };
+            delete newOptimistic[id];
+            return newOptimistic;
+          });
+          setVotedItems((prev) => {
+            const newSet = new Set(prev);
+            if (isCurrentlyVoted) {
+              // If we un-voted, add back
+              newSet.add(id);
+            } else {
+              // If we voted, remove
+              newSet.delete(id);
+            }
+            return newSet;
+          });
+          toast.error(err.message || "Failed to vote");
+        },
+      }
+    );
+  };
+
+  const handleStatusChange = (id: string, newStatus: string) => {
+    setFeedbackStatuses((prev) => ({
+      ...prev,
+      [id]: newStatus,
+    }));
   };
 
   return (
@@ -189,34 +192,31 @@ export default function FeedbackPage() {
                 </button>
               )}
             </div>
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-              <Plus className="w-4 h-4 mr-2" />
-              Kirim Feedback
-            </Button>
+            <FeedbackForm
+              open={isFeedbackFormOpen}
+              onOpenChange={setIsFeedbackFormOpen}
+              trigger={
+                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Kirim Feedback
+                </Button>
+              }
+            />
           </div>
 
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
-              <Filter className="w-4 h-4" />
-              Filter:
-            </div>
-            <select
-              value={selectedStatus || ""}
-              onChange={(e) => setSelectedStatus(e.target.value || null)}
-              className="px-3 py-1.5 text-sm bg-slate-800 border border-slate-700 rounded-lg text-slate-300"
-            >
-              <option value="">Semua Status</option>
-              <option value="under_review">Under Review</option>
-              <option value="planned">Planned</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="declined">Declined</option>
-            </select>
+          <div className="flex flex-wrap gap-4 mb-8">
+            <FeedbackFilters
+              selectedStatus={selectedStatus}
+              onStatusChange={setSelectedStatus}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              className="flex-1"
+            />
             <select
               value={selectedCategory || ""}
               onChange={(e) => setSelectedCategory(e.target.value || null)}
-              className="px-3 py-1.5 text-sm bg-slate-800 border border-slate-700 rounded-lg text-slate-300"
+              className="px-3 py-2 text-sm bg-slate-900 border border-slate-800 rounded-lg text-slate-300"
             >
               <option value="">Semua Kategori</option>
               <option value="feature">Feature</option>
@@ -226,89 +226,84 @@ export default function FeedbackPage() {
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-6 mb-8 p-4 bg-slate-900 border border-slate-800 rounded-xl">
-            {[
-              { label: "Total Feedback", value: mockFeedback.length },
-              { label: "Under Review", value: mockFeedback.filter((f) => f.status === "under_review").length },
-              { label: "Planned", value: mockFeedback.filter((f) => f.status === "planned").length },
-              { label: "Completed", value: mockFeedback.filter((f) => f.status === "completed").length },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">{stat.value}</div>
-                <div className="text-xs text-slate-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          {statsData?.data && (
+            <div className="flex flex-wrap gap-6 mb-8 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+              {[
+                { label: "Total Feedback", value: statsData.data.total },
+                { label: "Under Review", value: statsData.data.under_review },
+                { label: "Planned", value: statsData.data.planned },
+                { label: "Completed", value: statsData.data.completed },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="text-2xl font-bold text-emerald-400">{stat.value}</div>
+                  <div className="text-xs text-slate-500">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Feedback List */}
           <div className="space-y-4">
-            {filteredFeedback.map((item) => (
-              <div
-                key={item.id}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Vote */}
-                  <div className="flex flex-col items-center">
-                    <button
-                      onClick={() => handleVote(item.id)}
-                      className={`p-2 rounded-lg transition-colors ${
-                        votedItems.has(item.id)
-                          ? "bg-emerald-500/20 text-emerald-400"
-                          : "bg-slate-800 text-slate-400 hover:text-emerald-400"
-                      }`}
-                    >
-                      <ArrowUp className="w-5 h-5" />
-                    </button>
-                    <span className="text-lg font-semibold text-slate-200 mt-1">
-                      {item.votes_count + (votedItems.has(item.id) ? 1 : 0)}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge className={categoryConfig[item.category].color}>
-                        {categoryConfig[item.category].label}
-                      </Badge>
-                      <Badge className={statusConfig[item.status].color}>
-                        {statusConfig[item.status].label}
-                      </Badge>
-                    </div>
-
-                    <Link
-                      href={`/community/feedback/${item.id}`}
-                      className="block hover:text-emerald-400 transition-colors"
-                    >
-                      <h3 className="text-lg font-semibold text-slate-50 mb-1">{item.title}</h3>
-                    </Link>
-                    <p className="text-sm text-slate-400 line-clamp-2 mb-3">{item.description}</p>
-
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
-                      <span>by {item.author.username}</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {new Date(item.created_at).toLocaleDateString("id-ID")}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MessageSquare className="w-3 h-3" />
-                        {item.comments_count} komentar
-                      </span>
-                    </div>
-                  </div>
-                </div>
+            {isLoading && (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+                <span className="ml-3 text-slate-400">Memuat feedback...</span>
               </div>
-            ))}
+            )}
 
-            {filteredFeedback.length === 0 && (
+            {error && (
+              <div className="text-center py-16">
+                <p className="text-red-400 mb-4">Gagal memuat feedback. Silakan coba lagi.</p>
+                <Button
+                  variant="outline"
+                  onClick={() => window.location.reload()}
+                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                >
+                  Muat Ulang
+                </Button>
+              </div>
+            )}
+
+            {!isLoading && !error && filteredFeedback.map((item) => {
+              const displayVotesCount = votesOptimistic[item.id] ?? item.votes_count;
+              return (
+              <FeedbackCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                author={{
+                  username: item.author?.username ?? "Unknown",
+                  avatar_url: item.author?.avatar_url ?? null,
+                }}
+                category={item.category as "feature" | "bug" | "improvement"}
+                status={(feedbackStatuses[item.id] as "under_review" | "planned" | "in_progress" | "completed" | "declined") || item.status}
+                votesCount={displayVotesCount}
+                commentsCount={(item as { comments_count?: number }).comments_count ?? 0}
+                createdAt={item.created_at}
+                isVoted={votedItems.has(item.id)}
+                onVote={() => handleVote(item.id, item.votes_count)}
+                isAdmin={isAdmin}
+                onStatusChange={(newStatus) => handleStatusChange(item.id, newStatus)}
+              />
+              );
+            })}
+
+            {!isLoading && !error && filteredFeedback.length === 0 && (
               <div className="text-center py-16">
                 <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada feedback</h3>
                 <p className="text-slate-500 mb-6">Jadilah yang pertama memberikan feedback</p>
-                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Kirim Feedback
-                </Button>
+                <FeedbackForm
+                  open={isFeedbackFormOpen}
+                  onOpenChange={setIsFeedbackFormOpen}
+                  trigger={
+                    <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Kirim Feedback
+                    </Button>
+                  }
+                />
               </div>
             )}
           </div>
