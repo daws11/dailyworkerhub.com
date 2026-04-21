@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
+import { useDiscussions } from "@/lib/discussions/hooks";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import {
@@ -15,140 +15,35 @@ import {
   Search,
   Filter,
   X,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface Discussion {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  author_id: string;
-  author: {
-    username: string;
-    full_name: string | null;
-    avatar_url: string | null;
-  };
-  category_id: string;
-  category: {
-    name: string;
-    slug: string;
-    color: string | null;
-  };
-  status: string;
-  likes_count: number;
-  comments_count: number;
-  view_count: number;
-  is_pinned: boolean;
-  is_featured: boolean;
-  created_at: string;
+type SortOption = "newest" | "popular" | "trending" | "votes";
+
+// Map UI sort option to API sort option
+function mapSortToApi(sort: SortOption): "newest" | "oldest" | "popular" | "active" {
+  switch (sort) {
+    case "popular":
+      return "popular"
+    case "trending":
+      return "active"
+    case "votes":
+      return "popular"
+    default:
+      return "newest"
+  }
 }
 
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  color: string | null;
-}
-
-const mockDiscussions: Discussion[] = [
-  {
-    id: "1",
-    slug: "berapa-seharusnya-gaji-minimum-untuk-driver-online",
-    title: "Berapa seharusnya gaji minimum untuk driver online di Jakarta?",
-    excerpt: "Berdasarkan pengalaman saya selama 3 tahun bekerja sebagai driver ojek online...",
-    author_id: "1",
-    author: { username: "budi_santoso", full_name: "Budi Santoso", avatar_url: null },
-    category_id: "1",
-    category: { name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#10B981" },
-    status: "open",
-    likes_count: 234,
-    comments_count: 89,
-    view_count: 1205,
-    is_pinned: true,
-    is_featured: true,
-    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "2",
-    slug: "share-pengalaman-pertama-kerja-remote",
-    title: "Share pengalaman pertama kerja remote - what to prepare?",
-    excerpt: "Akhirnya dapat kerja remote pertama saya! Berikut perjuangan saya...",
-    author_id: "2",
-    author: { username: "rina_melati", full_name: "Rina Melati", avatar_url: null },
-    category_id: "2",
-    category: { name: "Remote Work", slug: "remote-work", color: "#10B981" },
-    status: "open",
-    likes_count: 156,
-    comments_count: 45,
-    view_count: 890,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "3",
-    slug: "tips-menghadapi-interview-warehouse-supervisor",
-    title: "Tips menghadapi interview untuk posisi warehouse supervisor",
-    excerpt: "Beberapa minggu lalu saya berhasil interview untuk posisi ini...",
-    author_id: "3",
-    author: { username: "hendra_wijaya", full_name: "Hendra Wijaya", avatar_url: null },
-    category_id: "3",
-    category: { name: "Karier", slug: "karier", color: "#10B981" },
-    status: "open",
-    likes_count: 98,
-    comments_count: 23,
-    view_count: 456,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "4",
-    slug: "rekomendasi-platform-freelancer-terpercaya",
-    title: "Rekomendasi platform freelancer terpercaya di Indonesia?",
-    excerpt: "Baru mulai freelance dan bingung pilih platform yang aman...",
-    author_id: "4",
-    author: { username: "lisa_permata", full_name: "Lisa Permata", avatar_url: null },
-    category_id: "4",
-    category: { name: "Skill Development", slug: "skill-development", color: "#10B981" },
-    status: "open",
-    likes_count: 76,
-    comments_count: 34,
-    view_count: 321,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "5",
-    slug: "how-to-deal-dengan-client-yang-suka-ubah-scope",
-    title: "How to deal dengan client yang suka ubah scope terakhir menit?",
-    excerpt: "Ini masalah yang selalu terjadi di project saya...",
-    author_id: "5",
-    author: { username: "yoga_prasetyo", full_name: "Yoga Prasetyo", avatar_url: null },
-    category_id: "5",
-    category: { name: "Umum", slug: "umum", color: "#10B981" },
-    status: "open",
-    likes_count: 54,
-    comments_count: 21,
-    view_count: 234,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
-  },
-];
-
-const mockCategories: Category[] = [
+// Predefined categories for filter (in production, these would come from an API)
+const filterCategories = [
   { id: "1", name: "Karier", slug: "karier", color: "#10B981" },
   { id: "2", name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#10B981" },
   { id: "3", name: "Remote Work", slug: "remote-work", color: "#10B981" },
   { id: "4", name: "Skill Development", slug: "skill-development", color: "#10B981" },
   { id: "5", name: "Umum", slug: "umum", color: "#10B981" },
-];
-
-type SortOption = "newest" | "popular" | "trending" | "votes";
+]
 
 export default function DiscussionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -156,24 +51,14 @@ export default function DiscussionsPage() {
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
 
-  const supabase = createClient();
+  const { data, isLoading, error } = useDiscussions({
+    categorySlug: selectedCategory || undefined,
+    search: searchQuery || undefined,
+    sortBy: mapSortToApi(sortBy),
+    limit: 20,
+  });
 
-  const filteredDiscussions = mockDiscussions
-    .filter((d) => {
-      if (selectedCategory && d.category.slug !== selectedCategory) return false;
-      if (searchQuery && !d.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (a.is_pinned && !b.is_pinned) return -1;
-      if (!a.is_pinned && b.is_pinned) return 1;
-      if (sortBy === "popular") return b.likes_count - a.likes_count;
-      if (sortBy === "trending") return b.comments_count - a.comments_count;
-      if (sortBy === "votes") return b.likes_count - a.likes_count;
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    });
-
-  void supabase; // Supabase client for future real data
+  const discussions = data?.data ?? [];
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -307,7 +192,7 @@ export default function DiscussionsPage() {
               >
                 Semua
               </button>
-              {mockCategories.map((cat) => (
+              {filterCategories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.slug)}
@@ -325,7 +210,23 @@ export default function DiscussionsPage() {
 
           {/* Discussions List */}
           <div className="space-y-4">
-            {filteredDiscussions.map((discussion) => (
+            {isLoading && (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+              </div>
+            )}
+
+            {error && (
+              <div className="text-center py-16">
+                <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
+                  <MessageCircle className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-300 mb-2">Gagal memuat diskusi</h3>
+                <p className="text-slate-500 mb-6">{error.message}</p>
+              </div>
+            )}
+
+            {!isLoading && !error && discussions.map((discussion) => (
               <Link
                 key={discussion.id}
                 href={`/community/discussions/${discussion.slug}`}
@@ -346,12 +247,14 @@ export default function DiscussionsPage() {
                           Pinned
                         </span>
                       )}
-                      <span
-                        className="px-2 py-0.5 text-xs rounded-full"
-                        style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
-                      >
-                        {discussion.category.name}
-                      </span>
+                      {discussion.category && (
+                        <span
+                          className="px-2 py-0.5 text-xs rounded-full"
+                          style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
+                        >
+                          {discussion.category.name}
+                        </span>
+                      )}
                     </div>
 
                     <h3 className="text-lg font-semibold text-slate-50 mb-2 line-clamp-2 hover:text-emerald-400 transition-colors">
@@ -393,7 +296,7 @@ export default function DiscussionsPage() {
               </Link>
             ))}
 
-            {filteredDiscussions.length === 0 && (
+            {!isLoading && !error && discussions.length === 0 && (
               <div className="text-center py-16">
                 <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4">
                   <MessageCircle className="w-8 h-8 text-slate-500" />
