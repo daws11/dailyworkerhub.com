@@ -5,8 +5,6 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import {
-  ArrowUp,
-  ArrowDown,
   MessageCircle,
   Clock,
   Share2,
@@ -18,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { VoteButtonCompact } from "@/components/vote-button";
 
 interface Comment {
   id: string;
@@ -150,15 +149,12 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
 
 export default function DiscussionDetailPage() {
   const [replyContent, setReplyContent] = useState("");
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
 
   const discussion = mockDiscussion;
   const comments = mockComments;
   const totalComments = comments.reduce((acc, c) => acc + 1 + (c.replies?.length || 0), 0);
 
   const handleSubmitReply = () => {
-    console.log("Submit reply:", replyContent);
     setReplyContent("");
   };
 
@@ -259,31 +255,12 @@ export default function DiscussionDetailPage() {
 
               {/* Actions */}
               <div className="flex items-center gap-2 mt-8 pt-6 border-t border-slate-800">
-                <div className="flex items-center gap-1">
-                  <Button
-                    variant={liked ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => {
-                      setLiked(!liked);
-                      if (disliked) setDisliked(false);
-                    }}
-                    className={`${liked ? "bg-emerald-500 text-slate-950" : "border-slate-700 text-slate-400"}`}
-                  >
-                    <ArrowUp className="w-4 h-4 mr-1" />
-                    {discussion.likes_count + (liked ? 1 : 0)}
-                  </Button>
-                  <Button
-                    variant={disliked ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => {
-                      setDisliked(!disliked);
-                      if (liked) setLiked(false);
-                    }}
-                    className="border-slate-700 text-slate-400"
-                  >
-                    <ArrowDown className="w-4 h-4" />
-                  </Button>
-                </div>
+                <VoteButtonCompact
+                  targetType="discussion"
+                  targetId={discussion.id}
+                  authorId="user-1" // TODO: Get from auth context
+                  initialVotesCount={discussion.likes_count}
+                />
 
                 <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
                   <Bookmark className="w-4 h-4 mr-2" />
@@ -366,10 +343,12 @@ export default function DiscussionDetailPage() {
                         </div>
 
                         <div className="flex items-center gap-4 mt-3">
-                          <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors">
-                            <ArrowUp className="w-3 h-3" />
-                            {comment.likes_count}
-                          </button>
+                          <VoteButtonCompact
+                            targetType="comment"
+                            targetId={comment.id}
+                            authorId="user-1" // TODO: Get from auth context
+                            initialVotesCount={comment.likes_count}
+                          />
                           <button className="text-xs text-slate-500 hover:text-emerald-400 transition-colors">
                             Balas
                           </button>
@@ -409,10 +388,13 @@ export default function DiscussionDetailPage() {
                               </div>
 
                               <div className="flex items-center gap-4 mt-2">
-                                <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors">
-                                  <ArrowUp className="w-3 h-3" />
-                                  {reply.likes_count}
-                                </button>
+                                <VoteButtonCompact
+                                  targetType="comment"
+                                  targetId={reply.id}
+                                  authorId="user-1" // TODO: Get from auth context
+                                  initialVotesCount={reply.likes_count}
+                                  className="h-7 w-7"
+                                />
                               </div>
                             </div>
                           </div>
