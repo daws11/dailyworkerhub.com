@@ -15,9 +15,20 @@ import {
   Search,
   Filter,
   X,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Discussion {
   id: string;
@@ -155,8 +166,30 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
+  const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const supabase = createClient();
+
+  const handleDeleteClick = (e: React.MouseEvent, discussionId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDeleteDiscussionId(discussionId);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteDiscussionId) return;
+
+    setIsDeleting(true);
+    // Simulate delete action - replace with actual Supabase delete when ready
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setDeleteDiscussionId(null);
+    setIsDeleting(false);
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDiscussionId(null);
+  };
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -387,6 +420,15 @@ export default function DiscussionsPage() {
                         <TrendingUp className="w-3 h-3" />
                         {discussion.view_count} views
                       </span>
+
+                      <button
+                        onClick={(e) => handleDeleteClick(e, discussion.id)}
+                        className="flex items-center gap-1 text-slate-500 hover:text-red-400 transition-colors ml-auto"
+                        aria-label="Hapus diskusi"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>Hapus</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -407,6 +449,30 @@ export default function DiscussionsPage() {
               </div>
             )}
           </div>
+
+          {/* Delete Confirmation Dialog */}
+          <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hapus Diskusi?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tindakan ini tidak dapat dibatalkan. Diskusi yang dihapus tidak dapat dikembalikan.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={handleDeleteCancel} disabled={isDeleting}>
+                  Batal
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDeleteConfirm}
+                  disabled={isDeleting}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  {isDeleting ? "Menghapus..." : "Hapus"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </main>
     </div>
