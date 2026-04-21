@@ -24,6 +24,17 @@ import {
   Save,
   Send,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 
 interface Category {
@@ -55,6 +66,7 @@ export default function ArticleEditorPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [showPublishDialog, setShowPublishDialog] = useState(false);
 
   const supabase = createClient();
 
@@ -142,12 +154,11 @@ export default function ArticleEditorPage() {
       alert("Konten artikel tidak boleh kosong.");
       return;
     }
+    setShowPublishDialog(true);
+  }, [title, excerpt, categoryId, content]);
 
-    const confirmed = window.confirm(
-      "Apakah Anda yakin ingin mempublikasikan artikel ini? Setelah dipublikasikan, artikel akan visible untuk semua pembaca."
-    );
-    if (!confirmed) return;
-
+  const handleConfirmPublish = useCallback(async () => {
+    setShowPublishDialog(false);
     setIsPublishing(true);
     try {
       // Simulate publish - in production, this would save to Supabase and set status to published
@@ -160,7 +171,7 @@ export default function ArticleEditorPage() {
     } finally {
       setIsPublishing(false);
     }
-  }, [title, excerpt, categoryId, content]);
+  }, []);
 
   void supabase; // Supabase client for future real data
 
@@ -409,6 +420,38 @@ export default function ArticleEditorPage() {
               </Button>
             </div>
           </div>
+
+          {/* Publish Confirmation Dialog */}
+          <AlertDialog open={showPublishDialog} onOpenChange={setShowPublishDialog}>
+            <AlertDialogContent className="bg-slate-900 border-slate-800">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-50">Publikasikan Artikel?</AlertDialogTitle>
+                <AlertDialogDescription className="text-slate-400">
+                  Apakah Anda yakin ingin mempublikasikan artikel ini? Setelah dipublikasikan,
+                  artikel akan visible untuk semua pembaca dan tidak dapat dikembalikan ke status draft.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="border-slate-700 text-slate-300 hover:bg-slate-800">
+                  Batal
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleConfirmPublish}
+                  disabled={isPublishing}
+                  className="bg-emerald-500 text-slate-950 hover:bg-emerald-400"
+                >
+                  {isPublishing ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span className="ml-2">Mempublikasikan...</span>
+                    </>
+                  ) : (
+                    "Publikasikan"
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </main>
     </div>
