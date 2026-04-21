@@ -15,12 +15,10 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { parseMentions, type ParsedMention } from "@/lib/utils/comment-utils";
+import type { Database } from "@/lib/supabase/types";
 
-interface CommentAuthor {
-  username: string;
-  full_name: string | null;
-  avatar_url: string | null;
-}
+// Type alias for author - use Database Profile Row type for API compatibility
+type CommentAuthor = Database['public']['Tables']['profiles']['Row']
 
 interface CommentItemProps {
   id: string;
