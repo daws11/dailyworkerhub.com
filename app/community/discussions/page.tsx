@@ -148,7 +148,7 @@ const mockCategories: Category[] = [
   { id: "5", name: "Umum", slug: "umum", color: "#10B981" },
 ];
 
-type SortOption = "newest" | "popular" | "trending";
+type SortOption = "newest" | "popular" | "trending" | "votes";
 
 export default function DiscussionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -169,6 +169,7 @@ export default function DiscussionsPage() {
       if (!a.is_pinned && b.is_pinned) return 1;
       if (sortBy === "popular") return b.likes_count - a.likes_count;
       if (sortBy === "trending") return b.comments_count - a.comments_count;
+      if (sortBy === "votes") return b.likes_count - a.likes_count;
       return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
 
@@ -263,6 +264,15 @@ export default function DiscussionsPage() {
               >
                 <Flame className="w-4 h-4 mr-2" />
                 Trending
+              </Button>
+              <Button
+                variant={sortBy === "votes" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSortBy("votes")}
+                className={sortBy === "votes" ? "bg-emerald-500 text-slate-950" : "border-slate-700 text-slate-300"}
+              >
+                <ArrowUp className="w-4 h-4 mr-2" />
+                Votes
               </Button>
             </div>
 
