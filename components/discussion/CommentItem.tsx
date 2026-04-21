@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import Link from "next/link";
 import {
   ArrowUp,
   ArrowDown,
@@ -13,6 +14,7 @@ import {
   Reply,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { parseMentions, type ParsedMention } from "@/lib/utils/comment-utils";
 
 interface CommentAuthor {
   username: string;
@@ -92,6 +94,51 @@ export function CommentItem({
   const avatarSize = isReply ? "w-6 h-6" : "w-8 h-8";
   const fallbackSize = isReply ? "text-xs" : "text-sm";
 
+  /**
+   * Render comment content with @mentions as clickable links
+   * Uses parseMentions to find @username patterns and renders them as links
+   */
+  const renderContentWithMentions = (text: string) => {
+    const mentions = parseMentions(text);
+
+    if (mentions.length === 0) {
+      return <span>{text}</span>;
+    }
+
+    const elements: React.ReactNode[] = [];
+    let lastIndex = 0;
+
+    mentions.forEach((mention: ParsedMention, index: number) => {
+      // Add text before mention
+      if (mention.startIndex > lastIndex) {
+        elements.push(
+          <span key={`text-${index}`}>{text.slice(lastIndex, mention.startIndex)}</span>
+        );
+      }
+
+      // Add mention as link
+      elements.push(
+        <Link
+          key={`mention-${index}`}
+          href={`/profile/${mention.username}`}
+          className="text-emerald-400 hover:text-emerald-300 hover:underline"
+          onClick={(e) => e.stopPropagation()}
+        >
+          @{mention.username}
+        </Link>
+      );
+
+      lastIndex = mention.endIndex;
+    });
+
+    // Add remaining text after last mention
+    if (lastIndex < text.length) {
+      elements.push(<span key="text-end">{text.slice(lastIndex)}</span>);
+    }
+
+    return <>{elements}</>;
+  };
+
   return (
     <div className="space-y-4">
       <div
@@ -134,7 +181,7 @@ export function CommentItem({
             </div>
 
             <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-              {content}
+              {renderContentWithMentions(content)}
             </div>
 
             <div className="flex items-center gap-3 mt-3">
