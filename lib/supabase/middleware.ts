@@ -34,10 +34,16 @@ export async function updateSession(request: NextRequest) {
     '/app',
     '/community/admin',
     '/community/discussions/new',
-    '/community/discussions/*/edit'
   ]
+  // Wildcard patterns that need regex matching
+  const protectedWildcardPatterns = [
+    /^\/community\/discussions\/[^/]+\/edit$/,
+  ]
+
   const isProtectedPath = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
+  ) || protectedWildcardPatterns.some((pattern) =>
+    pattern.test(request.nextUrl.pathname)
   )
 
   if (isProtectedPath && !user) {
