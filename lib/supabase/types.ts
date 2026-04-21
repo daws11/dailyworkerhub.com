@@ -90,6 +90,7 @@ export type Database = {
           status: 'open' | 'closed' | 'solved'
           view_count: number
           likes_count: number
+          votes_count: number
           comments_count: number
           is_pinned: boolean
           is_featured: boolean
@@ -108,6 +109,7 @@ export type Database = {
           status?: 'open' | 'closed' | 'solved'
           view_count?: number
           likes_count?: number
+          votes_count?: number
           comments_count?: number
           is_pinned?: boolean
           is_featured?: boolean
@@ -125,6 +127,7 @@ export type Database = {
           status?: 'open' | 'closed' | 'solved'
           view_count?: number
           likes_count?: number
+          votes_count?: number
           comments_count?: number
           is_pinned?: boolean
           is_featured?: boolean
