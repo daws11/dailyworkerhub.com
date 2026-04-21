@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
 import { FeedbackCard } from "@/components/feedback/FeedbackCard";
+import { FeedbackForm } from "@/components/feedback/FeedbackForm";
 import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/feedback/FeedbackFilters";
 
 export default function FeedbackPage() {
@@ -15,6 +16,7 @@ export default function FeedbackPage() {
   const [sortBy, setSortBy] = useState<FeedbackSortBy>("votes");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
+  const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
 
   const { data: feedbackData, isLoading, error } = useFeedbackItems({
     status: selectedStatus === "all" ? undefined : selectedStatus,
@@ -104,10 +106,16 @@ export default function FeedbackPage() {
                 </button>
               )}
             </div>
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-              <Plus className="w-4 h-4 mr-2" />
-              Kirim Feedback
-            </Button>
+            <FeedbackForm
+              open={isFeedbackFormOpen}
+              onOpenChange={setIsFeedbackFormOpen}
+              trigger={
+                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Kirim Feedback
+                </Button>
+              }
+            />
           </div>
 
           {/* Filters */}
@@ -195,10 +203,16 @@ export default function FeedbackPage() {
                 <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada feedback</h3>
                 <p className="text-slate-500 mb-6">Jadilah yang pertama memberikan feedback</p>
-                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Kirim Feedback
-                </Button>
+                <FeedbackForm
+                  open={isFeedbackFormOpen}
+                  onOpenChange={setIsFeedbackFormOpen}
+                  trigger={
+                    <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Kirim Feedback
+                    </Button>
+                  }
+                />
               </div>
             )}
           </div>
