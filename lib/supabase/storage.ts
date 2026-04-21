@@ -48,11 +48,9 @@ export function isStorageConfigured(): boolean {
   )
 }
 
-/**
- * Validate file type
- */
+// Validate file type
 export function isValidFileType(type: string): boolean {
-  return UPLOAD_OPTIONS.ALLOWED_TYPES.includes(type)
+  return (UPLOAD_OPTIONS.ALLOWED_TYPES as readonly string[]).includes(type)
 }
 
 /**

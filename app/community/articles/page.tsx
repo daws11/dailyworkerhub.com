@@ -134,21 +134,34 @@ export default function ArticlesPage() {
 
       if (error) throw error;
 
-      const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => ({
-        id: item.id as string,
-        slug: item.slug as string,
-        title: item.title as string,
-        subtitle: item.subtitle as string | null,
-        excerpt: (item.excerpt as string) || "",
-        cover_image: item.cover_image as string | null,
-        read_time: item.read_time as number | null,
-        view_count: item.view_count as number,
-        likes_count: item.likes_count as number,
-        is_featured: item.is_featured as boolean,
-        published_at: item.published_at as string,
-        author: (item.author as Record<string, unknown>) || { username: "unknown", full_name: null, avatar_url: null },
-        category: (item.category as Record<string, unknown>) || { name: "Umum", slug: "umum", color: null },
-      }));
+      const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
+        const rawAuthor = item.author as Record<string, unknown> | null;
+        const rawCategory = item.category as Record<string, unknown> | null;
+
+        return {
+          id: item.id as string,
+          slug: item.slug as string,
+          title: item.title as string,
+          subtitle: item.subtitle as string | null,
+          excerpt: (item.excerpt as string) || "",
+          cover_image: item.cover_image as string | null,
+          read_time: item.read_time as number | null,
+          view_count: item.view_count as number,
+          likes_count: item.likes_count as number,
+          is_featured: item.is_featured as boolean,
+          published_at: item.published_at as string,
+          author: rawAuthor ? {
+            username: rawAuthor.username as string,
+            full_name: rawAuthor.full_name as string | null,
+            avatar_url: rawAuthor.avatar_url as string | null,
+          } : { username: "unknown", full_name: null, avatar_url: null },
+          category: rawCategory ? {
+            name: rawCategory.name as string,
+            slug: rawCategory.slug as string,
+            color: rawCategory.color as string | null,
+          } : { name: "Umum", slug: "umum", color: null },
+        } as Article;
+      });
 
       setArticles(mappedArticles);
       setTotalCount(count || 0);
