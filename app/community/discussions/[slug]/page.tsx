@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import { toast } from "sonner";
 import {
   ArrowUp,
   ArrowDown,
@@ -207,6 +208,8 @@ export default function DiscussionDetailPage() {
       if (error) {
         throw new Error(error.message);
       }
+
+      toast.success("Diskusi berhasil dihapus");
 
       setShowDeleteDialog(false);
       window.location.href = "/community/discussions";

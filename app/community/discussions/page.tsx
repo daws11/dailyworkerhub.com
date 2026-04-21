@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import { toast } from "sonner";
 import {
   ArrowUp,
   MessageCircle,
@@ -219,6 +220,8 @@ export default function DiscussionsPage() {
       if (error) {
         throw new Error(error.message);
       }
+
+      toast.success("Diskusi berhasil dihapus");
 
       setDeleteDiscussionId(null);
     } catch (error) {
