@@ -40,6 +40,11 @@ interface Category {
   color: string | null;
 }
 
+interface User {
+  id: string;
+  email: string;
+}
+
 type SortOption = "newest" | "popular";
 
 const ARTICLES_PER_PAGE = 12;
@@ -54,8 +59,20 @@ export default function ArticlesPage() {
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
 
   const supabase = createClient();
+
+  const checkAuth = useCallback(async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser({ id: session.user.id, email: session.user.email || "" });
+      }
+    } catch (err) {
+      console.error("Error checking auth:", err);
+    }
+  }, [supabase]);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -145,13 +162,22 @@ export default function ArticlesPage() {
 
   useEffect(() => {
     fetchCategories();
-  }, [fetchCategories]);
+    checkAuth();
+  }, [fetchCategories, checkAuth]);
 
   useEffect(() => {
     fetchArticles();
   }, [fetchArticles]);
 
   const totalPages = Math.ceil(totalCount / ARTICLES_PER_PAGE);
+
+  const handleWriteArticle = useCallback(() => {
+    if (user) {
+      window.location.href = "/community/articles/new";
+    } else {
+      window.location.href = "/community/login";
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -247,7 +273,7 @@ export default function ArticlesPage() {
               </Button>
             </div>
 
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+            <Button onClick={handleWriteArticle} className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
               <Plus className="w-4 h-4 mr-2" />
               Tulis Artikel
             </Button>
@@ -370,7 +396,7 @@ export default function ArticlesPage() {
                     </div>
                     <h3 className="text-lg font-semibold text-slate-300 mb-2">Belum ada artikel</h3>
                     <p className="text-slate-500 mb-6">Jadilah penulis pertama di komunitas ini</p>
-                    <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                    <Button onClick={handleWriteArticle} className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
                       <Plus className="w-4 h-4 mr-2" />
                       Tulis Artikel
                     </Button>
