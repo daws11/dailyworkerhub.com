@@ -1,15 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Plus, Search, X, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
+import { useToggleVote } from "@/lib/feedback/mutation-hooks";
 import { FeedbackCard } from "@/components/feedback/FeedbackCard";
 import { FeedbackForm } from "@/components/feedback/FeedbackForm";
 import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/feedback/FeedbackFilters";
 import { useCurrentUser } from "@/lib/auth/hooks";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,10 +20,40 @@ export default function FeedbackPage() {
   const [sortBy, setSortBy] = useState<FeedbackSortBy>("votes");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
+  const [votesOptimistic, setVotesOptimistic] = useState<Record<string, number>>({});
   const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
   const [feedbackStatuses, setFeedbackStatuses] = useState<Record<string, string>>({});
+  const [userVotesLoaded, setUserVotesLoaded] = useState(false);
 
-  const { isAdmin } = useCurrentUser();
+  const { user, isAdmin } = useCurrentUser();
+  const toggleVoteMutation = useToggleVote();
+
+  // Fetch user's votes on mount or user change
+  useEffect(() => {
+    async function fetchUserVotes() {
+      if (!user) {
+        setVotedItems(new Set());
+        setUserVotesLoaded(true);
+        return;
+      }
+
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('votes')
+        .select('target_id')
+        .eq('user_id', user.id)
+        .eq('target_type', 'feedback');
+
+      if (!error && data) {
+        const typedData = data as { target_id: string }[];
+        const votedIds = new Set(typedData.map((v) => v.target_id));
+        setVotedItems(votedIds);
+      }
+      setUserVotesLoaded(true);
+    }
+
+    fetchUserVotes();
+  }, [user]);
 
   const { data: feedbackData, isLoading, error } = useFeedbackItems({
     status: selectedStatus === "all" ? undefined : selectedStatus,
@@ -39,16 +72,58 @@ export default function FeedbackPage() {
     );
   }, [feedbackList, searchQuery]);
 
-  const handleVote = (id: string) => {
+  const handleVote = (id: string, currentVotesCount: number) => {
+    if (!user) {
+      toast.error("Please sign in to vote");
+      return;
+    }
+
+    const isCurrentlyVoted = votedItems.has(id);
+    const voteDelta = isCurrentlyVoted ? -1 : 1;
+    const newVotesCount = (votesOptimistic[id] ?? currentVotesCount) + voteDelta;
+
+    // Optimistic update - immediately update UI
+    setVotesOptimistic((prev) => ({ ...prev, [id]: newVotesCount }));
     setVotedItems((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(id)) {
+      if (isCurrentlyVoted) {
         newSet.delete(id);
       } else {
         newSet.add(id);
       }
       return newSet;
     });
+
+    // Call mutation
+    toggleVoteMutation.mutate(
+      {
+        user_id: user.id,
+        target_id: id,
+        value: 1,
+      },
+      {
+        onError: (err) => {
+          // Revert optimistic update on error
+          setVotesOptimistic((prev) => {
+            const newOptimistic = { ...prev };
+            delete newOptimistic[id];
+            return newOptimistic;
+          });
+          setVotedItems((prev) => {
+            const newSet = new Set(prev);
+            if (isCurrentlyVoted) {
+              // If we un-voted, add back
+              newSet.add(id);
+            } else {
+              // If we voted, remove
+              newSet.delete(id);
+            }
+            return newSet;
+          });
+          toast.error(err.message || "Failed to vote");
+        },
+      }
+    );
   };
 
   const handleStatusChange = (id: string, newStatus: string) => {
@@ -189,7 +264,9 @@ export default function FeedbackPage() {
               </div>
             )}
 
-            {!isLoading && !error && filteredFeedback.map((item) => (
+            {!isLoading && !error && filteredFeedback.map((item) => {
+              const displayVotesCount = votesOptimistic[item.id] ?? item.votes_count;
+              return (
               <FeedbackCard
                 key={item.id}
                 id={item.id}
@@ -201,15 +278,16 @@ export default function FeedbackPage() {
                 }}
                 category={item.category as "feature" | "bug" | "improvement"}
                 status={(feedbackStatuses[item.id] as "under_review" | "planned" | "in_progress" | "completed" | "declined") || item.status}
-                votesCount={item.votes_count}
+                votesCount={displayVotesCount}
                 commentsCount={(item as { comments_count?: number }).comments_count ?? 0}
                 createdAt={item.created_at}
                 isVoted={votedItems.has(item.id)}
-                onVote={() => handleVote(item.id)}
+                onVote={() => handleVote(item.id, item.votes_count)}
                 isAdmin={isAdmin}
                 onStatusChange={(newStatus) => handleStatusChange(item.id, newStatus)}
               />
-            ))}
+              );
+            })}
 
             {!isLoading && !error && filteredFeedback.length === 0 && (
               <div className="text-center py-16">
