@@ -19,7 +19,7 @@ import { useDiscussionBySlug, useCommentsWithReplies } from "@/lib/discussions/h
 
 export default function DiscussionDetailPage() {
   const params = useParams();
-  const slug = typeof params.slug === 'string' ? params.slug : '';
+  const slug = typeof params?.slug === 'string' ? params.slug : '';
 
   const { data: discussionResponse, isLoading: isLoadingDiscussion, error: discussionError } = useDiscussionBySlug(slug);
   const { data: commentsResponse, isLoading: isLoadingComments } = useCommentsWithReplies(slug);
@@ -123,9 +123,9 @@ export default function DiscussionDetailPage() {
             <span>/</span>
             <span
               className="px-2 py-0.5 rounded-full text-xs"
-              style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
+              style={{ backgroundColor: `${discussion.category?.color || "#10B981"}20`, color: discussion.category?.color || "#10B981" }}
             >
-              {discussion.category.name}
+              {discussion.category?.name || "General"}
             </span>
           </div>
 
@@ -141,9 +141,9 @@ export default function DiscussionDetailPage() {
                 )}
                 <span
                   className="px-2 py-0.5 text-xs rounded-full"
-                  style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
+                  style={{ backgroundColor: `${discussion.category?.color || "#10B981"}20`, color: discussion.category?.color || "#10B981" }}
                 >
-                  {discussion.category.name}
+                  {discussion.category?.name || "General"}
                 </span>
                 {discussion.status === "solved" && (
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-green-500/10 text-green-400 border border-green-500/20">

@@ -17,9 +17,15 @@ import type { CommentWithReplies } from "@/lib/discussions/types";
 
 // CommentAuthor interface matching CommentItem
 interface CommentAuthor {
+  id: string;
   username: string;
   full_name: string | null;
   avatar_url: string | null;
+  bio: string | null;
+  reputation: number;
+  role: "member" | "moderator" | "admin";
+  created_at: string;
+  updated_at: string;
 }
 
 // Depth-based indentation classes - flatline at level 4 (depth >= 3)

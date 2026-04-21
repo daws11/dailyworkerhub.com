@@ -13,7 +13,7 @@ export interface ImageUploadOptions {
  * ImageUpload Mark extension for TipTap
  * Allows uploading images to storage and inserting them into the editor
  */
-const ImageUploadMark = Mark.create<ImageUploadOptions>({
+const ImageUploadMark = Mark.create({
   name: "imageUpload",
 
   addAttributes() {
@@ -39,15 +39,15 @@ const ImageUploadMark = Mark.create<ImageUploadOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["img", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+    return ["img", mergeAttributes((this as any).options.HTMLAttributes, HTMLAttributes)]
   },
 
   addCommands() {
     return {
       setImageUpload:
         (options: { src: string; alt?: string; title?: string }) =>
-        ({ commands }) => {
-          return commands.setMark(this.name, options)
+        ({ commands }: { commands: any }) => {
+          return commands.setMark((this as any).name, options)
         },
     }
   },
