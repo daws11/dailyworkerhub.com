@@ -52,7 +52,7 @@ export function VoteButton({
         <ArrowUp className={classes.icon} />
       </button>
       <span className={cn("font-semibold text-slate-200 mt-1", classes.text)}>
-        {votesCount + (isVoted ? 1 : 0)}
+        {votesCount}
       </span>
     </div>
   );
