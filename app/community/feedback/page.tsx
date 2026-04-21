@@ -2,25 +2,11 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowUp, Plus, Clock, Filter, Search, X, MessageSquare, Loader2 } from "lucide-react";
+import { Plus, Filter, Search, X, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
-
-const statusConfig = {
-  under_review: { label: "Under Review", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
-  planned: { label: "Planned", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-  in_progress: { label: "In Progress", color: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
-  completed: { label: "Completed", color: "bg-green-500/10 text-green-400 border-green-500/20" },
-  declined: { label: "Declined", color: "bg-red-500/10 text-red-400 border-red-500/20" },
-};
-
-const categoryConfig = {
-  feature: { label: "Feature", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
-  bug: { label: "Bug", color: "bg-red-500/10 text-red-400 border-red-500/20" },
-  improvement: { label: "Improvement", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-};
+import { FeedbackCard } from "@/components/feedback/FeedbackCard";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,14 +41,6 @@ export default function FeedbackPage() {
       }
       return newSet;
     });
-  };
-
-  const formatDate = (dateString: string) => {
-    try {
-      return new Date(dateString).toLocaleDateString("id-ID");
-    } catch {
-      return dateString;
-    }
   };
 
   return (
@@ -200,61 +178,23 @@ export default function FeedbackPage() {
             )}
 
             {!isLoading && !error && filteredFeedback.map((item) => (
-              <div
+              <FeedbackCard
                 key={item.id}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Vote */}
-                  <div className="flex flex-col items-center">
-                    <button
-                      onClick={() => handleVote(item.id)}
-                      className={`p-2 rounded-lg transition-colors ${
-                        votedItems.has(item.id)
-                          ? "bg-emerald-500/20 text-emerald-400"
-                          : "bg-slate-800 text-slate-400 hover:text-emerald-400"
-                      }`}
-                    >
-                      <ArrowUp className="w-5 h-5" />
-                    </button>
-                    <span className="text-lg font-semibold text-slate-200 mt-1">
-                      {item.votes_count + (votedItems.has(item.id) ? 1 : 0)}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge className={categoryConfig[item.category as keyof typeof categoryConfig]?.color}>
-                        {categoryConfig[item.category as keyof typeof categoryConfig]?.label ?? item.category}
-                      </Badge>
-                      <Badge className={statusConfig[item.status as keyof typeof statusConfig]?.color}>
-                        {statusConfig[item.status as keyof typeof statusConfig]?.label ?? item.status}
-                      </Badge>
-                    </div>
-
-                    <Link
-                      href={`/community/feedback/${item.id}`}
-                      className="block hover:text-emerald-400 transition-colors"
-                    >
-                      <h3 className="text-lg font-semibold text-slate-50 mb-1">{item.title}</h3>
-                    </Link>
-                    <p className="text-sm text-slate-400 line-clamp-2 mb-3">{item.description}</p>
-
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
-                      <span>by {item.author?.username ?? "Unknown"}</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {formatDate(item.created_at)}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MessageSquare className="w-3 h-3" />
-                        {(item as { comments_count?: number }).comments_count ?? 0} komentar
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                author={{
+                  username: item.author?.username ?? "Unknown",
+                  avatar_url: item.author?.avatar_url ?? null,
+                }}
+                category={item.category as "feature" | "bug" | "improvement"}
+                status={item.status as "under_review" | "planned" | "in_progress" | "completed" | "declined"}
+                votesCount={item.votes_count}
+                commentsCount={(item as { comments_count?: number }).comments_count ?? 0}
+                createdAt={item.created_at}
+                isVoted={votedItems.has(item.id)}
+                onVote={() => handleVote(item.id)}
+              />
             ))}
 
             {!isLoading && !error && filteredFeedback.length === 0 && (
