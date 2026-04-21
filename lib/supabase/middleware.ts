@@ -61,6 +61,18 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Admin-only routes - require admin/moderator role
+  const adminPaths = ['/community/admin']
+  const isAdminPath = adminPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  )
+
+  if (isAdminPath && !isAdmin) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/community/login'
+    return NextResponse.redirect(url)
+  }
+
   // Add role information to response headers for downstream use
   supabaseResponse.headers.set('x-user-role', userRole ?? '')
   supabaseResponse.headers.set('x-user-is-admin', isAdmin.toString())
