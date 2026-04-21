@@ -191,6 +191,7 @@ export function CommentSection({
             onMarkSolution={onMarkSolution ? handleMarkSolution : undefined}
             isReply={isReply}
             depth={depth}
+            isLoading={isLoading}
           />
         )}
 

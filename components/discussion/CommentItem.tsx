@@ -50,6 +50,7 @@ interface CommentItemProps {
   onMarkSolution?: (id: string) => void;
   depth?: number;
   isReply?: boolean;
+  isLoading?: boolean;
 }
 
 // Depth-based indentation classes - flatline at level 4 (depth >= 3)
@@ -83,9 +84,11 @@ export function CommentItem({
   onMarkSolution,
   depth = 0,
   isReply = false,
+  isLoading = false,
 }: CommentItemProps) {
   const [liked, setLiked] = useState(false);
   const [showActions, setShowActions] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const isDeleted = deleted_at !== null;
 
@@ -103,6 +106,7 @@ export function CommentItem({
   };
 
   const handleDelete = () => {
+    setDeleting(true);
     onDelete?.(id);
   };
 
@@ -276,15 +280,16 @@ export function CommentItem({
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Batal</AlertDialogCancel>
+                          <AlertDialogCancel disabled={deleting}>Batal</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => {
                               handleDelete();
                               setShowActions(false);
                             }}
-                            className="bg-red-600 hover:bg-red-700"
+                            disabled={deleting || isLoading}
+                            className="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            Hapus
+                            {deleting ? "Menghapus..." : "Hapus"}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -310,6 +315,7 @@ export function CommentItem({
               onDelete={onDelete}
               onLike={onLike}
               onMarkSolution={onMarkSolution}
+              isLoading={isLoading}
             />
           ))}
         </div>
