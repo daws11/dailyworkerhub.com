@@ -30,6 +30,7 @@ interface CommentItemProps {
   is_solution: boolean;
   likes_count: number;
   created_at: string;
+  deleted_at: string | null;
   replies?: CommentItemProps[];
   onReply?: (parentId: string) => void;
   onEdit?: (id: string, content: string) => void;
@@ -62,6 +63,7 @@ export function CommentItem({
   is_solution,
   likes_count,
   created_at,
+  deleted_at,
   replies = [],
   onReply,
   onEdit,
@@ -73,6 +75,8 @@ export function CommentItem({
 }: CommentItemProps) {
   const [liked, setLiked] = useState(false);
   const [showActions, setShowActions] = useState(false);
+
+  const isDeleted = deleted_at !== null;
 
   const handleLike = () => {
     setLiked(!liked);
@@ -181,7 +185,11 @@ export function CommentItem({
             </div>
 
             <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-              {renderContentWithMentions(content)}
+              {isDeleted ? (
+                <span className="italic text-slate-500">[deleted]</span>
+              ) : (
+                renderContentWithMentions(content)
+              )}
             </div>
 
             <div className="flex items-center gap-3 mt-3">
