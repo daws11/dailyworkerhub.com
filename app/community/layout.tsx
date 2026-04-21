@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
+// Use system fonts to avoid network dependency during build
+// In production, this would use next/font/google or self-hosted fonts
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +24,7 @@ export default function CommunityLayout({
 }>) {
   return (
     <html lang="id" suppressHydrationWarning className="dark">
-      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased bg-slate-950 text-slate-50`}>
+      <body className="font-sans antialiased bg-slate-950 text-slate-50">
         {children}
       </body>
     </html>
