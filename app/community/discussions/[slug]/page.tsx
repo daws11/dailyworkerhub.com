@@ -41,6 +41,7 @@ interface Comment {
   is_solution: boolean;
   likes_count: number;
   created_at: string;
+  deleted_at: string | null;
   replies?: Comment[];
 }
 
@@ -103,6 +104,7 @@ Untuk driver mobil mungkin perlu lebih tinggi karena ada biaya bensin dan mainte
     is_solution: false,
     likes_count: 45,
     created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [
       {
         id: "1-1",
@@ -116,6 +118,7 @@ Untuk driver mobil mungkin perlu lebih tinggi karena ada biaya bensin dan mainte
         is_solution: false,
         likes_count: 12,
         created_at: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+        deleted_at: null,
       },
     ],
   },
@@ -138,6 +141,7 @@ Quality hidup driver meningkat -> service quality meningkat -> semua menang.`,
     is_solution: true,
     likes_count: 89,
     created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [],
   },
   {
@@ -154,6 +158,7 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
     is_solution: false,
     likes_count: 34,
     created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [],
   },
 ];
