@@ -9,6 +9,7 @@ import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
 import { FeedbackCard } from "@/components/feedback/FeedbackCard";
 import { FeedbackForm } from "@/components/feedback/FeedbackForm";
 import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/feedback/FeedbackFilters";
+import { useCurrentUser } from "@/lib/auth/hooks";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,10 +18,13 @@ export default function FeedbackPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
   const [isFeedbackFormOpen, setIsFeedbackFormOpen] = useState(false);
+  const [feedbackStatuses, setFeedbackStatuses] = useState<Record<string, string>>({});
+
+  const { isAdmin } = useCurrentUser();
 
   const { data: feedbackData, isLoading, error } = useFeedbackItems({
     status: selectedStatus === "all" ? undefined : selectedStatus,
-    category: selectedCategory || undefined,
+    category: (selectedCategory || undefined) as "feature" | "bug" | "improvement" | undefined,
     sortBy,
   });
 
@@ -45,6 +49,13 @@ export default function FeedbackPage() {
       }
       return newSet;
     });
+  };
+
+  const handleStatusChange = (id: string, newStatus: string) => {
+    setFeedbackStatuses((prev) => ({
+      ...prev,
+      [id]: newStatus,
+    }));
   };
 
   return (
@@ -189,12 +200,14 @@ export default function FeedbackPage() {
                   avatar_url: item.author?.avatar_url ?? null,
                 }}
                 category={item.category as "feature" | "bug" | "improvement"}
-                status={item.status as "under_review" | "planned" | "in_progress" | "completed" | "declined"}
+                status={(feedbackStatuses[item.id] as "under_review" | "planned" | "in_progress" | "completed" | "declined") || item.status}
                 votesCount={item.votes_count}
                 commentsCount={(item as { comments_count?: number }).comments_count ?? 0}
                 createdAt={item.created_at}
                 isVoted={votedItems.has(item.id)}
                 onVote={() => handleVote(item.id)}
+                isAdmin={isAdmin}
+                onStatusChange={(newStatus) => handleStatusChange(item.id, newStatus)}
               />
             ))}
 

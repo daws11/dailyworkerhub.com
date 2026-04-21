@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Clock, MessageSquare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { VoteButton } from "@/components/feedback/VoteButton";
+import { StatusUpdateForm } from "@/components/feedback/StatusUpdateForm";
 
-interface FeedbackCardProps {
+export interface FeedbackCardProps {
   id: string;
   title: string;
   description: string;
@@ -20,6 +21,8 @@ interface FeedbackCardProps {
   createdAt: string;
   isVoted: boolean;
   onVote: () => void;
+  isAdmin?: boolean;
+  onStatusChange?: (newStatus: string) => void;
 }
 
 const statusConfig = {
@@ -48,12 +51,18 @@ export function FeedbackCard({
   createdAt,
   isVoted,
   onVote,
+  isAdmin = false,
+  onStatusChange,
 }: FeedbackCardProps) {
   const formattedDate = new Date(createdAt).toLocaleDateString("id-ID", {
     day: "numeric",
     month: "short",
     year: "numeric",
   });
+
+  const handleStatusChange = (newStatus: string) => {
+    onStatusChange?.(newStatus);
+  };
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-emerald-500/30 transition-colors">
@@ -73,9 +82,18 @@ export function FeedbackCard({
             <Badge className={categoryConfig[category].color}>
               {categoryConfig[category].label}
             </Badge>
-            <Badge className={statusConfig[status].color}>
-              {statusConfig[status].label}
-            </Badge>
+            {isAdmin ? (
+              <StatusUpdateForm
+                feedbackId={id}
+                currentStatus={status}
+                isAdmin={isAdmin}
+                onStatusChange={handleStatusChange}
+              />
+            ) : (
+              <Badge className={statusConfig[status].color}>
+                {statusConfig[status].label}
+              </Badge>
+            )}
           </div>
 
           {/* Title */}

@@ -109,7 +109,6 @@ export async function castVote(input: CastVoteInput): Promise<{
             .eq('id', input.target_id)
         }
       })
-    })
   })
 
   return { data: data as Vote, error: null }
@@ -170,7 +169,6 @@ export async function removeVote(userId: string, targetId: string): Promise<{
             .eq('id', targetId)
         }
       })
-    })
   })
 
   return { data: data as { id: string }, error: null }
@@ -266,7 +264,6 @@ export async function toggleVote(input: ToggleVoteInput): Promise<{
             .eq('id', input.target_id)
         }
       })
-    })
   })
 
   return { data: data as Vote, removed: false, error: null }
