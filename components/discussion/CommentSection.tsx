@@ -1,32 +1,32 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { MessageCircle } from "lucide-react";
 import { CommentItem } from "./CommentItem";
 import { CommentForm } from "./CommentForm";
+import {
+  useCommentsWithReplies,
+  useCreateComment,
+  useUpdateComment,
+  useDeleteComment,
+  useMarkCommentAsSolution,
+  discussionKeys,
+} from "@/lib/discussions/hooks";
+import type { CommentWithReplies } from "@/lib/discussions/types";
 
+// CommentAuthor interface matching CommentItem
 interface CommentAuthor {
   username: string;
   full_name: string | null;
   avatar_url: string | null;
 }
 
-interface Comment {
-  id: string;
-  content: string;
-  author: CommentAuthor;
-  parent_id: string | null;
-  is_solution: boolean;
-  likes_count: number;
-  created_at: string;
-  replies?: Comment[];
-}
-
 // Depth-based indentation classes - flatline at level 4 (depth >= 3)
 const getDepthIndentClass = (depth: number): string => {
   switch (depth) {
     case 0:
-      return "ml-0";  // Top-level comment - no indent
+      return "ml-0"; // Top-level comment - no indent
     case 1:
       return "ml-8"; // Level 2 (first reply) - standard indent
     case 2:
@@ -38,28 +38,43 @@ const getDepthIndentClass = (depth: number): string => {
 
 interface CommentSectionProps {
   discussionId: string;
-  comments: Comment[];
-  onAddComment?: (content: string, parentId?: string) => Promise<void>;
-  onEditComment?: (id: string, content: string) => Promise<void>;
-  onDeleteComment?: (id: string) => Promise<void>;
-  onLikeComment?: (id: string) => Promise<void>;
-  onMarkSolution?: (id: string) => Promise<void>;
-  isLoading?: boolean;
+  currentUserId?: string;
+  initialComments?: CommentWithReplies[];
 }
 
 export function CommentSection({
   discussionId,
-  comments,
-  onAddComment,
-  onEditComment,
-  onDeleteComment,
-  onLikeComment,
-  onMarkSolution,
-  isLoading = false,
+  currentUserId,
+  initialComments,
 }: CommentSectionProps) {
+  const queryClient = useQueryClient();
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
+
+  // Fetch comments from API
+  const {
+    data: commentsData,
+    isLoading,
+    error,
+  } = useCommentsWithReplies(discussionId);
+
+  // Use initial comments if provided during loading, otherwise use fetched comments
+  const comments = isLoading
+    ? initialComments || []
+    : commentsData?.data || initialComments || [];
+
+  // Create comment mutation with optimistic update
+  const createCommentMutation = useCreateComment();
+
+  // Update comment mutation
+  const updateCommentMutation = useUpdateComment();
+
+  // Delete comment mutation with optimistic update
+  const deleteCommentMutation = useDeleteComment();
+
+  // Mark as solution mutation
+  const markSolutionMutation = useMarkCommentAsSolution();
 
   // Calculate total comments including nested replies
   const totalComments = comments.reduce(
@@ -67,15 +82,133 @@ export function CommentSection({
     0
   );
 
+  // Helper to add optimistic comment to the tree
+  const addOptimisticComment = useCallback(
+    (commentsList: CommentWithReplies[], newComment: CommentWithReplies, parentId?: string | null): CommentWithReplies[] => {
+      if (!parentId) {
+        // Top-level comment - add to beginning
+        return [newComment, ...commentsList];
+      }
+
+      // Find parent and add as reply
+      return commentsList.map((comment) => {
+        if (comment.id === parentId) {
+          return {
+            ...comment,
+            replies: [...(comment.replies || []), newComment],
+          };
+        }
+        if (comment.replies && comment.replies.length > 0) {
+          return {
+            ...comment,
+            replies: addOptimisticComment(comment.replies, newComment, parentId),
+          };
+        }
+        return comment;
+      });
+    },
+    []
+  );
+
+  // Helper to remove optimistic comment from the tree
+  const removeOptimisticComment = useCallback(
+    (commentsList: CommentWithReplies[], commentId: string): CommentWithReplies[] => {
+      return commentsList
+        .filter((comment) => comment.id !== commentId)
+        .map((comment) => ({
+          ...comment,
+          replies: comment.replies
+            ? removeOptimisticComment(comment.replies, commentId)
+            : [],
+        }));
+    },
+    []
+  );
+
+  // Helper to update optimistic comment in the tree
+  const updateOptimisticComment = useCallback(
+    (commentsList: CommentWithReplies[], commentId: string, updates: Partial<CommentWithReplies>): CommentWithReplies[] => {
+      return commentsList.map((comment) => {
+        if (comment.id === commentId) {
+          return { ...comment, ...updates };
+        }
+        return {
+          ...comment,
+          replies: comment.replies
+            ? updateOptimisticComment(comment.replies, commentId, updates)
+            : [],
+        };
+      });
+    },
+    []
+  );
+
   // Handle adding a new comment
   const handleAddComment = useCallback(
     async (content: string, parentId?: string) => {
-      if (onAddComment) {
-        await onAddComment(content, parentId);
-      }
+      // Create optimistic comment
+      const optimisticComment: CommentWithReplies = {
+        id: `temp-${Date.now()}`,
+        discussion_id: discussionId,
+        content,
+        author_id: currentUserId || "",
+        parent_id: parentId || null,
+        depth: 0,
+        is_solution: false,
+        likes_count: 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        author: {
+          id: currentUserId || "",
+          username: "You",
+          full_name: null,
+          avatar_url: null,
+          bio: null,
+          reputation: 0,
+          role: "member" as const,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+        replies: [],
+      };
+
+      // Optimistically update the comments list
+      const queryKey = discussionKeys.commentsWithReplies(discussionId);
+      queryClient.setQueryData<{ data: CommentWithReplies[]; error: Error | null }>(
+        queryKey,
+        (old) => ({
+          data: addOptimisticComment(old?.data || [], optimisticComment, parentId),
+          error: old?.error || null,
+        })
+      );
+
       setReplyingTo(null);
+
+      try {
+        await createCommentMutation.mutateAsync({
+          input: { content, discussionId, parentId },
+          authorId: currentUserId || "",
+        });
+      } catch (err) {
+        // Rollback on error
+        queryClient.setQueryData<{ data: CommentWithReplies[]; error: Error | null }>(
+          queryKey,
+          (old) => ({
+            data: removeOptimisticComment(old?.data || [], optimisticComment.id),
+            error: old?.error || null,
+          })
+        );
+        throw err;
+      }
     },
-    [onAddComment]
+    [
+      discussionId,
+      currentUserId,
+      queryClient,
+      createCommentMutation,
+      addOptimisticComment,
+      removeOptimisticComment,
+    ]
   );
 
   // Handle starting a reply
@@ -98,12 +231,34 @@ export function CommentSection({
 
   // Handle save edit
   const handleSaveEdit = useCallback(async () => {
-    if (onEditComment && editingId && editingContent.trim()) {
-      await onEditComment(editingId, editingContent.trim());
-    }
+    if (!editingId || !editingContent.trim()) return;
+
+    const queryKey = discussionKeys.commentsWithReplies(discussionId);
+    const originalData = queryClient.getQueryData<{ data: CommentWithReplies[]; error: Error | null }>(queryKey);
+
+    // Optimistically update
+    queryClient.setQueryData<{ data: CommentWithReplies[]; error: Error | null }>(
+      queryKey,
+      (old) => ({
+        data: updateOptimisticComment(old?.data || [], editingId, { content: editingContent.trim() }),
+        error: old?.error || null,
+      })
+    );
+
     setEditingId(null);
     setEditingContent("");
-  }, [editingId, editingContent, onEditComment]);
+
+    try {
+      await updateCommentMutation.mutateAsync({
+        id: editingId,
+        content: editingContent.trim(),
+      });
+    } catch (err) {
+      // Rollback on error
+      queryClient.setQueryData(queryKey, originalData);
+      throw err;
+    }
+  }, [editingId, editingContent, discussionId, queryClient, updateCommentMutation, updateOptimisticComment]);
 
   // Handle cancel edit
   const handleCancelEdit = useCallback(() => {
@@ -114,36 +269,72 @@ export function CommentSection({
   // Handle delete comment
   const handleDelete = useCallback(
     async (id: string) => {
-      if (onDeleteComment) {
-        await onDeleteComment(id);
+      const queryKey = discussionKeys.commentsWithReplies(discussionId);
+      const originalData = queryClient.getQueryData<{ data: CommentWithReplies[]; error: Error | null }>(queryKey);
+
+      // Optimistically remove
+      queryClient.setQueryData<{ data: CommentWithReplies[]; error: Error | null }>(
+        queryKey,
+        (old) => ({
+          data: removeOptimisticComment(old?.data || [], id),
+          error: old?.error || null,
+        })
+      );
+
+      try {
+        await deleteCommentMutation.mutateAsync(id);
+      } catch (err) {
+        // Rollback on error
+        queryClient.setQueryData(queryKey, originalData);
+        throw err;
       }
     },
-    [onDeleteComment]
+    [discussionId, queryClient, deleteCommentMutation, removeOptimisticComment]
   );
 
-  // Handle like comment
-  const handleLike = useCallback(
-    async (id: string) => {
-      if (onLikeComment) {
-        await onLikeComment(id);
-      }
-    },
-    [onLikeComment]
-  );
+  // Handle like comment (placeholder for future implementation)
+  const handleLike = useCallback(async (_id: string) => {
+    // TODO: Implement like functionality with optimistic update
+  }, []);
 
   // Handle mark as solution
   const handleMarkSolution = useCallback(
     async (id: string) => {
-      if (onMarkSolution) {
-        await onMarkSolution(id);
+      const queryKey = discussionKeys.commentsWithReplies(discussionId);
+
+      // Optimistically mark as solution and unmark others
+      queryClient.setQueryData<{ data: CommentWithReplies[]; error: Error | null }>(
+        queryKey,
+        (old) => ({
+          data: (old?.data || []).map((comment) => ({
+            ...comment,
+            is_solution: comment.id === id,
+            replies: comment.replies?.map((reply) => ({
+              ...reply,
+              is_solution: reply.id === id,
+            })),
+          })),
+          error: old?.error || null,
+        })
+      );
+
+      try {
+        await markSolutionMutation.mutateAsync({ commentId: id, discussionId });
+      } catch (err) {
+        // Rollback on error - invalidate to refetch
+        queryClient.invalidateQueries({ queryKey });
+        throw err;
       }
     },
-    [onMarkSolution]
+    [discussionId, queryClient, markSolutionMutation]
   );
+
+  // Determine if any mutation is in progress
+  const isMutating = createCommentMutation.isPending || updateCommentMutation.isPending || deleteCommentMutation.isPending;
 
   // Render a comment with its replies
   const renderComment = useCallback(
-    (comment: Comment, isReply = false, depth = 0) => (
+    (comment: CommentWithReplies, isReply = false, depth = 0) => (
       <div key={comment.id} className="space-y-4">
         {editingId === comment.id ? (
           // Edit mode
@@ -154,21 +345,23 @@ export function CommentSection({
               }}
               placeholder="Edit komentar..."
               autoFocus
-              disabled={isLoading}
+              disabled={updateCommentMutation.isPending}
+              onCancel={handleCancelEdit}
             />
             <div className="flex justify-end gap-2 mt-3">
               <button
                 onClick={handleCancelEdit}
-                className="px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+                disabled={updateCommentMutation.isPending}
+                className="px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors disabled:opacity-50"
               >
                 Batal
               </button>
               <button
                 onClick={handleSaveEdit}
-                disabled={isLoading || !editingContent.trim()}
+                disabled={updateCommentMutation.isPending || !editingContent.trim()}
                 className="px-3 py-1.5 text-sm font-medium rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Simpan
+                {updateCommentMutation.isPending ? "Menyimpan..." : "Simpan"}
               </button>
             </div>
           </div>
@@ -176,7 +369,7 @@ export function CommentSection({
           <CommentItem
             id={comment.id}
             content={comment.content}
-            author={comment.author}
+            author={comment.author as CommentAuthor}
             parent_id={comment.parent_id}
             is_solution={comment.is_solution}
             likes_count={comment.likes_count}
@@ -186,7 +379,7 @@ export function CommentSection({
             onEdit={handleEdit}
             onDelete={handleDelete}
             onLike={handleLike}
-            onMarkSolution={onMarkSolution ? handleMarkSolution : undefined}
+            onMarkSolution={handleMarkSolution}
             isReply={isReply}
             depth={depth}
           />
@@ -206,7 +399,7 @@ export function CommentSection({
                 placeholder={`Balas ke @${comment.author.username}...`}
                 autoFocus
                 onCancel={handleCancelReply}
-                disabled={isLoading}
+                disabled={createCommentMutation.isPending}
               />
             </div>
           </div>
@@ -224,7 +417,7 @@ export function CommentSection({
       editingId,
       editingContent,
       replyingTo,
-      isLoading,
+      currentUserId,
       handleSaveEdit,
       handleCancelEdit,
       handleReply,
@@ -234,9 +427,24 @@ export function CommentSection({
       handleDelete,
       handleLike,
       handleMarkSolution,
-      onMarkSolution,
+      createCommentMutation.isPending,
+      updateCommentMutation.isPending,
     ]
   );
+
+  if (error) {
+    return (
+      <section className="space-y-6">
+        <div className="flex items-center gap-3">
+          <MessageCircle className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-xl font-semibold text-slate-50">Komentar</h2>
+        </div>
+        <div className="text-center py-8 text-red-400">
+          <p>Gagal memuat komentar. Silakan coba lagi.</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="space-y-6">
@@ -251,15 +459,23 @@ export function CommentSection({
       {/* Main comment form */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
         <CommentForm
-          onSubmit={handleAddComment}
+          onSubmit={(content) => handleAddComment(content, undefined)}
           placeholder="Tulis komentar Anda..."
-          disabled={isLoading}
+          disabled={createCommentMutation.isPending}
         />
       </div>
 
       {/* Comments list */}
       <div className="space-y-4">
-        {comments.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-8 text-slate-500">
+            <div className="animate-pulse space-y-4">
+              <div className="h-24 bg-slate-800 rounded-xl" />
+              <div className="h-24 bg-slate-800 rounded-xl" />
+              <div className="h-24 bg-slate-800 rounded-xl" />
+            </div>
+          </div>
+        ) : comments.length === 0 ? (
           <div className="text-center py-8 text-slate-500">
             <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-50" />
             <p>Belum ada komentar. Jadilah yang pertama berkomentar!</p>

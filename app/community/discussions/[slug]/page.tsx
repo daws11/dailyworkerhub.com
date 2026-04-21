@@ -230,7 +230,6 @@ export default function DiscussionDetailPage() {
           {/* Comments Section */}
           <CommentSection
             discussionId={discussion.id}
-            comments={comments}
           />
         </div>
       </main>
