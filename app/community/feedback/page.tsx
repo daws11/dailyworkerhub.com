@@ -1,95 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowUp, Plus, Clock, Filter, Search, X, MessageSquare } from "lucide-react";
+import { ArrowUp, Plus, Clock, Filter, Search, X, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-
-interface FeedbackItem {
-  id: string;
-  title: string;
-  description: string;
-  author: {
-    username: string;
-    avatar_url: string | null;
-  };
-  category: "feature" | "bug" | "improvement";
-  status: "under_review" | "planned" | "in_progress" | "completed" | "declined";
-  votes_count: number;
-  comments_count: number;
-  created_at: string;
-}
-
-const mockFeedback: FeedbackItem[] = [
-  {
-    id: "1",
-    title: "Fitur notifikasi push untuk update lowongan baru",
-    description: "Biar bisa dapat notifikasi langsung saat ada lowongan baru yang match dengan skill dan lokasi kita. Saat ini harus check manual terus.",
-    author: { username: "budi_santoso", avatar_url: null },
-    category: "feature",
-    status: "planned",
-    votes_count: 234,
-    comments_count: 45,
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "2",
-    title: "Tombol 'Copy' untuk nomor WhatsApp employer",
-    description: "Repot kalau mau copy nomor employer harus select manual. Tambahkan button copy yang appear saat hover.",
-    author: { username: "siti_rahmah", avatar_url: null },
-    category: "improvement",
-    status: "in_progress",
-    votes_count: 189,
-    comments_count: 23,
-    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "3",
-    title: "Error saat upload foto profil",
-    description: "Setiap kali upload foto profil selalu failed. Sudah coba berbagai format dan ukuran.",
-    author: { username: "joko_wibowo", avatar_url: null },
-    category: "bug",
-    status: "under_review",
-    votes_count: 156,
-    comments_count: 34,
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "4",
-    title: "Dark mode untuk halaman community",
-    description: "Matanya lelah kalau baca di bright mode. Please add dark mode!",
-    author: { username: "rina_melati", avatar_url: null },
-    category: "feature",
-    status: "under_review",
-    votes_count: 345,
-    comments_count: 67,
-    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "5",
-    title: "Tambahkan filter bahasa untuk lowongan",
-    description: "Some employers post in English. Would be nice to filter by language requirement.",
-    author: { username: "robert_tanaka", avatar_url: null },
-    category: "improvement",
-    status: "under_review",
-    votes_count: 98,
-    comments_count: 12,
-    created_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "6",
-    title: "Integrasi dengan Gojek/Grab untuk tracking",
-    description: " Biar bisa track pekerjaan langsung dari apps Gojek/Grab yang sudah familiar.",
-    author: { username: "dewi_lestari", avatar_url: null },
-    category: "feature",
-    status: "declined",
-    votes_count: 234,
-    comments_count: 89,
-    created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-  },
-];
+import { useFeedbackItems, useFeedbackStats } from "@/lib/feedback/hooks";
 
 const statusConfig = {
   under_review: { label: "Under Review", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
@@ -111,12 +28,22 @@ export default function FeedbackPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [votedItems, setVotedItems] = useState<Set<string>>(new Set());
 
-  const filteredFeedback = mockFeedback.filter((f) => {
-    if (selectedStatus && f.status !== selectedStatus) return false;
-    if (selectedCategory && f.category !== selectedCategory) return false;
-    if (searchQuery && !f.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-    return true;
+  const { data: feedbackData, isLoading, error } = useFeedbackItems({
+    status: selectedStatus || undefined,
+    category: selectedCategory || undefined,
+    sortBy: "votes",
   });
+
+  const { data: statsData } = useFeedbackStats();
+
+  const feedbackList = feedbackData?.data ?? [];
+
+  const filteredFeedback = useMemo(() => {
+    if (!searchQuery) return feedbackList;
+    return feedbackList.filter((f) =>
+      f.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [feedbackList, searchQuery]);
 
   const handleVote = (id: string) => {
     setVotedItems((prev) => {
@@ -128,6 +55,14 @@ export default function FeedbackPage() {
       }
       return newSet;
     });
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString("id-ID");
+    } catch {
+      return dateString;
+    }
   };
 
   return (
@@ -226,23 +161,45 @@ export default function FeedbackPage() {
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-6 mb-8 p-4 bg-slate-900 border border-slate-800 rounded-xl">
-            {[
-              { label: "Total Feedback", value: mockFeedback.length },
-              { label: "Under Review", value: mockFeedback.filter((f) => f.status === "under_review").length },
-              { label: "Planned", value: mockFeedback.filter((f) => f.status === "planned").length },
-              { label: "Completed", value: mockFeedback.filter((f) => f.status === "completed").length },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-2xl font-bold text-emerald-400">{stat.value}</div>
-                <div className="text-xs text-slate-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          {statsData?.data && (
+            <div className="flex flex-wrap gap-6 mb-8 p-4 bg-slate-900 border border-slate-800 rounded-xl">
+              {[
+                { label: "Total Feedback", value: statsData.data.total },
+                { label: "Under Review", value: statsData.data.under_review },
+                { label: "Planned", value: statsData.data.planned },
+                { label: "Completed", value: statsData.data.completed },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="text-2xl font-bold text-emerald-400">{stat.value}</div>
+                  <div className="text-xs text-slate-500">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Feedback List */}
           <div className="space-y-4">
-            {filteredFeedback.map((item) => (
+            {isLoading && (
+              <div className="flex items-center justify-center py-16">
+                <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
+                <span className="ml-3 text-slate-400">Memuat feedback...</span>
+              </div>
+            )}
+
+            {error && (
+              <div className="text-center py-16">
+                <p className="text-red-400 mb-4">Gagal memuat feedback. Silakan coba lagi.</p>
+                <Button
+                  variant="outline"
+                  onClick={() => window.location.reload()}
+                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                >
+                  Muat Ulang
+                </Button>
+              </div>
+            )}
+
+            {!isLoading && !error && filteredFeedback.map((item) => (
               <div
                 key={item.id}
                 className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
@@ -268,11 +225,11 @@ export default function FeedbackPage() {
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <Badge className={categoryConfig[item.category].color}>
-                        {categoryConfig[item.category].label}
+                      <Badge className={categoryConfig[item.category as keyof typeof categoryConfig]?.color}>
+                        {categoryConfig[item.category as keyof typeof categoryConfig]?.label ?? item.category}
                       </Badge>
-                      <Badge className={statusConfig[item.status].color}>
-                        {statusConfig[item.status].label}
+                      <Badge className={statusConfig[item.status as keyof typeof statusConfig]?.color}>
+                        {statusConfig[item.status as keyof typeof statusConfig]?.label ?? item.status}
                       </Badge>
                     </div>
 
@@ -285,14 +242,14 @@ export default function FeedbackPage() {
                     <p className="text-sm text-slate-400 line-clamp-2 mb-3">{item.description}</p>
 
                     <div className="flex items-center gap-4 text-xs text-slate-500">
-                      <span>by {item.author.username}</span>
+                      <span>by {item.author?.username ?? "Unknown"}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
-                        {new Date(item.created_at).toLocaleDateString("id-ID")}
+                        {formatDate(item.created_at)}
                       </span>
                       <span className="flex items-center gap-1">
                         <MessageSquare className="w-3 h-3" />
-                        {item.comments_count} komentar
+                        {(item as { comments_count?: number }).comments_count ?? 0} komentar
                       </span>
                     </div>
                   </div>
@@ -300,7 +257,7 @@ export default function FeedbackPage() {
               </div>
             ))}
 
-            {filteredFeedback.length === 0 && (
+            {!isLoading && !error && filteredFeedback.length === 0 && (
               <div className="text-center py-16">
                 <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada feedback</h3>
