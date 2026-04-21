@@ -10,6 +10,7 @@ import {
   Share2,
   Bookmark,
   Flag,
+  Edit,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -287,6 +288,11 @@ export default function DiscussionDetailPage() {
                 <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
                   <Flag className="w-4 h-4 mr-2" />
                   Report
+                </Button>
+
+                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                  <Edit className="w-4 h-4 mr-2" />
+                  Edit
                 </Button>
               </div>
             </div>
