@@ -33,7 +33,7 @@ const competitors: { key: keyof Row; label: string }[] = [
 function Indicator({ value, size = "md" }: { value: boolean; size?: "sm" | "md" }) {
   const cls = size === "sm" ? "w-4 h-4" : "w-6 h-6";
   return value ? (
-    <Check className={`${cls} text-secondary`} />
+    <Check className={`${cls} text-primary`} />
   ) : (
     <X className={`${cls} text-destructive`} />
   );
@@ -53,7 +53,7 @@ export function ComparisonTable() {
       </h3>
 
       {/* Desktop table (lg+) */}
-      <div className="hidden lg:block rounded-2xl border border-border bg-white shadow-xl overflow-hidden">
+      <div className="hidden lg:block rounded-2xl border border-border bg-background dark:bg-dark-primary shadow-xl overflow-hidden">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-background/50">
@@ -83,7 +83,7 @@ export function ComparisonTable() {
         {mobileRows.map((row) => (
           <div
             key={row.feature}
-            className="rounded-2xl border border-border bg-white shadow-md overflow-hidden"
+            className="rounded-2xl border border-border bg-background dark:bg-dark-primary shadow-md overflow-hidden"
           >
             <div className="p-5 bg-background/60 border-b border-border">
               <p className="font-sans font-semibold text-primary text-sm leading-snug">

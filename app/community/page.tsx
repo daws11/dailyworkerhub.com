@@ -187,8 +187,8 @@ export default function CommunityPage() {
       </nav>
 
       {/* Hero / Command Center */}
-      <section className="relative min-h-[60vh] flex items-center justify-center pt-16 bg-radial-green">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-screen flex items-center justify-center pt-16 bg-radial-green">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -206,7 +206,7 @@ export default function CommunityPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto"
+            className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto px-4"
           >
             Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
           </motion.p>
@@ -216,18 +216,18 @@ export default function CommunityPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative max-w-2xl mx-auto"
+            className="w-full max-w-2xl mx-auto px-4 sm:px-0"
           >
             <div className="relative group">
               <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative flex items-center bg-slate-900 border border-slate-700 rounded-2xl h-16 px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
-                <Search className="w-5 h-5 text-slate-400 mr-4 flex-shrink-0" />
+              <div className="relative flex items-center bg-slate-900 border border-slate-700 rounded-2xl h-14 sm:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 mr-3 sm:mr-4 flex-shrink-0" />
                 <input
                   type="text"
                   placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 bg-transparent text-slate-50 placeholder-slate-500 outline-none text-base"
+                  className="flex-1 bg-transparent text-slate-50 placeholder-slate-500 outline-none text-sm sm:text-base"
                 />
                 {searchQuery && (
                   <button
@@ -237,7 +237,7 @@ export default function CommunityPage() {
                     <X className="w-4 h-4" />
                   </button>
                 )}
-                <button className="ml-4 px-6 py-2.5 text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0">
+                <button className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0">
                   Kirim
                 </button>
               </div>
@@ -249,15 +249,15 @@ export default function CommunityPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-3 mt-8"
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 px-4"
           >
             {shortcuts.map((shortcut) => (
               <Link
                 key={shortcut.label}
                 href={shortcut.href}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-slate-400 bg-slate-800/50 border border-slate-700 rounded-full hover:bg-slate-700 hover:border-emerald-500/50 transition-all duration-300"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm text-slate-400 bg-slate-800/50 border border-slate-700 rounded-full hover:bg-slate-700 hover:border-emerald-500/50 transition-all duration-300"
               >
-                <shortcut.icon className="w-4 h-4" />
+                <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>{shortcut.label}</span>
               </Link>
             ))}

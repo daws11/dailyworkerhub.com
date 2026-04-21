@@ -64,7 +64,7 @@ const testimonials: Testimonial[] = [
 
 export function Testimonials() {
   return (
-    <section className="py-24 md:py-32 px-4 md:px-8 bg-background relative z-10">
+    <section className="py-24 md:py-32 px-4 md:px-8 bg-background dark:bg-dark-secondary relative z-10">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -118,7 +118,7 @@ export function Testimonials() {
                   {t.initials}
                 </div>
                 <div className="min-w-0">
-                  <div className="font-display font-bold text-secondary truncate">
+                  <div className="font-display font-bold text-foreground dark:text-white truncate">
                     {t.name}
                   </div>
                   <div className="font-sans text-xs text-muted-foreground truncate">
@@ -128,8 +128,8 @@ export function Testimonials() {
                 <span
                   className={`ml-auto text-[10px] uppercase tracking-wider font-sub font-semibold px-2 py-1 rounded-full shrink-0 ${
                     t.type === "pekerja"
-                      ? "bg-primary/10 text-primary"
-                      : "bg-secondary/10 text-secondary"
+                      ? "bg-primary/10 dark:bg-primary/20 text-primary"
+                      : "bg-secondary/10 dark:bg-white/10 text-secondary dark:text-white/70"
                   }`}
                 >
                   {t.type}

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Menu, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Navbar() {
   return (
@@ -21,12 +22,13 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-8 font-sub text-sm uppercase tracking-wider">
-          <a href="#how-it-works" className="hover:text-secondary transition-colors">Cara Kerja</a>
-          <a href="#pricing" className="hover:text-secondary transition-colors">Biaya</a>
-          <a href="https://community.dailyworkerhub.com" className="hover:text-secondary transition-colors">Komunitas</a>
+          <a href="#how-it-works" className="hover:text-primary dark:hover:text-primary transition-colors">Cara Kerja</a>
+          <a href="#pricing" className="hover:text-primary dark:hover:text-primary transition-colors">Biaya</a>
+          <a href="https://community.dailyworkerhub.com" className="hover:text-primary dark:hover:text-primary transition-colors">Komunitas</a>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Button variant="outline" asChild className="hidden sm:flex border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300">
             <a href="https://staging.dailyworkerhub.com/auth/login">Masuk</a>
           </Button>

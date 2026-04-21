@@ -31,6 +31,15 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+  (function() {
+    const theme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = theme === 'dark' || (!theme && prefersDark);
+    document.documentElement.classList.toggle('dark', isDark);
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -38,6 +47,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <Providers>
           <TooltipProvider>
