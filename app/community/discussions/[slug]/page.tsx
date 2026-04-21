@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import {
@@ -159,9 +160,62 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
 export default function DiscussionDetailPage() {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
+  const supabase = createClient();
   const discussion = mockDiscussion;
   const comments = mockComments;
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("Unauthorized");
+      }
+
+      const { data: discussionData } = await supabase
+        .from("discussions")
+        .select("author_id")
+        .eq("id", discussion.id)
+        .single();
+
+      if (!discussionData) {
+        throw new Error("Discussion not found");
+      }
+
+      if (discussionData.author_id !== user.id) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.role !== "admin" && profile?.role !== "moderator") {
+          throw new Error("You can only delete your own discussions");
+        }
+      }
+
+      const { error } = await supabase
+        .from("discussions")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", discussion.id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setShowDeleteDialog(false);
+      window.location.href = "/community/discussions";
+    } catch (error) {
+      console.error("Failed to delete discussion:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -301,7 +355,7 @@ export default function DiscussionDetailPage() {
                   Report
                 </Button>
 
-                <AlertDialog>
+                <AlertDialog open={showDeleteDialog} onOpenChange={(open) => setShowDeleteDialog(open)}>
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" size="sm" className="border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-400">
                       <Trash2 className="w-4 h-4 mr-2" />
@@ -316,9 +370,15 @@ export default function DiscussionDetailPage() {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Batal</AlertDialogCancel>
-                      <AlertDialogAction className="bg-red-500 hover:bg-red-600 text-white">
-                        Ya, Hapus
+                      <AlertDialogCancel onClick={() => setShowDeleteDialog(false)} disabled={isDeleting}>
+                        Batal
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDeleteConfirm}
+                        disabled={isDeleting}
+                        className="bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        {isDeleting ? "Menghapus..." : "Ya, Hapus"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

@@ -181,10 +181,52 @@ export default function DiscussionsPage() {
     if (!deleteDiscussionId) return;
 
     setIsDeleting(true);
-    // Simulate delete action - replace with actual Supabase delete when ready
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    setDeleteDiscussionId(null);
-    setIsDeleting(false);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("Unauthorized");
+      }
+
+      const { data: discussion } = await supabase
+        .from("discussions")
+        .select("author_id")
+        .eq("id", deleteDiscussionId)
+        .single();
+
+      if (!discussion) {
+        throw new Error("Discussion not found");
+      }
+
+      if (discussion.author_id !== user.id) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.role !== "admin" && profile?.role !== "moderator") {
+          throw new Error("You can only delete your own discussions");
+        }
+      }
+
+      const { error } = await supabase
+        .from("discussions")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", deleteDiscussionId);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      setDeleteDiscussionId(null);
+    } catch (error) {
+      console.error("Failed to delete discussion:", error);
+      setDeleteDiscussionId(null);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleDeleteCancel = () => {
