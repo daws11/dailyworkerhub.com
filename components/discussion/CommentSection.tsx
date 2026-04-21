@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { MessageCircle } from "lucide-react";
+import { toast } from "sonner";
 import { CommentItem } from "./CommentItem";
 import { CommentForm } from "./CommentForm";
 
@@ -116,6 +117,7 @@ export function CommentSection({
     async (id: string) => {
       if (onDeleteComment) {
         await onDeleteComment(id);
+        toast.success("Komentar berhasil dihapus");
       }
     },
     [onDeleteComment]
