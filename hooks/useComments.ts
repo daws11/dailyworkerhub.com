@@ -66,6 +66,7 @@ export function useComments(discussionId: string) {
           )
         `)
         .eq("discussion_id", discussionId)
+        .is("deleted_at", null)
         .order("created_at", { ascending: true });
 
       if (error) throw new Error(error.message);
@@ -208,7 +209,7 @@ export function useDeleteComment() {
 
       const { error: deleteError } = await supabase
         .from("comments")
-        .delete()
+        .update({ deleted_at: new Date().toISOString() })
         .eq("id", commentId);
 
       if (deleteError) throw new Error(deleteError.message);
