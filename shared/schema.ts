@@ -9,10 +9,19 @@ export const users = pgTable("users", {
   hashedPassword: text("hashed_password").notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  hashedPassword: true,
-});
+// bcrypt hash format: $2a$12$... or $2b$... or $2y$... followed by 53 chars
+const BCRYPT_HASH_REGEX = /^\$(2[aby])\$(\d{2})\$[./A-Za-z0-9]{53}$/;
+
+export const insertUserSchema = createInsertSchema(users)
+  .pick({
+    username: true,
+    hashedPassword: true,
+  })
+  .extend({
+    hashedPassword: z.string().regex(BCRYPT_HASH_REGEX, {
+      message: "Invalid password hash format. Expected bcrypt format like $2a$12$...",
+    }),
+  });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
