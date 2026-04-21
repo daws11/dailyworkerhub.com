@@ -5,18 +5,15 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import {
-  MessageCircle,
-  Clock,
+  ArrowUp,
+  ArrowDown,
   Share2,
   Bookmark,
   Flag,
-  CheckCircle,
-  Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { VoteButtonCompact } from "@/components/vote-button";
+import { CommentSection } from "@/components/discussion/CommentSection";
 
 interface Comment {
   id: string;
@@ -148,15 +145,11 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
 ];
 
 export default function DiscussionDetailPage() {
-  const [replyContent, setReplyContent] = useState("");
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
 
   const discussion = mockDiscussion;
   const comments = mockComments;
-  const totalComments = comments.reduce((acc, c) => acc + 1 + (c.replies?.length || 0), 0);
-
-  const handleSubmitReply = () => {
-    setReplyContent("");
-  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -255,12 +248,31 @@ export default function DiscussionDetailPage() {
 
               {/* Actions */}
               <div className="flex items-center gap-2 mt-8 pt-6 border-t border-slate-800">
-                <VoteButtonCompact
-                  targetType="discussion"
-                  targetId={discussion.id}
-                  authorId="user-1" // TODO: Get from auth context
-                  initialVotesCount={discussion.likes_count}
-                />
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant={liked ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => {
+                      setLiked(!liked);
+                      if (disliked) setDisliked(false);
+                    }}
+                    className={`${liked ? "bg-emerald-500 text-slate-950" : "border-slate-700 text-slate-400"}`}
+                  >
+                    <ArrowUp className="w-4 h-4 mr-1" />
+                    {discussion.likes_count + (liked ? 1 : 0)}
+                  </Button>
+                  <Button
+                    variant={disliked ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => {
+                      setDisliked(!disliked);
+                      if (liked) setLiked(false);
+                    }}
+                    className="border-slate-700 text-slate-400"
+                  >
+                    <ArrowDown className="w-4 h-4" />
+                  </Button>
+                </div>
 
                 <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
                   <Bookmark className="w-4 h-4 mr-2" />
@@ -281,131 +293,10 @@ export default function DiscussionDetailPage() {
           </article>
 
           {/* Comments Section */}
-          <section className="mb-6">
-            <h2 className="text-xl font-semibold text-slate-50 mb-6 flex items-center gap-2">
-              <MessageCircle className="w-5 h-5 text-emerald-400" />
-              {totalComments} Komentar
-            </h2>
-
-            {/* Reply Form */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
-              <Textarea
-                placeholder="Tulis komentar Anda..."
-                value={replyContent}
-                onChange={(e) => setReplyContent(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500 mb-3 min-h-[100px]"
-              />
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500">
-                  {replyContent.length}/2000 karakter
-                </span>
-                <Button
-                  onClick={handleSubmitReply}
-                  disabled={!replyContent.trim()}
-                  className="bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Kirim Komentar
-                </Button>
-              </div>
-            </div>
-
-            {/* Comments List */}
-            <div className="space-y-4">
-              {comments.map((comment) => (
-                <div key={comment.id} className="space-y-4">
-                  {/* Main Comment */}
-                  <div className={`bg-slate-900 border rounded-xl p-4 ${comment.is_solution ? "border-emerald-500/50" : "border-slate-800"}`}>
-                    {comment.is_solution && (
-                      <div className="flex items-center gap-2 mb-3 text-emerald-400">
-                        <CheckCircle className="w-4 h-4" />
-                        <span className="text-sm font-medium">Jawaban Terbaik</span>
-                      </div>
-                    )}
-
-                    <div className="flex items-start gap-3">
-                      <Avatar className="w-8 h-8">
-                        <AvatarFallback className="bg-emerald-500/20 text-emerald-400 text-sm">
-                          {comment.author.username.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-slate-200 text-sm">{comment.author.username}</span>
-                          <span className="text-xs text-slate-500">
-                            {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: id })}
-                          </span>
-                        </div>
-
-                        <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-                          {comment.content}
-                        </div>
-
-                        <div className="flex items-center gap-4 mt-3">
-                          <VoteButtonCompact
-                            targetType="comment"
-                            targetId={comment.id}
-                            authorId="user-1" // TODO: Get from auth context
-                            initialVotesCount={comment.likes_count}
-                          />
-                          <button className="text-xs text-slate-500 hover:text-emerald-400 transition-colors">
-                            Balas
-                          </button>
-                          {comment.is_solution && (
-                            <button className="flex items-center gap-1 text-xs text-emerald-400">
-                              <CheckCircle className="w-3 h-3" />
-                              Solusi
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Replies */}
-                  {comment.replies && comment.replies.length > 0 && (
-                    <div className="ml-8 space-y-3">
-                      {comment.replies.map((reply) => (
-                        <div key={reply.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
-                          <div className="flex items-start gap-3">
-                            <Avatar className="w-6 h-6">
-                              <AvatarFallback className="bg-slate-700 text-slate-300 text-xs">
-                                {reply.author.username.charAt(0).toUpperCase()}
-                              </AvatarFallback>
-                            </Avatar>
-
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="font-medium text-slate-300 text-sm">{reply.author.username}</span>
-                                <span className="text-xs text-slate-500">
-                                  {formatDistanceToNow(new Date(reply.created_at), { addSuffix: true, locale: id })}
-                                </span>
-                              </div>
-
-                              <div className="text-slate-400 text-sm leading-relaxed whitespace-pre-wrap">
-                                {reply.content}
-                              </div>
-
-                              <div className="flex items-center gap-4 mt-2">
-                                <VoteButtonCompact
-                                  targetType="comment"
-                                  targetId={reply.id}
-                                  authorId="user-1" // TODO: Get from auth context
-                                  initialVotesCount={reply.likes_count}
-                                  className="h-7 w-7"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
+          <CommentSection
+            discussionId={discussion.id}
+            comments={comments}
+          />
         </div>
       </main>
     </div>
