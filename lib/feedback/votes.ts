@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/client'
 import type { Database } from '@/lib/supabase/types'
 
 type Vote = Database['public']['Tables']['votes']['Row']
-type FeedbackItem = Database['public']['Tables']['feedback_items']['Row']
+type VoteInsert = Database['public']['Tables']['votes']['Insert']
 
 export interface CastVoteInput {
   user_id: string
@@ -14,6 +14,32 @@ export interface ToggleVoteInput {
   user_id: string
   target_id: string
   value: 1 | -1
+}
+
+// Helper to safely update votes count with fallback
+async function updateVotesCount(supabase: ReturnType<typeof createClient>, feedbackId: string, delta: number): Promise<void> {
+  try {
+    // @ts-expect-error RPC call - parameters are runtime-dependent
+    await supabase.rpc('increment_votes_count', {
+      feedback_id: feedbackId,
+      delta: delta,
+    })
+  } catch {
+    // Fallback: update directly if RPC doesn't exist
+    const { data: feedback } = await supabase
+      .from('feedback_items')
+      .select('votes_count')
+      .eq('id', feedbackId)
+      .single()
+
+    if (feedback) {
+      await supabase
+        .from('feedback_items')
+        // @ts-expect-error Type inference issue with dummy client at build time
+        .update({ votes_count: feedback.votes_count + delta })
+        .eq('id', feedbackId)
+    }
+  }
 }
 
 /**
@@ -34,12 +60,15 @@ export async function castVote(input: CastVoteInput): Promise<{
     .eq('target_id', input.target_id)
     .single()
 
-  if (existingVote) {
+  const existingVoteTyped = existingVote as Vote | null
+
+  if (existingVoteTyped && existingVoteTyped.id) {
     // Update existing vote
     const { data, error } = await supabase
       .from('votes')
-      .update({ value: input.value } as never)
-      .eq('id', existingVote.id)
+      // @ts-expect-error Type inference issue with dummy client at build time
+      .update({ value: input.value })
+      .eq('id', existingVoteTyped.id)
       .select()
       .single()
 
@@ -48,41 +77,26 @@ export async function castVote(input: CastVoteInput): Promise<{
     }
 
     // Update votes_count on feedback item if value changed
-    if (existingVote.value !== input.value) {
-      const voteDiff = input.value - existingVote.value
-      await supabase.rpc('increment_votes_count', {
-        feedback_id: input.target_id,
-        delta: voteDiff,
-      }).catch(() => {
-        // Fallback: update directly if RPC doesn't exist
-        supabase
-          .from('feedback_items')
-          .select('votes_count')
-          .eq('id', input.target_id)
-          .single()
-          .then(({ data: feedback }) => {
-            if (feedback) {
-              supabase
-                .from('feedback_items')
-                .update({ votes_count: feedback.votes_count + voteDiff } as never)
-                .eq('id', input.target_id)
-            }
-          })
-      })
+    if (existingVoteTyped.value !== input.value) {
+      const voteDiff = input.value - existingVoteTyped.value
+      await updateVotesCount(supabase, input.target_id, voteDiff)
     }
 
     return { data: data as Vote, error: null }
   }
 
   // Insert new vote
+  const insertData: VoteInsert = {
+    user_id: input.user_id,
+    target_type: 'feedback',
+    target_id: input.target_id,
+    value: input.value,
+  }
+
   const { data, error } = await supabase
     .from('votes')
-    .insert({
-      user_id: input.user_id,
-      target_type: 'feedback',
-      target_id: input.target_id,
-      value: input.value,
-    } as never)
+    // @ts-expect-error Type inference issue with dummy client at build time
+    .insert(insertData)
     .select()
     .single()
 
@@ -91,25 +105,7 @@ export async function castVote(input: CastVoteInput): Promise<{
   }
 
   // Increment votes_count on feedback item
-  await supabase.rpc('increment_votes_count', {
-    feedback_id: input.target_id,
-    delta: input.value,
-  }).catch(() => {
-    // Fallback: update directly if RPC doesn't exist
-    supabase
-      .from('feedback_items')
-      .select('votes_count')
-      .eq('id', input.target_id)
-      .single()
-      .then(({ data: feedback }) => {
-        if (feedback) {
-          supabase
-            .from('feedback_items')
-            .update({ votes_count: feedback.votes_count + input.value } as never)
-            .eq('id', input.target_id)
-        }
-      })
-  })
+  await updateVotesCount(supabase, input.target_id, input.value)
 
   return { data: data as Vote, error: null }
 }
@@ -132,7 +128,9 @@ export async function removeVote(userId: string, targetId: string): Promise<{
     .eq('target_id', targetId)
     .single()
 
-  if (!existingVote) {
+  const existingVoteTyped = existingVote as Vote | null
+
+  if (!existingVoteTyped) {
     return { data: null, error: new Error('Vote not found') }
   }
 
@@ -150,26 +148,8 @@ export async function removeVote(userId: string, targetId: string): Promise<{
   }
 
   // Decrement votes_count on feedback item
-  const voteChange = -existingVote.value
-  await supabase.rpc('increment_votes_count', {
-    feedback_id: targetId,
-    delta: voteChange,
-  }).catch(() => {
-    // Fallback: update directly if RPC doesn't exist
-    supabase
-      .from('feedback_items')
-      .select('votes_count')
-      .eq('id', targetId)
-      .single()
-      .then(({ data: feedback }) => {
-        if (feedback) {
-          supabase
-            .from('feedback_items')
-            .update({ votes_count: feedback.votes_count + voteChange } as never)
-            .eq('id', targetId)
-        }
-      })
-  })
+  const voteChange = -existingVoteTyped.value
+  await updateVotesCount(supabase, targetId, voteChange)
 
   return { data: data as { id: string }, error: null }
 }
@@ -193,51 +173,38 @@ export async function toggleVote(input: ToggleVoteInput): Promise<{
     .eq('target_id', input.target_id)
     .single()
 
-  if (existingVote) {
+  const existingVoteTyped = existingVote as Vote | null
+
+  if (existingVoteTyped && existingVoteTyped.id) {
     // Remove the vote
     const { error } = await supabase
       .from('votes')
       .delete()
-      .eq('id', existingVote.id)
+      .eq('id', existingVoteTyped.id)
 
     if (error) {
       return { data: null, removed: false, error: new Error(error.message) }
     }
 
     // Decrement votes_count on feedback item
-    const voteChange = -existingVote.value
-    await supabase.rpc('increment_votes_count', {
-      feedback_id: input.target_id,
-      delta: voteChange,
-    }).catch(() => {
-      // Fallback: update directly if RPC doesn't exist
-      supabase
-        .from('feedback_items')
-        .select('votes_count')
-        .eq('id', input.target_id)
-        .single()
-        .then(({ data: feedback }) => {
-          if (feedback) {
-            supabase
-              .from('feedback_items')
-              .update({ votes_count: feedback.votes_count + voteChange } as never)
-              .eq('id', input.target_id)
-          }
-        })
-    })
+    const voteChange = -existingVoteTyped.value
+    await updateVotesCount(supabase, input.target_id, voteChange)
 
     return { data: null, removed: true, error: null }
   }
 
   // Insert new vote
+  const insertData: VoteInsert = {
+    user_id: input.user_id,
+    target_type: 'feedback',
+    target_id: input.target_id,
+    value: input.value,
+  }
+
   const { data, error } = await supabase
     .from('votes')
-    .insert({
-      user_id: input.user_id,
-      target_type: 'feedback',
-      target_id: input.target_id,
-      value: input.value,
-    } as never)
+    // @ts-expect-error Type inference issue with dummy client at build time
+    .insert(insertData)
     .select()
     .single()
 
@@ -246,25 +213,7 @@ export async function toggleVote(input: ToggleVoteInput): Promise<{
   }
 
   // Increment votes_count on feedback item
-  await supabase.rpc('increment_votes_count', {
-    feedback_id: input.target_id,
-    delta: input.value,
-  }).catch(() => {
-    // Fallback: update directly if RPC doesn't exist
-    supabase
-      .from('feedback_items')
-      .select('votes_count')
-      .eq('id', input.target_id)
-      .single()
-      .then(({ data: feedback }) => {
-        if (feedback) {
-          supabase
-            .from('feedback_items')
-            .update({ votes_count: feedback.votes_count + input.value } as never)
-            .eq('id', input.target_id)
-        }
-      })
-  })
+  await updateVotesCount(supabase, input.target_id, input.value)
 
   return { data: data as Vote, removed: false, error: null }
 }
