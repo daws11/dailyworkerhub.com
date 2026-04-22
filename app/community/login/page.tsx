@@ -8,14 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRateLimit } from "@/lib/ratelimit";
+import { toast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
 
   const { check: checkRateLimit, isLimited } = useRateLimit({
     identifier: email || "login-attempt",
@@ -26,19 +25,25 @@ export default function LoginPage() {
 
     // Check rate limit before login attempt
     if (isLimited) {
-      setError("Terlalu banyak percobaan. Silakan tunggu beberapa saat sebelum mencoba lagi.");
+      toast({
+        title: "Terlalu banyak percobaan",
+        description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
+        variant: "destructive",
+      });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      setError(result.message);
+      toast({
+        title: "Terlalu banyak percobaan",
+        description: result.message,
+        variant: "destructive",
+      });
       return;
     }
 
     setLoading(true);
-    setError("");
-    setMessage("");
 
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
@@ -47,10 +52,17 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      toast({
+        title: "Login Gagal",
+        description: error.message,
+        variant: "destructive",
+      });
       setLoading(false);
     } else {
-      setMessage("Login berhasil! Mengalihkan...");
+      toast({
+        title: "Login Berhasil",
+        description: "Mengalihkan...",
+      });
       window.location.href = "/community";
     }
   }, [email, password, isLimited, checkRateLimit]);
@@ -58,18 +70,25 @@ export default function LoginPage() {
   const handleGoogleLogin = useCallback(async () => {
     // Check rate limit before OAuth attempt
     if (isLimited) {
-      setError("Terlalu banyak percobaan. Silakan tunggu beberapa saat sebelum mencoba lagi.");
+      toast({
+        title: "Terlalu banyak percobaan",
+        description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
+        variant: "destructive",
+      });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      setError(result.message);
+      toast({
+        title: "Terlalu banyak percobaan",
+        description: result.message,
+        variant: "destructive",
+      });
       return;
     }
 
     setLoading(true);
-    setError("");
 
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithOAuth({
@@ -80,7 +99,11 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setError(error.message);
+      toast({
+        title: "Login Gagal",
+        description: error.message,
+        variant: "destructive",
+      });
       setLoading(false);
     }
   }, [isLimited, checkRateLimit]);
@@ -109,20 +132,6 @@ export default function LoginPage() {
                 Masuk ke akun DailyWorkerHub Community Anda
               </p>
             </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                <p className="text-sm text-red-400">{error}</p>
-              </div>
-            )}
-
-            {/* Success Message */}
-            {message && (
-              <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-sm text-emerald-400">{message}</p>
-              </div>
-            )}
 
             {/* Login Form */}
             <form onSubmit={handleLogin} className="space-y-4">
