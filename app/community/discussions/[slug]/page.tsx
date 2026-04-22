@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentSection } from "@/components/discussion/CommentSection";
+import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
 
 interface Comment {
   id: string;
@@ -154,28 +155,7 @@ export default function DiscussionDetailPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link href="/community/login" className="text-sm text-slate-400 hover:text-slate-50">
-              Masuk
-            </Link>
-            <Link
-              href="/community/register"
-              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            >
-              Daftar
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <CommunityNavbar variant="simple" />
 
       {/* Main Content */}
       <main className="pt-24 pb-16">
