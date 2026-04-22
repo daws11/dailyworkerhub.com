@@ -298,10 +298,12 @@ export default function DiscussionsPage() {
             </Button>
 
             {/* New Discussion Button */}
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-              <Plus className="w-4 h-4 mr-2" />
-              Buat Diskusi
-            </Button>
+            <Link href="/community/discussions/new">
+              <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                <Plus className="w-4 h-4 mr-2" />
+                Buat Diskusi
+              </Button>
+            </Link>
           </div>
 
           {/* Category Pills */}
@@ -419,10 +421,12 @@ export default function DiscussionsPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada diskusi</h3>
                 <p className="text-slate-500 mb-6">Coba ubah filter atau kata kunci pencarian Anda</p>
-                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Buat Diskusi Pertama
-                </Button>
+                <Link href="/community/discussions/new">
+                  <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Buat Diskusi Pertama
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
