@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DiscussionCardSkeleton } from "@/components/skeleton/DiscussionCardSkeleton";
 
 interface Discussion {
   id: string;
@@ -155,8 +156,17 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClient();
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -324,6 +334,15 @@ export default function DiscussionsPage() {
           )}
 
           {/* Discussions List */}
+          {isLoading ? (
+            <div className="space-y-4">
+              <DiscussionCardSkeleton variant="featured" />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+            </div>
+          ) : (
           <div className="space-y-4">
             {filteredDiscussions.map((discussion) => (
               <Link
@@ -407,6 +426,7 @@ export default function DiscussionsPage() {
               </div>
             )}
           </div>
+          )}
         </div>
       </main>
     </div>

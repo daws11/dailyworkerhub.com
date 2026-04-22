@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -18,6 +18,7 @@ import {
   Eye,
   X,
 } from "lucide-react";
+import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
 
 // Mock data - will be replaced with Supabase data
 const mockStats = {
@@ -119,6 +120,20 @@ const shortcuts = [
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Show skeleton during loading
+  if (isLoading) {
+    return <CommunityHomeSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
