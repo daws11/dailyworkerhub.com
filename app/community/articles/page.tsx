@@ -8,6 +8,7 @@ import { id } from "date-fns/locale";
 import { Search, Clock, Eye, Plus, X, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ArticleCardSkeleton } from "@/components/skeleton/ArticleCardSkeleton";
 
 interface Article {
   id: string;
@@ -325,11 +326,27 @@ export default function ArticlesPage() {
             ))}
           </div>
 
-          {/* Loading State */}
+          {/* Loading State - Show skeleton during loading */}
           {loading && (
-            <div className="flex items-center justify-center py-16">
-              <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
-              <span className="ml-3 text-slate-400">Memuat artikel...</span>
+            <div className="space-y-8">
+              {/* Featured Skeleton */}
+              <div>
+                <h2 className="text-xl font-semibold text-slate-50 mb-4">Featured</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <ArticleCardSkeleton variant="featured" />
+                  <ArticleCardSkeleton variant="featured" />
+                </div>
+              </div>
+
+              {/* All Articles Skeleton */}
+              <div>
+                <h2 className="text-xl font-semibold text-slate-50 mb-4">Semua Artikel</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <ArticleCardSkeleton key={i} />
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
