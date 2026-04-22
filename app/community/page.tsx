@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MessageSquare,
@@ -310,10 +311,11 @@ export default function CommunityPage() {
               >
                 {/* Cover Image */}
                 <div className="aspect-video relative overflow-hidden">
-                  <img
+                  <Image
                     src={article.coverImage}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {article.category}
