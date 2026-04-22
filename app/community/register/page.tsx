@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRateLimit } from "@/lib/ratelimit";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -27,20 +27,16 @@ export default function RegisterPage() {
 
     // Check rate limit before registration attempt
     if (isLimited) {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
-        variant: "destructive",
       });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: result.message,
-        variant: "destructive",
       });
       return;
     }
@@ -48,20 +44,16 @@ export default function RegisterPage() {
     setLoading(true);
 
     if (password !== confirmPassword) {
-      toast({
-        title: "Password tidak cocok",
+      toast.error("Password tidak cocok", {
         description: "Pastikan password dan konfirmasi password sama.",
-        variant: "destructive",
       });
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      toast({
-        title: "Password terlalu pendek",
+      toast.error("Password terlalu pendek", {
         description: "Password minimal 6 karakter.",
-        variant: "destructive",
       });
       setLoading(false);
       return;
@@ -79,14 +71,11 @@ export default function RegisterPage() {
     });
 
     if (error) {
-      toast({
-        title: "Registrasi gagal",
+      toast.error("Registrasi gagal", {
         description: error.message,
-        variant: "destructive",
       });
     } else {
-      toast({
-        title: "Registrasi berhasil",
+      toast.success("Registrasi berhasil", {
         description: "Silakan cek email untuk verifikasi.",
       });
     }
@@ -96,20 +85,16 @@ export default function RegisterPage() {
   const handleGoogleRegister = useCallback(async () => {
     // Check rate limit before OAuth attempt
     if (isLimited) {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
-        variant: "destructive",
       });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: result.message,
-        variant: "destructive",
       });
       return;
     }
@@ -125,10 +110,8 @@ export default function RegisterPage() {
     });
 
     if (error) {
-      toast({
-        title: "Registrasi gagal",
+      toast.error("Registrasi gagal", {
         description: error.message,
-        variant: "destructive",
       });
       setLoading(false);
     }

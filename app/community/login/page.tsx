@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRateLimit } from "@/lib/ratelimit";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -25,20 +25,16 @@ export default function LoginPage() {
 
     // Check rate limit before login attempt
     if (isLimited) {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
-        variant: "destructive",
       });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: result.message,
-        variant: "destructive",
       });
       return;
     }
@@ -52,15 +48,12 @@ export default function LoginPage() {
     });
 
     if (error) {
-      toast({
-        title: "Login Gagal",
+      toast.error("Login Gagal", {
         description: error.message,
-        variant: "destructive",
       });
       setLoading(false);
     } else {
-      toast({
-        title: "Login Berhasil",
+      toast.success("Login Berhasil", {
         description: "Mengalihkan...",
       });
       window.location.href = "/community";
@@ -70,20 +63,16 @@ export default function LoginPage() {
   const handleGoogleLogin = useCallback(async () => {
     // Check rate limit before OAuth attempt
     if (isLimited) {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
-        variant: "destructive",
       });
       return;
     }
 
     const result = await checkRateLimit();
     if (result.status === "blocked") {
-      toast({
-        title: "Terlalu banyak percobaan",
+      toast.error("Terlalu banyak percobaan", {
         description: result.message,
-        variant: "destructive",
       });
       return;
     }
@@ -99,10 +88,8 @@ export default function LoginPage() {
     });
 
     if (error) {
-      toast({
-        title: "Login Gagal",
+      toast.error("Login Gagal", {
         description: error.message,
-        variant: "destructive",
       });
       setLoading(false);
     }
