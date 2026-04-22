@@ -6,6 +6,21 @@ import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import "./globals.css";
 
+const themeInitScript = `
+(function() {
+  try {
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = stored || (prefersDark ? 'dark' : 'light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  } catch (e) {
+    // Ignore errors in SSR
+  }
+})();
+`;
+
 export const metadata: Metadata = {
   title: "Daily Worker Hub",
   description: "Platform harian gratis untuk pekerja dan bisnis di Indonesia. Akses pekerja harian tanpa perantara, transparan, dan terpercaya.",
@@ -39,6 +54,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
+      <head>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body>
         <Providers>
           <TooltipProvider>
