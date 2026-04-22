@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
@@ -364,11 +365,12 @@ export default function ArticlesPage() {
                         >
                           <div className="flex flex-col sm:flex-row">
                             {article.cover_image && (
-                              <div className="sm:w-48 aspect-video sm:aspect-square relative">
-                                <img
+                              <div className="sm:w-48 aspect-video sm:aspect-square relative overflow-hidden">
+                                <Image
                                   src={article.cover_image}
                                   alt={article.title}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
                                 />
                               </div>
                             )}
@@ -425,10 +427,11 @@ export default function ArticlesPage() {
                         >
                           {article.cover_image && (
                             <div className="aspect-video relative overflow-hidden">
-                              <img
+                              <Image
                                 src={article.cover_image}
                                 alt={article.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-500"
                               />
                             </div>
                           )}
