@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+<<<<<<< HEAD
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,6 +31,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+=======
+import { DiscussionCardSkeleton } from "@/components/skeleton/DiscussionCardSkeleton";
+>>>>>>> origin/main
 
 interface Discussion {
   id: string;
@@ -167,6 +171,7 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
+<<<<<<< HEAD
   const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -235,6 +240,19 @@ export default function DiscussionsPage() {
   const handleDeleteCancel = () => {
     setDeleteDiscussionId(null);
   };
+=======
+  const [isLoading, setIsLoading] = useState(true);
+
+  const supabase = createClient();
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+>>>>>>> origin/main
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -366,10 +384,12 @@ export default function DiscussionsPage() {
             </Button>
 
             {/* New Discussion Button */}
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-              <Plus className="w-4 h-4 mr-2" />
-              Buat Diskusi
-            </Button>
+            <Link href="/community/discussions/new">
+              <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                <Plus className="w-4 h-4 mr-2" />
+                Buat Diskusi
+              </Button>
+            </Link>
           </div>
 
           {/* Category Pills */}
@@ -402,6 +422,15 @@ export default function DiscussionsPage() {
           )}
 
           {/* Discussions List */}
+          {isLoading ? (
+            <div className="space-y-4">
+              <DiscussionCardSkeleton variant="featured" />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+            </div>
+          ) : (
           <div className="space-y-4">
             {filteredDiscussions.map((discussion) => (
               <Link
@@ -487,13 +516,16 @@ export default function DiscussionsPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada diskusi</h3>
                 <p className="text-slate-500 mb-6">Coba ubah filter atau kata kunci pencarian Anda</p>
-                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Buat Diskusi Pertama
-                </Button>
+                <Link href="/community/discussions/new">
+                  <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Buat Diskusi Pertama
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
+<<<<<<< HEAD
 
           {/* Delete Confirmation Dialog */}
           <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
@@ -518,6 +550,9 @@ export default function DiscussionsPage() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+=======
+          )}
+>>>>>>> origin/main
         </div>
       </main>
     </div>

@@ -7,6 +7,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRateLimit } from "@/lib/ratelimit";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -18,8 +19,25 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const { check: checkRateLimit, isLimited } = useRateLimit({
+    identifier: email || "register-attempt",
+  });
+
   const handleRegister = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check rate limit before registration attempt
+    if (isLimited) {
+      setError("Terlalu banyak percobaan. Silakan tunggu beberapa saat sebelum mencoba lagi.");
+      return;
+    }
+
+    const result = await checkRateLimit();
+    if (result.status === "blocked") {
+      setError(result.message);
+      return;
+    }
+
     setLoading(true);
     setError("");
     setMessage("");
@@ -53,9 +71,21 @@ export default function RegisterPage() {
       setMessage("Registrasi berhasil! Silakan cek email untuk verifikasi.");
     }
     setLoading(false);
-  }, [email, password, username, confirmPassword]);
+  }, [email, password, username, confirmPassword, isLimited, checkRateLimit]);
 
   const handleGoogleRegister = useCallback(async () => {
+    // Check rate limit before OAuth attempt
+    if (isLimited) {
+      setError("Terlalu banyak percobaan. Silakan tunggu beberapa saat sebelum mencoba lagi.");
+      return;
+    }
+
+    const result = await checkRateLimit();
+    if (result.status === "blocked") {
+      setError(result.message);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -71,7 +101,7 @@ export default function RegisterPage() {
       setError(error.message);
       setLoading(false);
     }
-  }, []);
+  }, [isLimited, checkRateLimit]);
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col">
@@ -184,11 +214,13 @@ export default function RegisterPage() {
 
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || isLimited}
                 className="w-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
+                ) : isLimited ? (
+                  "Terlalu Banyak Percobaan"
                 ) : (
                   "Daftar"
                 )}
@@ -209,7 +241,7 @@ export default function RegisterPage() {
             <Button
               type="button"
               onClick={handleGoogleRegister}
-              disabled={loading}
+              disabled={loading || isLimited}
               variant="outline"
               className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-slate-50"
             >

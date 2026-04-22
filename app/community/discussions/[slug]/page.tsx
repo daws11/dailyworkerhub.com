@@ -12,7 +12,11 @@ import {
   Share2,
   Bookmark,
   Flag,
+<<<<<<< HEAD
   Trash2,
+=======
+  Edit,
+>>>>>>> origin/main
 } from "lucide-react";
 import {
   AlertDialog,
@@ -363,6 +367,7 @@ export default function DiscussionDetailPage() {
                   Report
                 </Button>
 
+<<<<<<< HEAD
                 <AlertDialog open={showDeleteDialog} onOpenChange={(open) => setShowDeleteDialog(open)}>
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" size="sm" className="border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-400">
@@ -391,6 +396,14 @@ export default function DiscussionDetailPage() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
+=======
+                <Link href={`/community/discussions/${discussion.slug}/edit`}>
+                  <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit
+                  </Button>
+                </Link>
+>>>>>>> origin/main
               </div>
             </div>
           </article>

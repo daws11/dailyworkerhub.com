@@ -30,9 +30,20 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Protected routes
-  const protectedPaths = ['/app', '/community/admin']
+  const protectedPaths = [
+    '/app',
+    '/community/admin',
+    '/community/discussions/new',
+  ]
+  // Wildcard patterns that need regex matching
+  const protectedWildcardPatterns = [
+    /^\/community\/discussions\/[^/]+\/edit$/,
+  ]
+
   const isProtectedPath = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
+  ) || protectedWildcardPatterns.some((pattern) =>
+    pattern.test(request.nextUrl.pathname)
   )
 
   if (isProtectedPath && !user) {
