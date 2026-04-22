@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import { toast } from "sonner";
 import {
   ArrowUp,
   MessageCircle,
@@ -15,10 +16,24 @@ import {
   Search,
   Filter,
   X,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+<<<<<<< HEAD
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+=======
 import { DiscussionCardSkeleton } from "@/components/skeleton/DiscussionCardSkeleton";
+>>>>>>> origin/main
 
 interface Discussion {
   id: string;
@@ -156,6 +171,76 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
+<<<<<<< HEAD
+  const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const supabase = createClient();
+
+  const handleDeleteClick = (e: React.MouseEvent, discussionId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDeleteDiscussionId(discussionId);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteDiscussionId) return;
+
+    setIsDeleting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("Unauthorized");
+      }
+
+      const { data: discussion } = await supabase
+        .from("discussions")
+        .select("author_id")
+        .eq("id", deleteDiscussionId)
+        .single();
+
+      if (!discussion) {
+        throw new Error("Discussion not found");
+      }
+
+      if (discussion.author_id !== user.id) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profile?.role !== "admin" && profile?.role !== "moderator") {
+          throw new Error("You can only delete your own discussions");
+        }
+      }
+
+      const { error } = await supabase
+        .from("discussions")
+        .update({ deleted_at: new Date().toISOString() })
+        .eq("id", deleteDiscussionId);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success("Diskusi berhasil dihapus");
+
+      setDeleteDiscussionId(null);
+    } catch (error) {
+      console.error("Failed to delete discussion:", error);
+      setDeleteDiscussionId(null);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDiscussionId(null);
+  };
+=======
   const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClient();
@@ -167,6 +252,7 @@ export default function DiscussionsPage() {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+>>>>>>> origin/main
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -408,6 +494,15 @@ export default function DiscussionsPage() {
                         <TrendingUp className="w-3 h-3" />
                         {discussion.view_count} views
                       </span>
+
+                      <button
+                        onClick={(e) => handleDeleteClick(e, discussion.id)}
+                        className="flex items-center gap-1 text-slate-500 hover:text-red-400 transition-colors ml-auto"
+                        aria-label="Hapus diskusi"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>Hapus</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -430,7 +525,34 @@ export default function DiscussionsPage() {
               </div>
             )}
           </div>
+<<<<<<< HEAD
+
+          {/* Delete Confirmation Dialog */}
+          <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hapus Diskusi?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tindakan ini tidak dapat dibatalkan. Diskusi yang dihapus tidak dapat dikembalikan.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={handleDeleteCancel} disabled={isDeleting}>
+                  Batal
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDeleteConfirm}
+                  disabled={isDeleting}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  {isDeleting ? "Menghapus..." : "Hapus"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+=======
           )}
+>>>>>>> origin/main
         </div>
       </main>
     </div>

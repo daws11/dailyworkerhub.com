@@ -66,6 +66,7 @@ export function useComments(discussionId: string) {
           )
         `)
         .eq("discussion_id", discussionId)
+        .is("deleted_at", null)
         .order("created_at", { ascending: true });
 
       if (error) throw new Error(error.message);
@@ -189,6 +190,8 @@ export function useUpdateComment() {
 }
 
 export function useDeleteComment() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (commentId: string) => {
       const supabase = createClient();
@@ -206,20 +209,57 @@ export function useDeleteComment() {
         throw new Error("You can only delete your own comments");
       }
 
+      // Fetch all descendant comment IDs for cascade soft delete
+      const descendantIds = await fetchAllDescendantIds(commentId);
+
+      // Soft delete the parent comment and all its descendants
+      const allCommentIds = [commentId, ...descendantIds];
       const { error: deleteError } = await supabase
         .from("comments")
-        .delete()
-        .eq("id", commentId);
+        .update({ deleted_at: new Date().toISOString() })
+        .in("id", allCommentIds);
 
       if (deleteError) throw new Error(deleteError.message);
 
-      const { error: countError } = await supabase.rpc("decrement_comments_count", {
+      const { error: countError } = await supabase.rpc("decrement_comments_count_by", {
         discussion_id: comment?.discussion_id,
+        count: allCommentIds.length,
       });
 
       if (countError) console.error("Failed to update comment count:", countError);
 
       return commentId;
     },
+    onSuccess: (_, __) => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+    },
   });
+}
+
+async function fetchAllDescendantIds(parentId: string): Promise<string[]> {
+  const supabase = createClient();
+  const descendantIds: string[] = [];
+  const queue: string[] = [parentId];
+  const visited = new Set<string>();
+
+  while (queue.length > 0) {
+    const currentId = queue.shift()!;
+    if (visited.has(currentId)) continue;
+    visited.add(currentId);
+
+    const { data: children } = await supabase
+      .from("comments")
+      .select("id")
+      .eq("parent_id", currentId)
+      .is("deleted_at", null);
+
+    if (children && children.length > 0) {
+      for (const child of children) {
+        descendantIds.push(child.id);
+        queue.push(child.id);
+      }
+    }
+  }
+
+  return descendantIds;
 }
