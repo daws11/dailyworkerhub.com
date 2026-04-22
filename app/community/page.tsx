@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -120,6 +120,26 @@ export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
+  const handleSearchSubmit = useCallback(
+    (e?: React.FormEvent) => {
+      e?.preventDefault();
+
+      if (searchQuery.trim()) {
+        window.location.href = `/community/discussions?q=${encodeURIComponent(searchQuery.trim())}`;
+      }
+    },
+    [searchQuery]
+  );
+
+  const handleSearchKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        handleSearchSubmit();
+      }
+    },
+    [handleSearchSubmit]
+  );
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
       {/* Navigation Bar - Fixed Top */}
@@ -227,6 +247,7 @@ export default function CommunityPage() {
                   placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
                   className="flex-1 bg-transparent text-slate-50 placeholder-slate-500 outline-none text-sm sm:text-base"
                 />
                 {searchQuery && (
@@ -237,7 +258,10 @@ export default function CommunityPage() {
                     <X className="w-4 h-4" />
                   </button>
                 )}
-                <button className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0">
+                <button
+                  onClick={() => handleSearchSubmit()}
+                  className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0"
+                >
                   Kirim
                 </button>
               </div>
