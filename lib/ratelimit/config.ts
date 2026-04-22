@@ -3,11 +3,6 @@ import { createClient } from '@upstash/redis'
 import type { StorageAdapter } from './storage-adapter'
 import { localStorageAdapter } from './storage-adapter'
 
-// Check if we're in a build environment without env vars
-const isBuildTime =
-  !process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL ||
-  !process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN
-
 /**
  * Rate limit configuration for authentication endpoints.
  *
@@ -39,7 +34,7 @@ export const AUTH_RATE_LIMIT_CONFIG: RateLimitConfig = {
 
 /**
  * Creates a rate limiter instance.
- * Returns a no-op rate limiter during build time when credentials are not available.
+ * Returns null when credentials are not available.
  *
  * @param config - Rate limit configuration
  * @param storage - Storage adapter for tracking requests
@@ -47,27 +42,17 @@ export const AUTH_RATE_LIMIT_CONFIG: RateLimitConfig = {
  */
 export function createRateLimiter(
   config: RateLimitConfig = AUTH_RATE_LIMIT_CONFIG,
-  storage?: StorageAdapter
+  _storage?: StorageAdapter
 ): Ratelimit | null {
-  const redisUrl = process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL
-  const redisToken = process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN
-
-  if (!redisUrl || !redisToken) {
-    // Return null during build time - rate limiting will be disabled
-    console.warn(
-      '[RateLimit] Upstash credentials not configured. Rate limiting is disabled. ' +
-        'Set NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL and NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN to enable.'
-    )
+  if (!process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL || !process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN) {
     return null
   }
 
-  const redisClient = createClient({
-    url: redisUrl,
-    token: redisToken,
-  })
-
   return new Ratelimit({
-    redis: redisClient,
+    redis: createClient({
+      url: process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL,
+      token: process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN,
+    }),
     limiter: Ratelimit.slidingWindow(config.limit, `${config.window} s`),
     analytics: true,
     prefix: 'ratelimit:auth',
@@ -102,17 +87,9 @@ export function createLocalRateLimiter(
 export function getRateLimiter(
   config: RateLimitConfig = AUTH_RATE_LIMIT_CONFIG
 ): Ratelimit | null {
-  if (isBuildTime) {
-    return null
+  if (!process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL || !process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN) {
+    return createLocalRateLimiter(config)
   }
 
-  const redisUrl = process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL
-  const redisToken = process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN
-
-  if (redisUrl && redisToken) {
-    return createRateLimiter(config)
-  }
-
-  // Fallback to local storage for development
-  return createLocalRateLimiter(config)
+  return createRateLimiter(config)
 }
