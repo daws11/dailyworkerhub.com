@@ -1,5 +1,5 @@
 import { Ratelimit } from '@upstash/ratelimit'
-import { createClient } from '@upstash/redis'
+import { Redis } from '@upstash/redis'
 import type { StorageAdapter } from './storage-adapter'
 import { localStorageAdapter } from './storage-adapter'
 
@@ -49,7 +49,7 @@ export function createRateLimiter(
   }
 
   return new Ratelimit({
-    redis: createClient({
+    redis: new Redis({
       url: process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL,
       token: process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN,
     }),
@@ -64,32 +64,26 @@ export function createRateLimiter(
  * This is useful when Redis is not available (e.g., during development or build).
  *
  * @param config - Rate limit configuration
- * @returns Rate limiter using localStorage adapter
+ * @returns Ratelimit using localStorage adapter
  */
 export function createLocalRateLimiter(
   config: RateLimitConfig = AUTH_RATE_LIMIT_CONFIG
-): Ratelimit {
-  return new Ratelimit({
-    redis: localStorageAdapter,
-    limiter: Ratelimit.slidingWindow(config.limit, `${config.window} s`),
-    analytics: false,
-    prefix: 'ratelimit:auth:local',
-  })
+): Ratelimit | null {
+  // LocalStorage adapter is not compatible with Upstash Ratelimit's Redis interface
+  // Return null to indicate rate limiting should be skipped
+  console.warn('Rate limiting with localStorage is not supported. Rate limiting will be skipped.')
+  return null
 }
 
 /**
  * Gets the appropriate rate limiter based on environment.
- * Uses Redis-based rate limiter in production, localStorage in development.
+ * Uses Redis-based rate limiter if credentials are available, otherwise returns null.
  *
  * @param config - Rate limit configuration
- * @returns Rate limiter instance
+ * @returns Ratelimit instance or null if credentials are missing
  */
 export function getRateLimiter(
   config: RateLimitConfig = AUTH_RATE_LIMIT_CONFIG
 ): Ratelimit | null {
-  if (!process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_URL || !process.env.NEXT_PUBLIC_UPSTASH_RATELIMIT_REST_TOKEN) {
-    return createLocalRateLimiter(config)
-  }
-
   return createRateLimiter(config)
 }

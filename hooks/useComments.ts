@@ -75,7 +75,7 @@ export function useComments(discussionId: string) {
         .from("discussions")
         .select("comments_count")
         .eq("id", discussionId)
-        .single();
+        .single<{ comments_count: number }>();
 
       return buildCommentTree(comments || [], discussion?.comments_count || 0);
     },
@@ -115,7 +115,7 @@ export function useCreateComment() {
 
       const { data, error } = await supabase
         .from("comments")
-        .insert(insertData)
+        .insert(insertData as never)
         .select()
         .single();
 
@@ -123,7 +123,7 @@ export function useCreateComment() {
 
       const { error: countError } = await supabase.rpc("increment_comments_count", {
         discussion_id: discussionId,
-      });
+      } as never);
 
       if (countError) console.error("Failed to update comment count:", countError);
 
@@ -141,7 +141,7 @@ async function fetchParentDepth(parentId: string): Promise<number> {
     .from("comments")
     .select("depth")
     .eq("id", parentId)
-    .single();
+    .single<{ depth: number }>();
 
   return data?.depth ?? 0;
 }
@@ -166,21 +166,21 @@ export function useUpdateComment() {
         .from("comments")
         .select("author_id")
         .eq("id", commentId)
-        .single();
+        .single<{ author_id: string }>();
 
       if (comment?.author_id !== user.id) {
         throw new Error("You can only edit your own comments");
       }
 
-      const { data, error } = await supabase
+      const result = await supabase
         .from("comments")
-        .update({ content })
+        .update({ content } as never)
         .eq("id", commentId)
         .select()
-        .single();
+        .single() as { data: CommentRow | null; error: { message: string } | null };
 
-      if (error) throw new Error(error.message);
-      return data as CommentRow;
+      if (result.error) throw new Error(result.error.message);
+      return result.data as CommentRow;
     },
     onSuccess: (_, { commentId }) => {
       queryClient.invalidateQueries({ queryKey: ["comment", commentId] });
@@ -203,7 +203,7 @@ export function useDeleteComment() {
         .from("comments")
         .select("author_id, discussion_id")
         .eq("id", commentId)
-        .single();
+        .single<{ author_id: string; discussion_id: string }>();
 
       if (comment?.author_id !== user.id) {
         throw new Error("You can only delete your own comments");
@@ -216,15 +216,15 @@ export function useDeleteComment() {
       const allCommentIds = [commentId, ...descendantIds];
       const { error: deleteError } = await supabase
         .from("comments")
-        .update({ deleted_at: new Date().toISOString() })
+        .update({ deleted_at: new Date().toISOString() } as never)
         .in("id", allCommentIds);
 
       if (deleteError) throw new Error(deleteError.message);
 
-      const { error: countError } = await supabase.rpc("decrement_comments_count_by", {
+      const { error: countError } = await supabase.rpc("decrement_comments_count_by" as never, {
         discussion_id: comment?.discussion_id,
         count: allCommentIds.length,
-      });
+      } as never);
 
       if (countError) console.error("Failed to update comment count:", countError);
 
@@ -251,7 +251,7 @@ async function fetchAllDescendantIds(parentId: string): Promise<string[]> {
       .from("comments")
       .select("id")
       .eq("parent_id", currentId)
-      .is("deleted_at", null);
+      .is("deleted_at", null) as { data: { id: string }[] | null };
 
     if (children && children.length > 0) {
       for (const child of children) {

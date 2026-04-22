@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,9 +30,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-=======
 import { DiscussionCardSkeleton } from "@/components/skeleton/DiscussionCardSkeleton";
->>>>>>> origin/main
 
 interface Discussion {
   id: string;
@@ -171,11 +168,19 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
-<<<<<<< HEAD
   const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClient();
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleDeleteClick = (e: React.MouseEvent, discussionId: string) => {
     e.preventDefault();
@@ -199,7 +204,7 @@ export default function DiscussionsPage() {
         .from("discussions")
         .select("author_id")
         .eq("id", deleteDiscussionId)
-        .single();
+        .single<{ author_id: string }>();
 
       if (!discussion) {
         throw new Error("Discussion not found");
@@ -210,7 +215,7 @@ export default function DiscussionsPage() {
           .from("profiles")
           .select("role")
           .eq("id", user.id)
-          .single();
+          .single<{ role: string }>();
 
         if (profile?.role !== "admin" && profile?.role !== "moderator") {
           throw new Error("You can only delete your own discussions");
@@ -219,7 +224,7 @@ export default function DiscussionsPage() {
 
       const { error } = await supabase
         .from("discussions")
-        .update({ deleted_at: new Date().toISOString() })
+        .update({ deleted_at: new Date().toISOString() } as never)
         .eq("id", deleteDiscussionId);
 
       if (error) {
@@ -240,19 +245,6 @@ export default function DiscussionsPage() {
   const handleDeleteCancel = () => {
     setDeleteDiscussionId(null);
   };
-=======
-  const [isLoading, setIsLoading] = useState(true);
-
-  const supabase = createClient();
-
-  // Simulate loading state
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
->>>>>>> origin/main
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -525,7 +517,7 @@ export default function DiscussionsPage() {
               </div>
             )}
           </div>
-<<<<<<< HEAD
+          )}
 
           {/* Delete Confirmation Dialog */}
           <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
@@ -550,9 +542,6 @@ export default function DiscussionsPage() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-=======
-          )}
->>>>>>> origin/main
         </div>
       </main>
     </div>

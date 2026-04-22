@@ -12,11 +12,7 @@ import {
   Share2,
   Bookmark,
   Flag,
-<<<<<<< HEAD
   Trash2,
-=======
-  Edit,
->>>>>>> origin/main
 } from "lucide-react";
 import {
   AlertDialog,
@@ -191,7 +187,7 @@ export default function DiscussionDetailPage() {
         .from("discussions")
         .select("author_id")
         .eq("id", discussion.id)
-        .single();
+        .single<{ author_id: string }>();
 
       if (!discussionData) {
         throw new Error("Discussion not found");
@@ -202,7 +198,7 @@ export default function DiscussionDetailPage() {
           .from("profiles")
           .select("role")
           .eq("id", user.id)
-          .single();
+          .single<{ role: string }>();
 
         if (profile?.role !== "admin" && profile?.role !== "moderator") {
           throw new Error("You can only delete your own discussions");
@@ -211,7 +207,7 @@ export default function DiscussionDetailPage() {
 
       const { error } = await supabase
         .from("discussions")
-        .update({ deleted_at: new Date().toISOString() })
+        .update({ deleted_at: new Date().toISOString() } as never)
         .eq("id", discussion.id);
 
       if (error) {
@@ -367,7 +363,6 @@ export default function DiscussionDetailPage() {
                   Report
                 </Button>
 
-<<<<<<< HEAD
                 <AlertDialog open={showDeleteDialog} onOpenChange={(open) => setShowDeleteDialog(open)}>
                   <AlertDialogTrigger asChild>
                     <Button variant="outline" size="sm" className="border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-400">
@@ -396,14 +391,6 @@ export default function DiscussionDetailPage() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
-=======
-                <Link href={`/community/discussions/${discussion.slug}/edit`}>
-                  <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
-                    <Edit className="w-4 h-4 mr-2" />
-                    Edit
-                  </Button>
-                </Link>
->>>>>>> origin/main
               </div>
             </div>
           </article>

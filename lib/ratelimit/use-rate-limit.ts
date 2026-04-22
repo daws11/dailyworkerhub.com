@@ -163,7 +163,7 @@ export function useRateLimit(
       const currentIdentifier = identifierRef.current;
       const response = await rateLimiter.limit(currentIdentifier);
 
-      if (response.isLimited) {
+      if (!response.success) {
         const resetTime = response.reset;
         setRemaining(0);
         setResetIn(Math.ceil((resetTime - Date.now()) / 1000));
