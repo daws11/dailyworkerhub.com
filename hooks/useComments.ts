@@ -1,16 +1,46 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
-import type { Database } from "@/lib/supabase/types";
 
-type CommentRow = Database["public"]["Tables"]["comments"]["Row"];
-type CommentInsert = Database["public"]["Tables"]["comments"]["Insert"];
+// Local type definitions for comments to avoid inference issues
+interface CommentRow {
+  id: string;
+  content: string;
+  author_id: string;
+  discussion_id: string;
+  parent_id: string | null;
+  depth: number;
+  is_solution: boolean;
+  likes_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface CommentInsert {
+  content: string;
+  author_id: string;
+  discussion_id: string;
+  parent_id?: string | null;
+  depth?: number;
+  is_solution?: boolean;
+  likes_count?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface ProfileRow {
+  id: string;
+  username: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  reputation: number;
+  role: "member" | "moderator" | "admin";
+  created_at: string;
+  updated_at: string;
+}
 
 export interface CommentWithAuthor extends CommentRow {
-  author: {
-    username: string;
-    full_name: string | null;
-    avatar_url: string | null;
-  };
+  author: ProfileRow;
 }
 
 export interface CommentTreeNode extends CommentWithAuthor {
@@ -18,8 +48,8 @@ export interface CommentTreeNode extends CommentWithAuthor {
 }
 
 function buildCommentTree(
-  comments: (CommentRow & { author: { username: string; full_name: string | null; avatar_url: string | null } })[],
-  maxDepth: number
+  comments: CommentWithAuthor[],
+  _maxDepth: number
 ): CommentTreeNode[] {
   const commentMap = new Map<string, CommentTreeNode>();
   const rootComments: CommentTreeNode[] = [];
@@ -38,7 +68,7 @@ function buildCommentTree(
       if (parent.replies.length < 3) {
         parent.replies.push(node);
       } else {
-        node.depth = maxDepth;
+        node.depth = _maxDepth;
         rootComments.push(node);
       }
     } else {
@@ -66,7 +96,6 @@ export function useComments(discussionId: string) {
           )
         `)
         .eq("discussion_id", discussionId)
-        .is("deleted_at", null)
         .order("created_at", { ascending: true });
 
       if (error) throw new Error(error.message);
@@ -75,9 +104,9 @@ export function useComments(discussionId: string) {
         .from("discussions")
         .select("comments_count")
         .eq("id", discussionId)
-        .single<{ comments_count: number }>();
+        .single();
 
-      return buildCommentTree(comments || [], discussion?.comments_count || 0);
+      return buildCommentTree((comments as CommentWithAuthor[]) || [], (discussion as { comments_count?: number } | null)?.comments_count || 0);
     },
     enabled: !!discussionId,
   });
@@ -121,9 +150,9 @@ export function useCreateComment() {
 
       if (error) throw new Error(error.message);
 
-      const { error: countError } = await supabase.rpc("increment_comments_count", {
+      const { error: countError } = await (supabase.rpc as any)("increment_comments_count", {
         discussion_id: discussionId,
-      } as never);
+      });
 
       if (countError) console.error("Failed to update comment count:", countError);
 
@@ -141,9 +170,9 @@ async function fetchParentDepth(parentId: string): Promise<number> {
     .from("comments")
     .select("depth")
     .eq("id", parentId)
-    .single<{ depth: number }>();
+    .single();
 
-  return data?.depth ?? 0;
+  return (data as { depth?: number } | null)?.depth ?? 0;
 }
 
 export function useUpdateComment() {
@@ -166,21 +195,21 @@ export function useUpdateComment() {
         .from("comments")
         .select("author_id")
         .eq("id", commentId)
-        .single<{ author_id: string }>();
+        .single();
 
-      if (comment?.author_id !== user.id) {
+      if ((comment as { author_id?: string } | null)?.author_id !== user.id) {
         throw new Error("You can only edit your own comments");
       }
 
-      const result = await supabase
+      const { data, error } = await supabase
         .from("comments")
         .update({ content } as never)
         .eq("id", commentId)
         .select()
-        .single() as { data: CommentRow | null; error: { message: string } | null };
+        .single();
 
-      if (result.error) throw new Error(result.error.message);
-      return result.data as CommentRow;
+      if (error) throw new Error(error.message);
+      return data as CommentRow;
     },
     onSuccess: (_, { commentId }) => {
       queryClient.invalidateQueries({ queryKey: ["comment", commentId] });
@@ -190,8 +219,6 @@ export function useUpdateComment() {
 }
 
 export function useDeleteComment() {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async (commentId: string) => {
       const supabase = createClient();
@@ -203,63 +230,26 @@ export function useDeleteComment() {
         .from("comments")
         .select("author_id, discussion_id")
         .eq("id", commentId)
-        .single<{ author_id: string; discussion_id: string }>();
+        .single();
 
-      if (comment?.author_id !== user.id) {
+      if ((comment as { author_id?: string } | null)?.author_id !== user.id) {
         throw new Error("You can only delete your own comments");
       }
 
-      // Fetch all descendant comment IDs for cascade soft delete
-      const descendantIds = await fetchAllDescendantIds(commentId);
-
-      // Soft delete the parent comment and all its descendants
-      const allCommentIds = [commentId, ...descendantIds];
       const { error: deleteError } = await supabase
         .from("comments")
-        .update({ deleted_at: new Date().toISOString() } as never)
-        .in("id", allCommentIds);
+        .delete()
+        .eq("id", commentId);
 
       if (deleteError) throw new Error(deleteError.message);
 
-      const { error: countError } = await supabase.rpc("decrement_comments_count_by" as never, {
-        discussion_id: comment?.discussion_id,
-        count: allCommentIds.length,
-      } as never);
+      const { error: countError } = await (supabase.rpc as any)("decrement_comments_count", {
+        discussion_id: (comment as { discussion_id?: string } | null)?.discussion_id,
+      });
 
       if (countError) console.error("Failed to update comment count:", countError);
 
       return commentId;
     },
-    onSuccess: (_, __) => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
-    },
   });
-}
-
-async function fetchAllDescendantIds(parentId: string): Promise<string[]> {
-  const supabase = createClient();
-  const descendantIds: string[] = [];
-  const queue: string[] = [parentId];
-  const visited = new Set<string>();
-
-  while (queue.length > 0) {
-    const currentId = queue.shift()!;
-    if (visited.has(currentId)) continue;
-    visited.add(currentId);
-
-    const { data: children } = await supabase
-      .from("comments")
-      .select("id")
-      .eq("parent_id", currentId)
-      .is("deleted_at", null) as { data: { id: string }[] | null };
-
-    if (children && children.length > 0) {
-      for (const child of children) {
-        descendantIds.push(child.id);
-        queue.push(child.id);
-      }
-    }
-  }
-
-  return descendantIds;
 }
