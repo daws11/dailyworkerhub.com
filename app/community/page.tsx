@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MessageSquare,
@@ -19,7 +18,6 @@ import {
   Eye,
   X,
 } from "lucide-react";
-import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
 
 // Mock data - will be replaced with Supabase data
 const mockStats = {
@@ -121,20 +119,26 @@ const shortcuts = [
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Simulate loading state
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
+  const handleSearchSubmit = useCallback(
+    (e?: React.FormEvent) => {
+      e?.preventDefault();
 
-  // Show skeleton during loading
-  if (isLoading) {
-    return <CommunityHomeSkeleton />;
-  }
+      if (searchQuery.trim()) {
+        window.location.href = `/community/discussions?q=${encodeURIComponent(searchQuery.trim())}`;
+      }
+    },
+    [searchQuery]
+  );
+
+  const handleSearchKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        handleSearchSubmit();
+      }
+    },
+    [handleSearchSubmit]
+  );
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
@@ -143,7 +147,7 @@ export default function CommunityPage() {
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
+            <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
             <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
             <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               Community
@@ -243,6 +247,7 @@ export default function CommunityPage() {
                   placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
                   className="flex-1 bg-transparent text-slate-50 placeholder-slate-500 outline-none text-sm sm:text-base"
                 />
                 {searchQuery && (
@@ -253,7 +258,10 @@ export default function CommunityPage() {
                     <X className="w-4 h-4" />
                   </button>
                 )}
-                <button className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0">
+                <button
+                  onClick={() => handleSearchSubmit()}
+                  className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0"
+                >
                   Kirim
                 </button>
               </div>
@@ -326,11 +334,10 @@ export default function CommunityPage() {
               >
                 {/* Cover Image */}
                 <div className="aspect-video relative overflow-hidden">
-                  <Image
+                  <img
                     src={article.coverImage}
                     alt={article.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {article.category}
@@ -472,7 +479,7 @@ export default function CommunityPage() {
             {/* Logo & Tagline */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <Link href="/" className="flex items-center gap-3">
-                <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
+                <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
                 <span className="font-semibold text-slate-50">DailyWorkerHub</span>
               </Link>
               <p className="text-sm text-slate-500">
