@@ -46,10 +46,10 @@ const ImageUploadMark = Mark.create<ImageUploadOptions>({
     return {
       setImageUpload:
         (options: { src: string; alt?: string; title?: string }) =>
-        ({ commands }) => {
+        ({ commands }: { commands: any }) => {
           return commands.setMark(this.name, options)
         },
-    }
+    } as any
   },
 })
 
