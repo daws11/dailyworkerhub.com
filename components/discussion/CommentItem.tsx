@@ -14,6 +14,17 @@ import {
   Reply,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { parseMentions, type ParsedMention } from "@/lib/utils/comment-utils";
 import type { Database } from "@/lib/supabase/types";
 
@@ -28,6 +39,7 @@ interface CommentItemProps {
   is_solution: boolean;
   likes_count: number;
   created_at: string;
+  deleted_at: string | null;
   replies?: CommentItemProps[];
   onReply?: (parentId: string) => void;
   onEdit?: (id: string, content: string) => void;
@@ -36,6 +48,7 @@ interface CommentItemProps {
   onMarkSolution?: (id: string) => void;
   depth?: number;
   isReply?: boolean;
+  isLoading?: boolean;
 }
 
 // Depth-based indentation classes - flatline at level 4 (depth >= 3)
@@ -60,6 +73,7 @@ export function CommentItem({
   is_solution,
   likes_count,
   created_at,
+  deleted_at,
   replies = [],
   onReply,
   onEdit,
@@ -68,9 +82,13 @@ export function CommentItem({
   onMarkSolution,
   depth = 0,
   isReply = false,
+  isLoading = false,
 }: CommentItemProps) {
   const [liked, setLiked] = useState(false);
   const [showActions, setShowActions] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const isDeleted = deleted_at !== null;
 
   const handleLike = () => {
     setLiked(!liked);
@@ -86,6 +104,7 @@ export function CommentItem({
   };
 
   const handleDelete = () => {
+    setDeleting(true);
     onDelete?.(id);
   };
 
@@ -179,7 +198,11 @@ export function CommentItem({
             </div>
 
             <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-              {renderContentWithMentions(content)}
+              {isDeleted ? (
+                <span className="italic text-slate-500">[deleted]</span>
+              ) : (
+                renderContentWithMentions(content)
+              )}
             </div>
 
             <div className="flex items-center gap-3 mt-3">
@@ -237,16 +260,38 @@ export function CommentItem({
                       <Edit className="w-3 h-3" />
                       Edit
                     </button>
-                    <button
-                      onClick={() => {
-                        handleDelete();
-                        setShowActions(false);
-                      }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-xs text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                      Hapus
-                    </button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          className="flex items-center gap-2 w-full px-3 py-2 text-xs text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          Hapus
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Hapus Komentar?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Tindakan ini tidak dapat dibatalkan. Komentar akan
+                            dihapus secara permanen.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel disabled={deleting}>Batal</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              handleDelete();
+                              setShowActions(false);
+                            }}
+                            disabled={deleting || isLoading}
+                            className="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {deleting ? "Menghapus..." : "Hapus"}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 )}
               </div>
@@ -268,6 +313,7 @@ export function CommentItem({
               onDelete={onDelete}
               onLike={onLike}
               onMarkSolution={onMarkSolution}
+              isLoading={isLoading}
             />
           ))}
         </div>
