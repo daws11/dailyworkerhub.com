@@ -31,7 +31,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Fetch user profile for role-based access control
+// Fetch user profile for role-based access control
   let profile: Profile | null = null
   let userRole: string | null = null
   let isAdmin = false
@@ -49,9 +49,20 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Protected routes - require authentication
-  const protectedPaths = ['/app', '/community/admin']
+  const protectedPaths = [
+    '/app',
+    '/community/admin',
+    '/community/discussions/new',
+  ]
+  // Wildcard patterns that need regex matching
+  const protectedWildcardPatterns = [
+    /^\/community\/discussions\/[^/]+\/edit$/,
+  ]
+
   const isProtectedPath = protectedPaths.some((path) =>
     request.nextUrl.pathname.startsWith(path)
+  ) || protectedWildcardPatterns.some((pattern) =>
+    pattern.test(request.nextUrl.pathname)
   )
 
   if (isProtectedPath && !user) {
