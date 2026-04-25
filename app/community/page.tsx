@@ -19,6 +19,7 @@ import {
   Eye,
   X,
 } from "lucide-react";
+import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
 import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
 
 // Mock data - will be replaced with Supabase data
@@ -120,6 +121,13 @@ const shortcuts = [
 
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
+<<<<<<< HEAD
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
+      {/* Navigation Bar */}
+      <CommunityNavbar variant="full" />
+=======
   const [showSearch, setShowSearch] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -201,6 +209,7 @@ export default function CommunityPage() {
           </div>
         </div>
       </nav>
+>>>>>>> main
 
       {/* Hero / Command Center */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 bg-radial-green">

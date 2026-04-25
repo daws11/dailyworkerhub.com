@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import { Search, Clock, Eye, Plus, X, Loader2, AlertCircle } from "lucide-react";
+import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArticleCardSkeleton } from "@/components/skeleton/ArticleCardSkeleton";
@@ -197,31 +198,7 @@ export default function ArticlesPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-            <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Community
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link href="/community/login" className="text-sm text-slate-400 hover:text-slate-50">
-              Masuk
-            </Link>
-            <Link
-              href="/community/register"
-              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            >
-              Daftar
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <CommunityNavbar variant="simple" />
 
       {/* Main Content */}
       <main className="pt-24 pb-16">

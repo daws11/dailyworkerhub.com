@@ -35,6 +35,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
 import { cn } from "@/lib/utils";
 
 interface Category {
@@ -178,59 +179,7 @@ export default function ArticleEditorPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community/articles" className="flex items-center gap-3">
-            <ArrowLeft className="w-5 h-5 text-slate-400" />
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowPreview(!showPreview)}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
-            >
-              {showPreview ? "Edit" : "Preview"}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSaveDraft}
-              disabled={isSaving}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
-            >
-              {isSaving ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <>
-                  <Save className="w-4 h-4 mr-2" />
-                  Simpan Draft
-                </>
-              )}
-            </Button>
-            <Button
-              size="sm"
-              onClick={handlePublish}
-              disabled={isPublishing}
-              className="bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            >
-              {isPublishing ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Publikasikan
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-      </nav>
+      <CommunityNavbar variant="editor" />
 
       {/* Main Content */}
       <main className="pt-24 pb-16">
