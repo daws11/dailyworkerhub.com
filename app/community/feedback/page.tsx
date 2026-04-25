@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Search, X, MessageSquare, Loader2 } from "lucide-react";
+import { Plus, Search, X, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
@@ -14,6 +14,7 @@ import { FeedbackFilters, FeedbackStatus, FeedbackSortBy } from "@/components/fe
 import { useCurrentUser } from "@/lib/auth/hooks";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
+import { FeedbackCardSkeleton } from "@/components/skeleton/FeedbackCardSkeleton";
 
 export default function FeedbackPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -220,9 +221,12 @@ export default function FeedbackPage() {
           {/* Feedback List */}
           <div className="space-y-4">
             {isLoading && (
-              <div className="flex items-center justify-center py-16">
-                <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
-                <span className="ml-3 text-slate-400">Memuat feedback...</span>
+              <div className="space-y-4">
+                <FeedbackCardSkeleton />
+                <FeedbackCardSkeleton />
+                <FeedbackCardSkeleton />
+                <FeedbackCardSkeleton />
+                <FeedbackCardSkeleton />
               </div>
             )}
 

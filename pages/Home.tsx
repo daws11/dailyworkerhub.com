@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X, Handshake, MessageCircle, Trophy } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { useEffect, useState, useRef } from "react";
@@ -300,7 +301,7 @@ export default function Home() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[160px] sm:h-[200px] md:h-[300px] shadow-2xl relative group"
                 >
-                  <img src="/hotel-action.webp" alt="Bisnis Hospitality" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <Image src="/hotel-action.webp" alt="Bisnis Hospitality" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
                 <motion.div
                   style={{ y: p2 }}
@@ -309,7 +310,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src="/hero-bg.webp" alt="Daily Worker" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <Image src="/hero-bg.webp" alt="Daily Worker" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
               </div>
 
@@ -322,7 +323,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[120px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <img src="/hotel-action.webp" alt="Tim Kerja" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                  <Image src="/hotel-action.webp" alt="Tim Kerja" fill className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
                 <motion.div
                   style={{ y: p4 }}
@@ -454,7 +455,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <img src="/worker-portrait.webp" alt="Worker Fleksibel" className="w-full h-full object-cover object-top" />
+                <Image src="/worker-portrait.webp" alt="Worker Fleksibel" fill className="object-cover object-top" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
                     <div className="flex items-center gap-2 mb-3">
@@ -528,7 +529,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <img src="/hotel-action.webp" alt="Manajemen Bisnis" className="w-full h-full object-cover" />
+                <Image src="/hotel-action.webp" alt="Manajemen Bisnis" fill className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
                     <div className="flex items-center gap-2 mb-3">
@@ -703,7 +704,7 @@ export default function Home() {
             {/* Logo & Tagline */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <a href="/" className="flex items-center gap-3">
-                <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
+                <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
                 <span className="font-semibold text-slate-50">DailyWorkerHub</span>
               </a>
               <p className="text-sm text-slate-500">

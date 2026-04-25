@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { formatDistanceToNow, format } from "date-fns";
 import { id } from "date-fns/locale";
 import {
@@ -226,10 +227,12 @@ export default function ArticleDetailPage() {
         {/* Cover Image */}
         {article.cover_image && (
           <div className="relative h-[300px] sm:h-[400px] overflow-hidden">
-            <img
+            <Image
               src={article.cover_image}
               alt={article.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
           </div>

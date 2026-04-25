@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MessageSquare,
@@ -19,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
+import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
 
 // Mock data - will be replaced with Supabase data
 const mockStats = {
@@ -119,11 +121,95 @@ const shortcuts = [
 
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
+<<<<<<< HEAD
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
       {/* Navigation Bar */}
       <CommunityNavbar variant="full" />
+=======
+  const [showSearch, setShowSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Show skeleton during loading
+  if (isLoading) {
+    return <CommunityHomeSkeleton />;
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
+      {/* Navigation Bar - Fixed Top */}
+      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
+        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
+            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
+            <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              Community
+            </span>
+          </Link>
+
+          {/* Nav Links */}
+          <div className="hidden md:flex items-center gap-1">
+            <Link
+              href="/community/discussions"
+              className="px-4 py-2 text-sm text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              Diskusi
+            </Link>
+            <Link
+              href="/community/articles"
+              className="px-4 py-2 text-sm text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              Artikel
+            </Link>
+            <Link
+              href="/community/docs"
+              className="px-4 py-2 text-sm text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/community/feedback"
+              className="px-4 py-2 text-sm text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              Feedback
+            </Link>
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowSearch(!showSearch)}
+              className="p-2 text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <Link
+              href="/community/login"
+              className="px-4 py-2 text-sm text-slate-300 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
+            >
+              Masuk
+            </Link>
+            <Link
+              href="/community/register"
+              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+            >
+              Daftar
+            </Link>
+          </div>
+        </div>
+      </nav>
+>>>>>>> main
 
       {/* Hero / Command Center */}
       <section className="relative min-h-screen flex items-center justify-center pt-16 bg-radial-green">
@@ -249,10 +335,11 @@ export default function CommunityPage() {
               >
                 {/* Cover Image */}
                 <div className="aspect-video relative overflow-hidden">
-                  <img
+                  <Image
                     src={article.coverImage}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {article.category}
@@ -394,7 +481,7 @@ export default function CommunityPage() {
             {/* Logo & Tagline */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <Link href="/" className="flex items-center gap-3">
-                <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
+                <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
                 <span className="font-semibold text-slate-50">DailyWorkerHub</span>
               </Link>
               <p className="text-sm text-slate-500">

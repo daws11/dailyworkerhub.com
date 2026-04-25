@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import { toast } from "sonner";
 import {
   ArrowUp,
   MessageCircle,
@@ -15,10 +16,22 @@ import {
   Search,
   Filter,
   X,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CommunityNavbar } from "@/components/layout/CommunityNavbar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { DiscussionCardSkeleton } from "@/components/skeleton/DiscussionCardSkeleton";
 
 interface Discussion {
   id: string;
@@ -156,8 +169,83 @@ export default function DiscussionsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
+  const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClient();
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleDeleteClick = (e: React.MouseEvent, discussionId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDeleteDiscussionId(discussionId);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteDiscussionId) return;
+
+    setIsDeleting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("Unauthorized");
+      }
+
+      const { data: discussion } = await supabase
+        .from("discussions")
+        .select("author_id")
+        .eq("id", deleteDiscussionId)
+        .single<{ author_id: string }>();
+
+      if (!discussion) {
+        throw new Error("Discussion not found");
+      }
+
+      if (discussion.author_id !== user.id) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single<{ role: string }>();
+
+        if (profile?.role !== "admin" && profile?.role !== "moderator") {
+          throw new Error("You can only delete your own discussions");
+        }
+      }
+
+      const { error } = await supabase
+        .from("discussions")
+        .update({ deleted_at: new Date().toISOString() } as never)
+        .eq("id", deleteDiscussionId);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success("Diskusi berhasil dihapus");
+
+      setDeleteDiscussionId(null);
+    } catch (error) {
+      console.error("Failed to delete discussion:", error);
+      setDeleteDiscussionId(null);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDiscussionId(null);
+  };
 
   const filteredDiscussions = mockDiscussions
     .filter((d) => {
@@ -264,10 +352,12 @@ export default function DiscussionsPage() {
             </Button>
 
             {/* New Discussion Button */}
-            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-              <Plus className="w-4 h-4 mr-2" />
-              Buat Diskusi
-            </Button>
+            <Link href="/community/discussions/new">
+              <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                <Plus className="w-4 h-4 mr-2" />
+                Buat Diskusi
+              </Button>
+            </Link>
           </div>
 
           {/* Category Pills */}
@@ -300,6 +390,15 @@ export default function DiscussionsPage() {
           )}
 
           {/* Discussions List */}
+          {isLoading ? (
+            <div className="space-y-4">
+              <DiscussionCardSkeleton variant="featured" />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+              <DiscussionCardSkeleton />
+            </div>
+          ) : (
           <div className="space-y-4">
             {filteredDiscussions.map((discussion) => (
               <Link
@@ -363,6 +462,15 @@ export default function DiscussionsPage() {
                         <TrendingUp className="w-3 h-3" />
                         {discussion.view_count} views
                       </span>
+
+                      <button
+                        onClick={(e) => handleDeleteClick(e, discussion.id)}
+                        className="flex items-center gap-1 text-slate-500 hover:text-red-400 transition-colors ml-auto"
+                        aria-label="Hapus diskusi"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                        <span>Hapus</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -376,13 +484,40 @@ export default function DiscussionsPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-slate-300 mb-2">Tidak ada diskusi</h3>
                 <p className="text-slate-500 mb-6">Coba ubah filter atau kata kunci pencarian Anda</p>
-                <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Buat Diskusi Pertama
-                </Button>
+                <Link href="/community/discussions/new">
+                  <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Buat Diskusi Pertama
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
+          )}
+
+          {/* Delete Confirmation Dialog */}
+          <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hapus Diskusi?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tindakan ini tidak dapat dibatalkan. Diskusi yang dihapus tidak dapat dikembalikan.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={handleDeleteCancel} disabled={isDeleting}>
+                  Batal
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDeleteConfirm}
+                  disabled={isDeleting}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  {isDeleting ? "Menghapus..." : "Hapus"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </main>
     </div>

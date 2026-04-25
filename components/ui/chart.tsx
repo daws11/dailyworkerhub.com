@@ -1,6 +1,5 @@
 import * as React from "react"
-import * as RechartsPrimitive from "recharts"
-
+import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils"
 
 // Format: { THEME_NAME: CSS_SELECTOR }
@@ -32,13 +31,33 @@ function useChart() {
   return context
 }
 
+// Dynamically imported recharts components with ssr: false
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ResponsiveContainer = dynamic<any>(
+  () => import("recharts").then((mod) => mod.ResponsiveContainer),
+  { ssr: false }
+)
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartTooltipPrimitive = dynamic<any>(
+  () => import("recharts").then((mod) => mod.Tooltip),
+  { ssr: false }
+)
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartLegendPrimitive = dynamic<any>(
+  () => import("recharts").then((mod) => mod.Legend),
+  { ssr: false }
+)
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LegendProps: any = null
+
 const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     config: ChartConfig
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >["children"]
+    children: React.ReactNode
   }
 >(({ id, className, children, config, ...props }, ref) => {
   const uniqueId = React.useId()
@@ -56,9 +75,7 @@ const ChartContainer = React.forwardRef<
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
-          {children}
-        </RechartsPrimitive.ResponsiveContainer>
+        <ResponsiveContainer>{children}</ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
@@ -98,19 +115,11 @@ ${colorConfig
   )
 }
 
-const ChartTooltip = RechartsPrimitive.Tooltip
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartTooltip = ChartTooltipPrimitive
 
-const ChartTooltipContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<"div"> & {
-      hideLabel?: boolean
-      hideIndicator?: boolean
-      indicator?: "line" | "dot" | "dashed"
-      nameKey?: string
-      labelKey?: string
-    }
->(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartTooltipContent = React.forwardRef<HTMLDivElement, any>(
   (
     {
       active,
@@ -184,11 +193,20 @@ const ChartTooltipContent = React.forwardRef<
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
           {payload
-            .filter((item) => item.type !== "none")
-            .map((item, index) => {
+            .filter((item: { type?: string }) => item.type !== "none")
+            .map((item: {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              [key: string]: any
+              type?: string
+              name?: string
+              dataKey?: string
+              value?: string | number
+              payload?: { fill?: string }
+              color?: string
+            }, index: number) => {
               const key = `${nameKey || item.name || item.dataKey || "value"}`
               const itemConfig = getPayloadConfigFromPayload(config, item, key)
-              const indicatorColor = color || item.payload.fill || item.color
+              const indicatorColor = color || item.payload?.fill || item.color
 
               return (
                 <div
@@ -256,18 +274,19 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = "ChartTooltip"
 
-const ChartLegend = RechartsPrimitive.Legend
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartLegend = ChartLegendPrimitive
 
-const ChartLegendContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-      hideIcon?: boolean
-      nameKey?: string
-    }
->(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ChartLegendContent = React.forwardRef<HTMLDivElement, any>(
   (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    {
+      className,
+      hideIcon = false,
+      payload,
+      verticalAlign = "bottom",
+      nameKey,
+    },
     ref
   ) => {
     const { config } = useChart()
@@ -286,8 +305,15 @@ const ChartLegendContent = React.forwardRef<
         )}
       >
         {payload
-          .filter((item) => item.type !== "none")
-          .map((item) => {
+          .filter((item: { type?: string }) => item.type !== "none")
+          .map((item: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [key: string]: any
+            type?: string
+            value?: string
+            dataKey?: string
+            color?: string
+          }) => {
             const key = `${nameKey || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
@@ -319,9 +345,11 @@ const ChartLegendContent = React.forwardRef<
 ChartLegendContent.displayName = "ChartLegend"
 
 // Helper to extract item config from a payload.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload: any,
   key: string
 ) {
   if (typeof payload !== "object" || payload === null) {
