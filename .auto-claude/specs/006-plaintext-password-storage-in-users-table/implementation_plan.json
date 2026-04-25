@@ -243,11 +243,10 @@
     }
   },
   "qa_signoff": null,
-  "status": "human_review",
-  "planStatus": "review",
-  "xstateState": "human_review",
+  "status": "done",
+  "planStatus": "completed",
+  "xstateState": "done",
   "executionPhase": "complete",
-  "updated_at": "2026-04-21T18:16:50.855Z",
-  "last_updated": "2026-04-21T18:16:50.465718+00:00",
-  "reviewReason": "completed"
+  "updated_at": "2026-04-25T03:52:55.866Z",
+  "last_updated": "2026-04-21T18:16:50.465718+00:00"
 }

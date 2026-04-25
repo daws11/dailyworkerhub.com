@@ -177,9 +177,10 @@ export default function DiscussionDetailPage() {
     setIsDeleting(true);
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user ?? null;
 
-      if (!user) {
+        if (!user) {
         throw new Error("Unauthorized");
       }
 

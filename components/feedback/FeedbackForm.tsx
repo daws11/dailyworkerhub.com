@@ -83,8 +83,9 @@ export function FeedbackForm({ open, onOpenChange, trigger }: FeedbackFormProps)
       // Check authentication when dialog opens
       setIsAuthChecked(false)
       const supabase = createClient()
-      const { data } = await supabase.auth.getUser()
-      setIsAuthenticated(!!data.user)
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
+      setIsAuthenticated(!!user)
       setIsAuthChecked(true)
     } else {
       // Reset form when closing
@@ -94,9 +95,10 @@ export function FeedbackForm({ open, onOpenChange, trigger }: FeedbackFormProps)
 
   const onSubmit = async (values: FeedbackFormValues) => {
     const supabase = createClient()
-    const { data: userData } = await supabase.auth.getUser()
+    const { data: { session } } = await supabase.auth.getSession()
+    const user = session?.user ?? null
 
-    if (!userData.user) {
+    if (!user) {
       toast.error("Please sign in to submit feedback")
       return
     }
@@ -106,7 +108,7 @@ export function FeedbackForm({ open, onOpenChange, trigger }: FeedbackFormProps)
         title: values.title,
         description: values.description,
         category: values.category,
-        author_id: userData.user.id,
+        author_id: user.id,
       },
       {
         onSuccess: () => {

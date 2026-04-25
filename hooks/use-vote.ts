@@ -288,8 +288,9 @@ export function useVote({
   React.useEffect(() => {
     async function fetchCurrentUser() {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
+        data: { session },
+      } = await supabase.auth.getSession();
+      const user = session?.user ?? null;
       const userId = user?.id ?? null;
       currentUserIdRef.current = userId;
       setCurrentUserId(userId);

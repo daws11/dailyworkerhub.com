@@ -33,9 +33,10 @@ export default function EditDiscussionPage() {
         const supabase = createClient() as any
 
         // Check if user is authenticated
-        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user ?? null;
 
-        if (authError || !user) {
+        if (!user) {
           setError("auth_required")
           return
         }

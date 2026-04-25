@@ -57,8 +57,9 @@ export function DiscussionForm({
   useState(() => {
     const checkAuth = async () => {
       const supabase = createClient()
-      const { data } = await supabase.auth.getUser()
-      setIsAuthenticated(!!data.user)
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
+      setIsAuthenticated(!!user)
       setIsAuthChecked(true)
     }
     checkAuth()
@@ -69,9 +70,10 @@ export function DiscussionForm({
 
     try {
       const supabase = createClient()
-      const { data: userData } = await supabase.auth.getUser()
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
 
-      if (!userData.user) {
+      if (!user) {
         toast.error("Silakan masuk untuk melanjutkan")
         router.push("/community/login")
         return
@@ -93,7 +95,7 @@ export function DiscussionForm({
           title: values.title,
           content: values.content,
           excerpt,
-          author_id: userData.user.id,
+          author_id: user.id,
           status: "open",
           view_count: 0,
           likes_count: 0,
