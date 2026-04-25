@@ -22,8 +22,9 @@ const themeInitScript = `
 `;
 
 export const metadata: Metadata = {
+  metadataBase: "https://dailyworkerhub.com",
   title: "Daily Worker Hub - Platform Pekerja Harian Indonesia",
-  description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya, dan гарантова qualidade. Pasang lowongan gratis!",
+  description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya, dan гарантова kualitas. Pasang lowongan gratis!",
   keywords: ["pekerja harian", "lowongan kerja", "bisnis", "recruitment", "Indonesia", "daily worker", "hire worker"],
   icons: {
     icon: [
@@ -34,13 +35,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Daily Worker Hub - Platform Pekerja Harian Indonesia",
-    description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya, dan гарантова качество. Pasang lowongan gratis!",
+    description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya, dan гарантова kualitas. Pasang lowongan gratis!",
     type: "website",
     locale: "id_ID",
     siteName: "Daily Worker Hub",
     images: [
       {
-        url: "/opengraph.jpg",
+        url: "/opengraph.jpg?v=2",
         width: 1200,
         height: 630,
         alt: "Daily Worker Hub - Platform Komunitas Pekerja Harian Indonesia",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Daily Worker Hub - Platform Pekerja Harian Indonesia",
     description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya. Pasang lowongan gratis!",
-    images: ["/opengraph.jpg"],
+    images: ["/opengraph.jpg?v=2"],
     site: "@dailyworkerhub",
   },
 };
