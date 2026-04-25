@@ -3,7 +3,23 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
+
+const themeInitScript = `
+(function() {
+  try {
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = stored || (prefersDark ? 'dark' : 'light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  } catch (e) {
+    // Ignore errors in SSR
+  }
+})();
+`;
 
 export const metadata: Metadata = {
   title: "Daily Worker Hub",
@@ -31,15 +47,6 @@ export const metadata: Metadata = {
   },
 };
 
-const themeScript = `
-  (function() {
-    const theme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = theme === 'dark' || (!theme && prefersDark);
-    document.documentElement.classList.toggle('dark', isDark);
-  })();
-`;
-
 export default function RootLayout({
   children,
 }: {
@@ -48,7 +55,11 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
       </head>
       <body>
         <Providers>

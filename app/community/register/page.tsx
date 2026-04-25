@@ -7,6 +7,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRateLimit } from "@/lib/ratelimit";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -15,23 +17,44 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+
+  const { check: checkRateLimit, isLimited } = useRateLimit({
+    identifier: email || "register-attempt",
+  });
 
   const handleRegister = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check rate limit before registration attempt
+    if (isLimited) {
+      toast.error("Terlalu banyak percobaan", {
+        description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
+      });
+      return;
+    }
+
+    const result = await checkRateLimit();
+    if (result.status === "blocked") {
+      toast.error("Terlalu banyak percobaan", {
+        description: result.message,
+      });
+      return;
+    }
+
     setLoading(true);
-    setError("");
-    setMessage("");
 
     if (password !== confirmPassword) {
-      setError("Password tidak cocok");
+      toast.error("Password tidak cocok", {
+        description: "Pastikan password dan konfirmasi password sama.",
+      });
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError("Password minimal 6 karakter");
+      toast.error("Password terlalu pendek", {
+        description: "Password minimal 6 karakter.",
+      });
       setLoading(false);
       return;
     }
@@ -48,16 +71,35 @@ export default function RegisterPage() {
     });
 
     if (error) {
-      setError(error.message);
+      toast.error("Registrasi gagal", {
+        description: error.message,
+      });
     } else {
-      setMessage("Registrasi berhasil! Silakan cek email untuk verifikasi.");
+      toast.success("Registrasi berhasil", {
+        description: "Silakan cek email untuk verifikasi.",
+      });
     }
     setLoading(false);
-  }, [email, password, username, confirmPassword]);
+  }, [email, password, username, confirmPassword, isLimited, checkRateLimit]);
 
   const handleGoogleRegister = useCallback(async () => {
+    // Check rate limit before OAuth attempt
+    if (isLimited) {
+      toast.error("Terlalu banyak percobaan", {
+        description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
+      });
+      return;
+    }
+
+    const result = await checkRateLimit();
+    if (result.status === "blocked") {
+      toast.error("Terlalu banyak percobaan", {
+        description: result.message,
+      });
+      return;
+    }
+
     setLoading(true);
-    setError("");
 
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithOAuth({
@@ -68,10 +110,12 @@ export default function RegisterPage() {
     });
 
     if (error) {
-      setError(error.message);
+      toast.error("Registrasi gagal", {
+        description: error.message,
+      });
       setLoading(false);
     }
-  }, []);
+  }, [isLimited, checkRateLimit]);
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col">
@@ -97,20 +141,6 @@ export default function RegisterPage() {
                 Bergabung dengan komunitas pekerja harian Indonesia
               </p>
             </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                <p className="text-sm text-red-400">{error}</p>
-              </div>
-            )}
-
-            {/* Success Message */}
-            {message && (
-              <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-sm text-emerald-400">{message}</p>
-              </div>
-            )}
 
             {/* Register Form */}
             <form onSubmit={handleRegister} className="space-y-4">
@@ -184,11 +214,13 @@ export default function RegisterPage() {
 
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={loading || isLimited}
                 className="w-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
+                ) : isLimited ? (
+                  "Terlalu Banyak Percobaan"
                 ) : (
                   "Daftar"
                 )}
@@ -209,7 +241,7 @@ export default function RegisterPage() {
             <Button
               type="button"
               onClick={handleGoogleRegister}
-              disabled={loading}
+              disabled={loading || isLimited}
               variant="outline"
               className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-slate-50"
             >
