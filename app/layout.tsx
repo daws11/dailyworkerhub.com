@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   title: "Daily Worker Hub",
   description: "Platform harian gratis untuk pekerja dan bisnis di Indonesia. Akses pekerja harian tanpa perantara, transparan, dan terpercaya.",
   keywords: ["pekerja harian", "lowongan kerja", "bisnis", "recruitment", "Indonesia"],
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Daily Worker Hub",
     description: "Platform harian gratis untuk pekerja dan bisnis di Indonesia",
