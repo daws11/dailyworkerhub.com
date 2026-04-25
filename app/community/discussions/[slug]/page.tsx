@@ -2,15 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
+import { toast } from "sonner";
 import {
   ArrowUp,
   ArrowDown,
   Share2,
   Bookmark,
   Flag,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentSection } from "@/components/discussion/CommentSection";
@@ -27,6 +41,7 @@ interface Comment {
   is_solution: boolean;
   likes_count: number;
   created_at: string;
+  deleted_at: string | null;
   replies?: Comment[];
 }
 
@@ -89,6 +104,7 @@ Untuk driver mobil mungkin perlu lebih tinggi karena ada biaya bensin dan mainte
     is_solution: false,
     likes_count: 45,
     created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [
       {
         id: "1-1",
@@ -102,6 +118,7 @@ Untuk driver mobil mungkin perlu lebih tinggi karena ada biaya bensin dan mainte
         is_solution: false,
         likes_count: 12,
         created_at: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+        deleted_at: null,
       },
     ],
   },
@@ -124,6 +141,7 @@ Quality hidup driver meningkat -> service quality meningkat -> semua menang.`,
     is_solution: true,
     likes_count: 89,
     created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [],
   },
   {
@@ -140,6 +158,7 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
     is_solution: false,
     likes_count: 34,
     created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+    deleted_at: null,
     replies: [],
   },
 ];
@@ -147,9 +166,64 @@ Setelah saya mulai negotiate dan punya beberapa platform options, alhamdulillah 
 export default function DiscussionDetailPage() {
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
+  const supabase = createClient();
   const discussion = mockDiscussion;
   const comments = mockComments;
+
+  const handleDeleteConfirm = async () => {
+    setIsDeleting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("Unauthorized");
+      }
+
+      const { data: discussionData } = await supabase
+        .from("discussions")
+        .select("author_id")
+        .eq("id", discussion.id)
+        .single<{ author_id: string }>();
+
+      if (!discussionData) {
+        throw new Error("Discussion not found");
+      }
+
+      if (discussionData.author_id !== user.id) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single<{ role: string }>();
+
+        if (profile?.role !== "admin" && profile?.role !== "moderator") {
+          throw new Error("You can only delete your own discussions");
+        }
+      }
+
+      const { error } = await supabase
+        .from("discussions")
+        .update({ deleted_at: new Date().toISOString() } as never)
+        .eq("id", discussion.id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast.success("Diskusi berhasil dihapus");
+
+      setShowDeleteDialog(false);
+      window.location.href = "/community/discussions";
+    } catch (error) {
+      console.error("Failed to delete discussion:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -288,6 +362,35 @@ export default function DiscussionDetailPage() {
                   <Flag className="w-4 h-4 mr-2" />
                   Report
                 </Button>
+
+                <AlertDialog open={showDeleteDialog} onOpenChange={(open) => setShowDeleteDialog(open)}>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" size="sm" className="border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-400">
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Hapus
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Hapus Diskusi?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Apakah Anda yakin ingin menghapus diskusi ini? Tindakan ini tidak dapat dibatalkan dan semua komentar akan ikut terhapus.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel onClick={() => setShowDeleteDialog(false)} disabled={isDeleting}>
+                        Batal
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleDeleteConfirm}
+                        disabled={isDeleting}
+                        className="bg-red-500 hover:bg-red-600 text-white"
+                      >
+                        {isDeleting ? "Menghapus..." : "Ya, Hapus"}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           </article>

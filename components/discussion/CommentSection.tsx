@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { MessageCircle } from "lucide-react";
+import { toast } from "sonner";
 import { CommentItem } from "./CommentItem";
 import { CommentForm } from "./CommentForm";
 
@@ -19,6 +20,7 @@ interface Comment {
   is_solution: boolean;
   likes_count: number;
   created_at: string;
+  deleted_at: string | null;
   replies?: Comment[];
 }
 
@@ -116,6 +118,7 @@ export function CommentSection({
     async (id: string) => {
       if (onDeleteComment) {
         await onDeleteComment(id);
+        toast.success("Komentar berhasil dihapus");
       }
     },
     [onDeleteComment]
@@ -181,6 +184,7 @@ export function CommentSection({
             is_solution={comment.is_solution}
             likes_count={comment.likes_count}
             created_at={comment.created_at}
+            deleted_at={comment.deleted_at}
             replies={comment.replies}
             onReply={handleReply}
             onEdit={handleEdit}
@@ -189,6 +193,7 @@ export function CommentSection({
             onMarkSolution={onMarkSolution ? handleMarkSolution : undefined}
             isReply={isReply}
             depth={depth}
+            isLoading={isLoading}
           />
         )}
 
@@ -215,7 +220,13 @@ export function CommentSection({
         {/* Nested replies */}
         {comment.replies && comment.replies.length > 0 && (
           <div className={`space-y-3 ${getDepthIndentClass(depth)}`}>
-            {comment.replies.map((reply) => renderComment(reply, true, depth + 1))}
+            {comment.replies.map((reply) =>
+              renderComment(
+                { ...reply, deleted_at: reply.deleted_at ?? null },
+                true,
+                depth + 1
+              )
+            )}
           </div>
         )}
       </div>
@@ -265,7 +276,13 @@ export function CommentSection({
             <p>Belum ada komentar. Jadilah yang pertama berkomentar!</p>
           </div>
         ) : (
-          comments.map((comment) => renderComment(comment))
+          comments.map((comment) =>
+            renderComment(
+              { ...comment, deleted_at: comment.deleted_at ?? null },
+              false,
+              0
+            )
+          )
         )}
       </div>
     </section>
