@@ -66,6 +66,7 @@ export function useComments(discussionId: string) {
           )
         `)
         .eq("discussion_id", discussionId)
+        .is("deleted_at", null)
         .order("created_at", { ascending: true });
 
       if (error) throw new Error(error.message);
@@ -74,7 +75,7 @@ export function useComments(discussionId: string) {
         .from("discussions")
         .select("comments_count")
         .eq("id", discussionId)
-        .single();
+        .single<{ comments_count: number }>();
 
       return buildCommentTree(comments || [], discussion?.comments_count || 0);
     },
@@ -114,7 +115,7 @@ export function useCreateComment() {
 
       const { data, error } = await supabase
         .from("comments")
-        .insert(insertData)
+        .insert(insertData as never)
         .select()
         .single();
 
@@ -122,7 +123,7 @@ export function useCreateComment() {
 
       const { error: countError } = await supabase.rpc("increment_comments_count", {
         discussion_id: discussionId,
-      });
+      } as never);
 
       if (countError) console.error("Failed to update comment count:", countError);
 
@@ -140,7 +141,7 @@ async function fetchParentDepth(parentId: string): Promise<number> {
     .from("comments")
     .select("depth")
     .eq("id", parentId)
-    .single();
+    .single<{ depth: number }>();
 
   return data?.depth ?? 0;
 }
@@ -165,21 +166,21 @@ export function useUpdateComment() {
         .from("comments")
         .select("author_id")
         .eq("id", commentId)
-        .single();
+        .single<{ author_id: string }>();
 
       if (comment?.author_id !== user.id) {
         throw new Error("You can only edit your own comments");
       }
 
-      const { data, error } = await supabase
+      const result = await supabase
         .from("comments")
-        .update({ content })
+        .update({ content } as never)
         .eq("id", commentId)
         .select()
-        .single();
+        .single() as { data: CommentRow | null; error: { message: string } | null };
 
-      if (error) throw new Error(error.message);
-      return data as CommentRow;
+      if (result.error) throw new Error(result.error.message);
+      return result.data as CommentRow;
     },
     onSuccess: (_, { commentId }) => {
       queryClient.invalidateQueries({ queryKey: ["comment", commentId] });
@@ -189,6 +190,8 @@ export function useUpdateComment() {
 }
 
 export function useDeleteComment() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (commentId: string) => {
       const supabase = createClient();
@@ -200,26 +203,63 @@ export function useDeleteComment() {
         .from("comments")
         .select("author_id, discussion_id")
         .eq("id", commentId)
-        .single();
+        .single<{ author_id: string; discussion_id: string }>();
 
       if (comment?.author_id !== user.id) {
         throw new Error("You can only delete your own comments");
       }
 
+      // Fetch all descendant comment IDs for cascade soft delete
+      const descendantIds = await fetchAllDescendantIds(commentId);
+
+      // Soft delete the parent comment and all its descendants
+      const allCommentIds = [commentId, ...descendantIds];
       const { error: deleteError } = await supabase
         .from("comments")
-        .delete()
-        .eq("id", commentId);
+        .update({ deleted_at: new Date().toISOString() } as never)
+        .in("id", allCommentIds);
 
       if (deleteError) throw new Error(deleteError.message);
 
-      const { error: countError } = await supabase.rpc("decrement_comments_count", {
+      const { error: countError } = await supabase.rpc("decrement_comments_count_by" as never, {
         discussion_id: comment?.discussion_id,
-      });
+        count: allCommentIds.length,
+      } as never);
 
       if (countError) console.error("Failed to update comment count:", countError);
 
       return commentId;
     },
+    onSuccess: (_, __) => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+    },
   });
+}
+
+async function fetchAllDescendantIds(parentId: string): Promise<string[]> {
+  const supabase = createClient();
+  const descendantIds: string[] = [];
+  const queue: string[] = [parentId];
+  const visited = new Set<string>();
+
+  while (queue.length > 0) {
+    const currentId = queue.shift()!;
+    if (visited.has(currentId)) continue;
+    visited.add(currentId);
+
+    const { data: children } = await supabase
+      .from("comments")
+      .select("id")
+      .eq("parent_id", currentId)
+      .is("deleted_at", null) as { data: { id: string }[] | null };
+
+    if (children && children.length > 0) {
+      for (const child of children) {
+        descendantIds.push(child.id);
+        queue.push(child.id);
+      }
+    }
+  }
+
+  return descendantIds;
 }

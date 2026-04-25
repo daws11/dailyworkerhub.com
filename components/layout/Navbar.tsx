@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Menu, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -25,9 +26,9 @@ export function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-md bg-background/70 text-foreground border-b border-border/50"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
-            <span className="font-display font-bold text-xl tracking-tight hidden sm:block">
+          <div className="flex items-center gap-2 relative h-8">
+            <Image src="/logo-new.png" alt="Daily Worker Hub" fill className="object-contain" />
+            <span className="font-display font-bold text-xl tracking-tight hidden sm:block ml-10">
               Daily Worker Hub
             </span>
           </div>

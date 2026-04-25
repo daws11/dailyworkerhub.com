@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
   Select,
@@ -156,11 +157,11 @@ export function FeedbackForm({ open, onOpenChange, trigger }: FeedbackFormProps)
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <input
+                      <Input
                         {...field}
                         placeholder="A clear, descriptive title for your feedback"
-                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                         maxLength={100}
+                        error={!!form.formState.errors.title}
                       />
                     </FormControl>
                     <FormDescription>
