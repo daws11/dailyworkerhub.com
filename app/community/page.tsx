@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   MessageSquare,
@@ -18,6 +19,7 @@ import {
   Eye,
   X,
 } from "lucide-react";
+import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
 
 // Mock data - will be replaced with Supabase data
 const mockStats = {
@@ -119,6 +121,20 @@ const shortcuts = [
 export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Show skeleton during loading
+  if (isLoading) {
+    return <CommunityHomeSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
@@ -127,7 +143,7 @@ export default function CommunityPage() {
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
+            <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
             <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
             <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               Community
@@ -310,10 +326,11 @@ export default function CommunityPage() {
               >
                 {/* Cover Image */}
                 <div className="aspect-video relative overflow-hidden">
-                  <img
+                  <Image
                     src={article.coverImage}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     {article.category}
@@ -455,7 +472,7 @@ export default function CommunityPage() {
             {/* Logo & Tagline */}
             <div className="flex flex-col items-center md:items-start gap-3">
               <Link href="/" className="flex items-center gap-3">
-                <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
+                <Image src="/logo-new.png" alt="Daily Worker Hub" width={32} height={32} className="h-8 w-auto object-contain" />
                 <span className="font-semibold text-slate-50">DailyWorkerHub</span>
               </Link>
               <p className="text-sm text-slate-500">
