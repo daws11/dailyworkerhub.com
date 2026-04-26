@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { TipTapEditor } from "@/components/editor/TipTapEditor";
 import { Button } from "@/components/ui/button";
@@ -17,14 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  ArrowLeft,
-  Image as ImageIcon,
-  X,
-  Loader2,
-  Save,
-  Send,
-} from "lucide-react";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -36,6 +29,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
+import {
+  ArrowLeft,
+  Image as ImageIcon,
+  X,
+  Loader2,
+  Save,
+  Send,
+  AlertCircle,
+} from "lucide-react";
 
 interface Category {
   id: string;
@@ -44,16 +46,37 @@ interface Category {
   color: string | null;
 }
 
-const mockCategories: Category[] = [
-  { id: "1", name: "Karier", slug: "karier", color: "#10B981" },
-  { id: "2", name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#F59E0B" },
-  { id: "3", name: "Remote Work", slug: "remote-work", color: "#3B82F6" },
-  { id: "4", name: "Skill Development", slug: "skill-development", color: "#8B5CF6" },
-  { id: "5", name: "Tips Interview", slug: "tips-interview", color: "#EC4899" },
-  { id: "6", name: "Work-Life Balance", slug: "work-life-balance", color: "#14B8A6" },
+const categories: Category[] = [
+  { id: "tips-trick", name: "Tips & Trick", slug: "tips-trick", color: "#10B981" },
+  { id: "panduan", name: "Panduan", slug: "panduan", color: "#3B82F6" },
+  { id: "karier", name: "Karier", slug: "karier", color: "#F59E0B" },
+  { id: "gaji-negosiasi", name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#EF4444" },
+  { id: "inspiratif", name: "Inspiratif", slug: "inspiratif", color: "#8B5CF6" },
+  { id: "umum", name: "Umum", slug: "umum", color: "#6B7280" },
 ];
 
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
+function calculateReadTime(content: string): number {
+  const wordsPerMinute = 200;
+  const text = content.replace(/<[^>]*>/g, "");
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+}
+
 export default function ArticleEditorPage() {
+  const router = useRouter();
+  const supabase = createClient();
+
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
@@ -67,8 +90,20 @@ export default function ArticleEditorPage() {
   const [isPublishing, setIsPublishing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showPublishDialog, setShowPublishDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const supabase = createClient();
+  useEffect(() => {
+    async function checkAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        router.push("/community/login?redirect=/community/articles/editor");
+        return;
+      }
+      setUser(session.user);
+      setIsLoading(false);
+    }
+    checkAuth();
+  }, [supabase, router]);
 
   const handleAddTag = useCallback(() => {
     const trimmedTag = tagInput.trim().toLowerCase();
@@ -100,12 +135,12 @@ export default function ArticleEditorPage() {
       const file = e.target.files?.[0];
       if (file) {
         if (file.size > 5 * 1024 * 1024) {
-          alert("Ukuran file terlalu besar. Maksimal 5MB.");
+          setError("Ukuran file terlalu besar. Maksimal 5MB.");
           return;
         }
         const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
         if (!allowedTypes.includes(file.type)) {
-          alert("Format file tidak didukung. Gunakan JPEG, PNG, WebP, atau GIF.");
+          setError("Format file tidak didukung. Gunakan JPEG, PNG, WebP, atau GIF.");
           return;
         }
         setCoverImageFile(file);
@@ -125,55 +160,142 @@ export default function ArticleEditorPage() {
   }, []);
 
   const handleSaveDraft = useCallback(async () => {
+    if (!user) {
+      setError("Silakan login terlebih dahulu.");
+      return;
+    }
+
     setIsSaving(true);
+    setError(null);
+
     try {
-      // Simulate save - in production, this would save to Supabase
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const slug = generateSlug(title || "untitled-draft-" + Date.now());
+      const readTime = calculateReadTime(content);
+
+      const { data, error: insertError } = await (supabase as any)
+        .from("community_articles")
+        .insert({
+          title: title || "Untitled Draft",
+          slug,
+          excerpt: excerpt || "",
+          content: content || "",
+          cover_image: coverImage,
+          author_id: user.id,
+          category: categories.find(c => c.id === categoryId)?.name || "Umum",
+          tags,
+          read_time: readTime,
+          is_published: false,
+          is_featured: false,
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
       alert("Draft berhasil disimpan!");
-    } catch {
-      alert("Gagal menyimpan draft. Silakan coba lagi.");
+      if (data) {
+        router.push("/community/articles");
+      }
+    } catch (err: any) {
+      console.error("Error saving draft:", err);
+      setError(err.message || "Gagal menyimpan draft. Silakan coba lagi.");
     } finally {
       setIsSaving(false);
     }
-  }, []);
+  }, [user, title, excerpt, content, coverImage, categoryId, tags, supabase, router]);
 
   const handlePublish = useCallback(async () => {
     if (!title.trim()) {
-      alert("Judul artikel harus diisi.");
+      setError("Judul artikel harus diisi.");
       return;
     }
     if (!excerpt.trim()) {
-      alert("Ringkasan artikel harus diisi.");
+      setError("Ringkasan artikel harus diisi.");
       return;
     }
     if (!categoryId) {
-      alert("Pilih kategori artikel.");
+      setError("Pilih kategori artikel.");
       return;
     }
     if (!content.trim() || content === "<p></p>") {
-      alert("Konten artikel tidak boleh kosong.");
+      setError("Konten artikel tidak boleh kosong.");
       return;
     }
     setShowPublishDialog(true);
   }, [title, excerpt, categoryId, content]);
 
   const handleConfirmPublish = useCallback(async () => {
+    if (!user) {
+      setError("Silakan login terlebih dahulu.");
+      return;
+    }
+
     setShowPublishDialog(false);
     setIsPublishing(true);
+    setError(null);
+
     try {
-      // Simulate publish - in production, this would save to Supabase and set status to published
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const slug = generateSlug(title);
+      const readTime = calculateReadTime(content);
+      const categoryName = categories.find(c => c.id === categoryId)?.name || "Umum";
+
+      const { data, error: insertError } = await (supabase as any)
+        .from("community_articles")
+        .insert({
+          title,
+          slug,
+          excerpt,
+          content,
+          cover_image: coverImage,
+          author_id: user.id,
+          category: categoryName,
+          tags,
+          read_time: readTime,
+          is_published: true,
+          is_featured: false,
+          published_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
       alert("Artikel berhasil dipublikasikan!");
-      // Redirect to articles list or article detail page
-      window.location.href = "/community/articles";
-    } catch {
-      alert("Gagal mempublikasikan artikel. Silakan coba lagi.");
+      if (data) {
+        router.push(`/community/articles/${data.slug}`);
+      }
+    } catch (err: any) {
+      console.error("Error publishing:", err);
+      setError(err.message || "Gagal mempublikasikan artikel. Silakan coba lagi.");
     } finally {
       setIsPublishing(false);
     }
-  }, []);
+  }, [user, title, excerpt, content, coverImage, categoryId, tags, supabase, router]);
 
-  void supabase; // Supabase client for future real data
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold mb-2">Login Diperlukan</h2>
+          <p className="text-slate-400 mb-4">Anda harus login untuk menulis artikel.</p>
+          <Link href="/community/login?redirect=/community/articles/editor">
+            <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+              Login
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
@@ -231,6 +353,19 @@ export default function ArticleEditorPage() {
           </div>
         </div>
       </nav>
+
+      {/* Error Banner */}
+      {error && (
+        <div className="fixed top-16 left-0 right-0 z-40 bg-red-500/10 border-b border-red-500/20 px-4 py-3">
+          <div className="max-w-6xl mx-auto flex items-center gap-2 text-red-400">
+            <AlertCircle className="w-4 h-4" />
+            <span className="text-sm">{error}</span>
+            <button onClick={() => setError(null)} className="ml-auto">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="pt-24 pb-16">
@@ -326,7 +461,7 @@ export default function ArticleEditorPage() {
                   <SelectValue placeholder="Pilih kategori..." />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-900 border-slate-800">
-                  {mockCategories.map((category) => (
+                  {categories.map((category) => (
                     <SelectItem
                       key={category.id}
                       value={category.id}
@@ -428,7 +563,7 @@ export default function ArticleEditorPage() {
                 <AlertDialogTitle className="text-slate-50">Publikasikan Artikel?</AlertDialogTitle>
                 <AlertDialogDescription className="text-slate-400">
                   Apakah Anda yakin ingin mempublikasikan artikel ini? Setelah dipublikasikan,
-                  artikel akan visible untuk semua pembaca dan tidak dapat dikembalikan ke status draft.
+                  artikel akan visible untuk semua pembaca.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

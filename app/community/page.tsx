@@ -1,114 +1,8 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import {
-  MessageSquare,
-  FileText,
-  BookOpen,
-  Vote,
-  Sparkles,
-  Search,
-  TrendingUp,
-  Briefcase,
-  ChevronRight,
-  ArrowUp,
-  MessageCircle,
-  Eye,
-  X,
-} from "lucide-react";
-import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton";
-
-// Mock data - will be replaced with Supabase data
-const mockStats = {
-  discussions: 1240,
-  articles: 89,
-  members: 340,
-  feedbackAnswered: 156,
-};
-
-const mockFeaturedArticles = [
-  {
-    id: "1",
-    title: "10 Tips Negosiasi Gaji yang Efektif untuk Daily Worker",
-    excerpt: "Negosiasi gaji adalah keterampilan penting yang sering diabaikan oleh banyak pekerja harian. Berikut tips yang bisa Anda terapkan...",
-    category: "Tips & Trick",
-    coverImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-    author: { name: "Sarah Wijaya", avatar: null },
-    readTime: 5,
-    publishedAt: "2024-01-15",
-  },
-  {
-    id: "2",
-    title: "Panduan Lengkap: Cara Daftar di DailyWorkerHub",
-    excerpt: "Langkah demi langkah untuk mendaftar dan mulai mencari pekerjaan harian yang sesuai dengan keahlian Anda...",
-    category: "Panduan",
-    coverImage: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
-    author: { name: "Ahmad Pratama", avatar: null },
-    readTime: 3,
-    publishedAt: "2024-01-14",
-  },
-  {
-    id: "3",
-    title: "Kisah Inspiratif: Dari Calo Menjadi Employer Bersertifikat",
-    excerpt: "Perjalanan transformasi seorang daily worker yang kini berhasil mengelola tim dengan 50 pekerja harian...",
-    category: "Inspiratif",
-    coverImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
-    author: { name: "Dewi Kusuma", avatar: null },
-    readTime: 8,
-    publishedAt: "2024-01-13",
-  },
-];
-
-const mockPopularDiscussions = [
-  {
-    id: "1",
-    title: "Berapa seharusnya gaji minimum untuk driver online di Jakarta?",
-    category: "Gaji & Negosiasi",
-    author: { name: "Budi Santoso" },
-    likes: 234,
-    comments: 89,
-    createdAt: "2 jam lalu",
-  },
-  {
-    id: "2",
-    title: "Share pengalaman pertama kerja remote - what to prepare?",
-    category: "Remote Work",
-    author: { name: "Rina Melati" },
-    likes: 156,
-    comments: 45,
-    createdAt: "5 jam lalu",
-  },
-  {
-    id: "3",
-    title: "Tips menghadapi interview untuk posisi warehouse supervisor",
-    category: "Karier",
-    author: { name: "Hendra Wijaya" },
-    likes: 98,
-    comments: 23,
-    createdAt: "8 jam lalu",
-  },
-  {
-    id: "4",
-    title: "Rekomendasi platform freelancer terpercaya di Indonesia?",
-    category: "Skill Development",
-    author: { name: "Lisa Permata" },
-    likes: 76,
-    comments: 34,
-    createdAt: "1 hari lalu",
-  },
-  {
-    id: "5",
-    title: "How to deal dengan client yang suka ubah scope terakhir menit?",
-    category: "Umum",
-    author: { name: "Yoga Prasetyo" },
-    likes: 54,
-    comments: 21,
-    createdAt: "1 hari lalu",
-  },
-];
+import Link from "next/link"
+import Image from "next/image"
+import { MessageSquare, FileText, BookOpen, Vote, Sparkles, Search, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, X } from "lucide-react"
+import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTimeAgo } from "@/lib/community"
+import { CommunityHomeSkeleton } from "@/components/skeleton/CommunityHomeSkeleton"
 
 const shortcuts = [
   { label: "Diskusi Terbaru", icon: MessageSquare, href: "/community/discussions?sort=newest" },
@@ -116,25 +10,16 @@ const shortcuts = [
   { label: "Panduan Karir", icon: BookOpen, href: "/community/docs/getting-started" },
   { label: "Feedback Produk", icon: Vote, href: "/community/feedback" },
   { label: "Cari Lowongan", icon: Briefcase, href: "/app" },
-];
+]
 
-export default function CommunityPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showSearch, setShowSearch] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export default async function CommunityPage() {
+  const [articles, discussions, stats] = await Promise.all([
+    getFeaturedArticles(3),
+    getPopularDiscussions(5),
+    getCommunityStats(),
+  ])
 
-  // Simulate loading state
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Show skeleton during loading
-  if (isLoading) {
-    return <CommunityHomeSkeleton />;
-  }
+  const hasData = articles.length > 0 || discussions.length > 0
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 bg-grid-pattern">
@@ -180,12 +65,6 @@ export default function CommunityPage() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowSearch(!showSearch)}
-              className="p-2 text-slate-400 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
-            >
-              <Search className="w-5 h-5" />
-            </button>
             <Link
               href="/community/login"
               className="px-4 py-2 text-sm text-slate-300 hover:text-slate-50 rounded-lg hover:bg-slate-800/50 transition-colors"
@@ -206,34 +85,19 @@ export default function CommunityPage() {
       <section className="relative min-h-screen flex items-center justify-center pt-16 bg-radial-green">
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
-          >
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
               Komunitas Pekerja Harian Indonesia
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto px-4"
-          >
+          <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto px-4">
             Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
-          </motion.p>
+          </p>
 
-          {/* Main Search Input */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="w-full max-w-2xl mx-auto px-4 sm:px-0"
-          >
+          {/* Search */}
+          <div className="w-full max-w-2xl mx-auto px-4 sm:px-0">
             <div className="relative group">
               <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative flex items-center bg-slate-900 border border-slate-700 rounded-2xl h-14 sm:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
@@ -241,32 +105,14 @@ export default function CommunityPage() {
                 <input
                   type="text"
                   placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1 bg-transparent text-slate-50 placeholder-slate-500 outline-none text-sm sm:text-base"
                 />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="p-1 text-slate-400 hover:text-slate-50 rounded-full hover:bg-slate-800 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-                <button className="ml-2 sm:ml-4 px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors flex-shrink-0">
-                  Kirim
-                </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Shortcut Pills */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 px-4"
-          >
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 px-4">
             {shortcuts.map((shortcut) => (
               <Link
                 key={shortcut.label}
@@ -277,7 +123,7 @@ export default function CommunityPage() {
                 <span>{shortcut.label}</span>
               </Link>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -286,10 +132,10 @@ export default function CommunityPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-wrap justify-center gap-8 sm:gap-16">
             {[
-              { label: "Diskusi", value: mockStats.discussions, suffix: "+" },
-              { label: "Artikel", value: mockStats.articles, suffix: "" },
-              { label: "Member", value: mockStats.members, suffix: "+" },
-              { label: "Feedback Terjawab", value: mockStats.feedbackAnswered, suffix: "" },
+              { label: "Diskusi", value: stats.discussions, suffix: "+" },
+              { label: "Artikel", value: stats.articles, suffix: "" },
+              { label: "Member", value: stats.members, suffix: "+" },
+              { label: "Feedback Terjawab", value: stats.feedbackAnswered, suffix: "" },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-2 text-sm">
                 <span className="text-emerald-400 font-semibold text-lg">
@@ -317,52 +163,70 @@ export default function CommunityPage() {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockFeaturedArticles.map((article) => (
-              <Link
-                key={article.id}
-                href={`/community/articles/${article.id}`}
-                className="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/30 card-hover"
-              >
-                {/* Cover Image */}
-                <div className="aspect-video relative overflow-hidden">
-                  <Image
-                    src={article.coverImage}
-                    alt={article.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    {article.category}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="font-semibold text-slate-50 line-clamp-2 mb-2 group-hover:text-emerald-400 transition-colors">
-                    {article.title}
-                  </h3>
-                  <p className="text-sm text-slate-400 line-clamp-3 mb-4">
-                    {article.excerpt}
-                  </p>
-
-                  {/* Footer */}
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <span className="text-emerald-400 text-xs font-medium">
-                        {article.author.name.charAt(0)}
-                      </span>
-                    </div>
-                    <span className="text-slate-400">{article.author.name}</span>
-                    <span>•</span>
-                    <span>{article.readTime} menit baca</span>
-                    <span>•</span>
-                    <span>{article.publishedAt}</span>
+          {hasData && articles.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {articles.map((article) => (
+                <Link
+                  key={article.id}
+                  href={`/community/articles/${article.slug}`}
+                  className="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-emerald-500/30 card-hover"
+                >
+                  {/* Cover Image */}
+                  <div className="aspect-video relative overflow-hidden">
+                    {article.cover_image ? (
+                      <Image
+                        src={article.cover_image}
+                        alt={article.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/50 to-slate-900" />
+                    )}
+                    <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      {article.category}
+                    </span>
                   </div>
-                </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="font-semibold text-slate-50 line-clamp-2 mb-2 group-hover:text-emerald-400 transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-slate-400 line-clamp-3 mb-4">
+                      {article.excerpt}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                        <span className="text-emerald-400 text-xs font-medium">
+                          {article.author?.full_name?.charAt(0) || 'A'}
+                        </span>
+                      </div>
+                      <span className="text-slate-400">{article.author?.full_name || 'Anonymous'}</span>
+                      <span>•</span>
+                      <span>{article.read_time} menit baca</span>
+                      <span>•</span>
+                      <span>{article.published_at ? new Date(article.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-slate-500">
+              <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
+              <p>Belum ada artikel. Jadilah yang pertama menulis!</p>
+              <Link
+                href="/community/articles/editor"
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+              >
+                <Sparkles className="w-4 h-4" />
+                Tulis Artikel
               </Link>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -380,69 +244,83 @@ export default function CommunityPage() {
             </Link>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6">
-            {/* Featured Discussion */}
-            <Link
-              href={`/community/discussions/${mockPopularDiscussions[0].id}`}
-              className="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/30 card-hover"
-            >
-              <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
-                {mockPopularDiscussions[0].category}
-              </span>
-              <h3 className="text-lg font-semibold text-slate-50 mb-4 line-clamp-2 group-hover:text-emerald-400 transition-colors">
-                {mockPopularDiscussions[0].title}
-              </h3>
-              <p className="text-sm text-slate-400 mb-4 line-clamp-2">
-                {mockPopularDiscussions[0].author.name} • {mockPopularDiscussions[0].createdAt}
-              </p>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 text-slate-400">
-                  <ArrowUp className="w-4 h-4" />
-                  <span>{mockPopularDiscussions[0].likes}</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-400">
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{mockPopularDiscussions[0].comments}</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-400">
-                  <Eye className="w-4 h-4" />
-                  <span>1.2k</span>
-                </div>
-              </div>
-            </Link>
-
-            {/* Discussion List */}
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl divide-y divide-slate-800">
-              {mockPopularDiscussions.slice(1).map((discussion) => (
-                <Link
-                  key={discussion.id}
-                  href={`/community/discussions/${discussion.id}`}
-                  className="flex items-start gap-4 p-4 hover:bg-slate-800/30 transition-colors"
-                >
-                  {/* Vote Pill */}
-                  <div className="flex flex-col items-center px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-xl">
-                    <ArrowUp className="w-4 h-4 text-slate-400" />
-                    <span className="text-sm font-medium text-slate-300">{discussion.likes}</span>
+          {hasData && discussions.length > 0 ? (
+            <div className="grid lg:grid-cols-2 gap-6">
+              {/* Featured Discussion */}
+              <Link
+                href={`/community/discussions/${discussions[0].slug}`}
+                className="group bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-emerald-500/30 card-hover"
+              >
+                <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+                  {discussions[0].category}
+                </span>
+                <h3 className="text-lg font-semibold text-slate-50 mb-4 line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                  {discussions[0].title}
+                </h3>
+                <p className="text-sm text-slate-400 mb-4 line-clamp-2">
+                  {discussions[0].author?.full_name || 'Anonymous'} • {formatTimeAgo(discussions[0].created_at)}
+                </p>
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <ArrowUp className="w-4 h-4" />
+                    <span>{discussions[0].likes_count}</span>
                   </div>
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <MessageCircle className="w-4 h-4" />
+                    <span>{discussions[0].comments_count}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <Eye className="w-4 h-4" />
+                    <span>{discussions[0].views_count}</span>
+                  </div>
+                </div>
+              </Link>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2 py-0.5 text-xs rounded-full bg-slate-800 text-slate-400">
-                        {discussion.category}
-                      </span>
+              {/* Discussion List */}
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl divide-y divide-slate-800">
+                {discussions.slice(1).map((discussion) => (
+                  <Link
+                    key={discussion.id}
+                    href={`/community/discussions/${discussion.slug}`}
+                    className="flex items-start gap-4 p-4 hover:bg-slate-800/30 transition-colors"
+                  >
+                    {/* Vote Pill */}
+                    <div className="flex flex-col items-center px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-xl">
+                      <ArrowUp className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm font-medium text-slate-300">{discussion.likes_count}</span>
                     </div>
-                    <h4 className="text-sm font-medium text-slate-200 line-clamp-1 group-hover:text-emerald-400 transition-colors">
-                      {discussion.title}
-                    </h4>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {discussion.author.name} • {discussion.createdAt}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-slate-800 text-slate-400">
+                          {discussion.category}
+                        </span>
+                      </div>
+                      <h4 className="text-sm font-medium text-slate-200 line-clamp-1 group-hover:text-emerald-400 transition-colors">
+                        {discussion.title}
+                      </h4>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {discussion.author?.full_name || 'Anonymous'} • {formatTimeAgo(discussion.created_at)}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-12 text-slate-500">
+              <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
+              <p>Belum ada diskusi. Mulai percakapan baru!</p>
+              <Link
+                href="/community/discussions/new"
+                className="inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+              >
+                <Sparkles className="w-4 h-4" />
+                Buat Diskusi
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -537,5 +415,5 @@ export default function CommunityPage() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

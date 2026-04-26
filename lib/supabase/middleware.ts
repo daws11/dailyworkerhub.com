@@ -35,6 +35,7 @@ export async function updateSession(request: NextRequest) {
     '/app',
     '/community/admin',
     '/community/discussions/new',
+    '/community/articles/editor',
   ]
   // Wildcard patterns that need regex matching
   const protectedWildcardPatterns = [
