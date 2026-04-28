@@ -30,7 +30,7 @@ const navbar = (
   <Navbar
     logo={<Logo />}
     logoLink="/"
-    projectLink="https://github.com/daws11/dailyworkerhub.com"
+
   >
     <div className="hidden md:flex items-center gap-1">
       <a href="/community/discussions" className={navLinkClass}>Diskusi</a>
@@ -102,10 +102,10 @@ export default async function DocsLayout({
       pageMap={pageMap}
       navbar={navbar}
       footer={footer}
-      docsRepositoryBase="https://github.com/daws11/dailyworkerhub.com/blob/main/app"
+
       sidebar={{ defaultMenuCollapseLevel: 1, toggleButton: true }}
-      editLink="Edit halaman ini di GitHub"
-      feedback={{ content: "Punya pertanyaan? Beri tahu kami." }}
+      editLink={false}
+      feedback={false}
       toc={{ backToTop: "Kembali ke atas" }}
     >
       {children}
