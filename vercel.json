@@ -5,6 +5,7 @@
       "main": true
     }
   },
-  "buildCommand": "pnpm install && pnpm run build",
-  "installCommand": "pnpm install"
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
 }

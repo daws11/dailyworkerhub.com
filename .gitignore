@@ -21,3 +21,5 @@ yarn.lock
 .security-key
 logs/security/
 .env*.local
+_pagefind/
+.next/server/app
