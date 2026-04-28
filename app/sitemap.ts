@@ -25,6 +25,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/cookies`, lastModified: new Date() },
   ]
 
+  const docRoutes = [
+    { url: `${baseUrl}/docs`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/getting-started`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/getting-started/persiapan-dasar`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/getting-started/membuat-akun`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/platform-guide`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/platform-guide/cara-mencari-lowongan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/platform-guide/cara-posting-lowongan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur/protection-pool`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur/escrow-system`, lastModified: new Date() },
+  ]
+
   const articleRoutes = (articlesResult.data || []).map((a: SitemapEntry) => ({
     url: `${baseUrl}/community/articles/${a.slug}`,
     lastModified: new Date(a.updated_at)
@@ -35,10 +48,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(d.updated_at)
   }))
 
-  const docRoutes = (docsResult.data || []).map((d: SitemapEntry) => ({
+  const communityDocRoutes = (docsResult.data || []).map((d: SitemapEntry) => ({
     url: `${baseUrl}/community/docs/${d.slug}`,
     lastModified: new Date(d.updated_at)
   }))
 
-  return [...routes, ...articleRoutes, ...discussionRoutes, ...docRoutes]
+  return [...routes, ...docRoutes, ...articleRoutes, ...discussionRoutes, ...communityDocRoutes]
 }
