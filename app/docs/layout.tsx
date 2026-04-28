@@ -52,7 +52,41 @@ const navbar = (
 
 const footer = (
   <Footer>
-    © {new Date().getFullYear()} DailyWorkerHub Documentation
+    <div className="max-w-7xl mx-auto px-6 py-8 border-t border-border">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 className="text-lg font-bold text-foreground">DailyWorkerHub</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Platform terpercaya untuk pekerja harian di Indonesia.
+          </p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-foreground">Produk</h4>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li><a href="/" className="hover:text-emerald-400 transition-colors">Cari Kerja</a></li>
+            <li><a href="/community" className="hover:text-emerald-400 transition-colors">Komunitas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-foreground">Resources</h4>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li><a href="/docs" className="hover:text-emerald-400 transition-colors">Panduan</a></li>
+            <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">Artikel</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-foreground">Legal</h4>
+          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+            <li><a href="/privacy" className="hover:text-emerald-400 transition-colors">Kebijakan Privasi</a></li>
+            <li><a href="/terms" className="hover:text-emerald-400 transition-colors">Syarat & Ketentuan</a></li>
+            <li><a href="/cookies" className="hover:text-emerald-400 transition-colors">Kebijakan Cookie</a></li>
+          </ul>
+        </div>
+      </div>
+      <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
+        © {new Date().getFullYear()} DailyWorkerHub. All rights reserved.
+      </div>
+    </div>
   </Footer>
 );
 
