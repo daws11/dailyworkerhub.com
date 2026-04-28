@@ -56,12 +56,12 @@ export async function getFeaturedArticles(limit = 3): Promise<Article[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_articles')
+    .from('community.articles')
     .select(`
       *,
-      author:users(full_name, avatar_url)
+      author:community.profiles(id, full_name, avatar_url)
     `)
-    .eq('is_published', true)
+    .eq('status', 'published')
     .eq('is_featured', true)
     .order('published_at', { ascending: false })
     .limit(limit)
@@ -78,12 +78,11 @@ export async function getPopularDiscussions(limit = 5): Promise<Discussion[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_discussions')
+    .from('community.discussions')
     .select(`
       *,
-      author:users(full_name, avatar_url)
+      author:community.profiles(id, full_name, avatar_url)
     `)
-    .eq('is_deleted', false)
     .order('likes_count', { ascending: false })
     .limit(limit)
 
@@ -99,12 +98,11 @@ export async function getRecentDiscussions(limit = 10): Promise<Discussion[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_discussions')
+    .from('community.discussions')
     .select(`
       *,
-      author:users(full_name, avatar_url)
+      author:community.profiles(id, full_name, avatar_url)
     `)
-    .eq('is_deleted', false)
     .order('created_at', { ascending: false })
     .limit(limit)
 
@@ -119,25 +117,18 @@ export async function getRecentDiscussions(limit = 10): Promise<Discussion[]> {
 export async function getCommunityStats(): Promise<CommunityStats> {
   const supabase = await createClient()
 
-  const [discussionsResult, articlesResult, usersResult] = await Promise.all([
-    supabase
-      .from('community_discussions')
-      .select('id', { count: 'exact', head: true })
-      .eq('is_deleted', false),
-    supabase
-      .from('community_articles')
-      .select('id', { count: 'exact', head: true })
-      .eq('is_published', true),
-    supabase
-      .from('users')
-      .select('id', { count: 'exact', head: true })
+  const [discussionsResult, articlesResult, profilesResult, feedbackResult] = await Promise.all([
+    supabase.from('community.discussions').select('id', { count: 'exact', head: true }),
+    supabase.from('community.articles').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+    supabase.from('community.profiles').select('id', { count: 'exact', head: true }),
+    supabase.from('community.feedback_items').select('id', { count: 'exact', head: true }).eq('status', 'completed'),
   ])
 
   return {
     discussions: discussionsResult.count || 0,
     articles: articlesResult.count || 0,
-    members: usersResult.count || 0,
-    feedbackAnswered: 0,
+    members: profilesResult.count || 0,
+    feedbackAnswered: feedbackResult.count || 0,
   }
 }
 

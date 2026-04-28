@@ -2,7 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from './types'
 
-export async function createClient() {
+// Use any to allow the 'community.xxx' table reference syntax
+export async function createClient(): Promise<any> {
   const cookieStore = await cookies()
 
   return createServerClient<Database>(
@@ -26,4 +27,9 @@ export async function createClient() {
       },
     }
   )
+}
+
+// Community schema client helper
+export async function createCommunityClient(): Promise<any> {
+  return createClient()
 }
