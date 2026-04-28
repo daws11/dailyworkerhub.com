@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
+import { Footer } from "@/components/footer";
 import Script from "next/script";
 import "./globals.css";
 
@@ -22,7 +23,7 @@ const themeInitScript = `
 `;
 
 export const metadata: Metadata = {
-  metadataBase: "https://dailyworkerhub.com",
+  metadataBase: new URL("https://dailyworkerhub.com"),
   title: "Daily Worker Hub - Platform Pekerja Harian Indonesia",
   description: "Hubungi langsung pekerja harian terpercaya di Indonesia. Tanpa perantara, transparan biaya, dan kualitas terjamin. Pasang lowongan gratis!",
   keywords: ["pekerja harian", "lowongan kerja", "bisnis", "recruitment", "Indonesia", "daily worker", "hire worker"],
@@ -75,6 +76,7 @@ export default function RootLayout({
         <Providers>
           <TooltipProvider>
             {children}
+            <Footer />
             <Toaster />
             <Analytics />
           </TooltipProvider>

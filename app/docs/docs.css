@@ -1,0 +1,242 @@
+/* Nextra theme override agar match dengan style /community/* (dark + light)
+ * Memakai CSS variables dari globals.css agar mengikuti theme toggle.
+ * Variabel di globals.css disimpan sebagai full hsl(...) strings, jadi pakai var() langsung.
+ */
+
+:root {
+  --nextra-primary-hue: 160deg;
+  --nextra-primary-saturation: 84%;
+  --nextra-primary-lightness: 39%;
+  --nextra-bg: 255, 255, 255;
+
+  /* Brand emerald (light mode) */
+  --doc-accent: hsl(160 84% 39%);
+  --doc-accent-soft: hsl(160 84% 39% / 0.1);
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --nextra-bg: 2, 6, 23; /* slate-950 */
+  --doc-accent: hsl(162 88% 52%); /* emerald-400 */
+  --doc-accent-soft: hsl(160 84% 39% / 0.15);
+}
+
+/* ===== Top navbar ===== */
+.nextra-nav-container,
+.nextra-nav-container-blur {
+  background-color: hsl(0 0% 100% / 0.8) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+html.dark .nextra-nav-container,
+html.dark .nextra-nav-container-blur {
+  background-color: hsl(222 47% 5% / 0.8) !important;
+}
+
+.nextra-nav-container nav a {
+  color: var(--muted-foreground);
+}
+.nextra-nav-container nav a:hover {
+  color: var(--foreground);
+}
+
+/* ===== Sidebar ===== */
+aside.nextra-sidebar,
+.nextra-sidebar-container {
+  background-color: var(--background);
+  border-right: 1px solid var(--border);
+}
+
+.nextra-sidebar-container li.active > a,
+.nextra-sidebar-container a[aria-current="page"] {
+  background-color: var(--doc-accent-soft);
+  color: var(--doc-accent) !important;
+  border-left: 2px solid hsl(160 84% 39%);
+}
+
+.nextra-sidebar-container a {
+  color: var(--muted-foreground);
+}
+.nextra-sidebar-container a:hover {
+  color: var(--foreground);
+  background-color: hsl(217 33% 17% / 0.5);
+}
+html:not(.dark) .nextra-sidebar-container a:hover {
+  background-color: hsl(240 5% 96% / 0.8);
+}
+
+/* ===== Search input ===== */
+.nextra-search input,
+input[type="search"] {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+.nextra-search input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.7;
+}
+.nextra-search input:focus {
+  border-color: hsl(160 84% 39% / 0.5);
+}
+
+.nextra-search ul,
+[role="listbox"] {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* ===== Main content typography ===== */
+article.nextra-content {
+  color: var(--foreground);
+}
+
+article.nextra-content h1,
+article.nextra-content h2,
+article.nextra-content h3,
+article.nextra-content h4 {
+  color: var(--foreground);
+  font-weight: 700;
+}
+article.nextra-content h2 {
+  border-bottom: 1px solid var(--border);
+}
+
+article.nextra-content p,
+article.nextra-content li {
+  color: var(--foreground);
+  opacity: 0.92;
+}
+
+article.nextra-content a {
+  color: var(--doc-accent);
+  text-decoration: none;
+}
+article.nextra-content a:hover {
+  text-decoration: underline;
+}
+
+/* Inline code */
+article.nextra-content code:not(pre code) {
+  background-color: hsl(217 33% 17% / 0.15);
+  border: 1px solid var(--border);
+  color: var(--doc-accent);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.875em;
+}
+html:not(.dark) article.nextra-content code:not(pre code) {
+  background-color: hsl(160 84% 39% / 0.08);
+}
+
+/* Code blocks */
+pre,
+.nextra-code pre {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Blockquote */
+article.nextra-content blockquote {
+  border-left-color: hsl(160 84% 39%);
+  background-color: hsl(160 84% 39% / 0.05);
+  color: var(--foreground);
+}
+
+/* Table */
+article.nextra-content table {
+  border-color: var(--border);
+}
+article.nextra-content th {
+  background-color: var(--card);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+article.nextra-content td {
+  border-color: var(--border);
+  color: var(--foreground);
+}
+
+article.nextra-content hr {
+  border-color: var(--border);
+}
+
+/* Cards (Nextra <Cards />) */
+.nextra-card,
+a[class*="nextra-card"] {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+.nextra-card:hover,
+a[class*="nextra-card"]:hover {
+  border-color: hsl(160 84% 39% / 0.3);
+}
+
+/* ===== TOC (right sidebar) ===== */
+.nextra-toc a {
+  color: var(--muted-foreground);
+}
+.nextra-toc a:hover {
+  color: var(--foreground);
+}
+.nextra-toc a.nextra-toc-active,
+.nextra-toc a[aria-selected="true"] {
+  color: var(--doc-accent);
+}
+
+.nextra-toc button,
+.nextra-toc-footer a {
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.nextra-toc button:hover,
+.nextra-toc-footer a:hover {
+  color: var(--doc-accent);
+  border-color: hsl(160 84% 39% / 0.3);
+}
+
+/* Pagination */
+.nextra-nav-pagination a,
+a.nextra-pagination-link {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+.nextra-nav-pagination a:hover,
+a.nextra-pagination-link:hover {
+  border-color: hsl(160 84% 39% / 0.3);
+}
+
+/* Footer */
+footer.nextra-footer,
+.nextra-footer {
+  background-color: var(--background);
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+}
+
+/* Mobile menu */
+.nextra-menu-mobile {
+  background-color: var(--background);
+  border-color: var(--border);
+}
+
+*:focus-visible {
+  outline-color: hsl(160 84% 39%);
+}
+
+.nextra-sidebar-container::-webkit-scrollbar,
+.nextra-toc::-webkit-scrollbar {
+  width: 6px;
+}
+.nextra-sidebar-container::-webkit-scrollbar-thumb,
+.nextra-toc::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}

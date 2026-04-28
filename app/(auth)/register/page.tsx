@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,6 @@ export default function RegisterPage() {
   const handleRegister = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check rate limit before registration attempt
     if (isLimited) {
       toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
@@ -83,7 +83,6 @@ export default function RegisterPage() {
   }, [email, password, username, confirmPassword, isLimited, checkRateLimit]);
 
   const handleGoogleRegister = useCallback(async () => {
-    // Check rate limit before OAuth attempt
     if (isLimited) {
       toast.error("Terlalu banyak percobaan", {
         description: "Silakan tunggu beberapa saat sebelum mencoba lagi.",
@@ -118,14 +117,18 @@ export default function RegisterPage() {
   }, [isLimited, checkRateLimit]);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="p-6">
         <Link href="/" className="flex items-center gap-3 w-fit">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-            <span className="text-slate-950 font-bold text-sm">DW</span>
-          </div>
-          <span className="font-semibold text-slate-50">DailyWorkerHub</span>
+          <Image
+            src="/logo-new.png"
+            alt="Daily Worker Hub"
+            width={32}
+            height={32}
+            className="h-8 w-auto object-contain"
+          />
+          <span className="font-semibold text-foreground">DailyWorkerHub</span>
         </Link>
       </header>
 
@@ -133,11 +136,11 @@ export default function RegisterPage() {
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8">
+          <div className="bg-card border border-border rounded-2xl p-8">
             {/* Header */}
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold text-slate-50 mb-2">Buat Akun Baru</h1>
-              <p className="text-slate-400 text-sm">
+              <h1 className="text-2xl font-bold text-foreground mb-2">Buat Akun Baru</h1>
+              <p className="text-muted-foreground text-sm">
                 Bergabung dengan komunitas pekerja harian Indonesia
               </p>
             </div>
@@ -153,7 +156,7 @@ export default function RegisterPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500"
+                  className="bg-muted border-border text-foreground placeholder:text-muted-foreground/70"
                 />
               </div>
 
@@ -166,7 +169,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500"
+                  className="bg-muted border-border text-foreground placeholder:text-muted-foreground/70"
                 />
               </div>
 
@@ -180,12 +183,12 @@ export default function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500 pr-10"
+                    className="bg-muted border-border text-foreground placeholder:text-muted-foreground/70 pr-10"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-50"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
@@ -201,15 +204,15 @@ export default function RegisterPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500"
+                  className="bg-muted border-border text-foreground placeholder:text-muted-foreground/70"
                 />
               </div>
 
-              <div className="text-sm text-slate-400">
+              <div className="text-sm text-muted-foreground">
                 Dengan mendaftar, Anda menyetujui{" "}
-                <a href="#" className="text-emerald-400 hover:text-emerald-300">Terms of Service</a>{" "}
+                <a href="/terms" className="text-emerald-400 hover:text-emerald-300">Terms of Service</a>{" "}
                 dan{" "}
-                <a href="#" className="text-emerald-400 hover:text-emerald-300">Privacy Policy</a>
+                <a href="/privacy" className="text-emerald-400 hover:text-emerald-300">Privacy Policy</a>
               </div>
 
               <Button
@@ -230,10 +233,10 @@ export default function RegisterPage() {
             {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-700" />
+                <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-slate-900 text-slate-500">atau</span>
+                <span className="px-4 bg-card text-muted-foreground/70">atau</span>
               </div>
             </div>
 
@@ -243,7 +246,7 @@ export default function RegisterPage() {
               onClick={handleGoogleRegister}
               disabled={loading || isLimited}
               variant="outline"
-              className="w-full border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-slate-50"
+              className="w-full border-border text-foreground/80 hover:bg-muted hover:text-foreground"
             >
               <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -256,9 +259,9 @@ export default function RegisterPage() {
           </div>
 
           {/* Login Link */}
-          <p className="text-center mt-6 text-sm text-slate-400">
+          <p className="text-center mt-6 text-sm text-muted-foreground">
             Sudah punya akun?{" "}
-            <a href="/community/login" className="text-emerald-400 hover:text-emerald-300 font-medium">
+            <a href="/login" className="text-emerald-400 hover:text-emerald-300 font-medium">
               Masuk
             </a>
           </p>

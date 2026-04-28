@@ -1,7 +1,4 @@
-import type { Metadata } from "next";
-
-// Use system fonts to avoid network dependency during build
-// In production, this would use next/font/google or self-hosted fonts
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: {
@@ -15,18 +12,12 @@ export const metadata: Metadata = {
     locale: "id_ID",
     siteName: "DailyWorkerHub Community",
   },
-};
+}
 
 export default function CommunityLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="id" suppressHydrationWarning className="dark">
-      <body className="font-sans antialiased bg-slate-950 text-slate-50">
-        {children}
-      </body>
-    </html>
-  );
+  return <>{children}</>
 }
