@@ -1,5 +1,4 @@
 import { MainNavbar } from "@/components/layout/MainNavbar";
-import { Footer } from "@/components/footer";
 
 export default function PrivacyPage() {
   return (
@@ -49,8 +48,6 @@ export default function PrivacyPage() {
           </section>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }
