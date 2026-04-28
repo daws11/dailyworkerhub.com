@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 import nextra from "nextra";
 
-const withNextra = nextra({});
+const withNextra = nextra({
+  theme: {
+    search: {
+      placeholder: "Cari dokumentasi...",
+      hotkey: "/",
+    },
+  },
+  pagefind: true,
+});
 
 const securityHeaders = [
   {
