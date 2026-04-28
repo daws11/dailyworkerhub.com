@@ -1,28 +1,12 @@
-import Link from "next/link"
-import Image from "next/image"
+import { MainNavbar } from "@/components/layout/MainNavbar";
+import { Footer } from "@/components/footer";
 
 export default function CookiesPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card/50">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo-new.png"
-              alt="Daily Worker Hub"
-              width={32}
-              height={32}
-              className="h-8 w-auto object-contain"
-            />
-            <span className="font-semibold text-foreground">DailyWorkerHub</span>
-          </Link>
-          <Link href="/community" className="text-sm text-muted-foreground hover:text-foreground">
-            Kembali ke Community
-          </Link>
-        </div>
-      </header>
+      <MainNavbar />
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main className="pt-24 pb-16 max-w-4xl mx-auto px-6">
         <h1 className="text-3xl font-bold text-foreground mb-8">Kebijakan Cookie</h1>
         <div className="prose prose-invert prose-slate max-w-none space-y-6">
           <p className="text-muted-foreground leading-relaxed">
@@ -32,7 +16,7 @@ export default function CookiesPage() {
             <h2 className="text-xl font-semibold text-foreground">1. Apa itu Cookie?</h2>
             <p className="text-muted-foreground leading-relaxed">
               Cookie adalah file kecil yang disimpan di perangkat Anda saat Anda mengunjungi situs web.
-              Cookie membantu situs web mengingat preferensi Anda dan meningkatkan pengalaman browsing Anda.
+              Cookie membantu situs web remembers preferensi Anda dan meningkatkan pengalaman browsing Anda.
             </p>
           </section>
           <section className="space-y-4">
@@ -66,6 +50,8 @@ export default function CookiesPage() {
           </section>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

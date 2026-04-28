@@ -1,28 +1,12 @@
-import Link from "next/link"
-import Image from "next/image"
+import { MainNavbar } from "@/components/layout/MainNavbar";
+import { Footer } from "@/components/footer";
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card/50">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo-new.png"
-              alt="Daily Worker Hub"
-              width={32}
-              height={32}
-              className="h-8 w-auto object-contain"
-            />
-            <span className="font-semibold text-foreground">DailyWorkerHub</span>
-          </Link>
-          <Link href="/community" className="text-sm text-muted-foreground hover:text-foreground">
-            Kembali ke Community
-          </Link>
-        </div>
-      </header>
+      <MainNavbar />
 
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main className="pt-24 pb-16 max-w-4xl mx-auto px-6">
         <h1 className="text-3xl font-bold text-foreground mb-8">Kebijakan Privasi</h1>
         <div className="prose prose-invert prose-slate max-w-none space-y-6">
           <p className="text-muted-foreground leading-relaxed">
@@ -65,6 +49,8 @@ export default function PrivacyPage() {
           </section>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }

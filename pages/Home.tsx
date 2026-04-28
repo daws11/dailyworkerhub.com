@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Star, Clock, Users, Building2, ChevronRight, ShieldCheck, Wallet, CheckCircle2, TrendingUp, Search, Calendar, FileText, Check, X, Handshake, MessageCircle, Trophy } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
+import { MainNavbar } from "@/components/layout/MainNavbar";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Magnet } from "@/components/animations/Magnet";
@@ -212,7 +212,7 @@ export default function Home() {
       {/* Texture overlay */}
       <div className="fixed inset-0 pointer-events-none z-50 bg-noise opacity-50 mix-blend-overlay"></div>
 
-      <Navbar />
+      <MainNavbar />
 
       {/* ============================================================ */}
       {/* HERO SECTION */}
