@@ -19,7 +19,7 @@
   },
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "next build && pagefind --site .next/static --output-path .next/static/_pagefind",
+    "build": "next build && npx pagefind --site .next/static --output-path .next/static/_pagefind",
     "start": "next start",
     "check": "tsc",
     "lint": "next lint"
