@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import type { Database } from './types'
 
+type Profile = Database['public']['Tables']['profiles']['Row']
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -30,7 +32,24 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getSession()
   const user = session?.user ?? null
 
-  // Protected routes
+// Fetch user profile for role-based access control
+  let profile: Profile | null = null
+  let userRole: string | null = null
+  let isAdmin = false
+
+  if (user) {
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single<Profile>()
+
+    profile = data
+    userRole = profile?.role ?? null
+    isAdmin = userRole === 'admin' || userRole === 'moderator'
+  }
+
+  // Protected routes - require authentication
   const protectedPaths = [
     '/app',
     '/community/admin',
@@ -54,6 +73,22 @@ export async function updateSession(request: NextRequest) {
     url.searchParams.set('redirect', request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
+
+  // Admin-only routes - require admin/moderator role
+  const adminPaths = ['/community/admin']
+  const isAdminPath = adminPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  )
+
+  if (isAdminPath && !isAdmin) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/community/login'
+    return NextResponse.redirect(url)
+  }
+
+  // Add role information to response headers for downstream use
+  supabaseResponse.headers.set('x-user-role', userRole ?? '')
+  supabaseResponse.headers.set('x-user-is-admin', isAdmin.toString())
 
   return supabaseResponse
 }
