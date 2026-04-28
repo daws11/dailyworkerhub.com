@@ -24,7 +24,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8 font-sub text-sm uppercase tracking-wider">
           <a href="#how-it-works" className="hover:text-primary dark:hover:text-primary transition-colors">Cara Kerja</a>
           <a href="#pricing" className="hover:text-primary dark:hover:text-primary transition-colors">Biaya</a>
-          <a href="https://community.dailyworkerhub.com" className="hover:text-primary dark:hover:text-primary transition-colors">Komunitas</a>
+          <a href="/community" className="hover:text-primary dark:hover:text-primary transition-colors">Komunitas</a>
         </div>
 
         <div className="flex items-center gap-3">
