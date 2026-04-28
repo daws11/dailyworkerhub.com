@@ -105,7 +105,7 @@ export default async function DocsLayout({
 
       sidebar={{ defaultMenuCollapseLevel: 1, toggleButton: true }}
       editLink={false}
-      feedback={false}
+      feedback={undefined}
       toc={{ backToTop: "Kembali ke atas" }}
     >
       {children}
