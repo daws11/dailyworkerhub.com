@@ -6,6 +6,19 @@
   "engines": {
     "node": "20.x"
   },
+  "pnpm": {
+    "overrides": {
+      "@tiptap/core": "2.11.7",
+      "@tiptap/pm": "2.11.7",
+      "@tiptap/react": "2.11.7",
+      "@tiptap/starter-kit": "2.11.7",
+      "@tiptap/extension-code-block-lowlight": "2.11.7",
+      "@tiptap/extension-image": "2.11.7",
+      "@tiptap/extension-link": "2.11.7",
+      "@tiptap/extension-placeholder": "2.11.7",
+      "@tiptap/extension-horizontal-rule": "2.11.7"
+    }
+  },
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
@@ -49,13 +62,14 @@
     "@supabase/supabase-js": "^2.104.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@tanstack/react-query": "^5.60.5",
-    "@tiptap/extension-code-block-lowlight": "^2.11.7",
-    "@tiptap/extension-image": "^2.11.7",
-    "@tiptap/extension-link": "^2.11.7",
-    "@tiptap/extension-placeholder": "^2.11.7",
-    "@tiptap/pm": "^2.11.7",
-    "@tiptap/react": "^2.11.7",
-    "@tiptap/starter-kit": "^2.11.7",
+    "@tiptap/core": "2.11.7",
+    "@tiptap/extension-code-block-lowlight": "2.11.7",
+    "@tiptap/extension-image": "2.11.7",
+    "@tiptap/extension-link": "2.11.7",
+    "@tiptap/extension-placeholder": "2.11.7",
+    "@tiptap/pm": "2.11.7",
+    "@tiptap/react": "2.11.7",
+    "@tiptap/starter-kit": "2.11.7",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.37.0",
     "@vercel/analytics": "^2.0.1",
@@ -92,6 +106,7 @@
     "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
+    "@types/mdx": "^2.0.13",
     "@types/node": "^20.19.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",

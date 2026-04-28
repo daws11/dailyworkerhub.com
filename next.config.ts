@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 import nextra from "nextra";
 
-const withNextra = nextra({
-  search: false
-});
+const withNextra = nextra({});
 
 const securityHeaders = [
   {
