@@ -96,7 +96,7 @@ export default function ArticleEditorPage() {
     async function checkAuth() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
-        router.push("/community/login?redirect=/community/articles/editor");
+        router.push("/login?redirect=/community/articles/editor");
         return;
       }
       setUser(session.user);
@@ -274,7 +274,7 @@ export default function ArticleEditorPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     );
@@ -282,12 +282,12 @@ export default function ArticleEditorPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">Login Diperlukan</h2>
-          <p className="text-slate-400 mb-4">Anda harus login untuk menulis artikel.</p>
-          <Link href="/community/login?redirect=/community/articles/editor">
+          <p className="text-muted-foreground mb-4">Anda harus login untuk menulis artikel.</p>
+          <Link href="/login?redirect=/community/articles/editor">
             <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
               Login
             </Button>
@@ -298,16 +298,13 @@ export default function ArticleEditorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community/articles" className="flex items-center gap-3">
-            <ArrowLeft className="w-5 h-5 text-slate-400" />
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
+    <div className="text-foreground">
+      {/* Editor Toolbar */}
+      <div className="sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border -mx-6 px-6 py-3 mb-4">
+        <div className="flex items-center justify-between gap-3">
+          <Link href="/community/articles" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+            <ArrowLeft className="w-4 h-4" />
+            Kembali ke Artikel
           </Link>
 
           <div className="flex items-center gap-3">
@@ -315,7 +312,7 @@ export default function ArticleEditorPage() {
               variant="outline"
               size="sm"
               onClick={() => setShowPreview(!showPreview)}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="border-border text-foreground/80 hover:bg-muted"
             >
               {showPreview ? "Edit" : "Preview"}
             </Button>
@@ -324,7 +321,7 @@ export default function ArticleEditorPage() {
               size="sm"
               onClick={handleSaveDraft}
               disabled={isSaving}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="border-border text-foreground/80 hover:bg-muted"
             >
               {isSaving ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -352,11 +349,11 @@ export default function ArticleEditorPage() {
             </Button>
           </div>
         </div>
-      </nav>
+      </div>
 
       {/* Error Banner */}
       {error && (
-        <div className="fixed top-16 left-0 right-0 z-40 bg-red-500/10 border-b border-red-500/20 px-4 py-3">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 mb-4">
           <div className="max-w-6xl mx-auto flex items-center gap-2 text-red-400">
             <AlertCircle className="w-4 h-4" />
             <span className="text-sm">{error}</span>
@@ -368,12 +365,12 @@ export default function ArticleEditorPage() {
       )}
 
       {/* Main Content */}
-      <main className="pt-24 pb-16">
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-slate-50 mb-2">Buat Artikel Baru</h1>
-            <p className="text-slate-400">
+            <h1 className="text-2xl font-bold text-foreground mb-2">Buat Artikel Baru</h1>
+            <p className="text-muted-foreground">
               Tulis dan publikasikan artikel untuk komunitas DailyWorkerHub
             </p>
           </div>
@@ -388,7 +385,7 @@ export default function ArticleEditorPage() {
                 placeholder="Masukkan judul artikel..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="text-lg font-semibold bg-slate-900 border-slate-800 text-slate-50 placeholder:text-slate-500"
+                className="text-lg font-semibold bg-card border-border text-foreground placeholder:text-muted-foreground"
               />
             </div>
 
@@ -401,9 +398,9 @@ export default function ArticleEditorPage() {
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
                 rows={3}
-                className="bg-slate-900 border-slate-800 text-slate-50 placeholder:text-slate-500 resize-none"
+                className="bg-card border-border text-foreground placeholder:text-muted-foreground resize-none"
               />
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted-foreground/70">
                 Ringkasan akan ditampilkan di halaman daftar artikel
               </p>
             </div>
@@ -412,7 +409,7 @@ export default function ArticleEditorPage() {
             <div className="space-y-2">
               <Label>Cover Image</Label>
               {coverImage ? (
-                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-800">
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-card border border-border">
                   <Image
                     src={coverImage}
                     alt="Cover preview"
@@ -421,7 +418,7 @@ export default function ArticleEditorPage() {
                   />
                   <button
                     onClick={handleRemoveCoverImage}
-                    className="absolute top-4 right-4 p-2 rounded-full bg-slate-950/80 text-slate-400 hover:text-slate-50 hover:bg-slate-800"
+                    className="absolute top-4 right-4 p-2 rounded-full bg-background/80 text-muted-foreground hover:text-foreground hover:bg-muted"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -430,16 +427,16 @@ export default function ArticleEditorPage() {
                 <label
                   className={cn(
                     "flex flex-col items-center justify-center w-full aspect-video rounded-xl",
-                    "border-2 border-dashed border-slate-700 bg-slate-900/50",
-                    "cursor-pointer hover:border-emerald-500/50 hover:bg-slate-900 transition-colors"
+                    "border-2 border-dashed border-border bg-card/50",
+                    "cursor-pointer hover:border-emerald-500/50 hover:bg-card transition-colors"
                   )}
                 >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <ImageIcon className="w-10 h-10 text-slate-500 mb-3" />
-                    <p className="text-sm text-slate-400 mb-1">
+                    <ImageIcon className="w-10 h-10 text-muted-foreground/70 mb-3" />
+                    <p className="text-sm text-muted-foreground mb-1">
                       Klik untuk upload cover image
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-muted-foreground/70">
                       PNG, JPG, WebP (maksimal 5MB)
                     </p>
                   </div>
@@ -457,15 +454,15 @@ export default function ArticleEditorPage() {
             <div className="space-y-2">
               <Label htmlFor="category">Kategori</Label>
               <Select value={categoryId} onValueChange={setCategoryId}>
-                <SelectTrigger className="bg-slate-900 border-slate-800 text-slate-50">
+                <SelectTrigger className="bg-card border-border text-foreground">
                   <SelectValue placeholder="Pilih kategori..." />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-900 border-slate-800">
+                <SelectContent className="bg-card border-border">
                   {categories.map((category) => (
                     <SelectItem
                       key={category.id}
                       value={category.id}
-                      className="focus:bg-slate-800 focus:text-slate-50"
+                      className="focus:bg-muted focus:text-foreground"
                     >
                       <div className="flex items-center gap-2">
                         <div
@@ -483,7 +480,7 @@ export default function ArticleEditorPage() {
             {/* Tags Input */}
             <div className="space-y-2">
               <Label>Tags</Label>
-              <div className="flex flex-wrap gap-2 p-3 bg-slate-900 border border-slate-800 rounded-lg min-h-[48px]">
+              <div className="flex flex-wrap gap-2 p-3 bg-card border border-border rounded-lg min-h-[48px]">
                 {tags.map((tag) => (
                   <span
                     key={tag}
@@ -505,10 +502,10 @@ export default function ArticleEditorPage() {
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyDown={handleTagKeyDown}
                   onBlur={handleAddTag}
-                  className="flex-1 min-w-[120px] bg-transparent text-slate-50 placeholder:text-slate-500 outline-none"
+                  className="flex-1 min-w-[120px] bg-transparent text-foreground placeholder:text-muted-foreground outline-none"
                 />
               </div>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted-foreground/70">
                 Tekan Enter atau koma untuk menambah tag (maksimal 10 tag)
               </p>
             </div>
@@ -516,22 +513,22 @@ export default function ArticleEditorPage() {
             {/* TipTap Editor */}
             <div className="space-y-2">
               <Label>Konten Artikel</Label>
-              <div className="rounded-xl overflow-hidden border border-slate-800">
+              <div className="rounded-xl overflow-hidden border border-border">
                 <TipTapEditor
                   content={content}
                   onChange={setContent}
                   placeholder="Tulis konten artikel Anda di sini..."
-                  className="bg-slate-900"
+                  className="bg-card"
                 />
               </div>
             </div>
           </div>
 
           {/* Bottom Actions */}
-          <div className="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="mt-8 pt-6 border-t border-border flex items-center justify-between">
             <Link
               href="/community/articles"
-              className="text-sm text-slate-400 hover:text-slate-50"
+              className="text-sm text-muted-foreground hover:text-foreground"
             >
               Batal dan kembali ke daftar artikel
             </Link>
@@ -540,7 +537,7 @@ export default function ArticleEditorPage() {
                 variant="outline"
                 onClick={handleSaveDraft}
                 disabled={isSaving || isPublishing}
-                className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                className="border-border text-foreground/80 hover:bg-muted"
               >
                 <Save className="w-4 h-4 mr-2" />
                 Simpan Draft
@@ -558,16 +555,16 @@ export default function ArticleEditorPage() {
 
           {/* Publish Confirmation Dialog */}
           <AlertDialog open={showPublishDialog} onOpenChange={setShowPublishDialog}>
-            <AlertDialogContent className="bg-slate-900 border-slate-800">
+            <AlertDialogContent className="bg-card border-border">
               <AlertDialogHeader>
-                <AlertDialogTitle className="text-slate-50">Publikasikan Artikel?</AlertDialogTitle>
-                <AlertDialogDescription className="text-slate-400">
+                <AlertDialogTitle className="text-foreground">Publikasikan Artikel?</AlertDialogTitle>
+                <AlertDialogDescription className="text-muted-foreground">
                   Apakah Anda yakin ingin mempublikasikan artikel ini? Setelah dipublikasikan,
                   artikel akan visible untuk semua pembaca.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="border-slate-700 text-slate-300 hover:bg-slate-800">
+                <AlertDialogCancel className="border-border text-foreground/80 hover:bg-muted">
                   Batal
                 </AlertDialogCancel>
                 <AlertDialogAction

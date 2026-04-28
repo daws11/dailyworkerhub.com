@@ -37,13 +37,13 @@ export function FeedbackStats({
   ];
 
   return (
-    <div className={cn("flex flex-wrap gap-6 p-4 bg-slate-900 border border-slate-800 rounded-xl", className)}>
+    <div className={cn("flex flex-wrap gap-6 p-4 bg-card border border-border rounded-xl", className)}>
       {stats.map((stat) => (
         <div key={stat.label} className="text-center min-w-[80px]">
-          <div className={cn("text-2xl font-bold", stat.accentColor ? "text-emerald-400" : "text-slate-200")}>
+          <div className={cn("text-2xl font-bold", stat.accentColor ? "text-emerald-400" : "text-foreground")}>
             {stat.value}
           </div>
-          <div className="text-xs text-slate-500">{stat.label}</div>
+          <div className="text-xs text-muted-foreground/70">{stat.label}</div>
         </div>
       ))}
     </div>

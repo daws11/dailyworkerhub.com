@@ -146,7 +146,7 @@ export function FeedbackForm({ open, onOpenChange, trigger }: FeedbackFormProps)
               You need to be signed in to submit feedback.
             </p>
             <Button asChild>
-              <a href="/community/login">Sign In</a>
+              <a href="/login">Sign In</a>
             </Button>
           </div>
         ) : (

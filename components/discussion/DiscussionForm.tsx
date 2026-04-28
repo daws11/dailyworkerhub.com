@@ -75,7 +75,7 @@ export function DiscussionForm({
 
       if (!user) {
         toast.error("Silakan masuk untuk melanjutkan")
-        router.push("/community/login")
+        router.push("/login")
         return
       }
 
@@ -170,31 +170,15 @@ export function DiscussionForm({
   const isEditMode = mode === "edit"
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-3xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
-          <Link href="/community" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-            <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Community
-            </span>
-          </Link>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="pt-24 pb-16">
+    <div className="text-foreground">
+      <main className="pb-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-slate-50 mb-2">
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               {isEditMode ? "Edit Diskusi" : "Buat Diskusi Baru"}
             </h1>
-            <p className="text-slate-400">
+            <p className="text-muted-foreground">
               {isEditMode
                 ? "Perbarui konten diskusi Anda"
                 : "Bagikan pertanyaan atau pengalaman Anda dengan komunitas"}
@@ -206,12 +190,12 @@ export function DiscussionForm({
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
           ) : !isAuthenticated ? (
-            <div className="py-8 text-center space-y-4 bg-slate-900 border border-slate-800 rounded-xl">
-              <p className="text-slate-400">
+            <div className="py-8 text-center space-y-4 bg-card border border-border rounded-xl">
+              <p className="text-muted-foreground">
                 Anda perlu masuk untuk membuat atau mengedit diskusi.
               </p>
               <Button asChild>
-                <Link href="/community/login">Masuk</Link>
+                <Link href="/login">Masuk</Link>
               </Button>
             </div>
           ) : (
@@ -228,7 +212,7 @@ export function DiscussionForm({
                         <input
                           {...field}
                           placeholder="Judul diskusi yang jelas dan deskriptif"
-                          className="flex h-10 w-full rounded-md border border-input bg-slate-900 px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                          className="flex h-10 w-full rounded-md border border-input bg-card px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                           maxLength={100}
                         />
                       </FormControl>
@@ -251,7 +235,7 @@ export function DiscussionForm({
                         <Textarea
                           {...field}
                           placeholder="Jelaskan pertanyaan atau pengalaman Anda secara detail..."
-                          className="min-h-[200px] bg-slate-900"
+                          className="min-h-[200px] bg-card"
                         />
                       </FormControl>
                       <FormDescription>
@@ -292,7 +276,7 @@ export function DiscussionForm({
                     variant="outline"
                     onClick={() => router.back()}
                     disabled={isSubmitting}
-                    className="border-slate-700 text-slate-300"
+                    className="border-border text-foreground/80"
                   >
                     Batal
                   </Button>

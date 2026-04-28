@@ -99,7 +99,7 @@ export function TagInput({
   return (
     <div
       className={cn(
-        "flex flex-wrap gap-2 p-3 bg-slate-900 border border-slate-800 rounded-lg",
+        "flex flex-wrap gap-2 p-3 bg-card border border-border rounded-lg",
         "min-h-[48px] transition-colors",
         isFocused && "border-emerald-500/50 ring-1 ring-emerald-500/20",
         disabled && "opacity-50 cursor-not-allowed",
@@ -144,15 +144,15 @@ export function TagInput({
           onFocus={handleInputFocus}
           placeholder={value.length === 0 ? placeholder : ""}
           className={cn(
-            "flex-1 min-w-[120px] bg-transparent text-slate-50",
-            "placeholder:text-slate-500 outline-none",
+            "flex-1 min-w-[120px] bg-transparent text-foreground",
+            "placeholder:text-muted-foreground/70 outline-none",
             "text-sm"
           )}
           disabled={disabled}
         />
       )}
       {disabled && value.length >= maxTags && (
-        <span className="flex items-center text-xs text-slate-500 self-center">
+        <span className="flex items-center text-xs text-muted-foreground/70 self-center">
           Maksimal {maxTags} tag
         </span>
       )}

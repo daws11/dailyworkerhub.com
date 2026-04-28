@@ -55,7 +55,7 @@ export function FeedbackFilters({
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className="px-3 py-1.5 text-xs sm:text-sm rounded-md data-[state=active]:bg-slate-800 data-[state=active]:text-slate-50 data-[state=active]:shadow-sm text-slate-400 hover:text-slate-200 capitalize"
+              className="px-3 py-1.5 text-xs sm:text-sm rounded-md data-[state=active]:bg-muted data-[state=active]:text-foreground data-[state=active]:shadow-sm text-muted-foreground hover:text-foreground capitalize"
             >
               {tab.label}
             </TabsTrigger>
@@ -64,20 +64,20 @@ export function FeedbackFilters({
       </Tabs>
 
       <div className="flex items-center gap-2 w-full sm:w-auto">
-        <span className="text-sm text-slate-400 hidden sm:block">Sort:</span>
+        <span className="text-sm text-muted-foreground hidden sm:block">Sort:</span>
         <Select
           value={sortBy}
           onValueChange={(value) => onSortChange(value as FeedbackSortBy)}
         >
-          <SelectTrigger className="w-full sm:w-[140px] bg-slate-900 border-slate-800 text-slate-300">
+          <SelectTrigger className="w-full sm:w-[140px] bg-card border-border text-foreground/80">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-slate-900 border-slate-800">
+          <SelectContent className="bg-card border-border">
             {sortOptions.map((option) => (
               <SelectItem
                 key={option.value}
                 value={option.value}
-                className="text-slate-300 focus:bg-slate-800 focus:text-slate-50"
+                className="text-foreground/80 focus:bg-muted focus:text-foreground"
               >
                 {option.label}
               </SelectItem>

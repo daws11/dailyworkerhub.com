@@ -161,12 +161,12 @@ export function CommentItem({
   return (
     <div className="space-y-4">
       <div
-        className={`bg-slate-900 border rounded-xl p-4 ${
+        className={`bg-card border rounded-xl p-4 ${
           is_solution
             ? "border-emerald-500/50"
             : isReply
-              ? "border-slate-800/50 bg-slate-900/30"
-              : "border-slate-800"
+              ? "border-border/50 bg-card/30"
+              : "border-border"
         }`}
       >
         {is_solution && (
@@ -188,10 +188,10 @@ export function CommentItem({
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
-              <span className="font-medium text-slate-200 text-sm">
+              <span className="font-medium text-foreground text-sm">
                 {author.username}
               </span>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-muted-foreground/70">
                 {formatDistanceToNow(new Date(created_at), {
                   addSuffix: true,
                   locale: id as any,
@@ -199,9 +199,9 @@ export function CommentItem({
               </span>
             </div>
 
-            <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+            <div className="text-foreground/80 text-sm leading-relaxed whitespace-pre-wrap">
               {isDeleted ? (
-                <span className="italic text-slate-500">[deleted]</span>
+                <span className="italic text-muted-foreground/70">[deleted]</span>
               ) : (
                 renderContentWithMentions(content)
               )}
@@ -213,20 +213,20 @@ export function CommentItem({
                 className={`flex items-center gap-1 text-xs transition-colors ${
                   liked
                     ? "text-emerald-400"
-                    : "text-slate-500 hover:text-emerald-400"
+                    : "text-muted-foreground/70 hover:text-emerald-400"
                 }`}
               >
                 <ArrowUp className="w-3 h-3" />
                 <span>{likes_count + (liked ? 1 : 0)}</span>
               </button>
 
-              <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-400 transition-colors">
+              <button className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors">
                 <ArrowDown className="w-3 h-3" />
               </button>
 
               <button
                 onClick={handleReply}
-                className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors"
+                className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors"
               >
                 <Reply className="w-3 h-3" />
                 <span>Balas</span>
@@ -235,7 +235,7 @@ export function CommentItem({
               {onMarkSolution && !is_solution && (
                 <button
                   onClick={() => onMarkSolution?.(id)}
-                  className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors"
+                  className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors"
                 >
                   <CheckCircle className="w-3 h-3" />
                   <span>Jadikan Solusi</span>
@@ -245,19 +245,19 @@ export function CommentItem({
               <div className="relative">
                 <button
                   onClick={() => setShowActions(!showActions)}
-                  className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-300 transition-colors ml-auto"
+                  className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-foreground/80 transition-colors ml-auto"
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </button>
 
                 {showActions && (
-                  <div className="absolute right-0 top-full mt-1 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-1 min-w-[120px] z-10">
+                  <div className="absolute right-0 top-full mt-1 bg-muted border border-border rounded-lg shadow-lg py-1 min-w-[120px] z-10">
                     <button
                       onClick={() => {
                         handleEdit();
                         setShowActions(false);
                       }}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-xs text-slate-300 hover:bg-slate-700 hover:text-slate-50"
+                      className="flex items-center gap-2 w-full px-3 py-2 text-xs text-foreground/80 hover:bg-muted hover:text-foreground"
                     >
                       <Edit className="w-3 h-3" />
                       Edit

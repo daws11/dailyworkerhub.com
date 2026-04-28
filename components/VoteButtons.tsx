@@ -78,7 +78,7 @@ export function VoteButtons({
           sizeClasses[size],
           liked
             ? "bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            : "border-slate-700 text-slate-400 hover:border-emerald-500 hover:text-emerald-400"
+            : "border-border text-muted-foreground hover:border-emerald-500 hover:text-emerald-400"
         )}
       >
         <ArrowUp className={iconSizes[size]} />
@@ -95,7 +95,7 @@ export function VoteButtons({
           sizeClasses[size],
           disliked
             ? "bg-red-500 text-slate-950 hover:bg-red-400"
-            : "border-slate-700 text-slate-400 hover:border-red-500 hover:text-red-400"
+            : "border-border text-muted-foreground hover:border-red-500 hover:text-red-400"
         )}
       >
         <ArrowDown className={iconSizes[size]} />

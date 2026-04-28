@@ -226,7 +226,7 @@ export function CommentForm({
         >
           <div className="py-1">
             {mentionUsers.length === 0 ? (
-              <div className="px-3 py-2 text-sm text-slate-500">
+              <div className="px-3 py-2 text-sm text-muted-foreground/70">
                 Tidak ada pengguna ditemukan
               </div>
             ) : (
@@ -238,7 +238,7 @@ export function CommentForm({
                   className={`flex items-center gap-3 w-full px-3 py-2 text-sm text-left transition-colors ${
                     index === selectedMentionIndex
                       ? "bg-emerald-500/20 text-emerald-400"
-                      : "text-slate-300 hover:bg-slate-800"
+                      : "text-foreground/80 hover:bg-muted"
                   }`}
                 >
                   <Avatar className="w-6 h-6">
@@ -252,7 +252,7 @@ export function CommentForm({
                       @{user.username}
                     </span>
                     {user.full_name && (
-                      <span className="text-xs text-slate-500 truncate">
+                      <span className="text-xs text-muted-foreground/70 truncate">
                         {user.full_name}
                       </span>
                     )}

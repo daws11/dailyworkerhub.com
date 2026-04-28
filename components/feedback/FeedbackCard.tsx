@@ -65,7 +65,7 @@ export function FeedbackCard({
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-emerald-500/30 transition-colors">
+    <div className="bg-card border border-border rounded-xl p-5 hover:border-emerald-500/30 transition-colors">
       <div className="flex items-start gap-4">
         {/* Vote Button */}
         <VoteButton
@@ -101,14 +101,14 @@ export function FeedbackCard({
             href={`/community/feedback/${id}`}
             className="block hover:text-emerald-400 transition-colors"
           >
-            <h3 className="text-lg font-semibold text-slate-50 mb-1">{title}</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-1">{title}</h3>
           </Link>
 
           {/* Description */}
-          <p className="text-sm text-slate-400 line-clamp-2 mb-3">{description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{description}</p>
 
           {/* Meta Info */}
-          <div className="flex items-center gap-4 text-xs text-slate-500">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground/70">
             <span>by {author.username}</span>
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />

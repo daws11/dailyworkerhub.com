@@ -150,7 +150,7 @@ export function CommentSection({
       <div key={comment.id} className="space-y-4">
         {editingId === comment.id ? (
           // Edit mode
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+          <div className="bg-card border border-border rounded-xl p-4">
             <CommentForm
               onSubmit={async () => {
                 await handleSaveEdit();
@@ -162,7 +162,7 @@ export function CommentSection({
             <div className="flex justify-end gap-2 mt-3">
               <button
                 onClick={handleCancelEdit}
-                className="px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+                className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Batal
               </button>
@@ -200,8 +200,8 @@ export function CommentSection({
         {/* Reply form */}
         {replyingTo === comment.id && (
           <div className={getDepthIndentClass(depth)}>
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-3 text-sm text-slate-400">
+            <div className="bg-card border border-border rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
                 <span>Membalas</span>
                 <span className="text-emerald-400">@{comment.author.username}</span>
               </div>
@@ -254,13 +254,13 @@ export function CommentSection({
       {/* Header */}
       <div className="flex items-center gap-3">
         <MessageCircle className="w-5 h-5 text-emerald-400" />
-        <h2 className="text-xl font-semibold text-slate-50">
+        <h2 className="text-xl font-semibold text-foreground">
           {totalComments} Komentar
         </h2>
       </div>
 
       {/* Main comment form */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+      <div className="bg-card border border-border rounded-xl p-4">
         <CommentForm
           onSubmit={handleAddComment}
           placeholder="Tulis komentar Anda..."
@@ -271,7 +271,7 @@ export function CommentSection({
       {/* Comments list */}
       <div className="space-y-4">
         {comments.length === 0 ? (
-          <div className="text-center py-8 text-slate-500">
+          <div className="text-center py-8 text-muted-foreground/70">
             <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-50" />
             <p>Belum ada komentar. Jadilah yang pertama berkomentar!</p>
           </div>

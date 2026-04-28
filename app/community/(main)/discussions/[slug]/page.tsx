@@ -227,37 +227,12 @@ export default function DiscussionDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link href="/community/login" className="text-sm text-slate-400 hover:text-slate-50">
-              Masuk
-            </Link>
-            <Link
-              href="/community/register"
-              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            >
-              Daftar
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="pt-24 pb-16">
+    <div className="text-foreground">
+      <main className="pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-            <Link href="/community/discussions" className="hover:text-slate-300">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground/70 mb-6">
+            <Link href="/community/discussions" className="hover:text-foreground/80">
               Diskusi
             </Link>
             <span>/</span>
@@ -270,7 +245,7 @@ export default function DiscussionDetailPage() {
           </div>
 
           {/* Main Discussion Card */}
-          <article className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden mb-6">
+          <article className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
             {/* Header */}
             <div className="p-6 pb-0">
               <div className="flex items-center gap-2 mb-4">
@@ -292,7 +267,7 @@ export default function DiscussionDetailPage() {
                 )}
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-50 mb-4">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 {discussion.title}
               </h1>
 
@@ -305,8 +280,8 @@ export default function DiscussionDetailPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="font-medium text-slate-200">{discussion.author.username}</div>
-                  <div className="text-sm text-slate-500">
+                  <div className="font-medium text-foreground">{discussion.author.username}</div>
+                  <div className="text-sm text-muted-foreground/70">
                     {formatDistanceToNow(new Date(discussion.created_at), { addSuffix: true, locale: id })}
                   </div>
                 </div>
@@ -316,13 +291,13 @@ export default function DiscussionDetailPage() {
             {/* Content */}
             <div className="px-6 pb-6">
               <div className="prose prose-invert prose-slate max-w-none">
-                <div className="text-slate-300 whitespace-pre-wrap leading-relaxed">
+                <div className="text-foreground/80 whitespace-pre-wrap leading-relaxed">
                   {discussion.content}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2 mt-8 pt-6 border-t border-slate-800">
+              <div className="flex items-center gap-2 mt-8 pt-6 border-t border-border">
                 <div className="flex items-center gap-1">
                   <Button
                     variant={liked ? "default" : "outline"}
@@ -331,7 +306,7 @@ export default function DiscussionDetailPage() {
                       setLiked(!liked);
                       if (disliked) setDisliked(false);
                     }}
-                    className={`${liked ? "bg-emerald-500 text-slate-950" : "border-slate-700 text-slate-400"}`}
+                    className={`${liked ? "bg-emerald-500 text-slate-950" : "border-border text-muted-foreground"}`}
                   >
                     <ArrowUp className="w-4 h-4 mr-1" />
                     {discussion.likes_count + (liked ? 1 : 0)}
@@ -343,30 +318,30 @@ export default function DiscussionDetailPage() {
                       setDisliked(!disliked);
                       if (liked) setLiked(false);
                     }}
-                    className="border-slate-700 text-slate-400"
+                    className="border-border text-muted-foreground"
                   >
                     <ArrowDown className="w-4 h-4" />
                   </Button>
                 </div>
 
-                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                <Button variant="outline" size="sm" className="border-border text-muted-foreground">
                   <Bookmark className="w-4 h-4 mr-2" />
                   Simpan
                 </Button>
 
-                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                <Button variant="outline" size="sm" className="border-border text-muted-foreground">
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
 
-                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                <Button variant="outline" size="sm" className="border-border text-muted-foreground">
                   <Flag className="w-4 h-4 mr-2" />
                   Report
                 </Button>
 
                 <AlertDialog open={showDeleteDialog} onOpenChange={(open) => setShowDeleteDialog(open)}>
                   <AlertDialogTrigger asChild>
-                    <Button variant="outline" size="sm" className="border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-400">
+                    <Button variant="outline" size="sm" className="border-border text-muted-foreground hover:text-red-400 hover:border-red-400">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Hapus
                     </Button>

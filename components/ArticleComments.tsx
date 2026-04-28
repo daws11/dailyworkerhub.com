@@ -92,22 +92,22 @@ export function ArticleComments({ comments, articleSlug }: ArticleCommentsProps)
 
   return (
     <section className="mb-6">
-      <h2 className="text-xl font-semibold text-slate-50 mb-6 flex items-center gap-2">
+      <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
         <MessageCircle className="w-5 h-5 text-emerald-400" />
         {totalComments} Komentar
       </h2>
 
       {/* Comment Form */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
+      <div className="bg-card border border-border rounded-xl p-4 mb-6">
         <Textarea
           placeholder="Tulis komentar Anda..."
           value={commentContent}
           onChange={(e) => setCommentContent(e.target.value)}
-          className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500 mb-3 min-h-[100px] resize-none"
+          className="bg-muted border-border text-foreground placeholder:text-muted-foreground/70 mb-3 min-h-[100px] resize-none"
           maxLength={2000}
         />
         <div className="flex items-center justify-between">
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-muted-foreground/70">
             {commentContent.length}/2000 karakter
           </span>
           <Button
@@ -124,15 +124,15 @@ export function ArticleComments({ comments, articleSlug }: ArticleCommentsProps)
       {/* Comments List */}
       <div className="space-y-4">
         {localComments.length === 0 ? (
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 text-center">
-            <MessageCircle className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400">Belum ada komentar. Jadilah yang pertama menulis!</p>
+          <div className="bg-card border border-border rounded-xl p-8 text-center">
+            <MessageCircle className="w-12 h-12 text-muted-foreground/60 mx-auto mb-3" />
+            <p className="text-muted-foreground">Belum ada komentar. Jadilah yang pertama menulis!</p>
           </div>
         ) : (
           localComments.map((comment) => (
             <div key={comment.id} className="space-y-4">
               {/* Main Comment */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+              <div className="bg-card border border-border rounded-xl p-4">
                 <div className="flex items-start gap-3">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src={comment.author.avatar_url || undefined} />
@@ -143,31 +143,31 @@ export function ArticleComments({ comments, articleSlug }: ArticleCommentsProps)
 
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="font-medium text-slate-200 text-sm">
+                      <span className="font-medium text-foreground text-sm">
                         {comment.author.full_name || comment.author.username}
                       </span>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-muted-foreground/70">
                         @{comment.author.username}
                       </span>
-                      <span className="text-xs text-slate-600">•</span>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-muted-foreground/60">•</span>
+                      <span className="text-xs text-muted-foreground/70">
                         {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: id })}
                       </span>
                     </div>
 
-                    <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                    <div className="text-foreground/80 text-sm leading-relaxed whitespace-pre-wrap">
                       {comment.content}
                     </div>
 
                     <div className="flex items-center gap-4 mt-3">
                       <button
                         onClick={() => handleLikeComment(comment.id)}
-                        className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors"
+                        className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors"
                       >
                         <ArrowUp className="w-3 h-3" />
                         {comment.likes_count}
                       </button>
-                      <button className="text-xs text-slate-500 hover:text-emerald-400 transition-colors">
+                      <button className="text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors">
                         Balas
                       </button>
                     </div>
@@ -179,36 +179,36 @@ export function ArticleComments({ comments, articleSlug }: ArticleCommentsProps)
               {comment.replies && comment.replies.length > 0 && (
                 <div className="ml-8 space-y-3">
                   {comment.replies.map((reply) => (
-                    <div key={reply.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
+                    <div key={reply.id} className="bg-card/50 border border-border rounded-xl p-4">
                       <div className="flex items-start gap-3">
                         <Avatar className="w-6 h-6">
-                          <AvatarFallback className="bg-slate-700 text-slate-300 text-xs">
+                          <AvatarFallback className="bg-muted text-foreground/80 text-xs">
                             {reply.author.username.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
 
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2 flex-wrap">
-                            <span className="font-medium text-slate-300 text-sm">
+                            <span className="font-medium text-foreground/80 text-sm">
                               {reply.author.full_name || reply.author.username}
                             </span>
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-muted-foreground/70">
                               @{reply.author.username}
                             </span>
-                            <span className="text-xs text-slate-600">•</span>
-                            <span className="text-xs text-slate-500">
+                            <span className="text-xs text-muted-foreground/60">•</span>
+                            <span className="text-xs text-muted-foreground/70">
                               {formatDistanceToNow(new Date(reply.created_at), { addSuffix: true, locale: id })}
                             </span>
                           </div>
 
-                          <div className="text-slate-400 text-sm leading-relaxed whitespace-pre-wrap">
+                          <div className="text-muted-foreground text-sm leading-relaxed whitespace-pre-wrap">
                             {reply.content}
                           </div>
 
                           <div className="flex items-center gap-4 mt-2">
                             <button
                               onClick={() => handleLikeComment(reply.id)}
-                              className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors"
+                              className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors"
                             >
                               <ArrowUp className="w-3 h-3" />
                               {reply.likes_count}

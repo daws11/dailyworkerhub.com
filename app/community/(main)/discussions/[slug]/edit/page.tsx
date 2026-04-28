@@ -70,23 +70,12 @@ export default function EditDiscussionPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50">
-        <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-          <div className="max-w-3xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
-            <Link href="/community/discussions" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-                <span className="text-slate-950 font-bold text-sm">DW</span>
-              </div>
-              <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-            </Link>
-          </div>
-        </nav>
-
-        <main className="pt-24 pb-16">
+      <div className="text-foreground">
+        <main className="pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[400px]">
             <div className="flex items-center gap-3">
               <Loader2 className="w-5 h-5 animate-spin text-emerald-500" />
-              <span className="text-slate-400">Memuat...</span>
+              <span className="text-muted-foreground">Memuat...</span>
             </div>
           </div>
         </main>
@@ -96,26 +85,15 @@ export default function EditDiscussionPage() {
 
   if (error === "auth_required") {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50">
-        <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-          <div className="max-w-3xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
-            <Link href="/community/discussions" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-                <span className="text-slate-950 font-bold text-sm">DW</span>
-              </div>
-              <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-            </Link>
-          </div>
-        </nav>
-
-        <main className="pt-24 pb-16">
+      <div className="text-foreground">
+        <main className="pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[400px]">
             <div className="text-center space-y-4">
-              <p className="text-slate-400">
+              <p className="text-muted-foreground">
                 Anda perlu masuk untuk mengedit diskusi.
               </p>
               <Link
-                href={`/community/login?redirect=/community/discussions/${slug}/edit`}
+                href={`/login?redirect=/community/discussions/${slug}/edit`}
                 className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
               >
                 Masuk
@@ -129,25 +107,14 @@ export default function EditDiscussionPage() {
 
   if (error || !initialData) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-50">
-        <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-          <div className="max-w-3xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
-            <Link href="/community/discussions" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-                <span className="text-slate-950 font-bold text-sm">DW</span>
-              </div>
-              <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-            </Link>
-          </div>
-        </nav>
-
-        <main className="pt-24 pb-16">
+      <div className="text-foreground">
+        <main className="pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center min-h-[400px]">
             <div className="text-center space-y-4">
               <p className="text-red-400">{error || "Diskusi tidak ditemukan"}</p>
               <Link
                 href="/community/discussions"
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700"
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-full bg-muted text-foreground/80 hover:bg-muted"
               >
                 Kembali ke Daftar Diskusi
               </Link>

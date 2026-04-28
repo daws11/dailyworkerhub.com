@@ -45,13 +45,13 @@ export function VoteButton({
           classes.button,
           isVoted
             ? "bg-emerald-500/20 text-emerald-400"
-            : "bg-slate-800 text-slate-400 hover:text-emerald-400 hover:bg-slate-700"
+            : "bg-muted text-muted-foreground hover:text-emerald-400 hover:bg-muted"
         )}
         aria-label={isVoted ? "Remove vote" : "Add vote"}
       >
         <ArrowUp className={classes.icon} />
       </button>
-      <span className={cn("font-semibold text-slate-200 mt-1", classes.text)}>
+      <span className={cn("font-semibold text-foreground mt-1", classes.text)}>
         {votesCount}
       </span>
     </div>

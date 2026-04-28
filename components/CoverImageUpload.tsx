@@ -160,7 +160,7 @@ export function CoverImageUpload({
     <div className={cn("space-y-2", className)} {...props}>
       <div
         className={cn(
-          "relative w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800",
+          "relative w-full rounded-xl overflow-hidden bg-card border border-border",
           aspectRatioClasses[aspectRatio],
           isDragging && "border-emerald-500 ring-2 ring-emerald-500/20"
         )}
@@ -179,15 +179,15 @@ export function CoverImageUpload({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-              <span className="text-xs text-slate-300 bg-slate-950/60 px-2 py-1 rounded">
+              <span className="text-xs text-foreground/80 bg-background/60 px-2 py-1 rounded">
                 Cover Image
               </span>
               <button
                 onClick={handleRemove}
                 disabled={disabled || isUploading}
                 className={cn(
-                  "p-2 rounded-full bg-slate-950/80 text-slate-400",
-                  "hover:text-slate-50 hover:bg-slate-800",
+                  "p-2 rounded-full bg-background/80 text-muted-foreground",
+                  "hover:text-foreground hover:bg-muted",
                   "transition-colors",
                   "disabled:opacity-50 disabled:cursor-not-allowed"
                 )}
@@ -201,27 +201,27 @@ export function CoverImageUpload({
         ) : isUploading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
             <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
-            <p className="text-sm text-slate-400">Mengupload cover image...</p>
+            <p className="text-sm text-muted-foreground">Mengupload cover image...</p>
           </div>
         ) : (
           <label
             className={cn(
               "flex flex-col items-center justify-center w-full h-full min-h-[200px]",
               "cursor-pointer",
-              !disabled && "hover:bg-slate-800/50",
+              !disabled && "hover:bg-muted/50",
               disabled && "cursor-not-allowed opacity-50"
             )}
             tabIndex={disabled ? undefined : 0}
             onKeyDown={handleKeyDown}
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6 px-4">
-              <ImageIcon className="w-10 h-10 text-slate-500 mb-3" />
-              <p className="text-sm text-slate-400 mb-1 text-center">
+              <ImageIcon className="w-10 h-10 text-muted-foreground/70 mb-3" />
+              <p className="text-sm text-muted-foreground mb-1 text-center">
                 {isDragging
                   ? "Lepaskan file di sini"
                   : "Klik untuk upload atau drag & drop"}
               </p>
-              <p className="text-xs text-slate-500 text-center">
+              <p className="text-xs text-muted-foreground/70 text-center">
                 PNG, JPG, WebP, GIF (maksimal {UPLOAD_OPTIONS.MAX_FILE_SIZE / 1024 / 1024}MB)
               </p>
             </div>

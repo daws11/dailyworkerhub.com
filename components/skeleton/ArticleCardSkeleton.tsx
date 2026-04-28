@@ -16,7 +16,7 @@ function ArticleCardSkeleton({
     return (
       <div
         className={cn(
-          "bg-slate-900 border border-slate-800 rounded-xl overflow-hidden",
+          "bg-card border border-border rounded-xl overflow-hidden",
           className
         )}
       >
@@ -39,7 +39,7 @@ function ArticleCardSkeleton({
   return (
     <div
       className={cn(
-        "bg-slate-900 border border-slate-800 rounded-xl overflow-hidden",
+        "bg-card border border-border rounded-xl overflow-hidden",
         className
       )}
     >

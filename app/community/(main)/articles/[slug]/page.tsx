@@ -217,33 +217,8 @@ export default function ArticleDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-6xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/community" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-slate-950 font-bold text-sm">DW</span>
-            </div>
-            <span className="font-semibold text-slate-50 hidden sm:block">DailyWorkerHub</span>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link href="/community/login" className="text-sm text-slate-400 hover:text-slate-50">
-              Masuk
-            </Link>
-            <Link
-              href="/community/register"
-              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-            >
-              Daftar
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="pt-16 pb-16">
+    <div className="text-foreground">
+      <main className="pb-16">
         {/* Cover Image */}
         {article.cover_image && (
           <div className="relative h-[300px] sm:h-[400px] overflow-hidden">
@@ -254,7 +229,7 @@ export default function ArticleDetailPage() {
               className="object-cover"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
           </div>
         )}
 
@@ -262,14 +237,14 @@ export default function ArticleDetailPage() {
           {/* Back Button */}
           <Link
             href="/community/articles"
-            className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-400 mb-6 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Kembali ke Artikel
           </Link>
 
           {/* Article Header Card */}
-          <article className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden mb-6">
+          <article className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
             <div className="p-6 sm:p-8">
               {/* Category Badge */}
               <span
@@ -280,13 +255,13 @@ export default function ArticleDetailPage() {
               </span>
 
               {/* Title */}
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-50 mb-2 leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2 leading-tight">
                 {article.title}
               </h1>
 
               {/* Subtitle */}
               {article.subtitle && (
-                <p className="text-lg text-slate-400 mb-6">{article.subtitle}</p>
+                <p className="text-lg text-muted-foreground mb-6">{article.subtitle}</p>
               )}
 
               {/* Author Info */}
@@ -298,15 +273,15 @@ export default function ArticleDetailPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="font-semibold text-slate-200 group-hover:text-emerald-400 transition-colors">
+                  <div className="font-semibold text-foreground group-hover:text-emerald-400 transition-colors">
                     {article.author.full_name || article.author.username}
                   </div>
-                  <div className="text-sm text-slate-500">@{article.author.username}</div>
+                  <div className="text-sm text-muted-foreground/70">@{article.author.username}</div>
                 </div>
               </Link>
 
               {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 pb-6 border-b border-slate-800">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground/70 pb-6 border-b border-border">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   <span>{format(new Date(article.published_at), "d MMMM yyyy", { locale: id })}</span>
@@ -324,12 +299,12 @@ export default function ArticleDetailPage() {
               {/* Tags */}
               {article.tags && article.tags.length > 0 && (
                 <div className="flex items-center gap-2 mt-6">
-                  <Tag className="w-4 h-4 text-slate-500" />
+                  <Tag className="w-4 h-4 text-muted-foreground/70" />
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-xs rounded-full bg-slate-800 text-slate-400 hover:text-emerald-400 hover:bg-slate-700 transition-colors cursor-pointer"
+                        className="px-2 py-1 text-xs rounded-full bg-muted text-muted-foreground hover:text-emerald-400 hover:bg-muted transition-colors cursor-pointer"
                       >
                         #{tag}
                       </span>
@@ -341,16 +316,16 @@ export default function ArticleDetailPage() {
           </article>
 
           {/* Article Content */}
-          <article className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden mb-6">
+          <article className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
             <div className="p-6 sm:p-8">
               <div className="prose prose-invert prose-slate max-w-none">
-                <div className="text-slate-300 leading-relaxed whitespace-pre-wrap">
+                <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
                   {article.content}
                 </div>
               </div>
 
               {/* Vote & Actions */}
-              <div className="flex items-center gap-2 mt-8 pt-6 border-t border-slate-800">
+              <div className="flex items-center gap-2 mt-8 pt-6 border-t border-border">
                 <div className="flex items-center gap-1">
                   <Button
                     variant={liked ? "default" : "outline"}
@@ -359,7 +334,7 @@ export default function ArticleDetailPage() {
                       setLiked(!liked);
                       if (disliked) setDisliked(false);
                     }}
-                    className={`${liked ? "bg-emerald-500 text-slate-950 hover:bg-emerald-400" : "border-slate-700 text-slate-400"}`}
+                    className={`${liked ? "bg-emerald-500 text-slate-950 hover:bg-emerald-400" : "border-border text-muted-foreground"}`}
                   >
                     <ArrowUp className="w-4 h-4 mr-1" />
                     {article.likes_count + (liked ? 1 : 0)}
@@ -371,7 +346,7 @@ export default function ArticleDetailPage() {
                       setDisliked(!disliked);
                       if (liked) setLiked(false);
                     }}
-                    className={`${disliked ? "bg-red-500 text-slate-950 hover:bg-red-400 border-red-500" : "border-slate-700 text-slate-400"}`}
+                    className={`${disliked ? "bg-red-500 text-slate-950 hover:bg-red-400 border-red-500" : "border-border text-muted-foreground"}`}
                   >
                     <ArrowDown className="w-4 h-4" />
                   </Button>
@@ -381,18 +356,18 @@ export default function ArticleDetailPage() {
                   variant={bookmarked ? "default" : "outline"}
                   size="sm"
                   onClick={() => setBookmarked(!bookmarked)}
-                  className={`${bookmarked ? "bg-amber-500 text-slate-950 hover:bg-amber-400 border-amber-500" : "border-slate-700 text-slate-400"}`}
+                  className={`${bookmarked ? "bg-amber-500 text-slate-950 hover:bg-amber-400 border-amber-500" : "border-border text-muted-foreground"}`}
                 >
                   <Bookmark className={`w-4 h-4 mr-2 ${bookmarked ? "fill-current" : ""}`} />
                   Simpan
                 </Button>
 
-                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                <Button variant="outline" size="sm" className="border-border text-muted-foreground">
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </Button>
 
-                <Button variant="outline" size="sm" className="border-slate-700 text-slate-400">
+                <Button variant="outline" size="sm" className="border-border text-muted-foreground">
                   <Flag className="w-4 h-4 mr-2" />
                   Report
                 </Button>
@@ -401,7 +376,7 @@ export default function ArticleDetailPage() {
           </article>
 
           {/* Author Bio Card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-6">
+          <div className="bg-card border border-border rounded-2xl p-6 mb-6">
             <Link href={`/community/profile/${article.author.username}`} className="flex items-start gap-4 group">
               <Avatar className="w-16 h-16">
                 <AvatarImage src={article.author.avatar_url || undefined} />
@@ -411,14 +386,14 @@ export default function ArticleDetailPage() {
               </Avatar>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-semibold text-slate-200 group-hover:text-emerald-400 transition-colors">
+                  <span className="font-semibold text-foreground group-hover:text-emerald-400 transition-colors">
                     {article.author.full_name || article.author.username}
                   </span>
-                  <span className="text-slate-500">•</span>
-                  <span className="text-sm text-slate-500">@{article.author.username}</span>
+                  <span className="text-muted-foreground/70">•</span>
+                  <span className="text-sm text-muted-foreground/70">@{article.author.username}</span>
                 </div>
                 {article.author.bio && (
-                  <p className="text-sm text-slate-400">{article.author.bio}</p>
+                  <p className="text-sm text-muted-foreground">{article.author.bio}</p>
                 )}
                 <Button variant="link" className="text-emerald-400 p-0 h-auto mt-2 text-sm">
                   Lihat profil lengkap
@@ -429,21 +404,21 @@ export default function ArticleDetailPage() {
 
           {/* Comments Section */}
           <section className="mb-6">
-            <h2 className="text-xl font-semibold text-slate-50 mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
               <MessageCircle className="w-5 h-5 text-emerald-400" />
               {totalComments} Komentar
             </h2>
 
             {/* Comment Form */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6">
+            <div className="bg-card border border-border rounded-xl p-4 mb-6">
               <Textarea
                 placeholder="Tulis komentar Anda..."
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-slate-50 placeholder:text-slate-500 mb-3 min-h-[100px] resize-none"
+                className="bg-muted border-border text-foreground placeholder:text-muted-foreground mb-3 min-h-[100px] resize-none"
               />
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500">
+                <span className="text-xs text-muted-foreground/70">
                   {replyContent.length}/2000 karakter
                 </span>
                 <Button
@@ -462,7 +437,7 @@ export default function ArticleDetailPage() {
               {comments.map((comment) => (
                 <div key={comment.id} className="space-y-4">
                   {/* Main Comment */}
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+                  <div className="bg-card border border-border rounded-xl p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-8 h-8">
                         <AvatarFallback className="bg-emerald-500/20 text-emerald-400 text-sm">
@@ -472,28 +447,28 @@ export default function ArticleDetailPage() {
 
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-slate-200 text-sm">
+                          <span className="font-medium text-foreground text-sm">
                             {comment.author.full_name || comment.author.username}
                           </span>
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-muted-foreground/70">
                             @{comment.author.username}
                           </span>
-                          <span className="text-xs text-slate-600">•</span>
-                          <span className="text-xs text-slate-500">
+                          <span className="text-xs text-muted-foreground/60">•</span>
+                          <span className="text-xs text-muted-foreground/70">
                             {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: id })}
                           </span>
                         </div>
 
-                        <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                        <div className="text-foreground/80 text-sm leading-relaxed whitespace-pre-wrap">
                           {comment.content}
                         </div>
 
                         <div className="flex items-center gap-4 mt-3">
-                          <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors">
+                          <button className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors">
                             <ArrowUp className="w-3 h-3" />
                             {comment.likes_count}
                           </button>
-                          <button className="text-xs text-slate-500 hover:text-emerald-400 transition-colors">
+                          <button className="text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors">
                             Balas
                           </button>
                         </div>
@@ -505,34 +480,34 @@ export default function ArticleDetailPage() {
                   {comment.replies && comment.replies.length > 0 && (
                     <div className="ml-8 space-y-3">
                       {comment.replies.map((reply) => (
-                        <div key={reply.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
+                        <div key={reply.id} className="bg-card/50 border border-border rounded-xl p-4">
                           <div className="flex items-start gap-3">
                             <Avatar className="w-6 h-6">
-                              <AvatarFallback className="bg-slate-700 text-slate-300 text-xs">
+                              <AvatarFallback className="bg-muted text-foreground/80 text-xs">
                                 {reply.author.username.charAt(0).toUpperCase()}
                               </AvatarFallback>
                             </Avatar>
 
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <span className="font-medium text-slate-300 text-sm">
+                                <span className="font-medium text-foreground/80 text-sm">
                                   {reply.author.full_name || reply.author.username}
                                 </span>
-                                <span className="text-xs text-slate-500">
+                                <span className="text-xs text-muted-foreground/70">
                                   @{reply.author.username}
                                 </span>
-                                <span className="text-xs text-slate-600">•</span>
-                                <span className="text-xs text-slate-500">
+                                <span className="text-xs text-muted-foreground/60">•</span>
+                                <span className="text-xs text-muted-foreground/70">
                                   {formatDistanceToNow(new Date(reply.created_at), { addSuffix: true, locale: id })}
                                 </span>
                               </div>
 
-                              <div className="text-slate-400 text-sm leading-relaxed whitespace-pre-wrap">
+                              <div className="text-muted-foreground text-sm leading-relaxed whitespace-pre-wrap">
                                 {reply.content}
                               </div>
 
                               <div className="flex items-center gap-4 mt-2">
-                                <button className="flex items-center gap-1 text-xs text-slate-500 hover:text-emerald-400 transition-colors">
+                                <button className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-emerald-400 transition-colors">
                                   <ArrowUp className="w-3 h-3" />
                                   {reply.likes_count}
                                 </button>
