@@ -119,10 +119,6 @@ export function DiscussionsPageClient() {
           created_at
         `, { count: "exact" });
 
-      if (selectedCategory) {
-        query = query.eq("category", selectedCategory);
-      }
-
       if (searchQuery) {
         query = query.ilike("title", `%${searchQuery}%`);
       }

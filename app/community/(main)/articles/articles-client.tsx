@@ -104,16 +104,12 @@ export function ArticlesPageClient() {
         `, { count: "exact" })
         .eq("is_published", true);
 
-      if (selectedCategory) {
-        query = query.eq("category_id", selectedCategory);
-      }
-
       if (searchQuery) {
         query = query.ilike("title", `%${searchQuery}%`);
       }
 
       if (sortBy === "popular") {
-        query = query.order("view_count", { ascending: false });
+        query = query.order("views_count", { ascending: false });
       } else {
         query = query.order("published_at", { ascending: false });
       }
