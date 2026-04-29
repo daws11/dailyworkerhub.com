@@ -1,19 +1,38 @@
 import { MainNavbar } from "@/components/layout/MainNavbar";
+import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
+
+const tocItems: TocItem[] = [
+  { id: "section-1", title: "1. Kelayakan Pengguna (Eligibility)" },
+  { id: "section-2", title: "2. Jenis Pengguna dan Tanggung Jawab Mereka" },
+  { id: "section-3", title: "3. Penggunaan yang Dilarang dalam Konteks Hospitality" },
+  { id: "section-4", title: "4. Syarat Escrow dan Pembayaran" },
+  { id: "section-5", title: "5. Resolusi Sengketa" },
+  { id: "section-6", title: "6. Batasan Tanggung Jawab" },
+  { id: "section-7", title: "7. Hak Kekayaan Intelektual" },
+  { id: "section-8", title: "8. Penangguhan dan Penghentian Akun" },
+  { id: "section-9", title: "9. Hukum yang Mengatur" },
+  { id: "section-10", title: "10. Informasi Kontak" },
+];
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
       <MainNavbar />
 
-      <main className="pt-24 pb-16 max-w-4xl mx-auto px-6">
+      <main className="pt-24 pb-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-8">
+            <LegalToc items={tocItems} />
+
+            <div className="flex-1 max-w-4xl">
+              <div className="prose prose-invert prose-slate max-w-none space-y-6">
         <h1 className="text-3xl font-bold text-foreground mb-8">Syarat & Ketentuan</h1>
-        <div className="prose prose-invert prose-slate max-w-none space-y-6">
-          <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
             Terakhir diperbarui: April 2026
           </p>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">1. Kelayakan Pengguna (Eligibility)</h2>
+            <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Kelayakan Pengguna (Eligibility)</h2>
             <p className="text-muted-foreground leading-relaxed">
               Untuk dapat menggunakan layanan DailyWorkerHub sebagai worker maupun employer, 
               Anda harus memenuhi seluruh persyaratan kelayakan yang ditetapkan di bawah ini. 
@@ -49,7 +68,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">2. Jenis Pengguna dan Tanggung Jawab Mereka</h2>
+            <h2 id="section-2" className="text-xl font-semibold text-foreground scroll-mt-24">2. Jenis Pengguna dan Tanggung Jawab Mereka</h2>
             <p className="text-muted-foreground leading-relaxed">
               DailyWorkerHub membedakan antara dua jenis pengguna utama dengan hak dan 
               kewajiban yang berbeda. Memahami peran Anda sangat penting untuk 
@@ -85,7 +104,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">3. Penggunaan yang Dilarang dalam Konteks Hospitality</h2>
+            <h2 id="section-3" className="text-xl font-semibold text-foreground scroll-mt-24">3. Penggunaan yang Dilarang dalam Konteks Hospitality</h2>
             <p className="text-muted-foreground leading-relaxed">
               DailyWorkerHub memiliki zero tolerance terhadap penyalahgunaan platform. 
               Berikut adalah penggunaan yang secara eksplisit dilarang, dengan 
@@ -146,7 +165,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">4. Syarat Escrow dan Pembayaran</h2>
+            <h2 id="section-4" className="text-xl font-semibold text-foreground scroll-mt-24">4. Syarat Escrow dan Pembayaran</h2>
             <p className="text-muted-foreground leading-relaxed">
               Sistem escrow adalah jantung dari kepercayaan dalam platform DailyWorkerHub. 
               Dengan menggunakan platform, Anda agreeing untuk terikat dengan syarat-syarat 
@@ -192,7 +211,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">5. Resolusi Sengketa</h2>
+            <h2 id="section-5" className="text-xl font-semibold text-foreground scroll-mt-24">5. Resolusi Sengketa</h2>
             <p className="text-muted-foreground leading-relaxed">
               DailyWorkerHub menyediakan proses resolusi sengketa bertingkat untuk menangani 
               konflik antara employer dan worker. Tujuan kami adalah menyelesaikan sengketa 
@@ -230,7 +249,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">6. Batasan Tanggung Jawab</h2>
+            <h2 id="section-6" className="text-xl font-semibold text-foreground scroll-mt-24">6. Batasan Tanggung Jawab</h2>
             <p className="text-muted-foreground leading-relaxed">
               DailyWorkerHub didirikan sebagai platform yang memfasilitasi pertukaran 
               tenaga kerja di sektor hospitality, bukan sebagai pihak yang secara 
@@ -274,7 +293,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">7. Hak Kekayaan Intelektual</h2>
+            <h2 id="section-7" className="text-xl font-semibold text-foreground scroll-mt-24">7. Hak Kekayaan Intelektual</h2>
             <p className="text-muted-foreground leading-relaxed">
               Seluruh konten yang tersedia di platform DailyWorkerHub — termasuk namun 
               tidak terbatas pada logo, merek dagang, desain antarmuka, teks, grafik, 
@@ -304,7 +323,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">8. Penangguhan dan Penghentian Akun</h2>
+            <h2 id="section-8" className="text-xl font-semibold text-foreground scroll-mt-24">8. Penangguhan dan Penghentian Akun</h2>
             <p className="text-muted-foreground leading-relaxed">
               DailyWorkerHub berhak menangguhkan atau menghentikan akun pengguna dalam 
               kondisi-kondisi tertentu yang telah kami tentukan. Berikut adalah 
@@ -352,7 +371,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">9. Hukum yang Mengatur</h2>
+            <h2 id="section-9" className="text-xl font-semibold text-foreground scroll-mt-24">9. Hukum yang Mengatur</h2>
             <p className="text-muted-foreground leading-relaxed">
               Syarat dan Ketentuan ini, serta setiap sengketa atau klaim yang timbul 
               dari atau terkait dengan nya, diatur oleh dan ditafsirkan sesuai dengan 
@@ -381,7 +400,7 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground">10. Informasi Kontak</h2>
+            <h2 id="section-10" className="text-xl font-semibold text-foreground scroll-mt-24">10. Informasi Kontak</h2>
             <p className="text-muted-foreground leading-relaxed">
               Jika Anda memiliki pertanyaan, kekhawatiran, atau طلب informasi lebih lanjut 
               tentang Syarat dan Ketentuan ini, jangan ragu untuk menghubungi kami 
@@ -414,6 +433,9 @@ export default function TermsPage() {
               dan эффективный для seluruh pengguna kami.
             </p>
           </section>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
