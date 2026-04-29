@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
@@ -56,8 +56,10 @@ export function ArticlesPageClient() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [user, setUser] = useState<User | null>(null);
+  const fetchCalled = useRef(false);
 
   const supabase = createClient();
+  console.log("ArticlesPageClient render, supabase:", !!supabase);
 
   const checkAuth = useCallback(async () => {
     try {
@@ -151,9 +153,11 @@ export function ArticlesPageClient() {
   }, [fetchCategories, checkAuth]);
 
   useEffect(() => {
-    console.log("=== ARTICLES PAGE MOUNT ===");
-    console.log("fetchArticles function:", !!fetchArticles);
-    fetchArticles();
+    console.log("=== ARTICLES PAGE MOUNT ===", "fetchCalled:", fetchCalled.current);
+    if (!fetchCalled.current) {
+      fetchCalled.current = true;
+      fetchArticles();
+    }
   }, [fetchArticles]);
 
   const totalPages = Math.ceil(totalCount / ARTICLES_PER_PAGE);
