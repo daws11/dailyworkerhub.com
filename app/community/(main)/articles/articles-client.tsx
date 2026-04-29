@@ -84,11 +84,21 @@ export function ArticlesPageClient() {
   }, [supabase]);
 
   const fetchArticles = useCallback(async () => {
-    console.log("fetchArticles called, loading:", loading);
+    console.log("=== FETCH ARTICLES START ===");
+    console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
     setLoading(true);
     setError(null);
 
     try {
+      const { data: testData, error: testError } = await supabase
+        .from('community_articles')
+        .select('id')
+        .limit(1);
+
+      console.log("Test query result:", testData, testError);
+
+      if (testError) throw testError;
+
       let query = supabase
         .from("community_articles")
         .select("id, slug, title, excerpt, cover_image, read_time, views_count, likes_count, is_featured, published_at")
