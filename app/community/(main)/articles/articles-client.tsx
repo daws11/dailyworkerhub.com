@@ -133,7 +133,7 @@ export function ArticlesPageClient() {
     } finally {
       setLoading(false);
     }
-  }, [supabase, selectedCategory, searchQuery, sortBy, page]);
+  }, []);
 
   useEffect(() => {
     fetchCategories();
@@ -141,11 +141,8 @@ export function ArticlesPageClient() {
   }, [fetchCategories, checkAuth]);
 
   useEffect(() => {
-    console.log("=== ARTICLES PAGE MOUNT ===", "fetchCalled:", fetchCalled.current);
-    if (!fetchCalled.current) {
-      fetchCalled.current = true;
-      fetchArticles();
-    }
+    console.log("ARTICLES PAGE MOUNT");
+    fetchArticles();
   }, [fetchArticles]);
 
   const totalPages = Math.ceil(totalCount / ARTICLES_PER_PAGE);
