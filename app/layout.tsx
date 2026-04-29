@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/footer";
 import Script from "next/script";
 import "./globals.css";
+import { getOrganizationSchema, getWebSiteSchema } from "@/lib/seo";
 
 const themeInitScript = `
 (function() {
@@ -70,6 +71,13 @@ export default function RootLayout({
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([getOrganizationSchema(), getWebSiteSchema()]),
+          }}
         />
       </head>
       <body>

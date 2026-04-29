@@ -1,5 +1,29 @@
+import type { Metadata } from "next";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
+
+export const metadata: Metadata = {
+  title: "Kebijakan Privasi - DailyWorkerHub",
+  description: "Kebijakan Privasi DailyWorkerHub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sebagai pengguna platform.",
+  keywords: ["kebijakan privasi", "data pribadi", "perlindungan data", "privacy policy", "dailyworkerhub"],
+  openGraph: {
+    title: "Kebijakan Privasi - DailyWorkerHub",
+    description: "Kebijakan Privasi DailyWorkerHub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.",
+    url: "https://dailyworkerhub.com/privacy",
+    siteName: "DailyWorkerHub",
+    images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kebijakan Privasi - DailyWorkerHub",
+    images: ["/opengraph.jpg"],
+  },
+  alternates: {
+    canonical: "https://dailyworkerhub.com/privacy",
+  },
+};
 
 const tocItems: TocItem[] = [
   { id: "section-1", title: "1. Informasi yang Kami Kumpulkan" },

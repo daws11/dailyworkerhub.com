@@ -1,8 +1,36 @@
+import type { Metadata } from "next";
 import Link from "next/link"
 import Image from "next/image"
 import { MessageSquare, FileText, BookOpen, Vote, Sparkles, Search, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye } from "lucide-react"
 import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTimeAgo } from "@/lib/community"
 import { CommunityNavbar } from "@/components/layout/community/CommunityNavbar"
+
+export const metadata: Metadata = {
+  title: "Komunitas Pekerja Harian Indonesia - DailyWorkerHub",
+  description: "Bergabunglah dengan komunitas pekerja harian Indonesia. Diskusi, pelajari tips karier, berbagi pengalaman, dan berkembang bersama ribuan daily worker di seluruh Indonesia.",
+  openGraph: {
+    title: "Komunitas Pekerja Harian Indonesia - DailyWorkerHub",
+    description: "Bergabunglah dengan komunitas pekerja harian Indonesia. Diskusi, pelajari tips karier, berbagi pengalaman.",
+    locale: "id_ID",
+    siteName: "DailyWorkerHub",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DailyWorkerHub Community",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/opengraph.jpg"],
+  },
+  alternates: {
+    canonical: "https://dailyworkerhub.com/community",
+  },
+};
 
 const shortcuts = [
   { label: "Diskusi Terbaru", icon: MessageSquare, href: "/community/discussions?sort=newest" },

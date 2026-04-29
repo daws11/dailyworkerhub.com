@@ -1,5 +1,29 @@
+import type { Metadata } from "next";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
+
+export const metadata: Metadata = {
+  title: "Syarat & Ketentuan - DailyWorkerHub",
+  description: "Syarat dan Ketentuan DailyWorkerHub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
+  keywords: ["syarat ketentuan", "terms of service", "peraturan platform", "dailyworkerhub"],
+  openGraph: {
+    title: "Syarat & Ketentuan - DailyWorkerHub",
+    description: "Syarat dan Ketentuan DailyWorkerHub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
+    url: "https://dailyworkerhub.com/terms",
+    siteName: "DailyWorkerHub",
+    images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Syarat & Ketentuan - DailyWorkerHub",
+    images: ["/opengraph.jpg"],
+  },
+  alternates: {
+    canonical: "https://dailyworkerhub.com/terms",
+  },
+};
 
 const tocItems: TocItem[] = [
   { id: "section-1", title: "1. Kelayakan Pengguna (Eligibility)" },

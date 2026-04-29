@@ -7,6 +7,26 @@ export const metadata: Metadata = {
     default: "DailyWorkerHub Community",
     template: "%s | DailyWorkerHub Community",
   },
+  description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman dengan sesama pekerja harian dan employer di Bali.",
+  openGraph: {
+    title: "DailyWorkerHub Community",
+    description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman.",
+    locale: "id_ID",
+    siteName: "DailyWorkerHub",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DailyWorkerHub Community",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/opengraph.jpg"],
+  },
 };
 
 function Loading() {

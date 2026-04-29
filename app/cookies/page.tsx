@@ -1,5 +1,29 @@
+import type { Metadata } from "next";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
+
+export const metadata: Metadata = {
+  title: "Kebijakan Cookie - DailyWorkerHub",
+  description: "Kebijakan Cookie DailyWorkerHub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
+  keywords: ["kebijakan cookie", "cookie", "pelacakan", "privasi", "dailyworkerhub"],
+  openGraph: {
+    title: "Kebijakan Cookie - DailyWorkerHub",
+    description: "Kebijakan Cookie DailyWorkerHub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
+    url: "https://dailyworkerhub.com/cookies",
+    siteName: "DailyWorkerHub",
+    images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kebijakan Cookie - DailyWorkerHub",
+    images: ["/opengraph.jpg"],
+  },
+  alternates: {
+    canonical: "https://dailyworkerhub.com/cookies",
+  },
+};
 
 const tocItems: TocItem[] = [
   { id: "section-1", title: "1. Apa itu Cookie?" },
