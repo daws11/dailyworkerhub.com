@@ -84,6 +84,7 @@ export function ArticlesPageClient() {
   }, [supabase]);
 
   const fetchArticles = useCallback(async () => {
+    console.log("fetchArticles called, loading:", loading);
     setLoading(true);
     setError(null);
 
@@ -100,17 +101,17 @@ export function ArticlesPageClient() {
       if (sortBy === "popular") {
         query = query.order("views_count", { ascending: false });
       } else {
-        query = query.order("published_at", { ascending: false });
+        query = query.order("published_at", { ascending: false }).limit(20);
       }
 
-      const from = (page - 1) * ARTICLES_PER_PAGE;
-      query = query.range(from, from + ARTICLES_PER_PAGE - 1);
-
       const { data, error } = await query;
+
+      console.log("Query result:", { data, error, count: data?.length });
 
       if (error) throw error;
 
       const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
+        console.log("Mapping article:", item.title);
         return {
           id: item.id as string,
           slug: item.slug as string,
@@ -128,11 +129,13 @@ export function ArticlesPageClient() {
       });
 
       setArticles(mappedArticles);
+      console.log("Articles set, count:", mappedArticles.length);
       setTotalCount(data?.length || 0);
     } catch (err) {
       console.error("Error fetching articles:", err);
       setError("Gagal memuat artikel. Silakan coba lagi.");
     } finally {
+      console.log("Fetch complete, setting loading to false");
       setLoading(false);
     }
   }, [supabase, selectedCategory, searchQuery, sortBy, page]);

@@ -116,11 +116,8 @@ export function DiscussionsPageClient() {
       } else if (sortBy === "trending") {
         query = query.order("comments_count", { ascending: false });
       } else {
-        query = query.order("created_at", { ascending: false });
+        query = query.order("created_at", { ascending: false }).limit(20);
       }
-
-      const from = (page - 1) * DISCUSSIONS_PER_PAGE;
-      query = query.range(from, from + DISCUSSIONS_PER_PAGE - 1);
 
       const { data, error } = await query;
 
