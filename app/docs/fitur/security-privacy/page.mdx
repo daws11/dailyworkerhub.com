@@ -1,0 +1,207 @@
+---
+title: Keamanan dan Privasi
+description: Panduan lengkap tentang keamanan data dan privasi di DailyWorkerHub — enkripsi, perlindungan akun, two-factor authentication, dan praktik keamanan terbaik
+---
+
+# Keamanan dan Privasi
+
+DailyWorkerHub memprioritaskan keamanan data dan transaksi Anda. Platform ini dibangun dengan infrastruktur keamanan tingkat enterprise untuk memastikan bahwa informasi pribadi, data finansial, dan setiap transaksi terlindungi secara maksimal.
+
+---
+
+## Infrastruktur Keamanan
+
+### Enkripsi Data
+
+| Lapisan | Teknologi | Yang Dilindungi |
+|---------|-----------|----------------|
+| **Data in Transit** | TLS 1.3 / SSL | Seluruh komunikasi antara aplikasi dan server |
+| **Data at Rest** | AES-256 | Data transaksi, saldo, KTP, password |
+| **Payment Data** | PCI-DSS Level 1 | Informasi kartu dan data pembayaran |
+
+> **Catatan:** AES-256 adalah standar enkripsi yang sama digunakan oleh bank-bank besar dan lembaga keuangan internasional.
+
+### Pemisahan Dana
+
+Dana escrow di DailyWorkerHub dipisahkan dari dana operasional perusahaan:
+
+| Aspek | Penjelasan |
+|-------|------------|
+| **Rekening Terpisah** | Dana escrow disimpan di rekening khusus yang berbeda dari rekening operasional |
+| **Tidak Dapat Diakses untuk Operasional** | Dana escrow tidak dapat digunakan untuk biaya operasional perusahaan |
+| **Audit Independen** | Rekening escrow di-audit secara berkala oleh pihak independen |
+| **Transparansi** | Saldo escrow dapat dilihat oleh pengguna yang berkepentingan |
+
+---
+
+## Perlindungan Akun
+
+### Two-Factor Authentication (2FA)
+
+2FA adalah lapisan keamanan tambahan yang melindungi akun Anda dari akses tidak sah.
+
+**Cara Kerja 2FA:**
+
+1. Anda login dengan email dan password (factor 1: sesuatu yang Anda ketahui)
+2. Sistem meminta kode 6 digit dari aplikasi authenticator (factor 2: sesuatu yang Anda miliki)
+3. Login berhasil hanya jika kedua factor cocok
+
+**Aksi yang Memerlukan 2FA:**
+
+| Aksi | Perlu 2FA? |
+|------|-----------|
+| Login dari perangkat baru | ✅ Ya |
+| Deposit saldo escrow | ✅ Ya |
+| Release dana escrow | ✅ Ya |
+| Withdraw ke rekening | ✅ Ya |
+| Ubah nomor telepon | ✅ Ya |
+| Ubah password | ✅ Ya |
+| Ubah email | ✅ Ya |
+| Ubah rekening bank | ✅ Ya |
+| Hapus akun | ✅ Ya |
+
+### Praktik Keamanan Akun
+
+| Praktik | ✅ Direkomendasikan | ❌ Harus Dihindari |
+|---------|---------------------|------------------|
+| **Password** | Minimal 12 karakter, kombinasi huruf besar/kecil/angka/simbol | Password sederhana seperti "123456" atau tanggal lahir |
+| **Pengelolaan Password** | Gunakan password manager (1Password, Bitwarden) | Tulis password di catatan atau share dengan orang lain |
+| **Perangkat** | Login hanya dari perangkat pribadi yang aman | Login dari warnet, perangkat umum, atau komputer bersama |
+| **WiFi** | Gunakan koneksi aman (WiFi rumah, VPN) | Login via WiFi publik yang tidak aman |
+| **OTP/2FA Code** | Jaga kerahasiaan kode, tidak diberikan ke siapapun | Share kode ke orang lain, termasuk yang mengklaim dari tim support |
+
+> **Peringatan:** Tim DailyWorkerHub tidak akan pernah meminta password, OTP, atau kode 2FA Anda. Jika ada yang mengklaim dari tim support dan meminta informasi ini, itu adalah upaya phishing.
+
+---
+
+## Perlindungan Transaksi
+
+### Escrow Protection
+
+| Aspek | Penjelasan |
+|-------|------------|
+| **Dana di Hold** | Setiap deposit dari employer di-hold di escrow sampai pekerjaan selesai diverifikasi |
+| **Tidak Ada Risiko Tidak Dibayar** | Worker dijamin dibayar jika menyelesaikan pekerjaan sesuai deskripsi |
+| **Refund Tersedia** | Employer bisa mengajukan refund jika terjadi dispute yang merugikan |
+
+### Audit Trail
+
+Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
+
+| Data | Deskripsi |
+|------|-----------|
+| **Timestamp** | Waktu pasti setiap aksi (deposit, hold, release, dispute) |
+| **ID Transaksi** | Identifier unik untuk setiap transaksi |
+| **Pihak Terlibat** | ID employer, ID worker |
+| **Jumlah Dana** | Nominal deposit, fee, release |
+| **Status Transaksi** | Pending, Hold, Released, Disputed |
+| **Bukti-bukti** | Screenshot chat, foto sebelum/sesudah, check-in/check-out |
+
+### Pencegahan Penipuan
+
+| Mekanisme | Cara Kerja |
+|-----------|-----------|
+| **Verifikasi KTP** | Semua user diverifikasi identitasnya sebelum bertransaksi |
+| **Verifikasi Rekening** | Rekening bank harus atas nama yang sama dengan KTP |
+| **Behavioral Analysis** | Sistem mendeteksi pattern mencurigakan secara real-time |
+| **Limit Transaksi** | Batas minimum dan maksimum per transaksi |
+| **Review Manual** | Transaksi dengan nilai tinggi akan di-review manual |
+
+---
+
+## Privasi Data
+
+### Data yang Dikumpulkan
+
+| Kategori Data | Contoh | Tujuan |
+|--------------|--------|--------|
+| **Identitas** | Nama, KTP, selfie | Verifikasi dan legalitas |
+| **Kontak** | Email, nomor telepon | Komunikasi |
+| **Finansial** | Rekening bank, history transaksi | Transaksi dan pembayaran |
+| **Profil** | Foto, deskripsi, keahlian, pengalaman | Matching worker dan employer |
+| **Aktivitas** | Lamaran, hiring, rating, review | Platform functionality |
+| **Perangkat** | IP address, device ID | Keamanan dan troubleshooting |
+
+### Penggunaan Data
+
+| Penggunaan | Diizinkan? |
+|-----------|-----------|
+| **Operasi platform** | ✅ Ya — untuk menjalankan fitur utama |
+| **Improving services** | ✅ Ya — untuk meningkatkan pengalaman pengguna |
+| **Marketing** | ❌ Tidak — tanpa persetujuan eksplisit |
+| **Dijual ke pihak ketiga** | ❌ Tidak pernah |
+| **Disclose ke employer/worker** | ✅ Ya — hanya data yang relevan untuk transaksi |
+
+### Hak Privasi Anda
+
+| Hak | Penjelasan |
+|-----|------------|
+| **Akses** | Anda dapat melihat semua data yang kami miliki tentang Anda |
+| **Koreksi** | Anda dapat memperbaiki data yang tidak akurat |
+| **Penghapusan** | Anda dapat meminta penghapusan data (dengan kondisi tertentu) |
+| **Portabilitas** | Anda dapat meminta salinan data Anda dalam format yang dapat dibaca |
+| **Penolakan** | Anda dapat menolak penggunaan data untuk tujuan tertentu |
+
+> **Untuk menggunakan hak privasi Anda**, silakan kirim email ke [privacy@dailyworkerhub.com](mailto:privacy@dailyworkerhub.com) dengan subjek "Privacy Rights Request".
+
+---
+
+## Penyimpanan dan Retensi Data
+
+| Jenis Data | Durasi Penyimpanan | Alasan |
+|-----------|-------------------|--------|
+| **Transaksi escrow** | 7 tahun | Persyaratan hukum dan audit trail |
+| **Data akun aktif** | Selama akun aktif | Fungsi platform |
+| **Data akun nonaktif** | 2 tahun setelah terakhir login | Kemungkinan reaktivasi |
+| **Logins dan aktivitas** | 1 tahun | Keamanan dan troubleshooting |
+| **Dokumen verifikasi (KTP)** | Selama akun aktif + 1 tahun | Persyaratan verifikasi |
+
+---
+
+## Keamanan untuk Employer
+
+| Risiko | Mitigasi |
+|--------|---------|
+| **Worker tidak kredibel** | Verifikasi KTP, rating, dan review dari employer lain |
+| **Worker no-show** | Protection Pool melindungi dengan refund dan kompensasi |
+| **Worker tidak sesuai deskripsi** | Dispute process untuk menyelesaikan sengketa |
+| **Dana tidak aman** | Dana di-hold escrow, tidak ada akses langsung |
+| **Data pekerja** | Anda hanya melihat data yang relevan untuk hiring |
+
+---
+
+## Keamanan untuk Worker
+
+| Risiko | Mitigasi |
+|--------|---------|
+| **Employer tidak bayar** | Dana di-hold escrow, employer tidak bisa cancel setelah Anda check-in |
+| **Pembayaran terlambat** | Sistem release otomatis setelah employer approve |
+| **Dispute yang tidak adil** | Tim review netral untuk memutuskan sengketa |
+| **Data disalahgunakan** | Data dienkripsi dan tidak dibagikan tanpa persetujuan |
+| **KTP disalahgunakan** | KTP hanya digunakan untuk verifikasi, tidak disimpan sebagai salinan |
+
+---
+
+## Melaporkan Masalah Keamanan
+
+Jika Anda menemukan celah keamanan atau menjadi korban penipuan:
+
+| Jenis | Cara Melaporkan |
+|-------|---------------|
+| **Bug/ Vulnerability** | Email [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
+| **Penipuan/Scam** | Ajukan dispute melalui platform, atau email [fraud@dailyworkerhub.com](mailto:fraud@dailyworkerhub.com) |
+| **Phishing** | Screenshot dan email ke [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
+| **Kehilangan Dana** | Hubungi [support@dailyworkerhub.com](mailto:support@dailyworkerhub.com) dengan subjek "URGENT — Dana Hilang" |
+
+> **Catatan:** Untuk laporan bug atau vulnerability, kami menghargai disclosures yang bertanggung jawab dan dapat memberikan acknowledgment atau reward tergantung pada severity.
+
+---
+
+## Langkah Berikutnya
+
+| Topik | Pelajari |
+|-------|---------|
+| Sistem escrow | [Escrow System](/docs/fitur/escrow-system) |
+| Dana proteksi | [Protection Pool](/docs/fitur/protection-pool) |
+| Verifikasi akun | [Verifikasi Akun](/docs/getting-started/verifikasi-akun) |
+| FAQ keamanan | [FAQ](/docs/faq) |

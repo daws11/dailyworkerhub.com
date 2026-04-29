@@ -1,0 +1,193 @@
+---
+title: Verifikasi Akun
+description: Panduan lengkap proses verifikasi identitas di DailyWorkerHub — verifikasi KTP, verifikasi telepon, dan two-factor authentication
+---
+
+# Verifikasi Akun
+
+Setelah mendaftar, setiap pengguna DailyWorkerHub wajib melewati proses verifikasi untuk memastikan keamanan dan kepercayaan dalam ekosistem platform. Verifikasi melindungi baik worker maupun employer dari akun palsu dan aktivitas penipuan.
+
+---
+
+## Mengapa Verifikasi Diperlukan?
+
+| Alasan | Penjelasan |
+|--------|------------|
+| **Kepercayaan** | Employer lebih percaya merekrut worker yang sudah terverifikasi |
+| **Keamanan** | Mengurangi risiko akun palsu, identitas盗窃, dan penipuan |
+| **Legalitas** | Mendukung operasional yang sah dan sesuai regulasi |
+| **Transparansi** | Membangun ekosistem kerja yang profesional dan bertanggung jawab |
+
+> **Catatan:** Akun yang belum terverifikasi memiliki batasan — tidak dapat apply ke lowongan atau menerima deposit escrow.
+
+---
+
+## Jenis Verifikasi
+
+### 1. Verifikasi Email
+
+**Status:** Otomatis dilakukan saat registrasi
+
+**Langkah:**
+1. Buka email yang digunakan saat registrasi
+2. Klik link verifikasi dari DailyWorkerHub (berlaku 24 jam)
+3. Akun otomatis aktif setelah email diverifikasi
+
+**Troubleshooting:**
+- Email verifikasi tidak masuk → Cek folder Spam/Promosi
+- Link sudah expired → Minta kirim ulang di halaman Login
+- Email salah saat daftar → Buat akun baru dengan email yang benar
+
+### 2. Verifikasi Nomor Telepon
+
+**Status:** Wajib setelah verifikasi email
+
+**Langkah:**
+1. Masukkan nomor telepon aktif (Indonesia: 08xx-xxxx-xxxx)
+2. Sistem mengirim kode OTP 6 digit via SMS
+3. Masukkan kode OTP dalam 60 detik
+4. Nomor telepon terverifikasi jika kode sesuai
+
+**Syarat Nomor Telepon:**
+- Harus nomor Indonesia (+62)
+- Aktif dapat menerima SMS
+- Tidak terdaftar dengan akun DailyWorkerHub lain
+- Disarankan WhatsApp aktif untuk komunikasi tambahan
+
+**Troubleshooting:**
+- OTP tidak masuk → Tunggu 60 detik, minta OTP baru
+- Nomor sudah terdaftar → Gunakan nomor berbeda atau hubungi support
+- OTP saysalah → Pastikan memasukkan 6 digit dengan benar, tanpa spasi
+
+### 3. Verifikasi Identitas (KTP)
+
+**Status:** Wajib untuk semua pengguna sebelum bertransaksi
+
+**Langkah Verifikasi KTP:**
+
+1. Buka menu **"Profil"** → **"Verifikasi Identitas"**
+2. Siapkan **KTP asli** (Kartu Tanda Penduduk)
+3. Foto bagian depan KTP dengan jelas:
+   - Pastikan teks terbaca (nama, NIK, alamat, foto)
+   -背景 terlihat (tidak blur)
+   - Tidak ada glare atau bayangan
+4. Foto bagian belakang KTP (jika ada informasi penting)
+5. Ambil **selfie** dengan memegang KTP di dada
+6. Submit dan tunggu proses verifikasi (1x24 jam)
+
+**Syarat KTP:**
+- KTP asli (tidak scan/foto layar)
+- Masih berlaku (belum expire)
+- Informasi jelas dan terbaca
+- Nama sesuai dengan nama akun yang terdaftar
+
+**Tips Foto KTP yang Baik:**
+
+| Tips | Penjelasan |
+|------|------------|
+| **Pencahayaan merata** | Hindari glare atau bayangan yang menutup teks |
+| **Kamera tegak lurus** | Tidak miring, tidak distorsi |
+| **KTP penuh dalam frame** | Semua tepi KTP terlihat |
+| **Selfie dengan KTP** | Wajah dan KTP sama-sama jelas terlihat |
+
+> **Peringatan:** KTP yang tidak jelas, blur, atau expired akan ditolak oleh sistem verifikasi.
+
+### 4. Verifikasi Rekening Bank
+
+**Status:** Wajib untuk worker sebelum withdraw pertama
+
+**Langkah:**
+1. Buka menu **"Saldo"** → **"Tambah Rekening"**
+2. Pilih bank: BCA, BRI, atau Mandiri
+3. Masukkan:
+   - Nomor rekening (16-13 digit)
+   - Nama pemilik rekening (harus sesuai nama di KTP)
+   -Cabang bank
+4. Sistem akan mengirim **tes deposit** kecil (Rp 1.000-5.000)
+5. Verifikasi nominal deposit untuk konfirmasi kepemilikan
+6. Rekening terhubung setelah verifikasi berhasil
+
+**Bank yang Didukung:**
+
+| Bank | Minimum Saldo | Estimasi Withdraw | Catatan |
+|------|-------------|------------------|---------|
+| **BCA** | Rp 50.000 | 1-2 hari kerja | Paling cepat diproses |
+| **BRI** | Rp 50.000 | 1-3 hari kerja | — |
+| **Mandiri** | Rp 50.000 | 1-3 hari kerja | — |
+
+> **Catatan:** Saat ini belum mendukung BNI, BTPN/Jenius, atau bank digital lainnya. Kami sedang dalam pengembangan.
+
+### 5. Two-Factor Authentication (2FA)
+
+**Status:** Rekomendasi (sangat disarankan untuk keamanan)
+
+**Langkah Aktifasi:**
+1. Buka menu **"Pengaturan"** → **"Keamanan"**
+2. Klik **"Aktifkan 2FA"**
+3. Scan QR code dengan aplikasi authenticator:
+   - **Google Authenticator** (Android / iOS)
+   - **Authy** (Android / iOS / Desktop)
+4. Masukkan kode 6 digit dari aplikasi untuk konfirmasi
+5. Simpan **backup codes** di tempat aman
+
+**Kapan 2FA Diperlukan:**
+
+| Aksi | Butuh 2FA? |
+|------|-----------|
+| Login dari perangkat baru | ✅ Ya |
+| Deposit saldo pertama kali | ✅ Ya |
+| Release dana escrow | ✅ Ya |
+| Withdraw ke rekening | ✅ Ya |
+| Ubah nomor telepon | ✅ Ya |
+| Ubah password | ✅ Ya |
+| Login dari perangkat yang sudah dikenali | ❌ Tidak |
+
+---
+
+## Status Verifikasi
+
+Cek status verifikasi di menu **"Profil"** → **"Status Verifikasi"**:
+
+| Verifikasi | Status | Batasan Tanpa Verifikasi Ini |
+|-----------|--------|------------------------------|
+| **Email** | ✅ Terverifikasi / ❌ Belum | Tidak dapat login |
+| **Nomor Telepon** | ✅ Terverifikasi / ❌ Belum | Tidak dapat apply atau post lowongan |
+| **KTP** | ✅ Terverifikasi / ❌ Belum | Tidak dapat bertransaksi escrow |
+| **Rekening Bank** | ✅ Terverifikasi / ❌ Belum | Tidak dapat withdraw |
+| **2FA** | ✅ Aktif / ❌ Nonaktif | Tidak ada (tetapi sangat direkomendasikan) |
+
+---
+
+## FAQ Verifikasi
+
+**Q: Apakah verifikasi gratis?**
+A: Ya, semua proses verifikasi gratis. Tidak ada biaya yang dikenakan.
+
+**Q: Berapa lama proses verifikasi KTP?**
+A: Biasanya 1x24 jam kerja. Pada kondisi sibuk (akhir pekan, hari libur), bisa memakan waktu lebih lama.
+
+**Q: Apakah data KTP saya aman?**
+A: Ya. Data KTP dienkripsi dengan AES-256 dan hanya digunakan untuk verifikasi identitas. Kami tidak membagikan data pribadi Anda ke pihak ketiga.
+
+**Q: Apakah bisa verifikasi dengan SIM atau Passport?**
+A: Saat ini hanya KTP yang diterima untuk verifikasi identitas di platform.
+
+**Q: Apakah employer juga perlu verifikasi?**
+A: Ya. Employer wajib verifikasi email, nomor telepon, dan identitas (KTP). Rekening bank tidak wajib untuk employer.
+
+**Q: Bagaimana jika KTP saya expired?**
+A: Anda perlu memperbarui KTP terlebih dahulu sebelum bisa menyelesaikan verifikasi. Akun dengan KTP expired akan memiliki keterbatasan akses.
+
+**Q: Apakah saya bisa verifikasi dari desktop?**
+A: Ya, semua proses verifikasi dapat dilakukan dari desktop browser. Namun, untuk foto KTP dan selfie, Anda perlu mengunggah file foto dari perangkat.
+
+---
+
+## Langkah Berikutnya
+
+| Setelah Verifikasi | Pelajari |
+|-------------------|---------|
+| Worker — Siap cari kerja | [Cara Mencari Lowongan](/docs/platform-guide/cara-mencari-lowongan) |
+| Worker — Persiapan sebelum apply | [Persiapan Dasar](/docs/getting-started/persiapan-dasar) |
+| Employer — Mulai rekrut | [Cara Posting Lowongan](/docs/platform-guide/cara-posting-lowongan) |
+| Employer — Pahami sistem pembayaran | [Escrow System](/docs/fitur/escrow-system) |
