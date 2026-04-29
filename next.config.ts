@@ -3,7 +3,7 @@ import nextra from "nextra";
 
 const withNextra = nextra({
   defaultShowCopyCode: true,
-  search: false,
+  search: true,
 });
 
 const securityHeaders = [
