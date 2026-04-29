@@ -90,18 +90,7 @@ export function ArticlesPageClient() {
     try {
       let query = supabase
         .from("community_articles")
-        .select(`
-          id,
-          slug,
-          title,
-          excerpt,
-          cover_image,
-          read_time,
-          views_count,
-          likes_count,
-          is_featured,
-          published_at
-        `, { count: "exact" })
+        .select("id, slug, title, excerpt, cover_image, read_time, views_count, likes_count, is_featured, published_at")
         .eq("is_published", true);
 
       if (searchQuery) {
@@ -117,7 +106,7 @@ export function ArticlesPageClient() {
       const from = (page - 1) * ARTICLES_PER_PAGE;
       query = query.range(from, from + ARTICLES_PER_PAGE - 1);
 
-      const { data, error, count } = await query;
+      const { data, error } = await query;
 
       if (error) throw error;
 
@@ -139,7 +128,7 @@ export function ArticlesPageClient() {
       });
 
       setArticles(mappedArticles);
-      setTotalCount(count || 0);
+      setTotalCount(data?.length || 0);
     } catch (err) {
       console.error("Error fetching articles:", err);
       setError("Gagal memuat artikel. Silakan coba lagi.");

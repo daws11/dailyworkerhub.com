@@ -105,19 +105,7 @@ export function DiscussionsPageClient() {
     try {
       let query = supabase
         .from("community_discussions")
-        .select(`
-          id,
-          slug,
-          title,
-          excerpt,
-          author_id,
-          category,
-          likes_count,
-          comments_count,
-          views_count,
-          is_pinned,
-          created_at
-        `, { count: "exact" });
+        .select("id, slug, title, author_id, category, likes_count, comments_count, views_count, is_pinned, created_at");
 
       if (searchQuery) {
         query = query.ilike("title", `%${searchQuery}%`);
@@ -134,7 +122,7 @@ export function DiscussionsPageClient() {
       const from = (page - 1) * DISCUSSIONS_PER_PAGE;
       query = query.range(from, from + DISCUSSIONS_PER_PAGE - 1);
 
-      const { data, error, count } = await query;
+      const { data, error } = await query;
 
       if (error) throw error;
 
@@ -143,7 +131,7 @@ export function DiscussionsPageClient() {
           id: item.id as string,
           slug: item.slug as string,
           title: item.title as string,
-          excerpt: (item.excerpt as string) || "",
+          excerpt: "",
           author_id: item.author_id as string,
           status: "open",
           view_count: (item.views_count as number) || 0,
@@ -158,7 +146,7 @@ export function DiscussionsPageClient() {
       });
 
       setDiscussions(mappedDiscussions);
-      setTotalCount(count || 0);
+      setTotalCount(data?.length || 0);
     } catch (err) {
       console.error("Error fetching discussions:", err);
       setError("Gagal memuat diskusi. Silakan coba lagi.");
