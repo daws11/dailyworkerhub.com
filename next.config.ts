@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 import nextra from "nextra";
 
 const withNextra = nextra({
-  search: false,
+  search: {
+    provider: "pagefind",
+  },
 });
 
 const securityHeaders = [
