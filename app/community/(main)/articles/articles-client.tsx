@@ -73,7 +73,7 @@ export function ArticlesPageClient() {
   const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from("categories")
+        .from("community.content_categories")
         .select("id, name, slug, color")
         .eq("type", "article")
         .order("sort_order", { ascending: true });
