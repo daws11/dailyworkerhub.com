@@ -90,40 +90,52 @@ export function ArticlesPageClient() {
 
     try {
       console.log("About to query supabase...");
-      const { data, error } = await supabase
+      const result = await supabase
         .from('community_articles')
         .select('id, title')
         .limit(5);
 
-      console.log("Query completed. Data:", data?.length, "Error:", error);
+      console.log("Query result:", JSON.stringify(result));
+
+      const { data, error } = result;
+
+      console.log("Data:", data, "Error:", error);
 
       if (error) {
         console.error("Query error:", error);
-        throw error;
+        setError(error.message);
+        setLoading(false);
+        return;
       }
 
-      const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
-        console.log("Mapping article:", item.title);
-        return {
-          id: item.id as string,
-          slug: item.slug as string,
-          title: item.title as string,
-          excerpt: (item.excerpt as string) || "",
-          cover_image: item.cover_image as string | null,
-          read_time: item.read_time as number | null,
-          views_count: (item.views_count as number) || 0,
-          likes_count: (item.likes_count as number) || 0,
-          is_featured: (item.is_featured as boolean) || false,
-          published_at: item.published_at as string,
-          author: { full_name: null, avatar_url: null },
-          category: null,
-        } as Article;
-      });
+      if (!data || data.length === 0) {
+        console.log("No data returned, setting empty articles");
+        setArticles([]);
+        setTotalCount(0);
+        setLoading(false);
+        return;
+      }
 
-      console.log("Mapped articles:", mappedArticles.length);
-      setArticles(mappedArticles);
-      console.log("Articles state set");
-      setTotalCount(data?.length || 0);
+      // Test: if no data, set some hardcoded test data
+      const testArticles: Article[] = data && data.length > 0 ? data.map((item: Record<string, unknown>) => ({
+        id: item.id as string,
+        slug: (item.slug as string) || "",
+        title: item.title as string,
+        excerpt: "",
+        cover_image: null,
+        read_time: 5,
+        views_count: 100,
+        likes_count: 10,
+        is_featured: false,
+        published_at: new Date().toISOString(),
+        author: { full_name: null, avatar_url: null },
+        category: null,
+      })) : [];
+
+      console.log("Mapped articles:", testArticles.length);
+      setArticles(testArticles);
+      console.log("Articles state set, count:", testArticles.length);
+      setTotalCount(testArticles.length);
     } catch (err) {
       console.error("Error fetching articles:", err);
       setError("Gagal memuat artikel. Silakan coba lagi.");
