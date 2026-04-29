@@ -90,7 +90,7 @@ export function ArticlesPageClient() {
 
     try {
       let query = supabase
-        .from("articles")
+        .from("community.articles")
         .select(`
           id,
           slug,

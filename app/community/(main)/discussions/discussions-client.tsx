@@ -105,7 +105,7 @@ export function DiscussionsPageClient() {
 
     try {
       let query = supabase
-        .from("discussions")
+        .from("community.discussions")
         .select(`
           id,
           slug,
