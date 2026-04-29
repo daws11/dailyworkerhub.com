@@ -73,9 +73,9 @@ export function ArticlesPageClient() {
   const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from("categories")
+        .from("content_categories")
         .select("id, name, slug, color")
-        .order("created_at", { ascending: true });
+        .eq("type", "article");
 
       if (error) throw error;
       setCategories(data || []);
@@ -90,7 +90,7 @@ export function ArticlesPageClient() {
 
     try {
       let query = supabase
-        .from("community_articles")
+        .from("articles")
         .select(`
           id,
           slug,
@@ -98,17 +98,16 @@ export function ArticlesPageClient() {
           excerpt,
           cover_image,
           read_time,
-          views_count,
+          view_count,
           likes_count,
           is_featured,
           published_at,
-          author:users!author_id(full_name, avatar_url),
-          category
+          status
         `, { count: "exact" })
-        .eq("is_published", true);
+        .eq("status", "published");
 
       if (selectedCategory) {
-        query = query.eq("category", selectedCategory);
+        query = query.eq("category_id", selectedCategory);
       }
 
       if (searchQuery) {
@@ -116,7 +115,7 @@ export function ArticlesPageClient() {
       }
 
       if (sortBy === "popular") {
-        query = query.order("views_count", { ascending: false });
+        query = query.order("view_count", { ascending: false });
       } else {
         query = query.order("published_at", { ascending: false });
       }
@@ -129,9 +128,6 @@ export function ArticlesPageClient() {
       if (error) throw error;
 
       const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
-        const rawAuthor = item.author as Record<string, unknown> | null;
-        const rawCategory = item.category as string | null;
-
         return {
           id: item.id as string,
           slug: item.slug as string,
@@ -139,15 +135,12 @@ export function ArticlesPageClient() {
           excerpt: (item.excerpt as string) || "",
           cover_image: item.cover_image as string | null,
           read_time: item.read_time as number | null,
-          views_count: item.views_count as number,
-          likes_count: item.likes_count as number,
-          is_featured: item.is_featured as boolean,
+          views_count: (item.view_count as number) || 0,
+          likes_count: (item.likes_count as number) || 0,
+          is_featured: (item.is_featured as boolean) || false,
           published_at: item.published_at as string,
-          author: rawAuthor ? {
-            full_name: rawAuthor.full_name as string | null,
-            avatar_url: rawAuthor.avatar_url as string | null,
-          } : { full_name: null, avatar_url: null },
-          category: rawCategory || null,
+          author: { full_name: null, avatar_url: null },
+          category: null,
         } as Article;
       });
 

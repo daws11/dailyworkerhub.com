@@ -88,10 +88,9 @@ export function DiscussionsPageClient() {
   const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from("categories")
+        .from("content_categories")
         .select("id, name, slug, color")
-        .eq("type", "discussion")
-        .order("sort_order", { ascending: true });
+        .eq("type", "discussion");
 
       if (error) throw error;
       setCategories(data || []);
@@ -106,25 +105,24 @@ export function DiscussionsPageClient() {
 
     try {
       let query = supabase
-        .from("community_discussions")
+        .from("discussions")
         .select(`
           id,
           slug,
           title,
           excerpt,
           author_id,
-          category,
-          tags,
+          category_id,
+          status,
+          view_count,
           likes_count,
           comments_count,
-          views_count,
           is_pinned,
-          is_locked,
           created_at
         `, { count: "exact" });
 
       if (selectedCategory) {
-        query = query.eq("category", selectedCategory);
+        query = query.eq("category_id", selectedCategory);
       }
 
       if (searchQuery) {
@@ -154,14 +152,14 @@ export function DiscussionsPageClient() {
           excerpt: (item.excerpt as string) || "",
           author_id: item.author_id as string,
           status: item.status as string,
-          view_count: (item.views_count as number) || 0,
+          view_count: (item.view_count as number) || 0,
           likes_count: (item.likes_count as number) || 0,
           comments_count: (item.comments_count as number) || 0,
           is_pinned: (item.is_pinned as boolean) || false,
           is_featured: false,
           created_at: item.created_at as string,
           author: { username: "unknown", full_name: null, avatar_url: null },
-          category: { name: item.category as string || "Umum", slug: item.category as string || "umum", color: "#10B981" },
+          category: { name: "Umum", slug: "umum", color: "#10B981" },
         } as Discussion;
       });
 
