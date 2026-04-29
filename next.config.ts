@@ -3,6 +3,7 @@ import nextra from "nextra";
 
 const withNextra = nextra({
   defaultShowCopyCode: true,
+  search: false,
 });
 
 const securityHeaders = [
@@ -38,7 +39,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self' data:",
-      "connect-src 'self'",
+      "connect-src 'self' https://tqnlrqutnhxqbzfcmvpc.supabase.co",
       "frame-ancestors 'self'",
       "form-action 'self'",
       "base-uri 'self'",
