@@ -91,46 +91,39 @@ export function ArticlesPageClient() {
     setError(null);
 
     try {
-      console.log("Querying supabase for articles...");
-      const result = await supabase
-        .from('community_articles')
-        .select('id, title')
-        .limit(5);
+      console.log("Using hardcoded test data");
+      const testArticles: Article[] = [
+        {
+          id: "test-1",
+          slug: "test-artikel-1",
+          title: "10 Tips Menjadi Housekeeper Profesional di Bali",
+          excerpt: "Artikel test untuk debugging",
+          cover_image: null,
+          read_time: 5,
+          views_count: 100,
+          likes_count: 10,
+          is_featured: false,
+          published_at: new Date().toISOString(),
+          author: { full_name: null, avatar_url: null },
+          category: null,
+        },
+        {
+          id: "test-2",
+          slug: "test-artikel-2",
+          title: "Panduan Lengkap Sistem Escrow",
+          excerpt: "Artikel test kedua",
+          cover_image: null,
+          read_time: 8,
+          views_count: 200,
+          likes_count: 20,
+          is_featured: false,
+          published_at: new Date().toISOString(),
+          author: { full_name: null, avatar_url: null },
+          category: null,
+        }
+      ];
 
-      const { data, error } = result;
-      console.log("Query result - data:", data?.length, "error:", error?.message);
-
-      if (error) {
-        console.error("Query error:", error);
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        console.log("No data returned");
-        setArticles([]);
-        setTotalCount(0);
-        setLoading(false);
-        return;
-      }
-
-      const testArticles: Article[] = data.map((item: Record<string, unknown>) => ({
-        id: item.id as string,
-        slug: (item.slug as string) || "",
-        title: item.title as string,
-        excerpt: "",
-        cover_image: null,
-        read_time: 5,
-        views_count: 100,
-        likes_count: 10,
-        is_featured: false,
-        published_at: new Date().toISOString(),
-        author: { full_name: null, avatar_url: null },
-        category: null,
-      }));
-
-      console.log("Setting articles, count:", testArticles.length);
+      console.log("Setting hardcoded articles:", testArticles.length);
       setArticles(testArticles);
       setTotalCount(testArticles.length);
       console.log("Done, setting loading false");
