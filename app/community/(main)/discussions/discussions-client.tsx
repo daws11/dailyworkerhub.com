@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
@@ -17,6 +17,7 @@ import {
   Filter,
   X,
   Trash2,
+  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +44,6 @@ interface Discussion {
     full_name: string | null;
     avatar_url: string | null;
   };
-  category_id: string;
   category: {
     name: string;
     slug: string;
@@ -65,122 +65,137 @@ interface Category {
   color: string | null;
 }
 
-const mockDiscussions: Discussion[] = [
-  {
-    id: "1",
-    slug: "berapa-seharusnya-gaji-minimum-untuk-driver-online",
-    title: "Berapa seharusnya gaji minimum untuk driver online di Jakarta?",
-    excerpt: "Berdasarkan pengalaman saya selama 3 tahun bekerja sebagai driver ojek online...",
-    author_id: "1",
-    author: { username: "budi_santoso", full_name: "Budi Santoso", avatar_url: null },
-    category_id: "1",
-    category: { name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#10B981" },
-    status: "open",
-    likes_count: 234,
-    comments_count: 89,
-    view_count: 1205,
-    is_pinned: true,
-    is_featured: true,
-    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "2",
-    slug: "share-pengalaman-pertama-kerja-remote",
-    title: "Share pengalaman pertama kerja remote - what to prepare?",
-    excerpt: "Akhirnya dapat kerja remote pertama saya! Berikut perjuangan saya...",
-    author_id: "2",
-    author: { username: "rina_melati", full_name: "Rina Melati", avatar_url: null },
-    category_id: "2",
-    category: { name: "Remote Work", slug: "remote-work", color: "#10B981" },
-    status: "open",
-    likes_count: 156,
-    comments_count: 45,
-    view_count: 890,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "3",
-    slug: "tips-menghadapi-interview-warehouse-supervisor",
-    title: "Tips menghadapi interview untuk posisi warehouse supervisor",
-    excerpt: "Beberapa minggu lalu saya berhasil interview untuk posisi ini...",
-    author_id: "3",
-    author: { username: "hendra_wijaya", full_name: "Hendra Wijaya", avatar_url: null },
-    category_id: "3",
-    category: { name: "Karier", slug: "karier", color: "#10B981" },
-    status: "open",
-    likes_count: 98,
-    comments_count: 23,
-    view_count: 456,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "4",
-    slug: "rekomendasi-platform-freelancer-terpercaya",
-    title: "Rekomendasi platform freelancer terpercaya di Indonesia?",
-    excerpt: "Baru mulai freelance dan bingung pilih platform yang aman...",
-    author_id: "4",
-    author: { username: "lisa_permata", full_name: "Lisa Permata", avatar_url: null },
-    category_id: "4",
-    category: { name: "Skill Development", slug: "skill-development", color: "#10B981" },
-    status: "open",
-    likes_count: 76,
-    comments_count: 34,
-    view_count: 321,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "5",
-    slug: "how-to-deal-dengan-client-yang-suka-ubah-scope",
-    title: "How to deal dengan client yang suka ubah scope terakhir menit?",
-    excerpt: "Ini masalah yang selalu terjadi di project saya...",
-    author_id: "5",
-    author: { username: "yoga_prasetyo", full_name: "Yoga Prasetyo", avatar_url: null },
-    category_id: "5",
-    category: { name: "Umum", slug: "umum", color: "#10B981" },
-    status: "open",
-    likes_count: 54,
-    comments_count: 21,
-    view_count: 234,
-    is_pinned: false,
-    is_featured: false,
-    created_at: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
-  },
-];
-
-const mockCategories: Category[] = [
-  { id: "1", name: "Karier", slug: "karier", color: "#10B981" },
-  { id: "2", name: "Gaji & Negosiasi", slug: "gaji-negosiasi", color: "#10B981" },
-  { id: "3", name: "Remote Work", slug: "remote-work", color: "#10B981" },
-  { id: "4", name: "Skill Development", slug: "skill-development", color: "#10B981" },
-  { id: "5", name: "Umum", slug: "umum", color: "#10B981" },
-];
-
 type SortOption = "newest" | "popular" | "trending" | "votes";
 
+const DISCUSSIONS_PER_PAGE = 20;
+
 export function DiscussionsPageClient() {
+  const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showFilters, setShowFilters] = useState(false);
   const [deleteDiscussionId, setDeleteDiscussionId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   const supabase = createClient();
 
-  // Simulate loading state
+  const fetchCategories = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from("content_categories")
+        .select("id, name, slug, color")
+        .eq("type", "discussion")
+        .order("sort_order", { ascending: true });
+
+      if (error) throw error;
+      setCategories(data || []);
+    } catch (err) {
+      console.error("Error fetching categories:", err);
+    }
+  }, [supabase]);
+
+  const fetchDiscussions = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      let query = supabase
+        .from("discussions")
+        .select(`
+          id,
+          slug,
+          title,
+          excerpt,
+          author_id,
+          status,
+          view_count,
+          likes_count,
+          comments_count,
+          is_pinned,
+          is_featured,
+          created_at,
+          author:community.profiles(id, username, full_name, avatar_url),
+          category:content_categories(id, name, slug, color)
+        `, { count: "exact" });
+
+      if (selectedCategory) {
+        query = query.eq("category_slug", selectedCategory);
+      }
+
+      if (searchQuery) {
+        query = query.ilike("title", `%${searchQuery}%`);
+      }
+
+      if (sortBy === "popular" || sortBy === "votes") {
+        query = query.order("likes_count", { ascending: false });
+      } else if (sortBy === "trending") {
+        query = query.order("comments_count", { ascending: false });
+      } else {
+        query = query.order("created_at", { ascending: false });
+      }
+
+      const from = (page - 1) * DISCUSSIONS_PER_PAGE;
+      query = query.range(from, from + DISCUSSIONS_PER_PAGE - 1);
+
+      const { data, error, count } = await query;
+
+      if (error) throw error;
+
+      const mappedDiscussions: Discussion[] = (data || []).map((item: Record<string, unknown>) => {
+        const rawAuthor = item.author as Record<string, unknown> | null;
+        const rawCategory = item.category as Record<string, unknown> | null;
+
+        return {
+          id: item.id as string,
+          slug: item.slug as string,
+          title: item.title as string,
+          excerpt: (item.excerpt as string) || "",
+          author_id: item.author_id as string,
+          status: item.status as string,
+          view_count: item.view_count as number,
+          likes_count: item.likes_count as number,
+          comments_count: item.comments_count as number,
+          is_pinned: item.is_pinned as boolean,
+          is_featured: item.is_featured as boolean,
+          created_at: item.created_at as string,
+          author: rawAuthor ? {
+            username: rawAuthor.username as string,
+            full_name: rawAuthor.full_name as string | null,
+            avatar_url: rawAuthor.avatar_url as string | null,
+          } : { username: "unknown", full_name: null, avatar_url: null },
+          category: rawCategory ? {
+            name: rawCategory.name as string,
+            slug: rawCategory.slug as string,
+            color: rawCategory.color as string | null,
+          } : { name: "Umum", slug: "umum", color: "#10B981" },
+        } as Discussion;
+      });
+
+      setDiscussions(mappedDiscussions);
+      setTotalCount(count || 0);
+    } catch (err) {
+      console.error("Error fetching discussions:", err);
+      setError("Gagal memuat diskusi. Silakan coba lagi.");
+    } finally {
+      setLoading(false);
+    }
+  }, [supabase, selectedCategory, searchQuery, sortBy, page]);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    fetchDiscussions();
+  }, [fetchDiscussions]);
+
+  const totalPages = Math.ceil(totalCount / DISCUSSIONS_PER_PAGE);
 
   const handleDeleteClick = (e: React.MouseEvent, discussionId: string) => {
     e.preventDefault();
@@ -225,7 +240,7 @@ export function DiscussionsPageClient() {
 
       const { error } = await supabase
         .from("discussions")
-        .update({ deleted_at: new Date().toISOString() } as never)
+        .update({ updated_at: new Date().toISOString() } as never)
         .eq("id", deleteDiscussionId);
 
       if (error) {
@@ -235,6 +250,7 @@ export function DiscussionsPageClient() {
       toast.success("Diskusi berhasil dihapus");
 
       setDeleteDiscussionId(null);
+      fetchDiscussions();
     } catch (error) {
       console.error("Failed to delete discussion:", error);
       setDeleteDiscussionId(null);
@@ -246,23 +262,6 @@ export function DiscussionsPageClient() {
   const handleDeleteCancel = () => {
     setDeleteDiscussionId(null);
   };
-
-  const filteredDiscussions = mockDiscussions
-    .filter((d) => {
-      if (selectedCategory && d.category.slug !== selectedCategory) return false;
-      if (searchQuery && !d.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (a.is_pinned && !b.is_pinned) return -1;
-      if (!a.is_pinned && b.is_pinned) return 1;
-      if (sortBy === "popular") return b.likes_count - a.likes_count;
-      if (sortBy === "trending") return b.comments_count - a.comments_count;
-      if (sortBy === "votes") return b.likes_count - a.likes_count;
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    });
-
-  void supabase; // Supabase client for future real data
 
   return (
     <div className="text-foreground">
@@ -284,12 +283,18 @@ export function DiscussionsPageClient() {
               <Input
                 placeholder="Cari diskusi..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setPage(1);
+                }}
                 className="pl-12 bg-card border-border text-foreground placeholder:text-muted-foreground"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => {
+                    setSearchQuery("");
+                    setPage(1);
+                  }}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   <X className="w-4 h-4" />
@@ -302,7 +307,10 @@ export function DiscussionsPageClient() {
               <Button
                 variant={sortBy === "newest" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSortBy("newest")}
+                onClick={() => {
+                  setSortBy("newest");
+                  setPage(1);
+                }}
                 className={sortBy === "newest" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <Clock className="w-4 h-4 mr-2" />
@@ -311,7 +319,10 @@ export function DiscussionsPageClient() {
               <Button
                 variant={sortBy === "popular" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSortBy("popular")}
+                onClick={() => {
+                  setSortBy("popular");
+                  setPage(1);
+                }}
                 className={sortBy === "popular" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <ArrowUp className="w-4 h-4 mr-2" />
@@ -320,7 +331,10 @@ export function DiscussionsPageClient() {
               <Button
                 variant={sortBy === "trending" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSortBy("trending")}
+                onClick={() => {
+                  setSortBy("trending");
+                  setPage(1);
+                }}
                 className={sortBy === "trending" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <Flame className="w-4 h-4 mr-2" />
@@ -329,7 +343,10 @@ export function DiscussionsPageClient() {
               <Button
                 variant={sortBy === "votes" ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSortBy("votes")}
+                onClick={() => {
+                  setSortBy("votes");
+                  setPage(1);
+                }}
                 className={sortBy === "votes" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <ArrowUp className="w-4 h-4 mr-2" />
@@ -361,7 +378,10 @@ export function DiscussionsPageClient() {
           {showFilters && (
             <div className="flex flex-wrap gap-2 mb-8 p-4 bg-card border border-border rounded-xl">
               <button
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setPage(1);
+                }}
                 className={`px-4 py-2 text-sm rounded-full transition-colors ${
                   !selectedCategory
                     ? "bg-emerald-500 text-slate-950"
@@ -370,10 +390,13 @@ export function DiscussionsPageClient() {
               >
                 Semua
               </button>
-              {mockCategories.map((cat) => (
+              {categories.map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => setSelectedCategory(cat.slug)}
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    setPage(1);
+                  }}
                   className={`px-4 py-2 text-sm rounded-full transition-colors ${
                     selectedCategory === cat.slug
                       ? "bg-emerald-500 text-slate-950"
@@ -386,8 +409,8 @@ export function DiscussionsPageClient() {
             </div>
           )}
 
-          {/* Discussions List */}
-          {isLoading ? (
+          {/* Loading State */}
+          {loading && (
             <div className="space-y-4">
               <DiscussionCardSkeleton variant="featured" />
               <DiscussionCardSkeleton />
@@ -395,101 +418,144 @@ export function DiscussionsPageClient() {
               <DiscussionCardSkeleton />
               <DiscussionCardSkeleton />
             </div>
-          ) : (
-          <div className="space-y-4">
-            {filteredDiscussions.map((discussion) => (
-              <Link
-                key={discussion.id}
-                href={`/community/discussions/${discussion.slug}`}
-                className="block bg-card border border-border rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Vote Section */}
-                  <div className="flex flex-col items-center px-3 py-2 bg-muted/50 border border-border rounded-xl min-w-[60px]">
-                    <ArrowUp className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-lg font-semibold text-foreground">{discussion.likes_count}</span>
-                  </div>
+          )}
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      {discussion.is_pinned && (
-                        <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          Pinned
-                        </span>
-                      )}
-                      <span
-                        className="px-2 py-0.5 text-xs rounded-full"
-                        style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
-                      >
-                        {discussion.category.name}
-                      </span>
+          {/* Error State */}
+          {!loading && error && (
+            <div className="flex items-center justify-center py-16">
+              <div className="text-center">
+                <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                <p className="text-muted-foreground mb-4">{error}</p>
+                <Button onClick={() => fetchDiscussions()} variant="outline" className="border-border">
+                  Coba Lagi
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Discussions List */}
+          {!loading && !error && (
+            <div className="space-y-4">
+              {discussions.map((discussion) => (
+                <Link
+                  key={discussion.id}
+                  href={`/community/discussions/${discussion.slug}`}
+                  className="block bg-card border border-border rounded-xl p-5 hover:border-emerald-500/30 transition-colors"
+                >
+                  <div className="flex items-start gap-4">
+                    {/* Vote Section */}
+                    <div className="flex flex-col items-center px-3 py-2 bg-muted/50 border border-border rounded-xl min-w-[60px]">
+                      <ArrowUp className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-lg font-semibold text-foreground">{discussion.likes_count}</span>
                     </div>
 
-                    <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2 hover:text-emerald-400 transition-colors">
-                      {discussion.title}
-                    </h3>
-
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                      {discussion.excerpt}
-                    </p>
-
-                    {/* Meta */}
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground/70">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                          <span className="text-emerald-400 text-xs font-medium">
-                            {discussion.author.username.charAt(0).toUpperCase()}
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        {discussion.is_pinned && (
+                          <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            Pinned
                           </span>
-                        </div>
-                        <span className="text-muted-foreground">{discussion.author.username}</span>
+                        )}
+                        <span
+                          className="px-2 py-0.5 text-xs rounded-full"
+                          style={{ backgroundColor: `${discussion.category.color || "#10B981"}20`, color: discussion.category.color || "#10B981" }}
+                        >
+                          {discussion.category.name}
+                        </span>
                       </div>
 
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {formatDistanceToNow(new Date(discussion.created_at), { addSuffix: true, locale: id })}
-                      </span>
+                      <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2 hover:text-emerald-400 transition-colors">
+                        {discussion.title}
+                      </h3>
 
-                      <span className="flex items-center gap-1">
-                        <MessageCircle className="w-3 h-3" />
-                        {discussion.comments_count} komentar
-                      </span>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+                        {discussion.excerpt}
+                      </p>
 
-                      <span className="flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3" />
-                        {discussion.view_count} views
-                      </span>
+                      {/* Meta */}
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground/70">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                            <span className="text-emerald-400 text-xs font-medium">
+                              {discussion.author.username?.charAt(0).toUpperCase() || "?"}
+                            </span>
+                          </div>
+                          <span className="text-muted-foreground">{discussion.author.username}</span>
+                        </div>
 
-                      <button
-                        onClick={(e) => handleDeleteClick(e, discussion.id)}
-                        className="flex items-center gap-1 text-muted-foreground/70 hover:text-red-400 transition-colors ml-auto"
-                        aria-label="Hapus diskusi"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                        <span>Hapus</span>
-                      </button>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {formatDistanceToNow(new Date(discussion.created_at), { addSuffix: true, locale: id })}
+                        </span>
+
+                        <span className="flex items-center gap-1">
+                          <MessageCircle className="w-3 h-3" />
+                          {discussion.comments_count} komentar
+                        </span>
+
+                        <span className="flex items-center gap-1">
+                          <TrendingUp className="w-3 h-3" />
+                          {discussion.view_count} views
+                        </span>
+
+                        <button
+                          onClick={(e) => handleDeleteClick(e, discussion.id)}
+                          className="flex items-center gap-1 text-muted-foreground/70 hover:text-red-400 transition-colors ml-auto"
+                          aria-label="Hapus diskusi"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          <span>Hapus</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-
-            {filteredDiscussions.length === 0 && (
-              <div className="text-center py-16">
-                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="w-8 h-8 text-muted-foreground/70" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground/80 mb-2">Tidak ada diskusi</h3>
-                <p className="text-muted-foreground/70 mb-6">Coba ubah filter atau kata kunci pencarian Anda</p>
-                <Link href="/community/discussions/new">
-                  <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Buat Diskusi Pertama
-                  </Button>
                 </Link>
-              </div>
-            )}
-          </div>
+              ))}
+
+              {discussions.length === 0 && (
+                <div className="text-center py-16">
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                    <MessageCircle className="w-8 h-8 text-muted-foreground/70" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground/80 mb-2">Tidak ada diskusi</h3>
+                  <p className="text-muted-foreground/70 mb-6">Jadilah yang pertama membuat diskusi di komunitas ini</p>
+                  <Link href="/community/discussions/new">
+                    <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Buat Diskusi Pertama
+                    </Button>
+                  </Link>
+                </div>
+              )}
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-8">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="border-border text-foreground/80"
+                  >
+                    Previous
+                  </Button>
+                  <span className="text-sm text-muted-foreground px-4">
+                    Halaman {page} dari {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                    className="border-border text-foreground/80"
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Delete Confirmation Dialog */}
