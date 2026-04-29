@@ -53,13 +53,13 @@ export function MainNavbar() {
               asChild
               className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300"
             >
-              <a href="https://staging.dailyworkerhub.com/auth/login">Masuk</a>
+              <a href="https://app.dailyworkerhub.com/login">Masuk</a>
             </Button>
             <Button
               asChild
               className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group"
             >
-              <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+              <a href="https://app.dailyworkerhub.com/register?role=business">
                 Pasang Lowongan
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
@@ -124,14 +124,14 @@ export function MainNavbar() {
                   {/* Auth Buttons */}
                   <div className="px-6 py-6 border-t border-border space-y-3">
                     <a
-                      href="https://staging.dailyworkerhub.com/auth/login"
+                      href="https://app.dailyworkerhub.com/login"
                       onClick={() => setMobileOpen(false)}
                       className="w-full flex items-center justify-center px-6 py-3 border border-border rounded-full font-sub text-base hover:bg-muted transition-colors"
                     >
                       Masuk
                     </a>
                     <a
-                      href="https://staging.dailyworkerhub.com/auth/register?role=business"
+                      href="https://app.dailyworkerhub.com/register?role=business"
                       onClick={() => setMobileOpen(false)}
                       className="w-full flex items-center justify-center px-6 py-3 bg-secondary text-white rounded-full font-sub text-base shadow-lg shadow-secondary/25"
                     >
@@ -139,7 +139,7 @@ export function MainNavbar() {
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </a>
                     <a
-                      href="https://staging.dailyworkerhub.com/auth/register?role=worker"
+                      href="https://app.dailyworkerhub.com/register?role=worker"
                       onClick={() => setMobileOpen(false)}
                       className="w-full flex items-center justify-center px-6 py-3 border border-primary text-primary rounded-full font-sub text-base hover:bg-primary/5 transition-colors"
                     >

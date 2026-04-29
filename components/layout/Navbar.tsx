@@ -30,10 +30,10 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Button variant="outline" asChild className="hidden sm:flex border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300">
-            <a href="https://staging.dailyworkerhub.com/auth/login">Masuk</a>
+            <a href="https://app.dailyworkerhub.com/login">Masuk</a>
           </Button>
           <Button asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group">
-            <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+            <a href="https://app.dailyworkerhub.com/register?role=business">
               Pasang Lowongan
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </a>

@@ -68,13 +68,13 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
 
           <div className="flex items-center gap-3">
             <Link
-              href="https://staging.dailyworkerhub.com/auth/login"
+              href="https://app.dailyworkerhub.com/login"
               className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
             >
               Masuk
             </Link>
             <Link
-              href="https://staging.dailyworkerhub.com/auth/register"
+              href="https://app.dailyworkerhub.com/register"
               className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
             >
               Daftar
@@ -148,14 +148,14 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
                 {/* Auth Buttons */}
                 <div className="px-4 py-4 border-t border-border space-y-2">
                   <Link
-                    href="https://staging.dailyworkerhub.com/auth/login"
+                    href="https://app.dailyworkerhub.com/login"
                     onClick={() => setMobileOpen(false)}
                     className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
                   >
                     Masuk
                   </Link>
                   <Link
-                    href="https://staging.dailyworkerhub.com/auth/register"
+                    href="https://app.dailyworkerhub.com/register"
                     onClick={() => setMobileOpen(false)}
                     className="w-full flex items-center justify-center px-4 py-2.5 bg-emerald-500 text-slate-950 rounded-full font-sub text-sm font-medium hover:bg-emerald-400 transition-colors"
                   >

@@ -261,7 +261,7 @@ export default function Home() {
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
                   <motion.a
-                    href="https://staging.dailyworkerhub.com/auth/register?role=business"
+                    href="https://app.dailyworkerhub.com/register?role=business"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.98 }}
                     className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 md:px-10 h-14 text-sm md:text-base font-sub tracking-wide whitespace-nowrap shadow-xl group w-full sm:w-auto flex items-center justify-center gap-3"
@@ -272,7 +272,7 @@ export default function Home() {
                 </Magnet>
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
                   <motion.a
-                    href="https://staging.dailyworkerhub.com/auth/register?role=worker"
+                    href="https://app.dailyworkerhub.com/register?role=worker"
                     whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
                     whileTap={{ scale: 0.98 }}
                     className="border border-border text-foreground rounded-full px-8 md:px-10 h-14 text-sm md:text-base font-sub tracking-wide whitespace-nowrap bg-transparent hover:bg-foreground hover:text-white transition-colors flex items-center justify-center gap-3 w-full sm:w-auto"
@@ -486,7 +486,7 @@ export default function Home() {
             </div>
 
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
-              <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
+              <a href="https://app.dailyworkerhub.com/register?role=worker">
                 Bergabung sebagai Worker <ArrowRight className="w-5 h-5 ml-2" />
               </a>
             </Button>
@@ -516,7 +516,7 @@ export default function Home() {
             </div>
 
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
-              <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+              <a href="https://app.dailyworkerhub.com/register?role=business">
                 Pasang Lowongan <ArrowRight className="w-5 h-5 ml-2" />
               </a>
             </Button>
@@ -672,13 +672,13 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
               <Button size="lg" asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
-                <a href="https://staging.dailyworkerhub.com/auth/register?role=business">
+                <a href="https://app.dailyworkerhub.com/register?role=business">
                   <span className="flex items-center gap-2">Pasang Lowongan</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
-                <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">
+                <a href="https://app.dailyworkerhub.com/register?role=worker">
                   Bergabung sebagai Worker
                 </a>
               </Button>
@@ -700,10 +700,10 @@ export default function Home() {
       {/* ============================================================ */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-xl border-t border-border z-50 flex gap-2">
         <Button asChild className="flex-1 bg-secondary hover:bg-secondary/90 text-white rounded-full h-12 text-sm font-sub shadow-xl">
-          <a href="https://staging.dailyworkerhub.com/auth/register?role=business">Untuk Bisnis</a>
+          <a href="https://app.dailyworkerhub.com/register?role=business">Untuk Bisnis</a>
         </Button>
         <Button asChild variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
-          <a href="https://staging.dailyworkerhub.com/auth/register?role=worker">Untuk Pekerja</a>
+          <a href="https://app.dailyworkerhub.com/register?role=worker">Untuk Pekerja</a>
         </Button>
       </div>
     </main>
