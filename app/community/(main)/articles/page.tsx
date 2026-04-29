@@ -15,21 +15,15 @@ interface Article {
   id: string;
   slug: string;
   title: string;
-  subtitle: string | null;
   excerpt: string;
   cover_image: string | null;
   author: {
-    username: string;
     full_name: string | null;
     avatar_url: string | null;
   };
-  category: {
-    name: string;
-    slug: string;
-    color: string | null;
-  };
+  category: string | null;
   read_time: number | null;
-  view_count: number;
+  views_count: number;
   likes_count: number;
   is_featured: boolean;
   published_at: string;
@@ -97,26 +91,25 @@ export default function ArticlesPage() {
 
     try {
       let query = supabase
-        .from("articles")
+        .from("community_articles")
         .select(`
           id,
           slug,
           title,
-          subtitle,
           excerpt,
           cover_image,
           read_time,
-          view_count,
+          views_count,
           likes_count,
           is_featured,
           published_at,
-          author:profiles!author_id(username, full_name, avatar_url),
-          category:categories!category_id(name, slug, color)
+          author:users!author_id(full_name, avatar_url),
+          category
         `, { count: "exact" })
-        .eq("status", "published");
+        .eq("is_published", true);
 
       if (selectedCategory) {
-        query = query.eq("category.slug", selectedCategory);
+        query = query.eq("category", selectedCategory);
       }
 
       if (searchQuery) {
@@ -124,7 +117,7 @@ export default function ArticlesPage() {
       }
 
       if (sortBy === "popular") {
-        query = query.order("view_count", { ascending: false });
+        query = query.order("views_count", { ascending: false });
       } else {
         query = query.order("published_at", { ascending: false });
       }
@@ -138,30 +131,24 @@ export default function ArticlesPage() {
 
       const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
         const rawAuthor = item.author as Record<string, unknown> | null;
-        const rawCategory = item.category as Record<string, unknown> | null;
+        const rawCategory = item.category as string | null;
 
         return {
           id: item.id as string,
           slug: item.slug as string,
           title: item.title as string,
-          subtitle: item.subtitle as string | null,
           excerpt: (item.excerpt as string) || "",
           cover_image: item.cover_image as string | null,
           read_time: item.read_time as number | null,
-          view_count: item.view_count as number,
+          views_count: item.views_count as number,
           likes_count: item.likes_count as number,
           is_featured: item.is_featured as boolean,
           published_at: item.published_at as string,
           author: rawAuthor ? {
-            username: rawAuthor.username as string,
             full_name: rawAuthor.full_name as string | null,
             avatar_url: rawAuthor.avatar_url as string | null,
-          } : { username: "unknown", full_name: null, avatar_url: null },
-          category: rawCategory ? {
-            name: rawCategory.name as string,
-            slug: rawCategory.slug as string,
-            color: rawCategory.color as string | null,
-          } : { name: "Umum", slug: "umum", color: null },
+          } : { full_name: null, avatar_url: null },
+          category: rawCategory || null,
         } as Article;
       });
 
@@ -366,16 +353,16 @@ export default function ArticlesPage() {
                             <div className="flex-1 p-4">
                               <span
                                 className="px-2 py-0.5 text-xs rounded-full"
-                                style={{ backgroundColor: `${article.category?.color || "#10B981"}20`, color: article.category?.color || "#10B981" }}
+                                style={{ backgroundColor: "#10B98120", color: "#10B981" }}
                               >
-                                {article.category?.name || "Umum"}
+                                {article.category || "Umum"}
                               </span>
                               <h3 className="font-semibold text-foreground mt-2 line-clamp-2 group-hover:text-emerald-400 transition-colors">
                                 {article.title}
                               </h3>
                               <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{article.excerpt}</p>
                               <div className="flex items-center gap-3 mt-3 text-xs text-muted-foreground/70">
-                                <span>{article.author?.username || "Unknown"}</span>
+                                <span>{article.author?.full_name || "Unknown"}</span>
                                 <span>•</span>
                                 <span className="flex items-center gap-1">
                                   <Clock className="w-3 h-3" />
@@ -427,16 +414,13 @@ export default function ArticlesPage() {
                           <div className="p-4">
                             <span
                               className="px-2 py-0.5 text-xs rounded-full"
-                              style={{ backgroundColor: `${article.category?.color || "#10B981"}20`, color: article.category?.color || "#10B981" }}
+                              style={{ backgroundColor: "#10B98120", color: "#10B981" }}
                             >
-                              {article.category?.name || "Umum"}
+                              {article.category || "Umum"}
                             </span>
                             <h3 className="font-semibold text-foreground mt-2 line-clamp-2 group-hover:text-emerald-400 transition-colors">
                               {article.title}
                             </h3>
-                            {article.subtitle && (
-                              <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{article.subtitle}</p>
-                            )}
                             <div className="flex items-center gap-3 mt-3 text-xs text-muted-foreground/70">
                               <span className="flex items-center gap-1">
                                 <Clock className="w-3 h-3" />
@@ -444,7 +428,7 @@ export default function ArticlesPage() {
                               </span>
                               <span className="flex items-center gap-1">
                                 <Eye className="w-3 h-3" />
-                                {article.view_count}
+                                {article.views_count}
                               </span>
                               <span>{formatDistanceToNow(new Date(article.published_at || Date.now()), { addSuffix: true, locale: id })}</span>
                             </div>
