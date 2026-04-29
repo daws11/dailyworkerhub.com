@@ -73,9 +73,8 @@ export function ArticlesPageClient() {
   const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from("content_categories")
-        .select("id, name, slug, color")
-        .eq("type", "article");
+        .from("categories")
+        .select("id, name, slug, color");
 
       if (error) throw error;
       setCategories(data || []);
@@ -90,7 +89,7 @@ export function ArticlesPageClient() {
 
     try {
       let query = supabase
-        .from("community.articles")
+        .from("community_articles")
         .select(`
           id,
           slug,
@@ -98,13 +97,12 @@ export function ArticlesPageClient() {
           excerpt,
           cover_image,
           read_time,
-          view_count,
+          views_count,
           likes_count,
           is_featured,
-          published_at,
-          status
+          published_at
         `, { count: "exact" })
-        .eq("status", "published");
+        .eq("is_published", true);
 
       if (selectedCategory) {
         query = query.eq("category_id", selectedCategory);
@@ -135,7 +133,7 @@ export function ArticlesPageClient() {
           excerpt: (item.excerpt as string) || "",
           cover_image: item.cover_image as string | null,
           read_time: item.read_time as number | null,
-          views_count: (item.view_count as number) || 0,
+          views_count: (item.views_count as number) || 0,
           likes_count: (item.likes_count as number) || 0,
           is_featured: (item.is_featured as boolean) || false,
           published_at: item.published_at as string,
