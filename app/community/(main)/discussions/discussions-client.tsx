@@ -88,7 +88,7 @@ export function DiscussionsPageClient() {
   const fetchCategories = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from("content_categories")
+        .from("categories")
         .select("id, name, slug, color")
         .eq("type", "discussion")
         .order("sort_order", { ascending: true });
@@ -106,26 +106,25 @@ export function DiscussionsPageClient() {
 
     try {
       let query = supabase
-        .from("discussions")
+        .from("community_discussions")
         .select(`
           id,
           slug,
           title,
           excerpt,
           author_id,
-          status,
-          view_count,
+          category,
+          tags,
           likes_count,
           comments_count,
+          views_count,
           is_pinned,
-          is_featured,
-          created_at,
-          author:community.profiles(id, username, full_name, avatar_url),
-          category:content_categories(id, name, slug, color)
+          is_locked,
+          created_at
         `, { count: "exact" });
 
       if (selectedCategory) {
-        query = query.eq("category_slug", selectedCategory);
+        query = query.eq("category", selectedCategory);
       }
 
       if (searchQuery) {
@@ -148,9 +147,6 @@ export function DiscussionsPageClient() {
       if (error) throw error;
 
       const mappedDiscussions: Discussion[] = (data || []).map((item: Record<string, unknown>) => {
-        const rawAuthor = item.author as Record<string, unknown> | null;
-        const rawCategory = item.category as Record<string, unknown> | null;
-
         return {
           id: item.id as string,
           slug: item.slug as string,
@@ -158,22 +154,14 @@ export function DiscussionsPageClient() {
           excerpt: (item.excerpt as string) || "",
           author_id: item.author_id as string,
           status: item.status as string,
-          view_count: item.view_count as number,
-          likes_count: item.likes_count as number,
-          comments_count: item.comments_count as number,
-          is_pinned: item.is_pinned as boolean,
-          is_featured: item.is_featured as boolean,
+          view_count: (item.views_count as number) || 0,
+          likes_count: (item.likes_count as number) || 0,
+          comments_count: (item.comments_count as number) || 0,
+          is_pinned: (item.is_pinned as boolean) || false,
+          is_featured: false,
           created_at: item.created_at as string,
-          author: rawAuthor ? {
-            username: rawAuthor.username as string,
-            full_name: rawAuthor.full_name as string | null,
-            avatar_url: rawAuthor.avatar_url as string | null,
-          } : { username: "unknown", full_name: null, avatar_url: null },
-          category: rawCategory ? {
-            name: rawCategory.name as string,
-            slug: rawCategory.slug as string,
-            color: rawCategory.color as string | null,
-          } : { name: "Umum", slug: "umum", color: "#10B981" },
+          author: { username: "unknown", full_name: null, avatar_url: null },
+          category: { name: item.category as string || "Umum", slug: item.category as string || "umum", color: "#10B981" },
         } as Discussion;
       });
 
