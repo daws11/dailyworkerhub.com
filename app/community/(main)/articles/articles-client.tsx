@@ -86,22 +86,19 @@ export function ArticlesPageClient() {
   }, [supabase]);
 
   const fetchArticles = useCallback(async () => {
-    console.log("=== FETCH ARTICLES START ===");
+    console.log("FETCH ARTICLES START");
     setLoading(true);
     setError(null);
 
     try {
-      console.log("About to query supabase...");
+      console.log("Querying supabase for articles...");
       const result = await supabase
         .from('community_articles')
         .select('id, title')
         .limit(5);
 
-      console.log("Query result:", JSON.stringify(result));
-
       const { data, error } = result;
-
-      console.log("Data:", data, "Error:", error);
+      console.log("Query result - data:", data?.length, "error:", error?.message);
 
       if (error) {
         console.error("Query error:", error);
@@ -111,15 +108,14 @@ export function ArticlesPageClient() {
       }
 
       if (!data || data.length === 0) {
-        console.log("No data returned, setting empty articles");
+        console.log("No data returned");
         setArticles([]);
         setTotalCount(0);
         setLoading(false);
         return;
       }
 
-      // Test: if no data, set some hardcoded test data
-      const testArticles: Article[] = data && data.length > 0 ? data.map((item: Record<string, unknown>) => ({
+      const testArticles: Article[] = data.map((item: Record<string, unknown>) => ({
         id: item.id as string,
         slug: (item.slug as string) || "",
         title: item.title as string,
@@ -132,17 +128,16 @@ export function ArticlesPageClient() {
         published_at: new Date().toISOString(),
         author: { full_name: null, avatar_url: null },
         category: null,
-      })) : [];
+      }));
 
-      console.log("Mapped articles:", testArticles.length);
+      console.log("Setting articles, count:", testArticles.length);
       setArticles(testArticles);
-      console.log("Articles state set, count:", testArticles.length);
       setTotalCount(testArticles.length);
+      console.log("Done, setting loading false");
     } catch (err) {
-      console.error("Error fetching articles:", err);
-      setError("Gagal memuat artikel. Silakan coba lagi.");
+      console.error("Catch error:", err);
+      setError("Gagal memuat artikel.");
     } finally {
-      console.log("Finally block - setting loading to false");
       setLoading(false);
     }
   }, [supabase, selectedCategory, searchQuery, sortBy, page]);
