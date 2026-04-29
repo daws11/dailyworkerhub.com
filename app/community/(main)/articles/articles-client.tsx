@@ -156,6 +156,8 @@ export function ArticlesPageClient() {
   }, [fetchCategories, checkAuth]);
 
   useEffect(() => {
+    console.log("=== ARTICLES PAGE MOUNT ===");
+    console.log("fetchArticles function:", !!fetchArticles);
     fetchArticles();
   }, [fetchArticles]);
 
