@@ -99,7 +99,7 @@ export function ArticlesPageClient() {
       }
 
       if (sortBy === "popular") {
-        query = query.order("views_count", { ascending: false });
+        query = query.order("views_count", { ascending: false }).limit(20);
       } else {
         query = query.order("published_at", { ascending: false }).limit(20);
       }
