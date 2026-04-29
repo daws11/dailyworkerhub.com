@@ -85,40 +85,22 @@ export function ArticlesPageClient() {
 
   const fetchArticles = useCallback(async () => {
     console.log("=== FETCH ARTICLES START ===");
-    console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
     setLoading(true);
     setError(null);
 
     try {
-      const { data: testData, error: testError } = await supabase
+      console.log("About to query supabase...");
+      const { data, error } = await supabase
         .from('community_articles')
-        .select('id')
-        .limit(1);
+        .select('id, title')
+        .limit(5);
 
-      console.log("Test query result:", testData, testError);
+      console.log("Query completed. Data:", data?.length, "Error:", error);
 
-      if (testError) throw testError;
-
-      let query = supabase
-        .from("community_articles")
-        .select("id, slug, title, excerpt, cover_image, read_time, views_count, likes_count, is_featured, published_at")
-        .eq("is_published", true);
-
-      if (searchQuery) {
-        query = query.ilike("title", `%${searchQuery}%`);
+      if (error) {
+        console.error("Query error:", error);
+        throw error;
       }
-
-      if (sortBy === "popular") {
-        query = query.order("views_count", { ascending: false }).limit(20);
-      } else {
-        query = query.order("published_at", { ascending: false }).limit(20);
-      }
-
-      const { data, error } = await query;
-
-      console.log("Query result:", { data, error, count: data?.length });
-
-      if (error) throw error;
 
       const mappedArticles: Article[] = (data || []).map((item: Record<string, unknown>) => {
         console.log("Mapping article:", item.title);
@@ -138,14 +120,15 @@ export function ArticlesPageClient() {
         } as Article;
       });
 
+      console.log("Mapped articles:", mappedArticles.length);
       setArticles(mappedArticles);
-      console.log("Articles set, count:", mappedArticles.length);
+      console.log("Articles state set");
       setTotalCount(data?.length || 0);
     } catch (err) {
       console.error("Error fetching articles:", err);
       setError("Gagal memuat artikel. Silakan coba lagi.");
     } finally {
-      console.log("Fetch complete, setting loading to false");
+      console.log("Finally block - setting loading to false");
       setLoading(false);
     }
   }, [supabase, selectedCategory, searchQuery, sortBy, page]);
