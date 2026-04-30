@@ -54,8 +54,8 @@ export default async function CommunityPage() {
       <CommunityNavbar />
 
       {/* Hero / Command Center */}
-      <section className="relative min-h-[70vh] flex flex-col items-center justify-center bg-radial-green py-16 sm:py-20 lg:py-24">
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[70vh] sm:min-h-[75vh] flex items-center justify-center bg-radial-green py-16 sm:py-20 lg:py-24">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Headline */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
@@ -64,12 +64,12 @@ export default async function CommunityPage() {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto px-2 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
             Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
           </p>
 
           {/* Search */}
-          <div className="w-full max-w-xl mx-auto px-2 sm:px-0 mb-6 sm:mb-8">
+          <div className="w-full max-w-2xl mx-auto px-4 sm:px-0">
             <div className="relative group">
               <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative flex items-center bg-card border border-border rounded-2xl h-12 sm:h-14 md:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
@@ -84,12 +84,12 @@ export default async function CommunityPage() {
           </div>
 
           {/* Shortcut Pills */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-2 sm:px-0">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 px-4">
             {shortcuts.map((shortcut) => (
               <Link
                 key={shortcut.label}
                 href={shortcut.href}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
               >
                 <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>{shortcut.label}</span>
