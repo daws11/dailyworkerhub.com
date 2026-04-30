@@ -54,7 +54,7 @@ export default async function CommunityPage() {
       <CommunityNavbar />
 
       {/* Hero / Command Center */}
-      <section className="relative min-h-screen flex items-center justify-center bg-radial-green pt-16">
+      <section className="relative h-screen flex items-center justify-center bg-radial-green pt-16">
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Headline */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
