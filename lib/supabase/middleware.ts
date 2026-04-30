@@ -54,10 +54,9 @@ export async function updateSession(request: NextRequest) {
   )
 
   if (isProtectedPath && !user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/community/login'
-    url.searchParams.set('redirect', request.nextUrl.pathname)
-    return NextResponse.redirect(url)
+    const appLoginUrl = new URL('https://app.dailyworkerhub.com/login')
+    appLoginUrl.searchParams.set('redirect', `${request.nextUrl.origin}${request.nextUrl.pathname}`)
+    return NextResponse.redirect(appLoginUrl)
   }
 
   return supabaseResponse

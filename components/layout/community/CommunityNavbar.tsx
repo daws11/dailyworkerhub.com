@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { createClient } from "@/lib/supabase/client";
 
 interface CommunityNavbarProps {
   active?: "discussions" | "articles" | "docs" | "feedback";
   badgeLabel?: string;
 }
+
+const APP_URL = "https://app.dailyworkerhub.com";
 
 const navItems = [
   { label: "Diskusi", href: "/community/discussions", key: "discussions", match: "/community/discussions" },
@@ -22,11 +25,138 @@ const navItems = [
 export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityNavbarProps) {
   const pathname = usePathname() ?? "";
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const resolveActive = (key: string, match: string) => {
     if (active) return active === key;
     return pathname === match || pathname.startsWith(`${match}/`);
   };
+
+  const handleLogout = () => {
+    const supabase = createClient();
+    supabase.auth.signOut().then(() => {
+      window.location.href = APP_URL + "/login";
+    });
+  };
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
+  const avatarUrl = user?.user_metadata?.avatar_url || null;
+
+  const AuthButtons = () => (
+    <>
+      <Link
+        href={`${APP_URL}/login`}
+        className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
+      >
+        Masuk
+      </Link>
+      <Link
+        href={`${APP_URL}/register`}
+        className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+      >
+        Daftar
+      </Link>
+    </>
+  );
+
+  const UserInfo = () => (
+    <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
+        {avatarUrl ? (
+          <Image
+            src={avatarUrl}
+            alt={displayName}
+            width={28}
+            height={28}
+            className="w-7 h-7 rounded-full object-cover border border-border"
+          />
+        ) : (
+          <div className="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center">
+            <User className="w-4 h-4 text-emerald-500" />
+          </div>
+        )}
+        <span className="text-sm font-medium text-foreground hidden lg:block">
+          {displayName}
+        </span>
+      </div>
+      <button
+        onClick={handleLogout}
+        className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
+        title="Keluar"
+      >
+        <LogOut className="w-4 h-4" />
+      </button>
+    </div>
+  );
+
+  const MobileAuthSection = () => (
+    <div className="px-4 py-4 border-t border-border space-y-2">
+      {user ? (
+        <>
+          <div className="flex items-center gap-3 px-3 py-2">
+            {avatarUrl ? (
+              <Image
+                src={avatarUrl}
+                alt={displayName}
+                width={32}
+                height={32}
+                className="w-8 h-8 rounded-full object-cover border border-border"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                <User className="w-4 h-4 text-emerald-500" />
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-medium">{displayName}</p>
+              <p className="text-xs text-muted-foreground">{user?.email}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setMobileOpen(false);
+              handleLogout();
+            }}
+            className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
+          >
+            Keluar
+          </button>
+        </>
+      ) : (
+        <>
+          <Link
+            href={`${APP_URL}/login`}
+            onClick={() => setMobileOpen(false)}
+            className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
+          >
+            Masuk
+          </Link>
+          <Link
+            href={`${APP_URL}/register`}
+            onClick={() => setMobileOpen(false)}
+            className="w-full flex items-center justify-center px-4 py-2.5 bg-emerald-500 text-slate-950 rounded-full font-sub text-sm font-medium hover:bg-emerald-400 transition-colors"
+          >
+            Daftar
+          </Link>
+        </>
+      )}
+    </div>
+  );
 
   return (
     <>
@@ -67,18 +197,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="https://app.dailyworkerhub.com/login"
-              className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
-            >
-              Masuk
-            </Link>
-            <Link
-              href="https://app.dailyworkerhub.com/register"
-              className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
-            >
-              Daftar
-            </Link>
+            {!loading && (user ? <UserInfo /> : <AuthButtons />)}
           </div>
         </div>
       </nav>
@@ -146,22 +265,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
                 </div>
 
                 {/* Auth Buttons */}
-                <div className="px-4 py-4 border-t border-border space-y-2">
-                  <Link
-                    href="https://app.dailyworkerhub.com/login"
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
-                  >
-                    Masuk
-                  </Link>
-                  <Link
-                    href="https://app.dailyworkerhub.com/register"
-                    onClick={() => setMobileOpen(false)}
-                    className="w-full flex items-center justify-center px-4 py-2.5 bg-emerald-500 text-slate-950 rounded-full font-sub text-sm font-medium hover:bg-emerald-400 transition-colors"
-                  >
-                    Daftar
-                  </Link>
-                </div>
+                {!loading && <MobileAuthSection />}
               </div>
             </SheetContent>
           </Sheet>
