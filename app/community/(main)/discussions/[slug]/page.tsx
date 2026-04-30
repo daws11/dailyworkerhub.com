@@ -43,7 +43,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 async function incrementDiscussionViewCount(slug: string) {
   const supabase = await createClient();
-  await supabase.rpc('increment_discussion_view_count', { slug });
+  const { data: current } = await supabase
+    .from('community_discussions')
+    .select('views_count')
+    .eq('slug', slug)
+    .single();
+  if (current) {
+    const { error } = await supabase
+      .from('community_discussions')
+      .update({ views_count: (current.views_count || 0) + 1 } as any)
+      .eq('slug', slug);
+    if (error) {
+      console.error('Error incrementing discussion view count:', error);
+    }
+  }
 }
 
 export default async function DiscussionDetailPage({ params }: PageProps) {

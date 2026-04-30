@@ -9,10 +9,9 @@ interface SitemapEntry {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
 
-  const [articlesResult, discussionsResult, docsResult]: [{ data: SitemapEntry[] | null }, { data: SitemapEntry[] | null }, { data: SitemapEntry[] | null }] = await Promise.all([
-    supabase.schema('community').from('articles').select('slug,updated_at').eq('status', 'published') as { data: SitemapEntry[] | null },
-    supabase.schema('community').from('discussions').select('slug,updated_at') as { data: SitemapEntry[] | null },
-    supabase.schema('community').from('docs').select('slug,updated_at').eq('status', 'published') as { data: SitemapEntry[] | null }
+  const [articlesResult, discussionsResult]: [{ data: SitemapEntry[] | null }, { data: SitemapEntry[] | null }] = await Promise.all([
+    supabase.from('community_articles').select('slug,updated_at').eq('is_published', true).eq('is_deleted', false) as { data: SitemapEntry[] | null },
+    supabase.from('community_discussions').select('slug,updated_at').eq('is_deleted', false) as { data: SitemapEntry[] | null },
   ])
 
   const baseUrl = 'https://dailyworkerhub.com'
@@ -48,10 +47,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(d.updated_at)
   }))
 
-  const communityDocRoutes = (docsResult.data || []).map((d: SitemapEntry) => ({
-    url: `${baseUrl}/community/docs/${d.slug}`,
-    lastModified: new Date(d.updated_at)
-  }))
-
-  return [...routes, ...docRoutes, ...articleRoutes, ...discussionRoutes, ...communityDocRoutes]
+  return [...routes, ...docRoutes, ...articleRoutes, ...discussionRoutes]
 }

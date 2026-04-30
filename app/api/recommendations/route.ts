@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
 
     if (type === "articles") {
       let query = supabase
-        .from("community.articles")
+        .from('community_articles')
         .select(`
           id,
           slug,
@@ -59,9 +59,10 @@ export async function GET(request: NextRequest) {
           comments_count,
           views_count,
           published_at,
-          category:content_categories(name, slug, color)
+          category
         `)
-        .eq("status", "published")
+        .eq("is_published", true)
+        .eq("is_deleted", false)
         .order("likes_count", { ascending: false })
         .limit(limit);
 
@@ -79,17 +80,17 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const recommendations: ArticleRecommendationWithScore[] = (data || []).map((article: ArticleRecommendation) => ({
+      const recommendations: ArticleRecommendationWithScore[] = (data || []).map((article: any) => ({
         id: article.id,
         slug: article.slug,
         title: article.title,
         excerpt: article.excerpt,
         cover_image: article.cover_image,
-        likes_count: article.likes_count,
-        comments_count: article.comments_count,
-        views_count: article.views_count,
+        likes_count: article.likes_count || 0,
+        comments_count: article.comments_count || 0,
+        views_count: article.views_count || 0,
         published_at: article.published_at,
-        category: article.category,
+        category: article.category ? { name: article.category, slug: (article.category as string).toLowerCase(), color: '#10B981' } : null,
         score:
           article.likes_count * 2 +
           article.comments_count * 1.5 +
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
 
     if (type === "discussions") {
       let query = supabase
-        .from("community.discussions")
+        .from('community_discussions')
         .select(`
           id,
           slug,
@@ -118,8 +119,9 @@ export async function GET(request: NextRequest) {
           comments_count,
           views_count,
           created_at,
-          category:content_categories(name, slug, color)
+          category
         `)
+        .eq("is_deleted", false)
         .order("likes_count", { ascending: false })
         .limit(limit);
 
@@ -141,17 +143,17 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const recommendations: DiscussionRecommendationWithScore[] = (data || []).map((discussion: DiscussionRecommendation) => ({
+      const recommendations: DiscussionRecommendationWithScore[] = (data || []).map((discussion: any) => ({
         id: discussion.id,
         slug: discussion.slug,
         title: discussion.title,
         excerpt:
-          discussion.content.substring(0, 150).replace(/[#*]/g, "") + "...",
-        likes_count: discussion.likes_count,
-        comments_count: discussion.comments_count,
-        views_count: discussion.views_count,
+          (discussion.content || '').substring(0, 150).replace(/[#*]/g, "") + "...",
+        likes_count: discussion.likes_count || 0,
+        comments_count: discussion.comments_count || 0,
+        views_count: discussion.views_count || 0,
         created_at: discussion.created_at,
-        category: discussion.category,
+        category: discussion.category ? { name: discussion.category, slug: (discussion.category as string).toLowerCase(), color: '#10B981' } : null,
         score:
           discussion.likes_count * 2 +
           discussion.comments_count * 1.5 +

@@ -41,7 +41,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 async function incrementArticleViewCount(slug: string) {
   const supabase = await createClient();
-  await supabase.rpc('increment_view_count', { slug });
+  // Increment view count: first read, then update
+  const { data: current } = await supabase
+    .from('community_articles')
+    .select('views_count')
+    .eq('slug', slug)
+    .single();
+  if (current) {
+    const { error } = await supabase
+      .from('community_articles')
+      .update({ views_count: (current.views_count || 0) + 1 } as any)
+      .eq('slug', slug);
+    if (error) {
+      console.error('Error incrementing view count:', error);
+    }
+  }
 }
 
 export default async function ArticleDetailPage({ params }: PageProps) {
