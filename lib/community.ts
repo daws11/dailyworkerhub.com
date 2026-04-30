@@ -321,6 +321,119 @@ export async function getDiscussionBySlug(slug: string): Promise<{
   }
 }
 
+export interface ProfileData {
+  id: string
+  username: string
+  full_name: string | null
+  avatar_url: string | null
+  bio: string | null
+  role: string
+  created_at: string
+}
+
+export async function getProfileByUsername(username: string): Promise<ProfileData | null> {
+  const supabase = await createClient()
+
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('id, username, full_name, avatar_url, bio, role, created_at')
+    .eq('username', username)
+    .single()
+
+  if (error || !profile) {
+    console.error('Error fetching profile by username:', error)
+    return null
+  }
+
+  return profile
+}
+
+export async function getUserArticles(authorId: string): Promise<Array<{
+  id: string
+  slug: string
+  title: string
+  excerpt: string | null
+  cover_image: string | null
+  category: string
+  read_time: number | null
+  likes_count: number
+  comments_count: number
+  views_count: number
+  is_featured: boolean
+  published_at: string | null
+}>> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('community_articles')
+    .select('id, slug, title, excerpt, cover_image, category, read_time, likes_count, comments_count, views_count, is_featured, published_at')
+    .eq('author_id', authorId)
+    .eq('is_published', true)
+    .eq('is_deleted', false)
+    .order('published_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching user articles:', error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function getUserDiscussions(authorId: string): Promise<Array<{
+  id: string
+  slug: string
+  title: string
+  category: string
+  likes_count: number
+  comments_count: number
+  views_count: number
+  is_pinned: boolean
+  created_at: string
+}>> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('community_discussions')
+    .select('id, slug, title, category, likes_count, comments_count, views_count, is_pinned, created_at')
+    .eq('author_id', authorId)
+    .eq('is_deleted', false)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching user discussions:', error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function getUserComments(authorId: string): Promise<Array<{
+  id: string
+  discussion_id: string | null
+  article_id: string | null
+  content: string
+  likes_count: number
+  created_at: string
+}>> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('community_comments')
+    .select('id, discussion_id, article_id, content, likes_count, created_at')
+    .eq('author_id', authorId)
+    .eq('is_deleted', false)
+    .order('created_at', { ascending: false })
+    .limit(50)
+
+  if (error) {
+    console.error('Error fetching user comments:', error)
+    return []
+  }
+
+  return data || []
+}
+
 export async function getCommunityStats(): Promise<CommunityStats> {
   const supabase = await createClient()
 
