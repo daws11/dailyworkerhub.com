@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from './types'
 
+const cookieDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined
+
 // Use any to allow the 'community.xxx' table reference syntax
 export async function createClient(): Promise<any> {
   const cookieStore = await cookies()
@@ -17,7 +19,10 @@ export async function createClient(): Promise<any> {
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options)
+              cookieStore.set(name, value, {
+                ...options,
+                ...(cookieDomain ? { domain: cookieDomain } : {}),
+              })
             })
           } catch {
             // The `setAll` method was called from a Server Component.

@@ -35,7 +35,11 @@ export function createStorageClient() {
     return null
   }
 
-  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey, {
+    cookieOptions: {
+      domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined,
+    },
+  })
 }
 
 /**
