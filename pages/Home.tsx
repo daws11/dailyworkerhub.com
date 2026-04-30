@@ -245,6 +245,7 @@ export default function Home() {
               </motion.div>
 
               <motion.h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance">
+                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-2">Daily Worker Hub</span>
                 <ScrubText
                   text="Temukan Daily Worker Terpercaya, Tanpa Perantara."
                   variant="reveal"

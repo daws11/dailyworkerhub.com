@@ -12,7 +12,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-lg font-bold text-foreground">DailyWorkerHub</h3>
+            <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Platform terpercaya untuk pekerja harian di Indonesia.
             </p>
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
-          © {new Date().getFullYear()} DailyWorkerHub. All rights reserved.
+          © {new Date().getFullYear()} Daily Worker Hub. All rights reserved.
         </div>
       </div>
     </footer>
