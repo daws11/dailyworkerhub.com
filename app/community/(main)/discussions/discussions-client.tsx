@@ -83,9 +83,8 @@ export function DiscussionsPageClient() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  const supabase = createClient();
-
   const fetchCategories = useCallback(async () => {
+    const supabase = createClient();
     try {
       const { data, error } = await supabase
         .from("categories")
@@ -96,19 +95,25 @@ export function DiscussionsPageClient() {
     } catch (err) {
       console.error("Error fetching categories:", err);
     }
-  }, [supabase]);
+  }, []);
 
   const fetchDiscussions = useCallback(async () => {
+    const supabase = createClient();
     setLoading(true);
     setError(null);
 
     try {
       let query = supabase
         .from("community_discussions")
-        .select("id, slug, title, author_id, category, likes_count, comments_count, views_count, is_pinned, created_at");
+        .select("id, slug, title, author_id, category, likes_count, comments_count, views_count, is_pinned, created_at")
+        .eq("is_deleted", false);
 
       if (searchQuery) {
         query = query.ilike("title", `%${searchQuery}%`);
+      }
+
+      if (selectedCategory) {
+        query = query.eq("category", selectedCategory);
       }
 
       if (sortBy === "popular" || sortBy === "votes") {
@@ -119,38 +124,77 @@ export function DiscussionsPageClient() {
         query = query.order("created_at", { ascending: false }).limit(20);
       }
 
-      const { data, error } = await query;
+      const { data, error: queryError } = await query;
 
-      if (error) throw error;
+      if (queryError) throw queryError;
 
-      const mappedDiscussions: Discussion[] = (data || []).map((item: Record<string, unknown>) => {
+      const rawDiscussions = data || [];
+
+      let profilesMap: Record<string, { username: string; full_name: string | null; avatar_url: string | null }> = {};
+
+      if (rawDiscussions.length > 0) {
+        const authorIds = [...new Set(
+          rawDiscussions
+            .map((d: Record<string, unknown>) => d.author_id as string)
+            .filter(Boolean)
+        )];
+
+        if (authorIds.length > 0) {
+          const { data: profiles } = await supabase
+            .from("profiles")
+            .select("id, username, full_name, avatar_url")
+            .in("id", authorIds);
+
+          if (profiles) {
+            for (const p of profiles as unknown as Array<{ id: string; username: string; full_name: string | null; avatar_url: string | null }>) {
+              profilesMap[p.id] = {
+                username: p.username ?? "unknown",
+                full_name: p.full_name ?? null,
+                avatar_url: p.avatar_url ?? null,
+              };
+            }
+          }
+        }
+      }
+
+      const mappedDiscussions: Discussion[] = rawDiscussions.map((item: Record<string, unknown>) => {
+        const profile = profilesMap[item.author_id as string] || { username: "unknown", full_name: null, avatar_url: null };
+        const categoryName = (item.category as string) || "Umum";
         return {
           id: item.id as string,
           slug: item.slug as string,
           title: item.title as string,
           excerpt: "",
           author_id: item.author_id as string,
+          author: {
+            username: profile.username,
+            full_name: profile.full_name,
+            avatar_url: profile.avatar_url,
+          },
+          category: {
+            name: categoryName,
+            slug: categoryName.toLowerCase(),
+            color: "#10B981",
+          },
           status: "open",
-          view_count: (item.views_count as number) || 0,
           likes_count: (item.likes_count as number) || 0,
           comments_count: (item.comments_count as number) || 0,
+          view_count: (item.views_count as number) || 0,
           is_pinned: (item.is_pinned as boolean) || false,
           is_featured: false,
           created_at: item.created_at as string,
-          author: { username: "unknown", full_name: null, avatar_url: null },
-          category: { name: item.category as string || "Umum", slug: item.category as string || "umum", color: "#10B981" },
-        } as Discussion;
+        };
       });
 
       setDiscussions(mappedDiscussions);
-      setTotalCount(data?.length || 0);
+      setTotalCount(mappedDiscussions.length);
     } catch (err) {
       console.error("Error fetching discussions:", err);
       setError("Gagal memuat diskusi. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
-  }, [supabase, selectedCategory, searchQuery, sortBy, page]);
+  }, [selectedCategory, searchQuery, sortBy, page]);
 
   useEffect(() => {
     fetchCategories();
@@ -174,6 +218,7 @@ export function DiscussionsPageClient() {
     setIsDeleting(true);
 
     try {
+      const supabase = createClient();
       const { data: { session } } = await supabase.auth.getSession();
       const user = session?.user ?? null;
 
@@ -182,7 +227,7 @@ export function DiscussionsPageClient() {
       }
 
       const { data: discussion } = await supabase
-        .from("discussions")
+        .from("community_discussions")
         .select("author_id")
         .eq("id", deleteDiscussionId)
         .single<{ author_id: string }>();
@@ -203,9 +248,9 @@ export function DiscussionsPageClient() {
         }
       }
 
-      const { error } = await supabase
-        .from("discussions")
-        .update({ updated_at: new Date().toISOString() } as never)
+      const { error } = await (supabase as any)
+        .from("community_discussions")
+        .update({ is_deleted: true })
         .eq("id", deleteDiscussionId);
 
       if (error) {
@@ -216,8 +261,8 @@ export function DiscussionsPageClient() {
 
       setDeleteDiscussionId(null);
       fetchDiscussions();
-    } catch (error) {
-      console.error("Failed to delete discussion:", error);
+    } catch (err) {
+      console.error("Failed to delete discussion:", err);
       setDeleteDiscussionId(null);
     } finally {
       setIsDeleting(false);
@@ -348,7 +393,7 @@ export function DiscussionsPageClient() {
                   setPage(1);
                 }}
                 className={`px-4 py-2 text-sm rounded-full transition-colors ${
-                  !selectedCategory
+                  selectedCategory === null
                     ? "bg-emerald-500 text-slate-950"
                     : "bg-muted text-muted-foreground hover:bg-muted"
                 }`}
@@ -359,7 +404,7 @@ export function DiscussionsPageClient() {
                 <button
                   key={cat.id}
                   onClick={() => {
-                    setSelectedCategory(cat.id);
+                    setSelectedCategory(cat.slug);
                     setPage(1);
                   }}
                   className={`px-4 py-2 text-sm rounded-full transition-colors ${

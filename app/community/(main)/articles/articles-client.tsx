@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
-import { Search, Clock, Eye, Plus, X, Loader2, AlertCircle } from "lucide-react";
+import { Search, Clock, Eye, Plus, X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArticleCardSkeleton } from "@/components/skeleton/ArticleCardSkeleton";
@@ -56,23 +56,21 @@ export function ArticlesPageClient() {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [user, setUser] = useState<User | null>(null);
-  const fetchCalled = useRef(false);
-
-  const supabase = createClient();
-  console.log("ArticlesPageClient render, supabase:", !!supabase);
 
   const checkAuth = useCallback(async () => {
+    const supabase = createClient();
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
         setUser({ id: session.user.id, email: session.user.email || "" });
       }
-    } catch (err) {
-      console.error("Error checking auth:", err);
+    } catch {
+      // ignore auth errors
     }
-  }, [supabase]);
+  }, []);
 
   const fetchCategories = useCallback(async () => {
+    const supabase = createClient();
     try {
       const { data, error } = await supabase
         .from("categories")
@@ -80,70 +78,105 @@ export function ArticlesPageClient() {
 
       if (error) throw error;
       setCategories(data || []);
-    } catch (err) {
-      console.error("Error fetching categories:", err);
+    } catch {
+      // ignore categories errors
     }
-  }, [supabase]);
+  }, []);
 
   const fetchArticles = useCallback(async () => {
-    console.log("FETCH ARTICLES START");
+    const supabase = createClient();
     setLoading(true);
     setError(null);
 
     try {
-      console.log("Using hardcoded test data");
-      const testArticles: Article[] = [
-        {
-          id: "test-1",
-          slug: "test-artikel-1",
-          title: "10 Tips Menjadi Housekeeper Profesional di Bali",
-          excerpt: "Artikel test untuk debugging",
-          cover_image: null,
-          read_time: 5,
-          views_count: 100,
-          likes_count: 10,
-          is_featured: false,
-          published_at: new Date().toISOString(),
-          author: { full_name: null, avatar_url: null },
-          category: null,
-        },
-        {
-          id: "test-2",
-          slug: "test-artikel-2",
-          title: "Panduan Lengkap Sistem Escrow",
-          excerpt: "Artikel test kedua",
-          cover_image: null,
-          read_time: 8,
-          views_count: 200,
-          likes_count: 20,
-          is_featured: false,
-          published_at: new Date().toISOString(),
-          author: { full_name: null, avatar_url: null },
-          category: null,
-        }
-      ];
+      let query = supabase
+        .from("community_articles")
+        .select("*")
+        .eq("is_published", true)
+        .eq("is_deleted", false);
 
-      console.log("Setting hardcoded articles:", testArticles.length);
-      setArticles(testArticles);
-      setTotalCount(testArticles.length);
-      console.log("Done, setting loading false");
-    } catch (err) {
-      console.error("Catch error:", err);
+      if (selectedCategory) {
+        query = query.eq("category", selectedCategory);
+      }
+
+      if (searchQuery) {
+        query = query.ilike("title", `%${searchQuery}%`);
+      }
+
+      if (sortBy === "popular") {
+        query = query.order("views_count", { ascending: false });
+      } else {
+        query = query.order("published_at", { ascending: false });
+      }
+
+      const { data: articlesData, error: articlesError } = await query;
+
+      if (articlesError) throw articlesError;
+
+      const rawArticles = articlesData || [];
+
+      let profilesMap: Record<string, { full_name: string | null; avatar_url: string | null }> = {};
+
+      if (rawArticles.length > 0) {
+        const authorIds = [...new Set(
+          rawArticles
+            .map((a: Record<string, unknown>) => a.author_id as string)
+            .filter(Boolean)
+        )];
+
+        if (authorIds.length > 0) {
+          const { data: profiles } = await supabase
+            .from("profiles")
+            .select("id, full_name, avatar_url")
+            .in("id", authorIds);
+
+          if (profiles) {
+            for (const p of profiles as unknown as Array<{ id: string; full_name: string | null; avatar_url: string | null }>) {
+              profilesMap[p.id] = {
+                full_name: p.full_name ?? null,
+                avatar_url: p.avatar_url ?? null,
+              };
+            }
+          }
+        }
+      }
+
+      const mappedArticles: Article[] = rawArticles.map((item: Record<string, unknown>) => {
+        const profile = profilesMap[item.author_id as string] || { full_name: null, avatar_url: null };
+        return {
+          id: item.id as string,
+          slug: item.slug as string,
+          title: item.title as string,
+          excerpt: item.excerpt as string,
+          cover_image: (item.cover_image as string) || null,
+          author: {
+            full_name: profile.full_name,
+            avatar_url: profile.avatar_url,
+          },
+          category: (item.category as string) || null,
+          read_time: (item.read_time as number) ?? null,
+          views_count: (item.views_count as number) || 0,
+          likes_count: (item.likes_count as number) || 0,
+          is_featured: (item.is_featured as boolean) || false,
+          published_at: item.published_at as string,
+        };
+      });
+
+      setArticles(mappedArticles);
+      setTotalCount(mappedArticles.length);
+    } catch {
       setError("Gagal memuat artikel.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedCategory, searchQuery, sortBy]);
 
   useEffect(() => {
     fetchCategories();
     checkAuth();
-  }, [fetchCategories, checkAuth]);
-
-  useEffect(() => {
-    console.log("ARTICLES PAGE MOUNT");
     fetchArticles();
-  }, [fetchArticles]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const totalPages = Math.ceil(totalCount / ARTICLES_PER_PAGE);
 
@@ -260,10 +293,9 @@ export function ArticlesPageClient() {
             ))}
           </div>
 
-          {/* Loading State - Show skeleton during loading */}
+          {/* Loading State */}
           {loading && (
             <div className="space-y-8">
-              {/* Featured Skeleton */}
               <div>
                 <h2 className="text-xl font-semibold text-foreground mb-4">Featured</h2>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -271,8 +303,6 @@ export function ArticlesPageClient() {
                   <ArticleCardSkeleton variant="featured" />
                 </div>
               </div>
-
-              {/* All Articles Skeleton */}
               <div>
                 <h2 className="text-xl font-semibold text-foreground mb-4">Semua Artikel</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
