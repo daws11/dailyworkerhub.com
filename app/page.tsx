@@ -20,17 +20,23 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <header className="px-4 md:px-8 py-6 md:py-8 bg-background text-center">
-        <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3">
-          Daily Worker Hub
-        </h1>
-        <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+      {/* Visually hidden H1 for Googlebot — hero has the visible H1 */}
+      <div
+        role="banner"
+        style={{
+          position: "absolute",
+          width: 0,
+          height: 0,
+          overflow: "hidden",
+        }}
+      >
+        <h1>Daily Worker Hub</h1>
+        <p>
           Daily Worker Hub adalah platform yang menghubungkan pekerja harian
-          lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau
-          cari pekerja terpercaya dengan mudah. Daftar sebagai worker untuk
-          mencari lowongan, atau sebagai business untuk merekrut tenaga kerja.
+          lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian
+          atau cari pekerja terpercaya dengan mudah.
         </p>
-      </header>
+      </div>
 
       <HomePage />
     </>
