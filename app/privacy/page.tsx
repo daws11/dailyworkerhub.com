@@ -70,7 +70,7 @@ export default function PrivacyPage() {
                     Untuk employer atau bisnis yang mendaftarkan usahanya, kami mengumpulkan nama bisnis
                     sesuai dokumen legal, alamat usaha, nomor NPWP atau NIB untuk keperluan perpajakan dan
                     compliance, serta informasi rekening bank yang akan digunakan untuk menerima dan
-                    mengirim dana escrow. Sementara untuk worker, kami mengumpulkan data profil tambahan
+                    mengirim Dana Jaminan. Sementara untuk worker, kami mengumpulkan data profil tambahan
                     seperti kategori pekerjaan hospitality yang dikuasai ( housekeeping, F&B service,
                     bartender, kitchen helper, receptionist), lokasi domisili di Bali untuk
                     pencocokan pekerjaan, serta portofolio atau sertifikat pelatihan jika tersedia.
@@ -86,12 +86,12 @@ export default function PrivacyPage() {
                     memahami pola penggunaan platform secara agregat.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Dalam situasi tertentu, terutama saat terjadi dispute antara worker dan employer,
-                    kami dapat mengumpulkan data tambahan berupa histori transaksi escrow, record
+                    Dalam situasi tertentu, terutama saat terjadi perselisihan antara worker dan employer,
+                    kami dapat mengumpulkan data tambahan berupa histori transaksi Dana Jaminan, record
                     attendance yang di-submit melalui platform, riwayat komunikasi melalui sistem
                     chat kami, serta bukti-bukti pendukung yang diunggah oleh kedua belah pihak untuk
                     proses mediasi. Semua data ini disimpan dengan enkripsi dan hanya diakses oleh
-                    tim yang berwenang dalam konteks resolusi dispute.
+                    tim yang berwenang dalam konteks resolusi perselisihan.
                   </p>
                 </section>
 
@@ -108,20 +108,20 @@ export default function PrivacyPage() {
                     identitas saat login, mengautentikasi setiap transaksi yang dilakukan, serta
                     mengidentifikasi pengguna secara unik dalam sistem. Tanpa data identitas ini,
                     platform tidak dapat membedakan satu pengguna dari pengguna lain, dan fitur
-                    escrow tidak dapat beroperasi karena tidak ada referensi untuk menghubungkan
+                    Dana Jaminan tidak dapat beroperasi karena tidak ada referensi untuk menghubungkan
                     deposit dengan beneficiary yang tepat.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Pemrosesan Transaksi Escrow:</strong> Informasi
+                    <strong className="text-foreground">Pemrosesan Transaksi Dana Jaminan:</strong> Informasi
                     rekening bank dan data identitas digunakan secara eksklusif untuk memproses deposit
-                    dari employer ke escrow, hold dana di rekening escrow, release dana ke worker
+                    dari employer ke Dana Jaminan, hold dana di rekening Dana Jaminan, release dana ke worker
                     setelah approval, serta memproses penarikan (withdrawal) ke rekening bank worker.
-                    Setiap langkah dalam alur escrow memerlukan validasi identitas untuk memastikan
+                    Setiap langkah dalam alur Dana Jaminan memerlukan validasi identitas untuk memastikan
                     dana sampai ke orang yang tepat dan sesuai dengan jumlah yang disepakati.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Komunikasi dan Notifikasi:</strong> Alamat email
-                    dan nomor WhatsApp digunakan untuk mengirimkan confirmation transaksi escrow
+                    dan nomor WhatsApp digunakan untuk mengirimkan confirmation transaksi Dana Jaminan
                     (deposit received, fund released, withdrawal completed), notifikasi jadwal kerja
                     dan reminder attendance, informasi lowongan kerja baru yang match dengan profil
                     worker, pesan dari employer atau worker terkait proyek harian, serta alert keamanan
@@ -161,7 +161,7 @@ export default function PrivacyPage() {
                     pelaksanaan kontrak. Ketika Anda menyetujui Syarat & Ketentuan dan membuat akun,
                     sebuah kontrak layanan terbentuk antara Anda dan Daily Worker Hub. Data seperti
                     nama, email, nomor WhatsApp, dan informasi rekening bank diperlukan untuk
-                    menjalankan kontrak ini, khususnya untuk mengoperasikan fitur escrow di mana
+                    menjalankan kontrak ini, khususnya untuk mengoperasikan fitur Dana Jaminan di mana
                     dana kepercayaan pengguna harus dikelola dengan transparan dan aman.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -203,7 +203,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Supabase (Database dan Authentication):</strong>
                     Supabase adalah backend-as-a-service yang menangani penyimpanan data dan autentikasi
-                    pengguna Daily Worker Hub. Semua data profil, histori transaksi escrow, dan records
+                    pengguna Daily Worker Hub. Semua data profil, histori transaksi Dana Jaminan, dan records
                     pekerjaan dikelola dalam database Supabase yang terletak di infrastruktur cloud
                     dengan enkripsi end-to-end. Ketika Anda login ke platform, Supabase menangani
                     proses autentikasi — memverifikasi kredensial, menghasilkan session tokens, dan
@@ -215,7 +215,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Xendit (Payment Processing):</strong> Xendit
                     adalah payment gateway yang memproses semua transaksi finansial di platform kami,
-                    termasuk deposit escrow dari employer dan withdrawal untuk worker. Ketika Anda
+                    termasuk deposit Dana Jaminan dari employer dan withdrawal untuk worker. Ketika Anda
                     melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
                     langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
                     rekening bank penuh. Xendit menangani compliance dengan standar PCI-DSS untuk
@@ -228,9 +228,9 @@ export default function PrivacyPage() {
                     <strong className="text-foreground">Firebase Cloud Messaging (Push Notifications):</strong>
                     FCM digunakan untuk mengirimkan push notifications ke perangkat pengguna — baik
                     via browser web maupun app mobile jika di masa depan kami mengembangkan aplikasi
-                    native. Notifications ini mencakup konfirmasi escrow (deposit received, fund
+                    native. Notifications ini mencakup konfirmasi Dana Jaminan (deposit received, fund
                     released), pengingat attendance yang harus di-submit oleh worker, update status
-                    dispute resolution, serta announcement platform seperti maintenance window atau
+                    perselisihan resolution, serta announcement platform seperti maintenance window atau
                     fitur baru. Untuk dapat mengirim notifikasi, FCM menyimpan registration tokens
                     yang di-generate per device per browser. Tokens ini tidakterkait dengan data identitas
                     pribadi kecuali Anda sedang logged in, dan Anda dapat menonaktifkan notifikasi
@@ -265,8 +265,8 @@ export default function PrivacyPage() {
                     sesuai regulasi perpajakan Indonesia.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Data Transaksi Escrow:</strong> Record
-                    transaksi escrow, termasuk deposit, hold, release, dan withdrawal, disimpan
+                    <strong className="text-foreground">Data Transaksi Dana Jaminan:</strong> Record
+                    transaksi Dana Jaminan, termasuk deposit, hold, release, dan withdrawal, disimpan
                     selama minimum 10 tahun untuk kepatuhan pajak dan peraturan keuangan Indonesia.
                     Data ini mencakup ID transaksi, jumlah, timestamp, status, dan referensi
                     ke user accounts yang terlibat. Meskipun akun telah dihapus, data transaksi
@@ -288,11 +288,11 @@ export default function PrivacyPage() {
                     dan trend reporting.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Data Dispute:</strong> Jika terjadi dispute
-                    antara worker dan employer, data terkait dispute (submissions dari kedua
+                    <strong className="text-foreground">Data Perselisihan:</strong> Jika terjadi perselisihan
+                    antara worker dan employer, data terkait perselisihan (submissions dari kedua
                     belah pihak, communications, bukti-bukti, dan resolusi) disimpan selama 5
-                    tahun setelah dispute resolved untuk keperluan reference dan potential appeal.
-                    Ini memastikan bahwa jika ada sengketa lanjutan yang terkait, data pendukung
+                    tahun setelah perselisihan resolved untuk keperluan reference dan potential appeal.
+                    Ini memastikan bahwa jika ada perselisihan lanjutan yang terkait, data pendukung
                     masih tersedia.
                   </p>
                 </section>
@@ -300,8 +300,8 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-6" className="text-xl font-semibold text-foreground scroll-mt-24">6. Langkah Keamanan yang Kami Terapkan</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Keamanan data pribadi dan dana escrow pengguna adalah prioritas utama
-                    Daily Worker Hub. Kami menerapkan multiple layers of protection untuk
+                    Keamanan data pribadi dan Dana Jaminan pengguna adalah prioritas utama
+                    Daily Worker Hub. Kami menerapkan multiple layers of perlindungan untuk
                     safeguarding data Anda:
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -331,12 +331,12 @@ export default function PrivacyPage() {
                     menjadi hak user tersebut.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Audit Trail untuk Transaksi Escrow:</strong>
-                    Setiap perubahan status transaksi escrow — dari deposit initiated hingga
+                    <strong className="text-foreground">Audit Trail untuk Transaksi Dana Jaminan:</strong>
+                    Setiap perubahan status transaksi Dana Jaminan — dari deposit initiated hingga
                     withdrawal completed — dicatat dalam immutable audit log. Log ini mencakup
                     timestamp, user ID, action yang dilakukan, IP address asal, dan hash
                     transaksi sebelumnya untuk mendeteksi tampering. Audit trail ini dapat
-                    digunakan sebagai bukti dalam dispute resolution.
+                    digunakan sebagai bukti dalam perselisihan resolution.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Regular Security Assessments:</strong>
@@ -357,7 +357,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Hak Akses:</strong> Anda berhak untuk
                     meminta salinan data pribadi yang kami simpan tentang Anda, termasuk data
-                    profil, histori transaksi escrow, dan pengaturan akun. Kami akan memberikan
+                    profil, histori transaksi Dana Jaminan, dan pengaturan akun. Kami akan memberikan
                     salinan ini dalam format yang dapat dibaca — umumnya JSON atau PDF — dalam
                     waktu 14 hari kerja setelah verifikasi identitas Anda. Ada kondisi di mana
                     kami tidak dapat sepenuhnya memenuhi permintaan ini jika pengungkapan akan
@@ -376,8 +376,8 @@ export default function PrivacyPage() {
                     Anda dapat meminta penghapusan data pribadi Anda dari sistem kami — dikenal
                     sebagai "hak untuk dilupakan." Namun, ada batasan penting: kami tidak dapat
                     menghapus data jika masih diperlukan untuk kewajiban hukum (misalnya data
-                    transaksi escrow yang harus disimpan 10 tahun untuk compliance perpajakan),
-                    untuk establish, exercise, atau defend legal claims, atau jika ada dispute
+                    transaksi Dana Jaminan yang harus disimpan 10 tahun untuk compliance perpajakan),
+                    untuk establish, exercise, atau defend legal claims, atau jika ada perselisihan
                     yang belum resolved. Untuk kasus-kasus ini, data akan dihapus segera setelah
                     periode retensi wajib berakhir.
                   </p>

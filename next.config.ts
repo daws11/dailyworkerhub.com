@@ -63,6 +63,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/docs/fitur/escrow-system/:path*",
+        destination: "/docs/fitur/sistem-dana-jaminan/:path*",
+        permanent: true,
+      },
+      {
+        source: "/docs/fitur/dispute-resolution/:path*",
+        destination: "/docs/fitur/penyelesaian-perselisihan/:path*",
+        permanent: true,
+      },
+      {
+        source: "/docs/fitur/protection-pool/:path*",
+        destination: "/docs/fitur/dana-perlindungan/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

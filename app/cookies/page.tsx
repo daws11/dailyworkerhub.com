@@ -63,7 +63,7 @@ export default function CookiesPage() {
                     Ketika Anda membuat akun di Daily Worker Hub, cookie memungkinkan kami mengenali perangkat
                     Anda sehingga Anda tidak perlu login ulang setiap kali mengunjungi platform. Cookie juga
                     membantu kami memahami bagaimana Anda berinteraksi dengan fitur-fitur seperti pencarian
-                    lowongan kerja, pencarian pekerja, manajemen proyek harian, dan penggunaan sistem escrow
+                    lowongan kerja, pencarian pekerja, manajemen proyek harian, dan penggunaan Sistem Dana Jaminan
                     pembayaran.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -95,7 +95,7 @@ export default function CookiesPage() {
                           <td className="px-4 py-3 font-medium text-foreground">Essential (Wajib)</td>
                           <td className="px-4 py-3">
                             Cookie ini mutlak diperlukan untuk operasi dasar platform, termasuk autentikasi
-                            pengguna, manajemen sesi login, security, dan fungsionalitas keranjang escrow.
+                            pengguna, manajemen sesi login, security, dan fungsionalitas keranjang Dana Jaminan.
                             Tanpa cookie ini, fitur utama seperti deposit dana, release pembayaran, dan
                             notifikasi push tidak akan berfungsi dengan baik.
                           </td>
@@ -145,20 +145,20 @@ export default function CookiesPage() {
                     dan mobile. Firebase mengumpulkan data interaksi anonim yang mencakup waktu session,
                     fitur yang digunakan, error yang terjadi, dan konversi dalam alur kerja — misalnya
                     berapa banyak employer yang berhasil membuat lowongan atau berapa banyak worker yang
-                    menyelesaikan proses withdraw pertama mereka. Data ini digunakan solely untuk tujuan
+                    menyelesaikan proses tarik dana pertama mereka. Data ini digunakan solely untuk tujuan
                     optimisasi produk dan tidak dibagikan ke advertiser.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Supabase:</strong> Sebagai backend platform kami,
                     Supabase menggunakan cookie sesi untuk mengelola autentikasi dan otorisasi pengguna.
                     Cookie ini memastikan bahwa setiap kali Anda mengakses fitur-fitur seperti melihat
-                    detail lowongan kerja, mengelola proposal, atau memproses transaksi escrow, sistem
+                    detail lowongan kerja, mengelola proposal, atau memproses transaksi Dana Jaminan, sistem
                     dapat memverifikasi identitas Anda secara aman. Supabase tidak menggunakan cookie
                     untuk tujuan pelacakan komersial.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Firebase Cloud Messaging (FCM):</strong> Untuk
-                    mengirimkan push notification — seperti konfirmasi deposit escrow, status pembayaran,
+                    mengirimkan push notification — seperti konfirmasi deposit Dana Jaminan, status pembayaran,
                     atau pengingat jadwal kerja — kami menggunakan FCM yang mungkin menyimpan token unik
                     di perangkat Anda. Token ini memungkinkan kami mengirim notifikasi even when browser
                     tab tertutup, selama Anda telah memberikan izin notifikasi.
@@ -199,7 +199,7 @@ export default function CookiesPage() {
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Perlu diketahui bahwa menonaktifkan cookie essential akansangat memengaruhi fungsi platform.
-                    Misalnya, Anda tidak akan bisa tetap login, sistem escrow tidak dapat memverifikasi sesi
+                    Misalnya, Anda tidak akan bisa tetap login, Sistem Dana Jaminan tidak dapat memverifikasi sesi
                     transaksi, dan deposit dana tidak dapat diproses dengan aman. Untuk pengalaman terbaik,
                     kami merekomendasikan untuk menerima cookie essential dari Daily Worker Hub sambil
                     memblokir cookie analitik dan fungsional pihak ketiga jika Anda concerned tentang
@@ -232,7 +232,7 @@ export default function CookiesPage() {
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Kami sangat mendorong Anda untuk secara berkala meninjau kebijakan ini, terutama
-                    sebelum membuat transaksi escrow besar atau menghubungkan metode pembayaran baru ke
+                    sebelum membuat transaksi Dana Jaminan besar atau menghubungkan metode pembayaran baru ke
                     akun Daily Worker Hub Anda. Jika Anda memiliki pertanyaan atau concerns tentang kebijakan
                     cookie kami, silakan hubungi tim kami melalui halaman Kontak yang tersedia di platform.
                   </p>

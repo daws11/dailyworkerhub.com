@@ -11,19 +11,19 @@ import {
 const faqs = [
   {
     q: "Apakah Daily Worker Hub legal dan aman?",
-    a: "Ya. Semua transaksi berjalan di atas payment escrow yang dijamin hingga shift selesai, dan pekerja maupun bisnis harus melalui proses verifikasi identitas sebelum bertransaksi. Kami mematuhi regulasi ketenagakerjaan Indonesia.",
+    a: "Ya. Semua transaksi berjalan di atas payment Dana Jaminan yang dijamin hingga shift selesai, dan pekerja maupun bisnis harus melalui proses verifikasi identitas sebelum bertransaksi. Kami mematuhi regulasi ketenagakerjaan Indonesia.",
   },
   {
     q: "Bagaimana cara pembayaran bekerja?",
-    a: "Bisnis melakukan top-up saldo lewat QRIS tanpa biaya tambahan. Saat shift dimulai, dana ditahan sebagai escrow. Setelah pekerja check-out melalui QR di lokasi, dana otomatis cair ke wallet pekerja — tanpa perantara.",
+    a: "Bisnis melakukan top-up saldo lewat QRIS tanpa biaya tambahan. Saat shift dimulai, dana ditahan sebagai Dana Jaminan. Setelah pekerja check-out melalui QR di lokasi, dana otomatis cair ke wallet pekerja — tanpa perantara.",
   },
   {
-    q: "Apa itu Protection Pool?",
-    a: "Protection Pool adalah dana komunitas dari potongan 1% setiap transaksi yang digunakan untuk bantuan darurat anggota, seperti kecelakaan kerja, keterlambatan pembayaran dari bisnis, atau sengketa. Dikelola transparan oleh komunitas.",
+    q: "Apa itu Dana Perlindungan?",
+    a: "Dana Perlindungan adalah dana komunitas dari potongan 1% setiap transaksi yang digunakan untuk bantuan darurat anggota, seperti kecelakaan kerja, keterlambatan pembayaran dari bisnis, atau perselisihan. Dikelola transparan oleh komunitas.",
   },
   {
     q: "Berapa biaya platform untuk bisnis dan pekerja?",
-    a: "Pekerja: 0% komisi potongan upah. Bisnis: 6% biaya transaksi + 1% Protection Pool. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
+    a: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 2% + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
   },
   {
     q: "Bagaimana proses verifikasi pekerja?",
@@ -34,8 +34,8 @@ const faqs = [
     a: "Saat ini Daily Worker Hub aktif di kota-kota besar Pulau Jawa (Jakarta, Bandung, Yogyakarta, Surabaya) dan sedang ekspansi ke Bali, Medan, dan Makassar. Daftar gratis walau kota kamu belum tercover — kami akan notifikasi saat tersedia.",
   },
   {
-    q: "Bagaimana jika terjadi sengketa antara pekerja dan bisnis?",
-    a: "Tim moderasi Daily Worker Hub akan meninjau bukti dari kedua belah pihak (check-in QR, chat, foto lokasi). Selama proses berjalan, dana tetap aman di escrow. Dalam kasus tertentu, Protection Pool dapat digunakan untuk membantu pihak yang dirugikan.",
+    q: "Bagaimana jika terjadi perselisihan antara pekerja dan bisnis?",
+    a: "Tim moderasi Daily Worker Hub akan meninjau bukti dari kedua belah pihak (check-in QR, chat, foto lokasi). Selama proses berjalan, dana tetap aman di Dana Jaminan. Dalam kasus tertentu, Dana Perlindungan dapat digunakan untuk membantu pihak yang dirugikan.",
   },
 ];
 

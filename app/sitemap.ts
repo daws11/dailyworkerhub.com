@@ -33,8 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/docs/platform-guide/cara-mencari-lowongan`, lastModified: new Date() },
     { url: `${baseUrl}/docs/platform-guide/cara-posting-lowongan`, lastModified: new Date() },
     { url: `${baseUrl}/docs/fitur`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur/protection-pool`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur/escrow-system`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur/dana-perlindungan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur/sistem-dana-jaminan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/fitur/penyelesaian-perselisihan`, lastModified: new Date() },
   ]
 
   const articleRoutes = (articlesResult.data || []).map((a: SitemapEntry) => ({

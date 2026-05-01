@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
     role: "Helper event, Surabaya",
     initials: "FP",
     quote:
-      "Proteksi dari Protection Pool bikin saya tenang. Waktu cedera ringan kemarin, komunitas benar-benar bantu.",
+      "Proteksi dari Dana Perlindungan bikin saya tenang. Waktu cedera ringan kemarin, komunitas benar-benar bantu.",
     type: "pekerja",
   },
   {

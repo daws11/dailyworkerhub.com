@@ -23,14 +23,14 @@ Daily Worker Hub memprioritaskan keamanan data dan transaksi Anda. Platform ini 
 
 ### Pemisahan Dana
 
-Dana escrow di Daily Worker Hub dipisahkan dari dana operasional perusahaan:
+Dana Dana Jaminan di Daily Worker Hub dipisahkan dari dana operasional perusahaan:
 
 | Aspek | Penjelasan |
 |-------|------------|
-| **Rekening Terpisah** | Dana escrow disimpan di rekening khusus yang berbeda dari rekening operasional |
-| **Tidak Dapat Diakses untuk Operasional** | Dana escrow tidak dapat digunakan untuk biaya operasional perusahaan |
-| **Audit Independen** | Rekening escrow di-audit secara berkala oleh pihak independen |
-| **Transparansi** | Saldo escrow dapat dilihat oleh pengguna yang berkepentingan |
+| **Rekening Terpisah** | Dana Dana Jaminan disimpan di rekening khusus yang berbeda dari rekening operasional |
+| **Tidak Dapat Diakses untuk Operasional** | Dana Dana Jaminan tidak dapat digunakan untuk biaya operasional perusahaan |
+| **Audit Independen** | Rekening Dana Jaminan di-audit secara berkala oleh pihak independen |
+| **Transparansi** | Saldo Dana Jaminan dapat dilihat oleh pengguna yang berkepentingan |
 
 ---
 
@@ -51,9 +51,9 @@ Dana escrow di Daily Worker Hub dipisahkan dari dana operasional perusahaan:
 | Aksi | Perlu 2FA? |
 |------|-----------|
 | Login dari perangkat baru | ✅ Ya |
-| Deposit saldo escrow | ✅ Ya |
-| Release dana escrow | ✅ Ya |
-| Withdraw ke rekening | ✅ Ya |
+| Deposit saldo Dana Jaminan | ✅ Ya |
+| Release Dana Jaminan | ✅ Ya |
+| Tarik ke rekening | ✅ Ya |
 | Ubah nomor telepon | ✅ Ya |
 | Ubah password | ✅ Ya |
 | Ubah email | ✅ Ya |
@@ -76,13 +76,13 @@ Dana escrow di Daily Worker Hub dipisahkan dari dana operasional perusahaan:
 
 ## Perlindungan Transaksi
 
-### Escrow Protection
+### Perlindungan Dana Jaminan
 
 | Aspek | Penjelasan |
 |-------|------------|
-| **Dana di Hold** | Setiap deposit dari employer di-hold di escrow sampai pekerjaan selesai diverifikasi |
+| **Dana di Hold** | Setiap deposit dari employer ditahan di Dana Jaminan sampai pekerjaan selesai diverifikasi |
 | **Tidak Ada Risiko Tidak Dibayar** | Worker dijamin dibayar jika menyelesaikan pekerjaan sesuai deskripsi |
-| **Refund Tersedia** | Employer bisa mengajukan refund jika terjadi dispute yang merugikan |
+| **Refund Tersedia** | Employer bisa mengajukan refund jika terjadi perselisihan yang merugikan |
 
 ### Audit Trail
 
@@ -90,11 +90,11 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 
 | Data | Deskripsi |
 |------|-----------|
-| **Timestamp** | Waktu pasti setiap aksi (deposit, hold, release, dispute) |
+| **Timestamp** | Waktu pasti setiap aksi (deposit, hold, release, perselisihan) |
 | **ID Transaksi** | Identifier unik untuk setiap transaksi |
 | **Pihak Terlibat** | ID employer, ID worker |
-| **Jumlah Dana** | Nominal deposit, fee, release |
-| **Status Transaksi** | Pending, Hold, Released, Disputed |
+| **Jumlah Dana** | Nominal deposit, biaya, release |
+| **Status Transaksi** | Pending, Hold, Released, Diperseilisihkan |
 | **Bukti-bukti** | Screenshot chat, foto sebelum/sesudah, check-in/check-out |
 
 ### Pencegahan Penipuan
@@ -150,7 +150,7 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 
 | Jenis Data | Durasi Penyimpanan | Alasan |
 |-----------|-------------------|--------|
-| **Transaksi escrow** | 7 tahun | Persyaratan hukum dan audit trail |
+| **Transaksi Dana Jaminan** | 7 tahun | Persyaratan hukum dan audit trail |
 | **Data akun aktif** | Selama akun aktif | Fungsi platform |
 | **Data akun nonaktif** | 2 tahun setelah terakhir login | Kemungkinan reaktivasi |
 | **Logins dan aktivitas** | 1 tahun | Keamanan dan troubleshooting |
@@ -163,9 +163,9 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 | Risiko | Mitigasi |
 |--------|---------|
 | **Worker tidak kredibel** | Verifikasi KTP, rating, dan review dari employer lain |
-| **Worker no-show** | Protection Pool melindungi dengan refund dan kompensasi |
-| **Worker tidak sesuai deskripsi** | Dispute process untuk menyelesaikan sengketa |
-| **Dana tidak aman** | Dana di-hold escrow, tidak ada akses langsung |
+| **Worker no-show** | Dana Perlindungan melindungi dengan refund dan kompensasi |
+| **Worker tidak sesuai deskripsi** | Perselisihan process untuk menyelesaikan perselisihan |
+| **Dana tidak aman** | Dana di-hold Dana Jaminan, tidak ada akses langsung |
 | **Data pekerja** | Anda hanya melihat data yang relevan untuk hiring |
 
 ---
@@ -174,9 +174,9 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 
 | Risiko | Mitigasi |
 |--------|---------|
-| **Employer tidak bayar** | Dana di-hold escrow, employer tidak bisa cancel setelah Anda check-in |
+| **Employer tidak bayar** | Dana di-hold Dana Jaminan, employer tidak bisa cancel setelah Anda check-in |
 | **Pembayaran terlambat** | Sistem release otomatis setelah employer approve |
-| **Dispute yang tidak adil** | Tim review netral untuk memutuskan sengketa |
+| **Perselisihan yang tidak adil** | Tim review netral untuk memutuskan perselisihan |
 | **Data disalahgunakan** | Data dienkripsi dan tidak dibagikan tanpa persetujuan |
 | **KTP disalahgunakan** | KTP hanya digunakan untuk verifikasi, tidak disimpan sebagai salinan |
 
@@ -189,7 +189,7 @@ Jika Anda menemukan celah keamanan atau menjadi korban penipuan:
 | Jenis | Cara Melaporkan |
 |-------|---------------|
 | **Bug/ Vulnerability** | Email [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
-| **Penipuan/Scam** | Ajukan dispute melalui platform, atau email [fraud@dailyworkerhub.com](mailto:fraud@dailyworkerhub.com) |
+| **Penipuan/Scam** | Ajukan perselisihan melalui platform, atau email [fraud@dailyworkerhub.com](mailto:fraud@dailyworkerhub.com) |
 | **Phishing** | Screenshot dan email ke [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
 | **Kehilangan Dana** | Hubungi [support@dailyworkerhub.com](mailto:support@dailyworkerhub.com) dengan subjek "URGENT — Dana Hilang" |
 
@@ -201,7 +201,7 @@ Jika Anda menemukan celah keamanan atau menjadi korban penipuan:
 
 | Topik | Pelajari |
 |-------|---------|
-| Sistem escrow | [Escrow System](/docs/fitur/escrow-system) |
-| Dana proteksi | [Protection Pool](/docs/fitur/protection-pool) |
+| Sistem Dana Jaminan | [Sistem Dana Jaminan](/docs/fitur/sistem-dana-jaminan) |
+| Dana proteksi | [Dana Perlindungan](/docs/fitur/dana-perlindungan) |
 | Verifikasi akun | [Verifikasi Akun](/docs/getting-started/verifikasi-akun) |
 | FAQ keamanan | [FAQ](/docs/faq) |

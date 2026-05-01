@@ -1,0 +1,357 @@
+---
+title: Sistem Dana Jaminan
+description: Panduan lengkap Sistem Dana Jaminan Daily Worker Hub — cara kerja, keamanan, biaya, timeline, penyelesaian perselisihan, dan contoh skenario transaksi
+metaDescription: "Dokumentasi lengkap Sistem Dana Jaminan Daily Worker Hub. Cara kerja sistem Dana Jaminan, fitur keamanan, struktur biaya transparan, timeline transaksi, mekanisme perselisihan, dan contoh skenario dunia nyata."
+---
+
+# Sistem Dana Jaminan
+
+Sistem Dana Jaminan adalah inti dari keamanan transaksi di Daily Worker Hub. Sistem ini memastikan bahwa dana gaji worker terjamin aman sampai pekerjaan selesai dan diverifikasi oleh employer, sekaligus melindungi employer dari kerugian jika pekerjaan tidak diselesaikan sesuai kesepakatan.
+
+---
+
+## Apa itu Dana Jaminan?
+
+Dana Jaminan adalah mekanisme pihak ketiga yang menahan dana sampai kondisi tertentu terpenuhi. Dalam konteks Daily Worker Hub:
+
+| Pihak | Peran dalam Dana Jaminan |
+|-------|--------------------------|
+| **Employer** | Deposit dana gaji + biaya ke Dana Jaminan sebelum pekerjaan dimulai |
+| **Worker** | Melakukan pekerjaan, menerima dana setelah pekerjaan diverifikasi |
+| **Daily Worker Hub** | Mengelola Dana Jaminan sebagai pihak ketiga yang netral |
+
+> **Catatan:** Dana Jaminan disimpan dalam rekening terpisah dari dana operasional Daily Worker Hub, memastikan bahwa dana Anda tidak tercampur dengan dana perusahaan.
+
+---
+
+## Cara Kerja: Langkah demi Langkah
+
+### Langkah 1: Employer Deposit Dana
+
+Sebelum pekerjaan dimulai, employer deposit dana ke dalam Sistem Dana Jaminan:
+
+1. Employer memilih worker dan mengkonfirmasi hiring
+2. Sistem menghitung total deposit: **Gaji harian × Jumlah hari + Biaya Platform + Kontribusi Dana Perlindungan + Biaya Gateway Xendit (VA)**
+3. Employer melakukan transfer melalui Virtual Account Xendit (BCA, BRI, Mandiri) atau E-Wallet (GoPay, OVO, Dana)
+4. Dana masuk ke saldo Dana Jaminan dan ditahan sampai pekerjaan selesai
+
+| Komponen | Penjelasan | Contoh (Gaji Rp 250.000/hari × 2 hari) |
+|----------|-----------|----------------------------------------|
+| **Gaji Worker** | Besaran bayaran yang disepakati | Rp 500.000 |
+| **Biaya Platform** | Biaya operasional DWH | Rp 10.000 (2%) |
+| **Kontribusi Dana Perlindungan** | Masuk ke pool perlindungan komunitas | Rp 5.000 (1%) |
+| **Biaya Gateway Xendit — VA** | Biaya Virtual Account (pihak ketiga) | Rp 4.000 |
+| **Total Deposit** | Jumlah yang harus dibayar employer | Rp 519.000 |
+
+### Langkah 2: Worker Melaksanakan Pekerjaan
+
+Setelah deposit berhasil, worker menerima notifikasi dan melakukan pekerjaan:
+
+1. Worker mendapat konfirmasi bahwa dana sudah di-deposit dan aman di Dana Jaminan
+2. Worker datang ke lokasi kerja sesuai jadwal yang disepakati
+3. Worker menyelesaikan pekerjaan sesuai deskripsi lowongan
+4. Worker mengirim notifikasi **"Pekerjaan Selesai"** melalui platform
+
+### Langkah 3: Employer Verifikasi dan Approve
+
+Employer memverifikasi bahwa pekerjaan sudah sesuai dengan yang diharapkan:
+
+1. Employer memeriksa hasil kerja di lokasi (atau melalui foto/video untuk remote workers)
+2. Employer mengklik tombol **"Verifikasi & Setujui Release"**
+3. Sistem memproses konfirmasi dan memulai countdown release
+
+| Verifikasi | Durasi | Hasil |
+|-----------|--------|-------|
+| **Approved** | 1-3 hari kerja | Dana dirilis ke saldo worker |
+| **Perlu Revisi** | Diskusi dengan worker | Worker memperbaiki, lalu ulang verifikasi |
+| **Perselisihan** | 3-7 hari kerja | Dikirim ke tim review Daily Worker Hub |
+
+> **Tips:** Sebaiknya employer verifikasi dalam 24 jam setelah worker submit "Pekerjaan Selesai". Delay verifikasi berarti delay pembayaran untuk worker.
+
+### Langkah 4: Dana Dirilis ke Worker
+
+Setelah employer approve, dana dikeluarkan dari Dana Jaminan:
+
+1. Dana masuk ke **saldo platform worker** (bukan langsung ke rekening bank)
+2. Worker dapat melihat saldo di menu **"Saldo Saya"**
+3. Worker melakukan **"Tarik Dana"** untuk mencairkan ke rekening bank
+
+**Proses Penarikan:**
+
+| Langkah | Durasi | Catatan |
+|---------|--------|---------|
+| Worker klik "Tarik Dana" | Segera | Masukkan jumlah yang ingin dicairkan |
+| Verifikasi pencairan | 1x24 jam | Sistem verifikasi bank detail |
+| Dana dikirim ke bank | 1-3 hari kerja | Bergantung pada bank (BCA biasanya lebih cepat) |
+| Biaya Gateway Xendit — Payout | Dipotong otomatis | Rp 2.500 (biaya Xendit, bukan biaya platform) |
+
+> **Peringatan:** Pencairan hanya bisa dilakukan ke rekening bank atas nama Anda sendiri yang sudah diverifikasi. Rekening atas nama orang lain tidak akan diterima oleh sistem.
+
+### Langkah 5: Rating & Review
+
+Setelah transaksi selesai:
+1. Employer memberikan rating dan review untuk worker
+2. Worker memberikan rating dan review untuk employer
+3. Rating ini digunakan sebagai referensi untuk transaksi berikutnya
+
+---
+
+## Fitur Keamanan
+
+Sistem Dana Jaminan dilengkapi dengan beberapa lapisan keamanan:
+
+### Enkripsi Data
+
+| Lapisan | Teknologi | Yang Dilindungi |
+|---------|-----------|-----------------|
+| **Data in Transit** | TLS 1.3 / SSL | Seluruh komunikasi antara aplikasi dan server |
+| **Data at Rest** | AES-256 | Data transaksi, saldo, dan identitas tersimpan terenkripsi |
+| **Payment Gateway** | PCI-DSS Compliant | Data kartu dan informasi pembayaran (via Xendit) |
+
+### Audit Trail
+
+Setiap transaksi di Sistem Dana Jaminan memiliki catatan lengkap:
+
+| Informasi | Deskripsi |
+|-----------|-----------|
+| **Timestamp** | Waktu pasti setiap aksi (deposit, tahan, rilis, tarik) |
+| **Pihak Terlibat** | ID employer, ID worker, ID transaksi |
+| **Jumlah** | Detail nominal deposit, biaya, dan rilis |
+| **Status** | Status terkini transaksi (pending, ditahan, dirilis, perselisihan) |
+| **IP Address & Device** | Catatan perangkat yang melakukan aksi |
+
+> **Catatan:** Audit trail tidak dapat diubah atau dihapus oleh siapapun, termasuk oleh tim Daily Worker Hub. Catatan ini menjadi bukti autentik dalam penyelesaian perselisihan.
+
+### Verifikasi Dua Faktor (2FA)
+
+Tindakan sensitif dalam Dana Jaminan memerlukan verifikasi tambahan:
+
+| Aksi | 2FA Diperlukan |
+|------|---------------|
+| **Deposit saldo (pertama kali)** | ✅ Ya |
+| **Deposit saldo berikutnya** | ❌ Tidak (jika dari device yang sama) |
+| **Rilis dana (approve)** | ✅ Ya |
+| **Tarik ke rekening** | ✅ Ya |
+| **Ubah detail rekening bank** | ✅ Ya |
+| **Batalkan perselisihan** | ✅ Ya |
+
+### Pemisahan Dana
+
+Dana Jaminan dipisahkan dari dana operasional Daily Worker Hub:
+
+- Dana Jaminan disimpan di rekening khusus yang terpisah
+- Hanya digunakan untuk transaksi Dana Jaminan
+- Tidak digunakan untuk biaya operasional perusahaan
+- Pemisahan dana di-audit secara berkala oleh pihak independen
+
+---
+
+## Rincian Biaya Transaksi
+
+Setiap transaksi di Daily Worker Hub memiliki **tiga lapis biaya yang transparan**.
+Semua biaya ditampilkan kepada employer **sebelum** deposit dilakukan — tidak ada biaya tersembunyi.
+
+---
+
+### Lapis 1: Biaya Platform (2%) — Pendapatan Daily Worker Hub
+
+Biaya ini adalah satu-satunya pendapatan platform, digunakan untuk:
+
+- Menjalankan server dan infrastruktur
+- Tim support dan review perselisihan
+- Pengembangan fitur baru
+- Verifikasi akun dan sistem keamanan
+
+> **Sebagai perbandingan:** Komisi agency/calo tradisional bisa mencapai 10-15% dari gaji harian. Biaya platform DWH hanya 2% — jauh lebih rendah.
+
+---
+
+### Lapis 2: Kontribusi Dana Perlindungan (1%) — Pool Komunitas
+
+Dana ini **tidak masuk ke platform**. Dana ini masuk ke pool perlindungan bersama yang melindungi **semua** anggota komunitas dari perselisihan, penipuan, atau kerugian.
+
+[Pelajari Dana Perlindungan →](/docs/fitur/dana-perlindungan)
+
+---
+
+### Lapis 3: Biaya Gateway Xendit — Pihak Ketiga
+
+Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan Daily Worker Hub. Platform tidak mengambil keuntungan dari biaya ini.
+
+| Jenis | Tahap | Besaran | Yang Membayar |
+|-------|-------|---------|---------------|
+| **Biaya Penerimaan Dana (Virtual Account)** | Employer deposit | Rp 4.000 | Employer |
+| **Biaya Transfer Bank (Payout)** | Worker tarik dana | Rp 2.500 | Worker |
+
+> **Catatan:** Biaya gateway Xendit di atas adalah biaya pihak ketiga sesuai [dokumentasi resmi Xendit](https://www.xendit.co/en-id/pricing/). Daily Worker Hub tidak mengenakan markup apapun.
+
+---
+
+### Contoh Perhitungan Lengkap
+
+| Komponen | Perhitungan | Jumlah | Masuk Ke |
+|----------|------------|--------|----------|
+| Gaji Worker (Rp 200.000/hari × 3 hari) | — | Rp 600.000 | Worker |
+| Biaya Platform (2%) | Rp 600.000 × 0,02 | Rp 12.000 | DWH |
+| Kontribusi Dana Perlindungan (1%) | Rp 600.000 × 0,01 | Rp 6.000 | Pool Komunitas |
+| Biaya Gateway Xendit — VA | Flat | Rp 4.000 | Xendit |
+| **Total Deposit Employer** | — | **Rp 622.000** | — |
+| | | | |
+| **Worker Menerima (net)** | — | **Rp 600.000** | Worker |
+| Biaya Gateway Xendit — Payout (saat tarik) | Flat | Rp 2.500 | Xendit |
+| **Worker Bersih (setelah tarik ke bank)** | — | **Rp 597.500** | Worker |
+
+> **Ringkasan:** Dari total Rp 622.000 yang dibayar employer, platform hanya menerima **Rp 12.000 (1,9%)**. Sisanya: Rp 600.000 ke worker, Rp 6.000 ke pool komunitas, Rp 6.500 ke gateway Xendit.
+
+---
+
+## Timeline Transaksi
+
+| Tahap | Durasi | Pihak Bertanggung Jawab |
+|-------|--------|------------------------|
+| **Deposit Dana** | Segera setelah pembayaran berhasil | Employer |
+| **Dana Ditahan** | Selama pekerjaan berlangsung | Sistem (otomatis) |
+| **Verifikasi & Approval** | 1-24 jam setelah worker submit | Employer |
+| **Rilis ke Saldo Worker** | Segera setelah approval | Sistem (otomatis) |
+| **Tarik ke Bank** | 1-3 hari kerja | Worker (manual) |
+| **Perselisihan** | Dana tetap ditahan sampai selesai | Tim review |
+
+**Total Estimasi Transaksi Normal:** 3-5 hari dari deposit sampai dana masuk rekening worker.
+
+---
+
+## Penyelesaian Perselisihan
+
+### Kapan Perselisihan Bisa Diajukan?
+
+| Pihak | Kondisi | Alasan |
+|-------|---------|--------|
+| **Worker** | Employer tidak approve release setelah 48 jam meskipun pekerjaan sudah selesai | Pembayaran tidak dicairkan tanpa alasan |
+| **Worker** | Employer menuntut perbaikan di luar scope kesepakatan awal | Perubahan tugas yang tidak disepakati |
+| **Employer** | Worker tidak menyelesaikan pekerjaan sesuai deskripsi | Pekerjaan tidak sesuai kesepakatan |
+| **Employer** | Worker tidak hadir tanpa konfirmasi | Worker melakukan no-show |
+| **Employer** | Kualitas kerja sangat buruk | Hasil kerja di bawah standar minimum |
+
+### Proses Perselisihan
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 ALUR PENYELESAIAN PERSELISIHAN               │
+│                                                               │
+│  1. Ajukan Perselisihan                                      │
+│     ├── Pihak yang dirugikan klik "Ajukan Perselisihan"     │
+│     ├── Tulis penjelasan dan lampirkan bukti                 │
+│     └── Dana tetap ditahan di Dana Jaminan sampai selesai   │
+│                         │                                     │
+│                         ▼                                     │
+│  2. Review oleh Tim Daily Worker Hub                           │
+│     ├── Tim mereview bukti dari kedua belah pihak            │
+│     ├── Waktu review: 1-3 hari kerja                         │
+│     ├── Tim mungkin meminta informasi tambahan               │
+│     └── Komunikasi via chat platform                          │
+│                         │                                     │
+│                         ▼                                     │
+│  3. Keputusan                                                │
+│     ├── Dana dikembalikan ke Employer                         │
+│     ├── Dana dirilis ke Worker                                │
+│     └── Dana dibagi (split) sesuai proporsi yang adil        │
+│                         │                                     │
+│                         ▼                                     │
+│  4. Pelaksanaan Keputusan                                    │
+│     ├── Dana diproses sesuai keputusan                       │
+│     └── Dana Perlindungan digunakan jika diperlukan          │
+│                         │                                     │
+│                         ▼                                     │
+│  5. Tidak Puas dengan Keputusan?                             │
+│     ├── Ajukan banding dalam 7 hari                          │
+│     └── Review ulang oleh tim berbeda                        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+> **Peringatan:** Perselisihan hanya bisa diajukan dalam waktu 7 hari setelah pekerjaan selesai. Setelah 7 hari, transaksi dianggap selesai dan dana dirilis ke worker.
+
+[Pelajari Penyelesaian Perselisihan selengkapnya →](/docs/fitur/penyelesaian-perselisihan)
+
+---
+
+## Skenario Transaksi: Contoh Dunia Nyata
+
+### Skenario 1: Transaksi Normal
+
+| Langkah | Detail |
+|---------|--------|
+| **Posting** | Hotel Sari Bali membutuhkan 3 waiter untuk shift malam (18:00-24:00), rate Rp 175.000/hari |
+| **Apply** | 5 worker mendaftar, employer memilih 3 worker terbaik berdasarkan rating |
+| **Deposit** | Employer deposit: 3 worker × Rp 175.000 + Biaya Platform 2% + Kontribusi Dana Perlindungan 1% + Biaya VA = Rp 540.750 |
+| **Pekerjaan** | 3 worker hadir tepat waktu dan menyelesaikan shift sesuai jadwal |
+| **Verifikasi** | Employer verify pada hari berikutnya (14 jam setelah shift) |
+| **Rilis** | Masing-masing worker menerima Rp 175.000 di saldo platform |
+| **Tarik** | Ketiga worker tarik ke rekening masing-masing (dipotong biaya payout Xendit Rp 2.500) |
+| **Rating** | Employer memberi rating 5/5, worker memberi rating 4/5 untuk employer |
+
+**Hasil:** Dana sampai ke rekening worker dalam 4 hari dari deposit. Win-win untuk semua.
+
+### Skenario 2: Perselisihan
+
+| Langkah | Detail |
+|---------|--------|
+| **Posting** | Restoran Bali Timur membutuhkan 1 chef untuk acara khusus |
+| **Hire** | Employer memilih chef berpengalaman dengan rating 4.8 |
+| **Deposit** | Employer deposit: Rp 400.000 + Biaya Platform + Kontribusi Dana Perlindungan + Biaya VA = Rp 412.000 |
+| **Masalah** | Chef datang 2 jam terlambat dan tidak mengikuti resep yang diminta |
+| **Perselisihan** | Employer mengajukan perselisihan karena kualitas kerja tidak sesuai |
+| **Review** | Tim Daily Worker Hub mereview: bukti foto makanan, chat kesepakatan resep |
+| **Keputusan** | Dana dibagi: 70% ke worker (karena pekerjaan tetap diselesaikan), 30% refund ke employer |
+| **Dana Perlindungan** | Employer menerima kompensasi tambahan dari Dana Perlindungan |
+
+**Hasil:** Perselisihan diselesaikan adil dalam 3 hari. Worker tetap menerima sebagian gaji, employer menerima kompensasi atas keterlambatan.
+
+### Skenario 3: Worker No-Show
+
+| Langkah | Detail |
+|---------|--------|
+| **Posting** | Villa Sunset membutuhkan housekeeping untuk 2 hari |
+| **Hire** | Employer deposit: Rp 160.000 × 2 hari + biaya = Rp 329.600 |
+| **Masalah** | Worker tidak hadir di hari pertama tanpa konfirmasi |
+| **Perselisihan** | Employer mengajukan perselisihan |
+| **Review** | Tim memverifikasi: worker tidak check-in di platform, tidak ada chat atau notifikasi |
+| **Keputusan** | 100% dana dikembalikan ke employer. Worker menerima warning. |
+| **Dana Perlindungan** | Employer menerima kompensasi dari Dana Perlindungan untuk biaya penanganan |
+
+**Hasil:** Dana employer dikembalikan penuh. Worker diberi warning, rating terkena dampak.
+
+---
+
+## FAQ Sistem Dana Jaminan
+
+**Q: Apakah dana saya benar-benar aman di Dana Jaminan?**
+A: Ya. Dana Jaminan disimpan di rekening terpisah yang tidak digunakan untuk operasional perusahaan. Sistem dienkripsi dengan AES-256 dan memiliki audit trail lengkap.
+
+**Q: Berapa lama dana bisa ditahan di Dana Jaminan?**
+A: Tidak ada batasan waktu selama transaksi aktif. Namun, jika tidak ada aktivitas selama 30 hari setelah pekerjaan selesai, sistem akan otomatis rilis ke worker kecuali ada perselisihan aktif.
+
+**Q: Bagaimana jika saya (employer) ingin cancel sebelum pekerjaan dimulai?**
+A: Anda dapat cancel dan dana akan dikembalikan penuh ke saldo Anda, dikurangi Biaya Platform 1% sebagai biaya pemrosesan. Cancel harus dilakukan sebelum worker check-in.
+
+**Q: Bagaimana jika saya (worker) ingin cancel setelah accepting?**
+A: Anda dapat cancel, tetapi ini akan mempengaruhi rating Anda. Disarankan untuk cancel sebelum employer deposit dana. Jika cancel setelah deposit, dana akan kembali ke employer penuh.
+
+**Q: Apakah saya bisa tarik sebagian dari saldo, bukan semua?**
+A: Ya. Anda dapat tarik berapapun yang tersedia di saldo platform, selama minimal Rp 50.000 per transaksi.
+
+**Q: Apakah ada batasan jumlah deposit dari employer?**
+A: Tidak ada batasan atas. Minimum deposit adalah Rp 100.000 per transaksi.
+
+**Q: Bank apa saja yang didukung untuk penarikan?**
+A: Saat ini kami mendukung BCA, BRI, dan Mandiri melalui gateway Xendit. Kami sedang mengembangkan dukungan untuk BNI dan e-wallet via Xendit (OVO, GoPay, Dana).
+
+---
+
+## Langkah Berikutnya
+
+| Anda Ingin | Pelajari |
+|-----------|---------|
+| **Pahami Dana Perlindungan** | [Dana Perlindungan](/docs/fitur/dana-perlindungan) — bagaimana dana perlindungan bekerja |
+| **Deposit saldo** | [Cara Posting Lowongan](/docs/platform-guide/cara-posting-lowongan) — panduan employer |
+| **Cairkan dana** | [Cara Mencari Lowongan](/docs/platform-guide/cara-mencari-lowongan) — panduan worker |
+| **Ringkasan semua fitur** | [Fitur Overview](/docs/fitur) |

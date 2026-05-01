@@ -13,11 +13,11 @@ type Row = {
 
 const rows: Row[] = [
   { feature: "Akses terbuka — siapa pun bisa daftar tanpa perantara", dwh: true, staffinc: false, myrobin: false, calo: false },
-  { feature: "Tanpa komisi platform — 1% hanya untuk Protection Pool komunitas", dwh: true, staffinc: false, myrobin: false, calo: false },
-  { feature: "Protection Pool komunitas (dana darurat anggota)", dwh: true, staffinc: false, myrobin: false, calo: false },
+  { feature: "Biaya Platform 2% — 3x lebih rendah dari komisi calo", dwh: true, staffinc: false, myrobin: false, calo: false },
+  { feature: "Dana Perlindungan komunitas (dana darurat anggota)", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Suara & partisipasi worker dalam kebijakan platform", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Transparansi upah publik sebelum apply (rate/jam terbuka)", dwh: true, staffinc: false, myrobin: false, calo: false },
-  { feature: "Payment escrow — dana dijamin hingga shift selesai", dwh: true, staffinc: false, myrobin: false, calo: false },
+  { feature: "Payment Dana Jaminan — dana dijamin hingga shift selesai", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Review dua arah worker ↔ bisnis, publik", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "QR check-in & verifikasi kehadiran real-time di lokasi", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Jaminan hak kerja otomatis sesuai aturan (upah minimum, lembur, jam istirahat)", dwh: true, staffinc: false, myrobin: false, calo: false },

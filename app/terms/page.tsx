@@ -29,7 +29,7 @@ const tocItems: TocItem[] = [
   { id: "section-1", title: "1. Kelayakan Pengguna (Eligibility)" },
   { id: "section-2", title: "2. Jenis Pengguna dan Tanggung Jawab Mereka" },
   { id: "section-3", title: "3. Penggunaan yang Dilarang dalam Konteks Hospitality" },
-  { id: "section-4", title: "4. Syarat Escrow dan Pembayaran" },
+  { id: "section-4", title: "4. Syarat Dana Jaminan dan Pembayaran" },
   { id: "section-5", title: "5. Resolusi Sengketa" },
   { id: "section-6", title: "6. Batasan Tanggung Jawab" },
   { id: "section-7", title: "7. Hak Kekayaan Intelektual" },
@@ -79,13 +79,13 @@ export default function TermsPage() {
               mereka melalui sistem verifikasi yang kami sediakan, yang dapat mencakup 
               verifikasi nomor WhatsApp dan upload dokumen identitas resmi (KTP, SIM, 
               atau paspor). Employer diharuskan memverifikasi legalitas bisnis mereka 
-              sebelum dapat membuat lowongan dan melakukan deposit dana escrow.
+              sebelum dapat membuat lowongan dan melakukan deposit Dana Jaminan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Status Blacklist:</strong> Pengguna 
               yang sebelumnya telah di-blacklist dari platform Daily Worker Hub karena 
               pelanggaran berat — termasuk namun tidak terbatas pada fraud, harassment, 
-              atau pelanggaran escrow — tidak diizinkan untuk membuat akun baru. Setiap 
+              atau pelanggaran Dana Jaminan — tidak diizinkan untuk membuat akun baru. Setiap 
               attempt untuk menghindari blacklist dengan membuat akun tambahan akan 
               dianggap sebagai pelanggaran serius dan dapat tindakan hukum yang sesuai.
             </p>
@@ -105,8 +105,8 @@ export default function TermsPage() {
               Daily Worker Hub untuk merekrut worker harian. Tanggung jawab employer 
               mencakup: membuat deskripsi lowongan yang akurat dan tidak misleading, 
               menetapkan harga yang wajar dan sesuai dengan standar industri Bali, 
-              melakukan deposit dana ke escrow sebelum pekerjaan dimulai, memverifikasi 
-              attendance worker pada awal dan akhir shift, approve atau disputed pekerjaan 
+              melakukan deposit dana ke Dana Jaminan sebelum pekerjaan dimulai, memverifikasi 
+              attendance worker pada awal dan akhir shift, approve atau perselisihand pekerjaan 
               yang telah selesai dalam waktu 24 jam setelah submission, serta menjaga 
               profesionalisme dalam semua interaksi dengan worker. Employer yang gagal 
               memenuhi tanggung jawab ini dapat dikenai penalti termasuk suspension akun.
@@ -151,7 +151,7 @@ export default function TermsPage() {
               Worker yang dengan sengaja memanipulasi fitur attendance — termasuk 
               menggunakan lokasi palsu (VPN untuk spoofing GPS), submit attendance 
               behalf of worker lain, atau menggunakan foto/screenshot palsu untuk 
-              check-in — akan langsung di-blacklist dan dana escrow yang tersimpan 
+              check-in — akan langsung di-blacklist dan Dana Jaminan yang tersimpan 
               dapat hangus. Employer yang secara sengaja memanipulasi records untuk 
               menghindari pembayaran juga akan menghadapi konsekuensi yang sama. 
               Daily Worker Hub berhak memberikan historical data attendance kepada 
@@ -173,7 +173,7 @@ export default function TermsPage() {
               Semua bentuk harassment — termasuk namun tidak terbatas pada harassment 
               seksual, discriminatory comments berdasarkan agama, suku, gender, atau 
               orientasi seksual, bullying, atau intimidation — baik dari employer maupun 
-              worker adalah dilarang mutlak dan dapat dilaporkan melalui sistem dispute. 
+              worker adalah dilarang mutlak dan dapat dilaporkan melalui sistem perselisihan. 
               Dalam kasus yang validated, pelaku akan di-blacklist secara permanen tanpa 
               kesempatan appeal, dan dalam kasus yang melibatkan ancaman fisik atau 
               seksual, kami akan menyerahkan evidence kepada otoritas yang berwenang.
@@ -181,7 +181,7 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Transaksi di Luar Platform:</strong> 
               Baik employer maupun worker dilarang melakukan transaksi keuangan 
-              secara langsung di luar sistem escrow Daily Worker Hub untuk menghindari 
+              secara langsung di luar Sistem Dana Jaminan Daily Worker Hub untuk menghindari 
               biaya platform. Violasi ini akan mengakibatkan suspension akun dan 
               disqualifikasi dari platform, karena hal ini juga menghilangkan 
               proteksi buyer/seller yang menjadi core value proposition kami.
@@ -189,15 +189,15 @@ export default function TermsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 id="section-4" className="text-xl font-semibold text-foreground scroll-mt-24">4. Syarat Escrow dan Pembayaran</h2>
+            <h2 id="section-4" className="text-xl font-semibold text-foreground scroll-mt-24">4. Syarat Dana Jaminan dan Pembayaran</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Sistem escrow adalah jantung dari kepercayaan dalam platform Daily Worker Hub. 
+              Sistem Dana Jaminan adalah jantung dari kepercayaan dalam platform Daily Worker Hub. 
               Dengan menggunakan platform, Anda agreeing untuk terikat dengan syarat-syarat 
-              escrow berikut yang kami jelaskan secara detail di bawah ini.
+              Dana Jaminan berikut yang kami jelaskan secara detail di bawah ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Deposit oleh Employer:</strong> Sebelum 
-              pekerjaan dimulai, employer wajib melakukan deposit dana ke escrow system 
+              pekerjaan dimulai, employer wajib melakukan deposit dana ke Sistem Dana Jaminan 
               Daily Worker Hub sebesar jumlah yang disepakati dengan worker untuk jasa 
               pekerjaan harian tersebut. Dana ini dihold oleh platform dan tidak dapat 
               dicairkan oleh employer selama pekerjaan sedang dalam proses. Deposit 
@@ -209,51 +209,51 @@ export default function TermsPage() {
               <strong className="text-foreground">Release Dana kepada Worker:</strong> 
               Setelah worker menyelesaikan pekerjaan dan submit completion notice, 
               employer memiliki jendela 24 jam untuk memverifikasi kualitas dan kuantitas 
-              pekerjaan. Jika employer puas, mereka approve release dana dan dana escrow 
+              pekerjaan. Jika employer puas, mereka approve release dana dan Dana Jaminan 
               akan ditransfer ke wallet worker di platform. Worker kemudian dapat 
               melakukan withdrawal ke rekening bank mereka. Withdrawal biasanya 
               memakan waktu 1-3 hari kerja tergantung bank tujuan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Dispute Escrow:</strong> Jika employer 
-              tidak puas dengan pekerjaan, mereka dapat raise dispute dalam 24 jam setelah 
-              submission. Dana akan tetap dihold di escrow sampai dispute resolved melalui 
-              proses mediation kami. Selama dispute, baik employer maupun worker dapat 
+              <strong className="text-foreground">Perselisihan Dana Jaminan:</strong> Jika employer 
+              tidak puas dengan pekerjaan, mereka dapat raise perselisihan dalam 24 jam setelah 
+              submission. Dana akan tetap dihold di Dana Jaminan sampai perselisihan resolved melalui 
+              proses mediation kami. Selama perselisihan, baik employer maupun worker dapat 
               submit bukti-bukti pendukung — foto hasil kerja, chat logs, attendance 
               records — untuk memperkuat posisi mereka. Tim mediation kami akan 
-              memutuskan berdasarkan bukti yang ada. Jika dispute tidak dapat resolved 
+              memutuskan berdasarkan bukti yang ada. Jika perselisihan tidak dapat resolved 
               secara internal, akan diarahkan ke arbitration.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Biaya Transaksi:</strong> Daily Worker Hub 
-              mengenakan small fee platform untuk setiap transaksi escrow yang berhasil. 
-              Fee ini deducted dari jumlah gross escrow sebelum dana released ke worker. 
-              Besaran fee transparan dan ditampilkan kepada employer sebelum deposit 
+              mengenakan small Biaya Platform untuk setiap transaksi Dana Jaminan yang berhasil. 
+              Biaya ini deducted dari jumlah gross Dana Jaminan sebelum dana released ke worker. 
+              Besaran biaya transparan dan ditampilkan kepada employer sebelum deposit 
               dilakukan, sehingga tidak ada biaya tersembunyi. Employer menanggung 
-              seluruh fee platform agar worker menerima net amount yang disepakati.
+              seluruh Biaya Platform agar worker menerima net amount yang disepakati.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 id="section-5" className="text-xl font-semibold text-foreground scroll-mt-24">5. Resolusi Sengketa</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Daily Worker Hub menyediakan proses resolusi sengketa bertingkat untuk menangani 
-              konflik antara employer dan worker. Tujuan kami adalah menyelesaikan sengketa 
+              Daily Worker Hub menyediakan proses resolusi perselisihan bertingkat untuk menangani 
+              konflik antara employer dan worker. Tujuan kami adalah menyelesaikan perselisihan 
               secara adil, cepat, dan dengan biaya minimal bagi kedua belah pihak.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Mediasi Internal:</strong> Sengketa pertama-tama 
               akan ditangani melalui proses mediasi internal yang dilakukan oleh tim 
               customer success kami. Kedua belah pihak diminta untuk submit penjelasan 
-              tertulis tentang perspektif mereka dalam waktu 48 jam setelah dispute 
+              tertulis tentang perspektif mereka dalam waktu 48 jam setelah perselisihan 
               initiated. Tim mediation kemudian review bukti-bukti yang submitted — 
               termasuk attendance records, chat logs, foto, dan lainnya — dan memberikan 
               rekomendasi resolution dalam waktu 5 hari kerja. Rekomendasi ini tidak 
-              bersifat mengikat tetapi mayoritas sengketa terselesaikan pada tahap ini.
+              bersifat mengikat tetapi mayoritas perselisihan terselesaikan pada tahap ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Arbitrasi:</strong> Jika mediasi tidak 
-              mencapai kesepakatan, sengketa akan naik ke tahap arbitration di mana 
+              mencapai kesepakatan, perselisihan akan naik ke tahap arbitration di mana 
               seorang arbiter independen — yang ditunjuk oleh Daily Worker Hub dari 
               panelprofesional yang memiliki pengalaman di industri hospitality Bali — 
               akan memberikan keputusan yang mengikat bagi kedua belah pihak. Keputusan 
@@ -264,9 +264,9 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Batasan Platform:</strong> Perlu 
               dicatat bahwa Daily Worker Hub bertindak sebagai intermediary saja. 
-              Kami tidak menjamin outcomes tertentu dalam sengketa dan tidak memiliki 
-              kewajiban untuk menyediakan ganti rugi di luar jumlah dana escrow yang 
-              tersimpan di platform untuk transaksi yang disputed. Pengguna yang tidak 
+              Kami tidak menjamin outcomes tertentu dalam perselisihan dan tidak memiliki 
+              kewajiban untuk menyediakan ganti rugi di luar jumlah Dana Jaminan yang 
+              tersimpan di platform untuk transaksi yang perselisihand. Pengguna yang tidak 
               setuju dengan keputusan arbitration masih dapat pursue remedies melalui 
               jalur hukum yang tersedia di Indonesia.
             </p>
@@ -285,7 +285,7 @@ export default function TermsPage() {
               <strong className="text-foreground">Platform sebagai Intermediary:</strong> 
               Daily Worker Hub tidak pernah menjadi pihak dalam kontrak pekerjaan antara 
               employer dan worker. Kami menyediakan platform untuk mempertemukan kedua 
-              belah pihak, memfasilitasi pembayaran escrow, dan menyediakan tools 
+              belah pihak, memfasilitasi pembayaran Dana Jaminan, dan menyediakan tools 
               untuk manajemen attendance dan komunikasi. Kami tidak supervisi langsung 
               pekerjaan yang dilakukan worker di lokasi employer, tidak bertanggung 
               jawab atas kualitas hasil kerja, dan tidak memiliki kontrol atas 
@@ -311,7 +311,7 @@ export default function TermsPage() {
               termasuk namun tidak terbatas pada lost profits, lost data, atau lost 
               opportunity yang terkait dengan pekerjaan yang failed atau worker yang 
               tidak show up. Liability kami dalam hal apapun terbatas pada jumlah 
-              total fee yang telah Anda bayarkan kepada kami dalam 12 months preceding 
+              total biaya yang telah Anda bayarkan kepada kami dalam 12 months preceding 
               the incident yang memberikan rise kepada klaim.
             </p>
           </section>
@@ -369,7 +369,7 @@ export default function TermsPage() {
               <strong className="text-foreground">Suspension dengan Cause:</strong> 
               Akun dapat ditangguhkan untuk durasi yang lebih panjang — mulai dari 
               7 hari hingga 90 hari — sebagai penalty untuk pelanggaran sedang 
-              seperti repeated no-shows, failure to respond to dispute, atau 
+              seperti repeated no-shows, failure to respond to perselisihan, atau 
               penggunaan platform yang tidak profesional. Selama periode suspension, 
               pengguna kehilangan akses ke fitur-fitur platform tetapi data mereka 
               tetap disimpan.
@@ -378,7 +378,7 @@ export default function TermsPage() {
               <strong className="text-foreground">Termination Permanen (Blacklist):</strong> 
               Akun dapat dihentikan secara permanen dan pengguna di-blacklist dari 
               platform untuk pelanggaran berat seperti: fraud atau pengkhianatan 
-              kepercayaan escrow, harassment atau diskriminasi yang validated, 
+              kepercayaan Dana Jaminan, harassment atau diskriminasi yang validated, 
               manipulasi attendance atau sistem, pembuatan multiple akun untuk 
               menghindari blacklist, atau aktivitas illegal menggunakan platform. 
               Pengguna yang di-blacklist kehilangan akses permanen ke akun dan data 
@@ -397,13 +397,13 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-9" className="text-xl font-semibold text-foreground scroll-mt-24">9. Hukum yang Mengatur</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Syarat dan Ketentuan ini, serta setiap sengketa atau klaim yang timbul 
+              Syarat dan Ketentuan ini, serta setiap perselisihan atau klaim yang timbul 
               dari atau terkait dengan nya, diatur oleh dan ditafsirkan sesuai dengan 
               hukum Republik Indonesia tanpa memperhatikan principles of conflict of laws.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Yurisdiksi:</strong> Anda agree bahwa 
-              setiap sengketa yang tidak dapat diselesaikan melalui proses mediasi 
+              setiap perselisihan yang tidak dapat diselesaikan melalui proses mediasi 
               dan arbitration internal kami akan diajukan kepada courts yang memiliki 
               jurisdiction di wilayah hukum Negara Republik Indonesia, spesifiknya 
               adalah Pengadilan Negeri Jakarta Selatan sebagai courts dari first instance, 
@@ -417,7 +417,7 @@ export default function TermsPage() {
               terbatas pada UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik 
               (ITE), UU No. 14 Tahun 2019 tentang Perlindungan Data Pribadi (UU PDP), 
               serta regulasi perpajakan yang berlaku untuk platform digital dan transaksi 
-              escrow. Pengguna bertanggung jawab untuk memastikan bahwa penggunaan 
+              Dana Jaminan. Pengguna bertanggung jawab untuk memastikan bahwa penggunaan 
               platform mereka juga comply dengan semua hukum yang berlaku di yurisdiksi 
               masing-masing.
             </p>
@@ -439,7 +439,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Dalam Platform:</strong> Untuk 
-              pertanyaan tentang akun atau dispute yang sedang berjalan, gunakan 
+              pertanyaan tentang akun atau perselisihan yang sedang berjalan, gunakan 
               fitur chat yang tersedia di dashboard untuk connected dengan tim 
               customer success kami secara langsung.
             </p>

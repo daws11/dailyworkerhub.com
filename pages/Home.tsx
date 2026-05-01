@@ -407,8 +407,8 @@ export default function Home() {
               </div>
               <h3 className="font-display text-lg font-semibold text-foreground mb-3">Perlindungan</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Protection Pool melindungi kedua belah pihak. Transaksi aman dengan
-                sistem escrow dan verifikasi reputasi komunitas.
+                Dana Perlindungan melindungi kedua belah pihak. Transaksi aman dengan
+                Sistem Dana Jaminan dan verifikasi reputasi komunitas.
               </p>
             </div>
           </div>
@@ -464,7 +464,7 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Card 2: Protection Pool */}
+            {/* Card 2: Dana Perlindungan */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -481,9 +481,9 @@ export default function Home() {
               <div className="w-16 h-16 rounded-full bg-primary/5 dark:bg-primary/20 flex items-center justify-center text-secondary dark:text-white/70 mb-8">
                 <ShieldCheck className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Protection Pool</h3>
+              <h3 className="font-display text-2xl font-bold text-primary mb-4">Dana Perlindungan</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                1% dari setiap transaksi dialokasikan ke Protection Pool — dana yang dirancang untuk melindungi worker ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
+                1% dari setiap transaksi dialokasikan ke Dana Perlindungan — dana yang dirancang untuk melindungi worker ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
               </p>
             </motion.div>
 
@@ -700,7 +700,7 @@ export default function Home() {
                 </li>
                 <li className="flex justify-between items-center pb-2">
                   <div className="flex flex-col">
-                    <span className="font-medium text-white/80">Protection Pool</span>
+                    <span className="font-medium text-white/80">Dana Perlindungan</span>
                     <span className="text-xs text-white/50">Dana perlindungan untuk semua anggota</span>
                   </div>
                   <span className="font-bold text-white text-xl">1%</span>
