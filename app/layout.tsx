@@ -33,10 +33,10 @@ export const metadata: Metadata = {
   keywords: ["pekerja harian", "lowongan kerja", "bisnis", "recruitment", "Indonesia", "daily worker", "hire worker"],
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png" },
+      { url: "/logo-new.png", type: "image/png" },
       { url: "/favicon.ico", type: "image/x-icon" },
     ],
-    apple: "/favicon.png",
+    apple: "/logo-new.png",
   },
   openGraph: {
     title: "Daily Worker Hub",
