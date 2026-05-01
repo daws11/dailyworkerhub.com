@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
-  name: "DailyWorkerHub",
-  description: "Platform komunitas pekerja harian Indonesia",
+  name: "Daily Worker Hub",
+  description: "Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.",
   url: "https://dailyworkerhub.com",
   ogImage: "/opengraph.jpg",
   ogImageWithVersion: "/opengraph.jpg?v=2",

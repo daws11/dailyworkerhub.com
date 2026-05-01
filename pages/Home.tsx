@@ -240,14 +240,14 @@ export default function Home() {
               <motion.div variants={fadeUp} className="mb-4 md:mb-6 flex items-center gap-4">
                 <span className="h-[2px] w-8 md:w-12 bg-primary block"></span>
                 <span className="font-sub uppercase tracking-[0.2em] text-foreground dark:text-white/60 font-bold text-xs md:text-sm">
-                  Community First Platform
+                  Platform Pekerja Harian Indonesia
                 </span>
               </motion.div>
 
               <motion.h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance">
                 <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-2">Daily Worker Hub</span>
                 <ScrubText
-                  text="Temukan Daily Worker Terpercaya, Tanpa Perantara."
+                  text="Temukan Pekerja Harian Terpercaya, Tanpa Perantara."
                   variant="reveal"
                 />
               </motion.h1>
@@ -256,7 +256,7 @@ export default function Home() {
                 variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
-                Daily Worker Hub menghubungkan pekerja dan bisnis secara langsung — dengan sistem verifikasi reputasi, perlindungan via Protection Pool, dan transparansi untuk semua pihak.
+                Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha yang membutuhkan tenaga kerja di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
