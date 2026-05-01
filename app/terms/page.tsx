@@ -144,7 +144,7 @@ export default function TermsPage() {
               Employer yang setelah mengapprove worker kemudian membatalkan shift 
               less dari 12 jam sebelum waktunya tanpa alasan yang valid juga 
               akan menerima penalty, karena hal ini menyebabkan worker kehilangan 
-             机会 kerja lain.
+             kesempatan kerja lain.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Catatan Attendance Palsu:</strong> 
@@ -248,14 +248,14 @@ export default function TermsPage() {
               tertulis tentang perspektif mereka dalam waktu 48 jam setelah dispute 
               initiated. Tim mediation kemudian review bukti-bukti yang submitted — 
               termasuk attendance records, chat logs, foto, dan lainnya — dan memberikan 
-              rekomendasi resolution dalam waktu 5 hari kerja. Рекомендация ini tidak 
-              bersifat mengikat tetapi большинность sengketa terselesaikan pada tahap ini.
+              rekomendasi resolution dalam waktu 5 hari kerja. Rekomendasi ini tidak 
+              bersifat mengikat tetapi mayoritas sengketa terselesaikan pada tahap ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Arbitrasi:</strong> Jika mediasi tidak 
               mencapai kesepakatan, sengketa akan naik ke tahap arbitration di mana 
               seorang arbiter independen — yang ditunjuk oleh Daily Worker Hub dari 
-              panel专业人士 yang memiliki pengalaman di industri hospitality Bali — 
+              panelprofesional yang memiliki pengalaman di industri hospitality Bali — 
               akan memberikan keputusan yang mengikat bagi kedua belah pihak. Keputusan 
               arbiter bersifat final dan tidak dapat di-appeal melalui platform. 
               Biaya arbitration akan dibebankan kepada pihak yanglose, kecuali 
@@ -267,7 +267,7 @@ export default function TermsPage() {
               Kami tidak menjamin outcomes tertentu dalam sengketa dan tidak memiliki 
               kewajiban untuk menyediakan ganti rugi di luar jumlah dana escrow yang 
               tersimpan di platform untuk transaksi yang disputed. Pengguna yang tidak 
-              согласны dengan keputusan arbitration masih dapat pursue remedies melalui 
+              setuju dengan keputusan arbitration masih dapat pursue remedies melalui 
               jalur hukum yang tersedia di Indonesia.
             </p>
           </section>
@@ -293,8 +293,8 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Force Majeure:</strong> Daily Worker Hub 
-              tidak bertanggung jawab atas kegagalan atau penundaan выполнения 
-              obligations kami yang disebabkan oleh события diluar kendali kami yang 
+              tidak bertanggung jawab atas kegagalan atau penundaan pemenuhan 
+              obligations kami yang disebabkan oleh peristiwa diluar kendali kami yang 
               reasonable — termasuk namun tidak terbatas pada bencana alam (gempa 
               bumi, tsunami, letusan Gunung Agung), epidemic atau pandemic yang 
               memerlukan lockdown, kebijakan pemerintah yang secara tiba-tiba 
@@ -309,7 +309,7 @@ export default function TermsPage() {
               indirect, incidental, special, consequential, atau punitive damages 
               yang arising dari penggunaan atau ketidakmampuan menggunakan platform, 
               termasuk namun tidak terbatas pada lost profits, lost data, atau lost 
-              opportunity yang связаны dengan pekerjaan yang failed atau worker yang 
+              opportunity yang terkait dengan pekerjaan yang failed atau worker yang 
               tidak show up. Liability kami dalam hal apapun terbatas pada jumlah 
               total fee yang telah Anda bayarkan kepada kami dalam 12 months preceding 
               the incident yang memberikan rise kepada klaim.
@@ -332,7 +332,7 @@ export default function TermsPage() {
               portofolio worker, dan chat messages. Dengan memposting konten di 
               platform, Anda memberikan Daily Worker Hub license non-exclusive, 
               worldwide, royalty-free untuk menggunakan, mereproduksi, memodifikasi, 
-              dan mendistribusikan konten tersebut semata-mata untuk tujuan операционные 
+              dan mendistribusikan konten tersebut semata-mata untuk tujuan operasional 
               platform — misalnya menampilkan deskripsi lowongan kepada candidate yang 
               sesuai atau menyimpan portofolio worker untuk ditampilkan kepada employer.
             </p>
@@ -405,9 +405,9 @@ export default function TermsPage() {
               <strong className="text-foreground">Yurisdiksi:</strong> Anda agree bahwa 
               setiap sengketa yang tidak dapat diselesaikan melalui proses mediasi 
               dan arbitration internal kami akan diajukan kepada courts yang memiliki 
-              jurisdiction di wilayah hukum Negara Republik Indonesia, конкретноnya 
+              jurisdiction di wilayah hukum Negara Republik Indonesia, spesifiknya 
               adalah Pengadilan Negeri Jakarta Selatan sebagai courts dari first instance, 
-              kecuali для пользователей в других регионах Indonesia yang secara khusus 
+              kecuali untuk pengguna в других регионах Indonesia yang secara khusus 
               agree untuk menggunakan courts lain yang lebih dekat dengan domisili mereka.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -426,14 +426,14 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-10" className="text-xl font-semibold text-foreground scroll-mt-24">10. Informasi Kontak</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Jika Anda memiliki pertanyaan, kekhawatiran, atau طلب informasi lebih lanjut 
+              Jika Anda memiliki pertanyaan, kekhawatiran, atau permintaan informasi lebih lanjut 
               tentang Syarat dan Ketentuan ini, jangan ragu untuk menghubungi kami 
               melalui kanal-kanal berikut:
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Email:</strong> Hubungi tim customer 
               support kami di support@dailyworkerhub.com untuk pertanyaan umum tentang 
-              penggunaan platform, atau di legal@dailyworkerhub.com untuk запросы 
+              penggunaan platform, atau di legal@dailyworkerhub.com untuk permintaan 
               yang涉及到 aspects legal dari Syarat dan Ketentuan. Kami strive untuk 
               merespons dalam 2-3 hari kerja.
             </p>
@@ -452,9 +452,9 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Kami appreciate kepercayaan Anda menggunakan Daily Worker Hub sebagai 
-              partner dalam найм работников di industri hospitality Bali. Kami 
+              partner dalam perekrutan pekerja di industri hospitality Bali. Kami 
               akan terus berusaha untuk menyediakan platform yang aman, adil, 
-              dan эффективный для seluruh pengguna kami.
+              dan efektif для seluruh pengguna kami.
             </p>
           </section>
               </div>

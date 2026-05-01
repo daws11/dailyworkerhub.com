@@ -198,7 +198,7 @@ export default function CookiesPage() {
                     Anda juga dapat menghapus semua cookie yang tersimpan melalui opsi "Manage Website Data".
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Perlu diketahui bahwa menonaktifkan cookie essential akan严重影响 fungsi platform.
+                    Perlu diketahui bahwa menonaktifkan cookie essential akansangat memengaruhi fungsi platform.
                     Misalnya, Anda tidak akan bisa tetap login, sistem escrow tidak dapat memverifikasi sesi
                     transaksi, dan deposit dana tidak dapat diproses dengan aman. Untuk pengalaman terbaik,
                     kami merekomendasikan untuk menerima cookie essential dari Daily Worker Hub sambil

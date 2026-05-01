@@ -220,7 +220,7 @@ export default function PrivacyPage() {
                     langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
                     rekening bank penuh. Xendit menangani compliance dengan standar PCI-DSS untuk
                     keamanan data pembayaran, konversi mata uang jika diperlukan, settlement dana
-                    ke rekening bank lokal Indonesia, serta notification transaksi成功 atau gagal.
+                    ke rekening bank lokal Indonesia, serta notification transaksiberhasil atau gagal.
                     Data transaksi yang diproses Xendit mencakup jumlah, timestamp, status payment,
                     dan referensi idempotency untuk mencegah duplicate charges.
                   </p>
@@ -232,7 +232,7 @@ export default function PrivacyPage() {
                     released), pengingat attendance yang harus di-submit oleh worker, update status
                     dispute resolution, serta announcement platform seperti maintenance window atau
                     fitur baru. Untuk dapat mengirim notifikasi, FCM menyimpan registration tokens
-                    yang di-generate per device per browser. Tokens ini tidak关联 dengan data identitas
+                    yang di-generate per device per browser. Tokens ini tidakterkait dengan data identitas
                     pribadi kecuali Anda sedang logged in, dan Anda dapat menonaktifkan notifikasi
                     melalui pengaturan browser atau pengaturan akun kapan saja.
                   </p>
@@ -386,7 +386,7 @@ export default function PrivacyPage() {
                     untuk menerima data pribadi Anda dalam format yang terstruktur, umum digunakan,
                     dan dapat dibaca oleh mesin — misalnya JSON atau CSV — dan Mentransfer data
                     tersebut ke layanan lain tanpa hambatan dari kami. Hak ini berlaku untuk data
-                    yang，您 berikan kepada kami berdasarkan consent atau pelaksanaan kontrak, dan
+                    yang Anda berikan kepada kami berdasarkan consent atau pelaksanaan kontrak, dan
                     yang diproses secara otomatis.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -408,7 +408,7 @@ export default function PrivacyPage() {
                     tambahan yang dapat membantu kami memproses permintaan Anda. Kami akan
                     memverifikasi identitas Anda sebelum memproses permintaan — ini adalah
                     security measure untuk mencegah unauthorized access ke akun Anda. Respons
-                    akan diberikan dalam waktu 30 hari sesuai требование UU PDP.
+                    akan diberikan dalam waktu 30 hari sesuai ketentuan UU PDP.
                   </p>
                 </section>
 
@@ -445,7 +445,7 @@ export default function PrivacyPage() {
                     Daily Worker Hub mengoperasikan bisnis dan menyimpan data primarily di Indonesia,
                     dengan infrastruktur cloud yang menggunakan servers yang berlokasi di Asia
                     Tenggara — khususnya Singapore dan Jakarta. Ketika data Anda ditransfer di
-                    luar Indonesia, kami memastikan bahwa transfer tersebut mematuhi требования
+                    luar Indonesia, kami memastikan bahwa transfer tersebut mematuhi persyaratan
                     UU PDP tentang transfer data lintas batas negara.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -477,7 +477,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Email:</strong> Kirimkan email ke
                     privacy@dailyworkerhub.com dengan subjek yang jelas dan respons biasanya
-                    diberikan dalam 3-5 hari kerja. Untuk permintaan yang涉及到 data subject
+                    diberikan dalam 3-5 hari kerja. Untuk permintaan yangmenyangkut data subject
                     rights, tolong sertakan informasi verifikasi seperti nomor akun dan
                     email terdaftar untuk mempercepat proses.
                   </p>
