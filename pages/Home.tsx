@@ -347,6 +347,24 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* PURPOSE — tentang Daily Worker Hub */}
+      {/* ============================================================ */}
+      <section className="py-16 md:py-20 px-4 md:px-8 bg-muted/30 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
+            Apa itu Daily Worker Hub?
+          </h2>
+          <p className="font-sans text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas
+            dengan pelaku usaha yang membutuhkan tenaga kerja di Indonesia. Kami
+            menyediakan sistem verifikasi reputasi, perlindungan transaksi melalui
+            Protection Pool, dan transparansi penuh untuk semua pihak — baik pekerja
+            maupun bisnis.
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
       {/* LOGO MARQUEE — social proof */}
       {/* ============================================================ */}
       {/* <LogoMarquee /> */}
