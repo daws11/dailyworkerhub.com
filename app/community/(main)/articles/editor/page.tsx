@@ -371,7 +371,7 @@ export default function ArticleEditorPage() {
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-foreground mb-2">Buat Artikel Baru</h1>
             <p className="text-muted-foreground">
-              Tulis dan publikasikan artikel untuk komunitas DailyWorkerHub
+              Tulis dan publikasikan artikel untuk komunitas Daily Worker Hub
             </p>
           </div>
 

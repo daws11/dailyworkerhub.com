@@ -12,16 +12,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!profile) {
     return {
-      title: "Profil Tidak Ditemukan - DailyWorkerHub",
+      title: "Profil Tidak Ditemukan - Daily Worker Hub",
     };
   }
 
   return {
     title: `${profile.full_name || profile.username} (@${profile.username})`,
-    description: profile.bio || `Profil ${profile.full_name || profile.username} di DailyWorkerHub Community`,
+    description: profile.bio || `Profil ${profile.full_name || profile.username} di Daily Worker Hub Community`,
     openGraph: {
       title: `${profile.full_name || profile.username} (@${profile.username})`,
-      description: profile.bio || `Profil ${profile.full_name || profile.username} di DailyWorkerHub Community`,
+      description: profile.bio || `Profil ${profile.full_name || profile.username} di Daily Worker Hub Community`,
       images: profile.avatar_url ? [{ url: profile.avatar_url }] : [{ url: "/opengraph.jpg" }],
     },
     twitter: {

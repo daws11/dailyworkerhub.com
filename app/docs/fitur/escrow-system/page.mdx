@@ -1,26 +1,26 @@
 ---
 title: Escrow System
-description: Panduan lengkap sistem pembayaran escrow DailyWorkerHub — cara kerja, keamanan, biaya, timeline, penyelesaian sengketa, dan contoh skenario transaksi
-metaDescription: "Dokumentasi lengkap Escrow System DailyWorkerHub. Cara kerja sistem escrow, fitur keamanan, fee structure, timeline transaksi, mekanisme dispute, dan contoh skenario dunia nyata."
+description: Panduan lengkap sistem pembayaran escrow Daily Worker Hub — cara kerja, keamanan, biaya, timeline, penyelesaian sengketa, dan contoh skenario transaksi
+metaDescription: "Dokumentasi lengkap Escrow System Daily Worker Hub. Cara kerja sistem escrow, fitur keamanan, fee structure, timeline transaksi, mekanisme dispute, dan contoh skenario dunia nyata."
 ---
 
 # Escrow System
 
-Escrow System adalah inti dari keamanan transaksi di DailyWorkerHub. Sistem ini memastikan bahwa dana gaji worker terjamin aman sampai pekerjaan selesai dan diverifikasi oleh employer, sekaligus melindungi employer dari kerugian jika pekerjaan tidak diselesaikan sesuai kesepakatan.
+Escrow System adalah inti dari keamanan transaksi di Daily Worker Hub. Sistem ini memastikan bahwa dana gaji worker terjamin aman sampai pekerjaan selesai dan diverifikasi oleh employer, sekaligus melindungi employer dari kerugian jika pekerjaan tidak diselesaikan sesuai kesepakatan.
 
 ---
 
 ## Apa itu Escrow?
 
-Escrow adalah mekanisme pihak ketiga yang menahan dana dalam rekening terpisah sampai kondisi tertentu terpenuhi. Dalam konteks DailyWorkerHub:
+Escrow adalah mekanisme pihak ketiga yang menahan dana dalam rekening terpisah sampai kondisi tertentu terpenuhi. Dalam konteks Daily Worker Hub:
 
 | Pihak | Peran dalam Escrow |
 |-------|-------------------|
 | **Employer** | Deposit dana gaji + fee ke escrow sebelum pekerjaan dimulai |
 | **Worker** | Melakukan pekerjaan, menerima dana setelah pekerjaan diverifikasi |
-| **DailyWorkerHub** | Mengelola dana escrow sebagai pihak ketiga yang netral |
+| **Daily Worker Hub** | Mengelola dana escrow sebagai pihak ketiga yang netral |
 
-> **Catatan:** Dana escrow disimpan dalam rekening terpisah dari dana operasional DailyWorkerHub, memastikan bahwa dana Anda tidak tercampur dengan dana perusahaan.
+> **Catatan:** Dana escrow disimpan dalam rekening terpisah dari dana operasional Daily Worker Hub, memastikan bahwa dana Anda tidak tercampur dengan dana perusahaan.
 
 ---
 
@@ -63,7 +63,7 @@ Employer memverifikasi bahwa pekerjaan sudah sesuai dengan yang diharapkan:
 |-----------|--------|-------|
 | **Approved** | 1-3 hari kerja | Dana dirilis ke saldo worker |
 | **Perlu Revisi** | Diskusi dengan worker | Worker memperbaiki, lalu ulang verifikasi |
-| **Dispute** | 3-7 hari kerja | Dikirim ke tim review DailyWorkerHub |
+| **Dispute** | 3-7 hari kerja | Dikirim ke tim review Daily Worker Hub |
 
 > **Tips:** Sebaiknya employer verifikasi dalam 24 jam setelah worker submit "Pekerjaan Selesai". Delay verifikasi berarti delay pembayaran untuk worker.
 
@@ -96,7 +96,7 @@ Setelah transaksi selesai:
 
 ## Fitur Keamanan Escrow
 
-Escrow System DailyWorkerHub dilengkapi dengan beberapa lapisan keamanan:
+Escrow System Daily Worker Hub dilengkapi dengan beberapa lapisan keamanan:
 
 ### Enkripsi Data
 
@@ -118,7 +118,7 @@ Setiap transaksi di escrow system memiliki catatan lengkap:
 | **Status** | Status terkini transaksi (pending, hold, released, dispute) |
 | **IP Address & Device** | Catatan perangkat yang melakukan aksi |
 
-> **Catatan:** Audit trail tidak dapat diubah atau dihapus oleh siapapun, termasuk oleh tim DailyWorkerHub. Catatan ini menjadi bukti autentik dalam penyelesaian sengketa.
+> **Catatan:** Audit trail tidak dapat diubah atau dihapus oleh siapapun, termasuk oleh tim Daily Worker Hub. Catatan ini menjadi bukti autentik dalam penyelesaian sengketa.
 
 ### Two-Factor Authorization
 
@@ -135,7 +135,7 @@ Tindakan sensitif dalam escrow memerlukan verifikasi tambahan:
 
 ### Pemisahan Dana
 
-Dana escrow dipisahkan dari dana operasional DailyWorkerHub:
+Dana escrow dipisahkan dari dana operasional Daily Worker Hub:
 
 - Dana escrow disimpan di rekening khusus yang terpisah
 - Hanya digunakan untuk transaksi escrow
@@ -209,7 +209,7 @@ Setiap transaksi escrow dikenakan fee untuk menutupi biaya pengelolaan sistem ke
 │     └── Dana tetap dihold di escrow sampai selesai           │
 │                         │                                     │
 │                         ▼                                     │
-│  2. Review oleh Tim DailyWorkerHub                           │
+│  2. Review oleh Tim Daily Worker Hub                           │
 │     ├── Tim mereview bukti dari kedua belah pihak            │
 │     ├── Waktu review: 1-3 hari kerja                         │
 │     ├── Tim mungkin meminta informasi tambahan               │
@@ -263,7 +263,7 @@ Setiap transaksi escrow dikenakan fee untuk menutupi biaya pengelolaan sistem ke
 | **Deposit** | Employer deposit: Rp 400.000 + 3% fee = Rp 412.000 |
 | **Masalah** | Chef datang 2 jam terlambat dan tidak mengikuti resep yang diminta |
 | **Dispute** | Employer mengajukan dispute karena kualitas kerja tidak sesuai |
-| **Review** | Tim DailyWorkerHub mereview: bukti foto makanan, chat kesepakatan resep |
+| **Review** | Tim Daily Worker Hub mereview: bukti foto makanan, chat kesepakatan resep |
 | **Keputusan** | Dana dipisah: 70% ke worker (karena pekerjaan tetap diselesaikan), 30% refund ke employer |
 | **Protection Pool** | Employer menerima kompensasi tambahan dari Protection Pool |
 

@@ -1,4 +1,4 @@
--- DailyWorkerHub Community Platform - Initial Schema
+-- Daily Worker Hub Community Platform - Initial Schema
 -- Phase 1: Foundation
 
 -- Enable UUID extension
@@ -389,6 +389,6 @@ insert into public.categories (slug, name, description, type, icon, color, sort_
   ('panduan', 'Panduan', 'Panduan komprehensif untuk pemula', 'article', 'BookOpen', '#00FF94', 2),
   ('inspiratif', 'Inspiratif', 'Kisah inspiratif dari daily worker', 'article', 'Heart', '#00FF94', 3),
   ('getting-started', 'Getting Started', 'Panduan awal untuk memulai', 'doc', 'Rocket', '#10B981', 1),
-  ('platform-guide', 'Platform Guide', 'Cara menggunakan platform DailyWorkerHub', 'doc', 'HelpCircle', '#10B981', 2),
+  ('platform-guide', 'Platform Guide', 'Cara menggunakan platform Daily Worker Hub', 'doc', 'HelpCircle', '#10B981', 2),
   ('fitur', 'Fitur', 'Deskripsi dan penggunaan fitur platform', 'doc', 'Star', '#10B981', 3),
   ('feedback', 'Feedback', 'Kumpulan feedback dan saran pengguna', 'feedback', 'MessageSquare', '#10B981', 1);

@@ -3,21 +3,21 @@ import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
 export const metadata: Metadata = {
-  title: "Kebijakan Cookie - DailyWorkerHub",
-  description: "Kebijakan Cookie DailyWorkerHub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
+  title: "Kebijakan Cookie - Daily Worker Hub",
+  description: "Kebijakan Cookie Daily Worker Hub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
   keywords: ["kebijakan cookie", "cookie", "pelacakan", "privasi", "dailyworkerhub"],
   openGraph: {
-    title: "Kebijakan Cookie - DailyWorkerHub",
-    description: "Kebijakan Cookie DailyWorkerHub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
+    title: "Kebijakan Cookie - Daily Worker Hub",
+    description: "Kebijakan Cookie Daily Worker Hub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
     url: "https://dailyworkerhub.com/cookies",
-    siteName: "DailyWorkerHub",
+    siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kebijakan Cookie - DailyWorkerHub",
+    title: "Kebijakan Cookie - Daily Worker Hub",
     images: ["/opengraph.jpg"],
   },
   alternates: {
@@ -54,13 +54,13 @@ export default function CookiesPage() {
                   <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Apa itu Cookie?</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     Cookie adalah file teks kecil yang disimpan pada perangkat Anda — baik komputer, tablet,
-                    maupun smartphone — saat Anda mengunjungi atau menggunakan layanan DailyWorkerHub. Cookie
+                    maupun smartphone — saat Anda mengunjungi atau menggunakan layanan Daily Worker Hub. Cookie
                     dikirim oleh server platform dan disimpan di browser Anda untuk berbagai keperluan, mulai
                     dari mengingat preferensi bahasa, status login, hingga melacak aktivitas penggunaan agar
                     kami dapat meningkatkan pengalaman Anda di platform kami.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Ketika Anda membuat akun di DailyWorkerHub, cookie memungkinkan kami mengenali perangkat
+                    Ketika Anda membuat akun di Daily Worker Hub, cookie memungkinkan kami mengenali perangkat
                     Anda sehingga Anda tidak perlu login ulang setiap kali mengunjungi platform. Cookie juga
                     membantu kami memahami bagaimana Anda berinteraksi dengan fitur-fitur seperti pencarian
                     lowongan kerja, pencarian pekerja, manajemen proyek harian, dan penggunaan sistem escrow
@@ -77,7 +77,7 @@ export default function CookiesPage() {
                 <section className="space-y-4">
                   <h2 id="section-2" className="text-xl font-semibold text-foreground scroll-mt-24">2. Jenis Cookie yang Kami Gunakan</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub menggunakan tiga kategori utama cookie yang masing-masing memiliki fungsi
+                    Daily Worker Hub menggunakan tiga kategori utama cookie yang masing-masing memiliki fungsi
                     berbeda. Memahami perbedaan ini membantu Anda mengetahui apa yang kami kumpulkan dan
                     mengapa kami membutuhkannya.
                   </p>
@@ -135,7 +135,7 @@ export default function CookiesPage() {
                 <section className="space-y-4">
                   <h2 id="section-3" className="text-xl font-semibold text-foreground scroll-mt-24">3. Cookie Pihak Ketiga</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub mengandalkan beberapa layanan pihak ketiga yang dalam pengoperasiannya
+                    Daily Worker Hub mengandalkan beberapa layanan pihak ketiga yang dalam pengoperasiannya
                     juga menempatkan cookie di perangkat Anda. Berikut adalah layanan-layanan tersebut
                     beserta penjelasan tentang data yang mereka kumpulkan:
                   </p>
@@ -182,7 +182,7 @@ export default function CookiesPage() {
                     <strong className="text-foreground">Google Chrome:</strong> Buka Settings → Privacy
                     and security → Cookies and other site data. Di sini Anda dapat memblokir cookie dari
                     semua situs, memblokir cookie pihak ketiga saja, atau menghapus cookie spesifik dari
-                    DailyWorkerHub. Gunakan opsi "Block third-party cookies" jika Anda ingin tetap login
+                    Daily Worker Hub. Gunakan opsi "Block third-party cookies" jika Anda ingin tetap login
                     di platform kami tanpa menerima cookie pelacakan dari situs lain.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -201,7 +201,7 @@ export default function CookiesPage() {
                     Perlu diketahui bahwa menonaktifkan cookie essential akan严重影响 fungsi platform.
                     Misalnya, Anda tidak akan bisa tetap login, sistem escrow tidak dapat memverifikasi sesi
                     transaksi, dan deposit dana tidak dapat diproses dengan aman. Untuk pengalaman terbaik,
-                    kami merekomendasikan untuk menerima cookie essential dari DailyWorkerHub sambil
+                    kami merekomendasikan untuk menerima cookie essential dari Daily Worker Hub sambil
                     memblokir cookie analitik dan fungsional pihak ketiga jika Anda concerned tentang
                     privasi.
                   </p>
@@ -226,14 +226,14 @@ export default function CookiesPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     Ketiga, untuk perubahan minor seperti pembaruan nama layanan atau koreksi editorial,
                     kami akan memperbarui tanggal "Terakhir diperbarui" di bagian atas kebijakan ini tanpa
-                    memerlukan persetujuan eksplisit ulang. Dengan terus menggunakan layanan DailyWorkerHub
+                    memerlukan persetujuan eksplisit ulang. Dengan terus menggunakan layanan Daily Worker Hub
                     setelah adanya pemberitahuan perubahan, Anda dianggap telah menyetujui kebijakan yang
                     telah diperbarui tersebut.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Kami sangat mendorong Anda untuk secara berkala meninjau kebijakan ini, terutama
                     sebelum membuat transaksi escrow besar atau menghubungkan metode pembayaran baru ke
-                    akun DailyWorkerHub Anda. Jika Anda memiliki pertanyaan atau concerns tentang kebijakan
+                    akun Daily Worker Hub Anda. Jika Anda memiliki pertanyaan atau concerns tentang kebijakan
                     cookie kami, silakan hubungi tim kami melalui halaman Kontak yang tersedia di platform.
                   </p>
                 </section>

@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { ArticlesPageClient } from "./articles-client";
 
 export const metadata: Metadata = {
-  title: "Artikel & Knowledge Base - DailyWorkerHub Community",
+  title: "Artikel & Knowledge Base - Daily Worker Hub Community",
   description: "Pelajari tips, panduan, dan kisah inspiratif dari komunitas pekerja harian Indonesia. Artikel seputar karier, gaji, remote work, dan pengembangan skill.",
   openGraph: {
-    title: "Artikel & Knowledge Base - DailyWorkerHub Community",
+    title: "Artikel & Knowledge Base - Daily Worker Hub Community",
     description: "Pelajari tips, panduan, dan kisah inspiratif dari komunitas pekerja harian Indonesia.",
     url: "https://dailyworkerhub.com/community/articles",
     type: "website",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         url: "/opengraph.jpg",
         width: 1200,
         height: 630,
-        alt: "DailyWorkerHub Articles",
+        alt: "Daily Worker Hub Articles",
       },
     ],
   },

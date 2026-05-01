@@ -51,7 +51,7 @@ const mockDocs: Doc[] = [
     id: "4",
     slug: "platform-guide",
     title: "Platform Guide",
-    excerpt: "Cara menggunakan platform DailyWorkerHub secara efektif.",
+    excerpt: "Cara menggunakan platform Daily Worker Hub secara efektif.",
     category: { name: "Platform Guide", slug: "platform-guide" },
     parent_id: null,
     has_children: true,
@@ -165,7 +165,7 @@ export default function DocsPage() {
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-foreground mb-2">Dokumentasi</h1>
                 <p className="text-muted-foreground">
-                  Panduan dan referensi untuk menggunakan platform DailyWorkerHub
+                  Panduan dan referensi untuk menggunakan platform Daily Worker Hub
                 </p>
               </div>
 

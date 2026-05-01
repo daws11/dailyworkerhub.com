@@ -6,20 +6,20 @@ import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTi
 import { CommunityNavbar } from "@/components/layout/community/CommunityNavbar"
 
 export const metadata: Metadata = {
-  title: "Komunitas Pekerja Harian Indonesia - DailyWorkerHub",
+  title: "Komunitas Pekerja Harian Indonesia - Daily Worker Hub",
   description: "Bergabunglah dengan komunitas pekerja harian Indonesia. Diskusi, pelajari tips karier, berbagi pengalaman, dan berkembang bersama ribuan daily worker di seluruh Indonesia.",
   openGraph: {
-    title: "Komunitas Pekerja Harian Indonesia - DailyWorkerHub",
+    title: "Komunitas Pekerja Harian Indonesia - Daily Worker Hub",
     description: "Bergabunglah dengan komunitas pekerja harian Indonesia. Diskusi, pelajari tips karier, berbagi pengalaman.",
     locale: "id_ID",
-    siteName: "DailyWorkerHub",
+    siteName: "Daily Worker Hub",
     type: "website",
     images: [
       {
         url: "/opengraph.jpg",
         width: 1200,
         height: 630,
-        alt: "DailyWorkerHub Community",
+        alt: "Daily Worker Hub Community",
       },
     ],
   },

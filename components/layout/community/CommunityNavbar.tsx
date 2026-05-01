@@ -171,7 +171,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
               height={32}
               className="h-8 w-auto object-contain"
             />
-            <span className="font-semibold text-foreground">DailyWorkerHub</span>
+            <span className="font-semibold text-foreground">Daily Worker Hub</span>
             <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20">
               {badgeLabel}
             </span>
@@ -213,7 +213,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
               height={28}
               className="h-7 w-auto object-contain"
             />
-            <span className="font-semibold text-foreground text-sm">DailyWorkerHub</span>
+            <span className="font-semibold text-foreground text-sm">Daily Worker Hub</span>
             <span className="px-1.5 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20">
               {badgeLabel}
             </span>

@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!discussion) {
     return {
-      title: "Diskusi Tidak Ditemukan - DailyWorkerHub",
+      title: "Diskusi Tidak Ditemukan - Daily Worker Hub",
     };
   }
 

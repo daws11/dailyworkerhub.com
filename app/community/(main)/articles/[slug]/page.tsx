@@ -13,16 +13,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!article) {
     return {
-      title: "Artikel Tidak Ditemukan - DailyWorkerHub",
+      title: "Artikel Tidak Ditemukan - Daily Worker Hub",
     };
   }
 
   return {
     title: article.title,
-    description: article.excerpt || `Baca artikel ${article.title} di DailyWorkerHub Community`,
+    description: article.excerpt || `Baca artikel ${article.title} di Daily Worker Hub Community`,
     openGraph: {
       title: article.title,
-      description: article.excerpt || `Baca artikel ${article.title} di DailyWorkerHub Community`,
+      description: article.excerpt || `Baca artikel ${article.title} di Daily Worker Hub Community`,
       url: `https://dailyworkerhub.com/community/articles/${slug}`,
       type: "article",
       images: article.cover_image ? [{ url: article.cover_image }] : [{ url: "/opengraph.jpg" }],

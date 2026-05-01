@@ -4,22 +4,22 @@ import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: {
-    default: "DailyWorkerHub Community",
-    template: "%s | DailyWorkerHub Community",
+    default: "Daily Worker Hub Community",
+    template: "%s | Daily Worker Hub Community",
   },
   description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman dengan sesama pekerja harian dan employer di Bali.",
   openGraph: {
-    title: "DailyWorkerHub Community",
+    title: "Daily Worker Hub Community",
     description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman.",
     locale: "id_ID",
-    siteName: "DailyWorkerHub",
+    siteName: "Daily Worker Hub",
     type: "website",
     images: [
       {
         url: "/opengraph.jpg",
         width: 1200,
         height: 630,
-        alt: "DailyWorkerHub Community",
+        alt: "Daily Worker Hub Community",
       },
     ],
   },

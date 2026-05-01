@@ -15,7 +15,7 @@ function Logo() {
         height={32}
         className="h-8 w-auto object-contain"
       />
-      <span className="font-semibold text-foreground">DailyWorkerHub</span>
+      <span className="font-semibold text-foreground">Daily Worker Hub</span>
       <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 border border-emerald-500/20">
         Docs
       </span>
@@ -55,7 +55,7 @@ const footer = (
     <div className="max-w-7xl mx-auto px-6 py-8 border-t border-border">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         <div>
-          <h3 className="text-lg font-bold text-foreground">DailyWorkerHub</h3>
+          <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
           <p className="mt-2 text-sm text-muted-foreground">
             Platform terpercaya untuk pekerja harian di Indonesia.
           </p>
@@ -84,7 +84,7 @@ const footer = (
         </div>
       </div>
       <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
-        © {new Date().getFullYear()} DailyWorkerHub. All rights reserved.
+        © {new Date().getFullYear()} Daily Worker Hub. All rights reserved.
       </div>
     </div>
   </Footer>

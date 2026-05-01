@@ -1,4 +1,4 @@
--- DailyWorkerHub Community Platform - Voting System Migration
+-- Daily Worker Hub Community Platform - Voting System Migration
 -- Phase 2: Voting System - Database Schema
 
 -- ============================================

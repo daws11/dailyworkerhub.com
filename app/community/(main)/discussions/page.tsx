@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { DiscussionsPageClient } from "./discussions-client";
 
 export const metadata: Metadata = {
-  title: "Forum Diskusi - DailyWorkerHub Community",
+  title: "Forum Diskusi - Daily Worker Hub Community",
   description: "Diskusikan pertanyaan, berbagi pengalaman, dan belajar dari komunitas pekerja harian Indonesia.",
   openGraph: {
-    title: "Forum Diskusi - DailyWorkerHub Community",
+    title: "Forum Diskusi - Daily Worker Hub Community",
     description: "Diskusikan pertanyaan, berbagi pengalaman, dan belajar dari komunitas pekerja harian Indonesia.",
     url: "https://dailyworkerhub.com/community/discussions",
     type: "website",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         url: "/opengraph.jpg",
         width: 1200,
         height: 630,
-        alt: "DailyWorkerHub Discussions",
+        alt: "Daily Worker Hub Discussions",
       },
     ],
   },

@@ -1,4 +1,4 @@
--- DailyWorkerHub Community Platform - Soft Delete Migration
+-- Daily Worker Hub Community Platform - Soft Delete Migration
 -- Phase 5: Discussion Forum Delete Confirmation Notification
 
 -- ============================================

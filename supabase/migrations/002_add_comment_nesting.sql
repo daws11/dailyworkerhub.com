@@ -1,4 +1,4 @@
--- DailyWorkerHub Community Platform - Comment Nesting Enhancement
+-- Daily Worker Hub Community Platform - Comment Nesting Enhancement
 -- Phase 1: Add depth column and get_comment_tree function
 
 -- ============================================

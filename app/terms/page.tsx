@@ -3,21 +3,21 @@ import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
 export const metadata: Metadata = {
-  title: "Syarat & Ketentuan - DailyWorkerHub",
-  description: "Syarat dan Ketentuan DailyWorkerHub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
+  title: "Syarat & Ketentuan - Daily Worker Hub",
+  description: "Syarat dan Ketentuan Daily Worker Hub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
   keywords: ["syarat ketentuan", "terms of service", "peraturan platform", "dailyworkerhub"],
   openGraph: {
-    title: "Syarat & Ketentuan - DailyWorkerHub",
-    description: "Syarat dan Ketentuan DailyWorkerHub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
+    title: "Syarat & Ketentuan - Daily Worker Hub",
+    description: "Syarat dan Ketentuan Daily Worker Hub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
     url: "https://dailyworkerhub.com/terms",
-    siteName: "DailyWorkerHub",
+    siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Syarat & Ketentuan - DailyWorkerHub",
+    title: "Syarat & Ketentuan - Daily Worker Hub",
     images: ["/opengraph.jpg"],
   },
   alternates: {
@@ -58,7 +58,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Kelayakan Pengguna (Eligibility)</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Untuk dapat menggunakan layanan DailyWorkerHub sebagai worker maupun employer, 
+              Untuk dapat menggunakan layanan Daily Worker Hub sebagai worker maupun employer, 
               Anda harus memenuhi seluruh persyaratan kelayakan yang ditetapkan di bawah ini. 
               Dengan mendaftar dan menggunakan platform, Anda menyatakan dan menjamin bahwa 
               Anda memenuhi semua persyaratan ini.
@@ -68,7 +68,7 @@ export default function TermsPage() {
               berusia minimal 16 tahun pada saat pendaftaran. Pengguna di bawah 18 tahun 
               dianggap sebagai minor dan bertanggung jawab untuk memastikan bahwa mereka 
               memiliki persetujuan yang sah dari orang tua, wali, atau tutor hukum sebelum 
-              menggunakan platform ini untuk aktivitas komersial apapun. DailyWorkerHub 
+              menggunakan platform ini untuk aktivitas komersial apapun. Daily Worker Hub 
               tidak memverifikasi status perkakas secara aktif tetapi berhak menangguhkan 
               akun jika ditemukan pelanggaran usia.
             </p>
@@ -83,7 +83,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Status Blacklist:</strong> Pengguna 
-              yang sebelumnya telah di-blacklist dari platform DailyWorkerHub karena 
+              yang sebelumnya telah di-blacklist dari platform Daily Worker Hub karena 
               pelanggaran berat — termasuk namun tidak terbatas pada fraud, harassment, 
               atau pelanggaran escrow — tidak diizinkan untuk membuat akun baru. Setiap 
               attempt untuk menghindari blacklist dengan membuat akun tambahan akan 
@@ -94,7 +94,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-2" className="text-xl font-semibold text-foreground scroll-mt-24">2. Jenis Pengguna dan Tanggung Jawab Mereka</h2>
             <p className="text-muted-foreground leading-relaxed">
-              DailyWorkerHub membedakan antara dua jenis pengguna utama dengan hak dan 
+              Daily Worker Hub membedakan antara dua jenis pengguna utama dengan hak dan 
               kewajiban yang berbeda. Memahami peran Anda sangat penting untuk 
               penggunaan platform yang efektif dan menghindari misunderstandings.
             </p>
@@ -102,7 +102,7 @@ export default function TermsPage() {
               <strong className="text-foreground">Employer (Pemberi Kerja):</strong> 
               Employer adalah bisnis atau individu di sektor hospitality Bali — seperti 
               hotel, restoran, kafe, bar, villa, atau event venue — yang menggunakan 
-              DailyWorkerHub untuk merekrut worker harian. Tanggung jawab employer 
+              Daily Worker Hub untuk merekrut worker harian. Tanggung jawab employer 
               mencakup: membuat deskripsi lowongan yang akurat dan tidak misleading, 
               menetapkan harga yang wajar dan sesuai dengan standar industri Bali, 
               melakukan deposit dana ke escrow sebelum pekerjaan dimulai, memverifikasi 
@@ -113,7 +113,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Worker (Pekerja Harian):</strong> 
-              Worker adalah individu yang menggunakan DailyWorkerHub untuk menemukan 
+              Worker adalah individu yang menggunakan Daily Worker Hub untuk menemukan 
               pekerjaan harian di sektor hospitality Bali. Tanggung jawab worker 
               mencakup: menyelesaikan profil dengan informasi yang accurate dan 
               portofolio yang dapat diverifikasi, submit attendance tepat waktu pada 
@@ -130,7 +130,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-3" className="text-xl font-semibold text-foreground scroll-mt-24">3. Penggunaan yang Dilarang dalam Konteks Hospitality</h2>
             <p className="text-muted-foreground leading-relaxed">
-              DailyWorkerHub memiliki zero tolerance terhadap penyalahgunaan platform. 
+              Daily Worker Hub memiliki zero tolerance terhadap penyalahgunaan platform. 
               Berikut adalah penggunaan yang secara eksplisit dilarang, dengan 
               penjelasan khusus tentang bagaimana kebijakan ini berlaku dalam konteks 
               industri hospitality:
@@ -154,7 +154,7 @@ export default function TermsPage() {
               check-in — akan langsung di-blacklist dan dana escrow yang tersimpan 
               dapat hangus. Employer yang secara sengaja memanipulasi records untuk 
               menghindari pembayaran juga akan menghadapi konsekuensi yang sama. 
-              DailyWorkerHub berhak memberikan historical data attendance kepada 
+              Daily Worker Hub berhak memberikan historical data attendance kepada 
               employer yang affected untuk keperluan verificação.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -181,7 +181,7 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Transaksi di Luar Platform:</strong> 
               Baik employer maupun worker dilarang melakukan transaksi keuangan 
-              secara langsung di luar sistem escrow DailyWorkerHub untuk menghindari 
+              secara langsung di luar sistem escrow Daily Worker Hub untuk menghindari 
               biaya platform. Violasi ini akan mengakibatkan suspension akun dan 
               disqualifikasi dari platform, karena hal ini juga menghilangkan 
               proteksi buyer/seller yang menjadi core value proposition kami.
@@ -191,14 +191,14 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-4" className="text-xl font-semibold text-foreground scroll-mt-24">4. Syarat Escrow dan Pembayaran</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Sistem escrow adalah jantung dari kepercayaan dalam platform DailyWorkerHub. 
+              Sistem escrow adalah jantung dari kepercayaan dalam platform Daily Worker Hub. 
               Dengan menggunakan platform, Anda agreeing untuk terikat dengan syarat-syarat 
               escrow berikut yang kami jelaskan secara detail di bawah ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Deposit oleh Employer:</strong> Sebelum 
               pekerjaan dimulai, employer wajib melakukan deposit dana ke escrow system 
-              DailyWorkerHub sebesar jumlah yang disepakati dengan worker untuk jasa 
+              Daily Worker Hub sebesar jumlah yang disepakati dengan worker untuk jasa 
               pekerjaan harian tersebut. Dana ini dihold oleh platform dan tidak dapat 
               dicairkan oleh employer selama pekerjaan sedang dalam proses. Deposit 
               dilakukan melalui metode pembayaran yang kami support — saat ini mencakup 
@@ -225,7 +225,7 @@ export default function TermsPage() {
               secara internal, akan diarahkan ke arbitration.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Biaya Transaksi:</strong> DailyWorkerHub 
+              <strong className="text-foreground">Biaya Transaksi:</strong> Daily Worker Hub 
               mengenakan small fee platform untuk setiap transaksi escrow yang berhasil. 
               Fee ini deducted dari jumlah gross escrow sebelum dana released ke worker. 
               Besaran fee transparan dan ditampilkan kepada employer sebelum deposit 
@@ -237,7 +237,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-5" className="text-xl font-semibold text-foreground scroll-mt-24">5. Resolusi Sengketa</h2>
             <p className="text-muted-foreground leading-relaxed">
-              DailyWorkerHub menyediakan proses resolusi sengketa bertingkat untuk menangani 
+              Daily Worker Hub menyediakan proses resolusi sengketa bertingkat untuk menangani 
               konflik antara employer dan worker. Tujuan kami adalah menyelesaikan sengketa 
               secara adil, cepat, dan dengan biaya minimal bagi kedua belah pihak.
             </p>
@@ -254,7 +254,7 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Arbitrasi:</strong> Jika mediasi tidak 
               mencapai kesepakatan, sengketa akan naik ke tahap arbitration di mana 
-              seorang arbiter independen — yang ditunjuk oleh DailyWorkerHub dari 
+              seorang arbiter independen — yang ditunjuk oleh Daily Worker Hub dari 
               panel专业人士 yang memiliki pengalaman di industri hospitality Bali — 
               akan memberikan keputusan yang mengikat bagi kedua belah pihak. Keputusan 
               arbiter bersifat final dan tidak dapat di-appeal melalui platform. 
@@ -263,7 +263,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Batasan Platform:</strong> Perlu 
-              dicatat bahwa DailyWorkerHub bertindak sebagai intermediary saja. 
+              dicatat bahwa Daily Worker Hub bertindak sebagai intermediary saja. 
               Kami tidak menjamin outcomes tertentu dalam sengketa dan tidak memiliki 
               kewajiban untuk menyediakan ganti rugi di luar jumlah dana escrow yang 
               tersimpan di platform untuk transaksi yang disputed. Pengguna yang tidak 
@@ -275,7 +275,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-6" className="text-xl font-semibold text-foreground scroll-mt-24">6. Batasan Tanggung Jawab</h2>
             <p className="text-muted-foreground leading-relaxed">
-              DailyWorkerHub didirikan sebagai platform yang memfasilitasi pertukaran 
+              Daily Worker Hub didirikan sebagai platform yang memfasilitasi pertukaran 
               tenaga kerja di sektor hospitality, bukan sebagai pihak yang secara 
               langsung mempekerjakan atau menyediakan worker. Keterangan ini penting 
               untuk dipahami agar ekspektasi Anda terhadap platform sesuai dengan 
@@ -283,7 +283,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Platform sebagai Intermediary:</strong> 
-              DailyWorkerHub tidak pernah menjadi pihak dalam kontrak pekerjaan antara 
+              Daily Worker Hub tidak pernah menjadi pihak dalam kontrak pekerjaan antara 
               employer dan worker. Kami menyediakan platform untuk mempertemukan kedua 
               belah pihak, memfasilitasi pembayaran escrow, dan menyediakan tools 
               untuk manajemen attendance dan komunikasi. Kami tidak supervisi langsung 
@@ -292,7 +292,7 @@ export default function TermsPage() {
               lingkungan kerja di tempat employer.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Force Majeure:</strong> DailyWorkerHub 
+              <strong className="text-foreground">Force Majeure:</strong> Daily Worker Hub 
               tidak bertanggung jawab atas kegagalan atau penundaan выполнения 
               obligations kami yang disebabkan oleh события diluar kendali kami yang 
               reasonable — termasuk namun tidak terbatas pada bencana alam (gempa 
@@ -304,7 +304,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Ganti Rugi:</strong> Dalam tidak 
-              ada circunstans where applicable law does not allow it, DailyWorkerHub, 
+              ada circunstans where applicable law does not allow it, Daily Worker Hub, 
               directors, employees, dan affiliates kami tidak akan liable untuk 
               indirect, incidental, special, consequential, atau punitive damages 
               yang arising dari penggunaan atau ketidakmampuan menggunakan platform, 
@@ -319,9 +319,9 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-7" className="text-xl font-semibold text-foreground scroll-mt-24">7. Hak Kekayaan Intelektual</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Seluruh konten yang tersedia di platform DailyWorkerHub — termasuk namun 
+              Seluruh konten yang tersedia di platform Daily Worker Hub — termasuk namun 
               tidak terbatas pada logo, merek dagang, desain antarmuka, teks, grafik, 
-              ikon tombol, dan kode software — adalah milik DailyWorkerHub atau 
+              ikon tombol, dan kode software — adalah milik Daily Worker Hub atau 
               pemberi lisensinya dan dilindungi oleh undang-undang hak cipta, merek 
               dagang, dan kekayaan intelektual Indonesia dan internasional.
             </p>
@@ -330,7 +330,7 @@ export default function TermsPage() {
               tetap memiliki kepemilikan atas konten yang mereka submit ke platform — 
               termasuk deskripsi lowongan kerja yang dibuat oleh employer, foto dan 
               portofolio worker, dan chat messages. Dengan memposting konten di 
-              platform, Anda memberikan DailyWorkerHub license non-exclusive, 
+              platform, Anda memberikan Daily Worker Hub license non-exclusive, 
               worldwide, royalty-free untuk menggunakan, mereproduksi, memodifikasi, 
               dan mendistribusikan konten tersebut semata-mata untuk tujuan операционные 
               platform — misalnya menampilkan deskripsi lowongan kepada candidate yang 
@@ -349,7 +349,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-8" className="text-xl font-semibold text-foreground scroll-mt-24">8. Penangguhan dan Penghentian Akun</h2>
             <p className="text-muted-foreground leading-relaxed">
-              DailyWorkerHub berhak menangguhkan atau menghentikan akun pengguna dalam 
+              Daily Worker Hub berhak menangguhkan atau menghentikan akun pengguna dalam 
               kondisi-kondisi tertentu yang telah kami tentukan. Berikut adalah 
               penjelasan mengenai kondisi-kondisi tersebut:
             </p>
@@ -412,7 +412,7 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Kepatuhan Hukum Indonesia:</strong> 
-              DailyWorkerHub dioperasikan sebagai platform yang fully compliant dengan 
+              Daily Worker Hub dioperasikan sebagai platform yang fully compliant dengan 
               peraturan perundang-undangan Indonesia yang berlaku, termasuk namun tidak 
               terbatas pada UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik 
               (ITE), UU No. 14 Tahun 2019 tentang Perlindungan Data Pribadi (UU PDP), 
@@ -451,7 +451,7 @@ export default function TermsPage() {
               kontak untuk request spesifik.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Kami appreciate kepercayaan Anda menggunakan DailyWorkerHub sebagai 
+              Kami appreciate kepercayaan Anda menggunakan Daily Worker Hub sebagai 
               partner dalam найм работников di industri hospitality Bali. Kami 
               akan terus berusaha untuk menyediakan platform yang aman, adil, 
               dan эффективный для seluruh pengguna kami.

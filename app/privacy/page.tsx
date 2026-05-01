@@ -3,21 +3,21 @@ import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
 export const metadata: Metadata = {
-  title: "Kebijakan Privasi - DailyWorkerHub",
-  description: "Kebijakan Privasi DailyWorkerHub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sebagai pengguna platform.",
+  title: "Kebijakan Privasi - Daily Worker Hub",
+  description: "Kebijakan Privasi Daily Worker Hub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sebagai pengguna platform.",
   keywords: ["kebijakan privasi", "data pribadi", "perlindungan data", "privacy policy", "dailyworkerhub"],
   openGraph: {
-    title: "Kebijakan Privasi - DailyWorkerHub",
-    description: "Kebijakan Privasi DailyWorkerHub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.",
+    title: "Kebijakan Privasi - Daily Worker Hub",
+    description: "Kebijakan Privasi Daily Worker Hub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.",
     url: "https://dailyworkerhub.com/privacy",
-    siteName: "DailyWorkerHub",
+    siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kebijakan Privasi - DailyWorkerHub",
+    title: "Kebijakan Privasi - Daily Worker Hub",
     images: ["/opengraph.jpg"],
   },
   alternates: {
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Informasi yang Kami Kumpulkan</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub mengumpulkan informasi dari Anda dalam beberapa kategori utama untuk
+                    Daily Worker Hub mengumpulkan informasi dari Anda dalam beberapa kategori utama untuk
                     dapat mengoperasikan platform marketplace yang menghubungkan pekerja harian hospitality
                     dengan bisnis di Bali. Informasi pertama yang kami kumpulkan adalah data identitas
                     dasar yang Anda berikan saat mendaftar: nama lengkap sesuai KTP atau paspor, alamat
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
                   <h2 id="section-2" className="text-xl font-semibold text-foreground scroll-mt-24">2. Bagaimana Kami Menggunakan Data Anda</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     Data pribadi yang kami kumpulkan digunakan primarily untuk menyediakan dan
-                    mempertahankan operasi platform marketplace DailyWorkerHub. Berikut adalah
+                    mempertahankan operasi platform marketplace Daily Worker Hub. Berikut adalah
                     penggunaan spesifik berdasarkan kategori data:
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
                   <h2 id="section-3" className="text-xl font-semibold text-foreground scroll-mt-24">3. Dasar Hukum Pemrosesan Data</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     Sesuai dengan Undang-Undang Perlindungan Data Pribadi (UU PDP) Indonesia yang
-                    berlaku, DailyWorkerHub memproses data pribadi Anda berdasarkan beberapa dasar
+                    berlaku, Daily Worker Hub memproses data pribadi Anda berdasarkan beberapa dasar
                     hukum yang sah tergantung pada konteks dan tujuan pemrosesan:
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -159,7 +159,7 @@ export default function PrivacyPage() {
                     yang diperlukan untuk memenuhi kewajiban kontraktual kami terhadap Anda — yaitu
                     menyediakan platform marketplace yang berfungsi penuh — dilakukan atas dasar
                     pelaksanaan kontrak. Ketika Anda menyetujui Syarat & Ketentuan dan membuat akun,
-                    sebuah kontrak layanan terbentuk antara Anda dan DailyWorkerHub. Data seperti
+                    sebuah kontrak layanan terbentuk antara Anda dan Daily Worker Hub. Data seperti
                     nama, email, nomor WhatsApp, dan informasi rekening bank diperlukan untuk
                     menjalankan kontrak ini, khususnya untuk mengoperasikan fitur escrow di mana
                     dana kepercayaan pengguna harus dikelola dengan transparan dan aman.
@@ -195,7 +195,7 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-4" className="text-xl font-semibold text-foreground scroll-mt-24">4. Integrasi Layanan Pihak Ketiga</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub mengintegrasikan beberapa layanan pihak ketiga yang secara langsung
+                    Daily Worker Hub mengintegrasikan beberapa layanan pihak ketiga yang secara langsung
                     terlibat dalam pengoperasian platform. Pihak-pihak ini memiliki akses terhadap
                     data tertentu sesuai dengan fungsinya masing-masing dan tunduk pada perjanjian
                     pemrosesan data dengan kami:
@@ -203,21 +203,21 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Supabase (Database dan Authentication):</strong>
                     Supabase adalah backend-as-a-service yang menangani penyimpanan data dan autentikasi
-                    pengguna DailyWorkerHub. Semua data profil, histori transaksi escrow, dan records
+                    pengguna Daily Worker Hub. Semua data profil, histori transaksi escrow, dan records
                     pekerjaan dikelola dalam database Supabase yang terletak di infrastruktur cloud
                     dengan enkripsi end-to-end. Ketika Anda login ke platform, Supabase menangani
                     proses autentikasi — memverifikasi kredensial, menghasilkan session tokens, dan
                     mengelola refresh tokens. Supabase juga mengelola Row Level Security (RLS) yang
                     memastikan setiap pengguna hanya dapat mengakses data yang menjadi hak mereka.
                     Sebagai processor data, Supabase tidak menggunakan data Anda untuk tujuan mereka
-                    sendiri dan hanya memproses sesuai instruksi dari DailyWorkerHub.
+                    sendiri dan hanya memproses sesuai instruksi dari Daily Worker Hub.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Xendit (Payment Processing):</strong> Xendit
                     adalah payment gateway yang memproses semua transaksi finansial di platform kami,
                     termasuk deposit escrow dari employer dan withdrawal untuk worker. Ketika Anda
                     melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
-                    langsung oleh Xendit — DailyWorkerHub tidak pernah menyimpan data kartu atau
+                    langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
                     rekening bank penuh. Xendit menangani compliance dengan standar PCI-DSS untuk
                     keamanan data pembayaran, konversi mata uang jika diperlukan, settlement dana
                     ke rekening bank lokal Indonesia, serta notification transaksi成功 atau gagal.
@@ -301,12 +301,12 @@ export default function PrivacyPage() {
                   <h2 id="section-6" className="text-xl font-semibold text-foreground scroll-mt-24">6. Langkah Keamanan yang Kami Terapkan</h2>
                   <p className="text-muted-foreground leading-relaxed">
                     Keamanan data pribadi dan dana escrow pengguna adalah prioritas utama
-                    DailyWorkerHub. Kami menerapkan multiple layers of protection untuk
+                    Daily Worker Hub. Kami menerapkan multiple layers of protection untuk
                     safeguarding data Anda:
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Enkripsi Data:</strong> Semua data yang
-                    dikirim antara perangkat Anda dan server DailyWorkerHub dilindungi dengan
+                    dikirim antara perangkat Anda dan server Daily Worker Hub dilindungi dengan
                     TLS 1.3 encryption — protokol enkripsi terkini yang memastikan tidak ada
                     pihak ketiga yang dapat menyadap komunikasi Anda saat menggunakan platform.
                     Data sensitif seperti kata sandi tidak pernah disimpan dalam plaintext;
@@ -349,7 +349,7 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-7" className="text-xl font-semibold text-foreground scroll-mt-24">7. Hak Anda sebagai Subjek Data</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Sebagai pengguna DailyWorkerHub, Anda memiliki serangkaian hak yang dijamin
+                    Sebagai pengguna Daily Worker Hub, Anda memiliki serangkaian hak yang dijamin
                     oleh Undang-Undang Perlindungan Data Pribadi Indonesia. Anda dapat
                     menggunakan hak-hak ini dengan menghubungi tim kami melalui kanal yang
                     tersedia di bagian akhir kebijakan ini:
@@ -415,7 +415,7 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-8" className="text-xl font-semibold text-foreground scroll-mt-24">8. Privasi Anak-anak</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub adalah platform yang dirancang untuk pengguna dewasa dalam konteks
+                    Daily Worker Hub adalah platform yang dirancang untuk pengguna dewasa dalam konteks
                     pekerjaan profesional di industri hospitality. Kami secara strict tidak
                     mengumpulkan data pribadi dari individu yang belum berusia 16 tahun.
                   </p>
@@ -430,7 +430,7 @@ export default function PrivacyPage() {
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Untuk pengguna yang berusia 16-18 tahun di yurisdiksi Indonesia yang menganggap
-                    mereka sebagai minor, perlu memahami bahwa penggunaan platform DailyWorkerHub
+                    mereka sebagai minor, perlu memahami bahwa penggunaan platform Daily Worker Hub
                     untuk aktivitas pekerjaan — baik sebagai worker maupun dalam hal employer yang
                     menjalankan bisnis — adalah aktivitas kontrak yang secara hukum mengikat di
                     bawah pengawasan tutors atau guardians yang sah. Kami highly recommend agar
@@ -442,7 +442,7 @@ export default function PrivacyPage() {
                 <section className="space-y-4">
                   <h2 id="section-9" className="text-xl font-semibold text-foreground scroll-mt-24">9. Transfer Data Internasional</h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    DailyWorkerHub mengoperasikan bisnis dan menyimpan data primarily di Indonesia,
+                    Daily Worker Hub mengoperasikan bisnis dan menyimpan data primarily di Indonesia,
                     dengan infrastruktur cloud yang menggunakan servers yang berlokasi di Asia
                     Tenggara — khususnya Singapore dan Jakarta. Ketika data Anda ditransfer di
                     luar Indonesia, kami memastikan bahwa transfer tersebut mematuhi требования
