@@ -352,18 +352,66 @@ export default function Home() {
       {/* ============================================================ */}
       {/* PURPOSE — tentang Daily Worker Hub */}
       {/* ============================================================ */}
-      <section className="py-16 md:py-20 px-4 md:px-8 bg-muted/30 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Apa itu Daily Worker Hub?
-          </h2>
-          <p className="font-sans text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas
-            dengan pelaku usaha yang membutuhkan tenaga kerja di Indonesia. Kami
-            menyediakan sistem verifikasi reputasi, perlindungan transaksi melalui
-            Protection Pool, dan transparansi penuh untuk semua pihak — baik pekerja
-            maupun bisnis.
-          </p>
+      <section className="py-20 md:py-28 px-4 md:px-8 relative z-10 overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-6xl mx-auto relative">
+          {/* Header */}
+          <div className="text-center mb-16 md:mb-20">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 mb-6">
+              Tentang Kami
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+              Apa itu <span className="text-primary">Daily Worker Hub</span>?
+            </h2>
+            <p className="font-sans text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas
+              dengan pelaku usaha di Indonesia. Kami hadir untuk menghilangkan perantara
+              dan menciptakan ekosistem kerja yang transparan dan adil.
+            </p>
+          </div>
+
+          {/* Feature cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {/* For Workers */}
+            <div className="group relative p-8 rounded-2xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <Users className="w-6 h-6" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3">Untuk Pekerja</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Temukan pekerjaan harian tanpa perantara. Bangun reputasi, dapatkan
+                perlindungan transaksi, dan kelola penghasilanmu dalam satu platform.
+              </p>
+            </div>
+
+            {/* For Businesses */}
+            <div className="group relative p-8 rounded-2xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3">Untuk Bisnis</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Rekrut pekerja harian terpercaya dengan sistem rating dan verifikasi.
+                Bayar langsung ke pekerja, tanpa biaya tersembunyi.
+              </p>
+            </div>
+
+            {/* Protection */}
+            <div className="group relative p-8 rounded-2xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-foreground mb-3">Perlindungan</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Protection Pool melindungi kedua belah pihak. Transaksi aman dengan
+                sistem escrow dan verifikasi reputasi komunitas.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
