@@ -1,4 +1,4 @@
-{
+export default {
   "sistem-dana-jaminan": "Sistem Dana Jaminan",
   "dana-perlindungan": "Dana Perlindungan",
   "penyelesaian-perselisihan": "Penyelesaian Perselisihan",

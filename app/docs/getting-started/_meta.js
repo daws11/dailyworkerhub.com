@@ -1,4 +1,4 @@
-{
+export default {
   "persiapan-dasar": "Persiapan Dasar",
   "membuat-akun": "Membuat Akun",
   "verifikasi-akun": "Verifikasi Akun",
