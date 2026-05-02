@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 const shortcuts = [
   { label: "Diskusi Terbaru", icon: MessageSquare, href: "/community/discussions?sort=newest" },
   { label: "Artikel Populer", icon: TrendingUp, href: "/community/articles?sort=popular" },
-  { label: "Panduan Karir", icon: BookOpen, href: "/community/docs/getting-started" },
+  { label: "Panduan Karir", icon: BookOpen, href: "/docs/getting-started" },
   { label: "Feedback Produk", icon: Vote, href: "/community/feedback" },
   { label: "Cari Lowongan", icon: Briefcase, href: "/" },
 ]
