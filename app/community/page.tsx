@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link"
 import Image from "next/image"
-import { MessageSquare, FileText, BookOpen, Vote, Sparkles, Search, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye } from "lucide-react"
+import { MessageSquare, FileText, BookOpen, Vote, Sparkles, Search, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, Zap } from "lucide-react"
 import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTimeAgo } from "@/lib/community"
 import { CommunityNavbar } from "@/components/layout/community/CommunityNavbar"
+import CommunityChatDemo from "@/components/community/CommunityChatDemo"
 
 export const metadata: Metadata = {
   title: "Komunitas Pekerja Harian Indonesia - Daily Worker Hub",
@@ -54,47 +55,91 @@ export default async function CommunityPage() {
       <CommunityNavbar />
 
       {/* Hero / Command Center */}
-      <section className="relative h-screen flex items-center justify-center bg-radial-green pt-16">
-        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-              Komunitas Pekerja Harian Indonesia
-            </span>
-          </h1>
+      <section className="relative min-h-screen flex items-center bg-radial-green pt-20 pb-16">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Column — Content */}
+            <div className="text-center lg:text-left">
+              {/* Headline */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                  Komunitas Pekerja Harian Indonesia
+                </span>
+              </h1>
 
-          {/* Subheadline */}
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto px-4">
-            Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
-          </p>
+              {/* Subheadline */}
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-xl">
+                Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
+              </p>
 
-          {/* Search */}
-          <div className="w-full max-w-2xl mx-auto px-4 sm:px-0">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative flex items-center bg-card border border-border rounded-2xl h-12 sm:h-14 md:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground mr-3 sm:mr-4 flex-shrink-0" />
-                <input
-                  type="text"
-                  placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
-                  className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm sm:text-base"
-                />
+              {/* Search */}
+              <div className="w-full max-w-xl">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative flex items-center bg-card border border-border rounded-2xl h-12 sm:h-14 md:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground mr-3 sm:mr-4 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
+                      className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm sm:text-base"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Shortcut Pills */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mt-5 sm:mt-6">
+                {shortcuts.map((shortcut) => (
+                  <Link
+                    key={shortcut.label}
+                    href={shortcut.href}
+                    className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
+                  >
+                    <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span>{shortcut.label}</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Social Proof */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 mt-7 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-7 h-7 rounded-full border-2 border-background bg-emerald-500/20 flex items-center justify-center text-[10px] font-medium text-emerald-400"
+                      >
+                        {String.fromCharCode(65 + i)}
+                      </div>
+                    ))}
+                  </div>
+                  <span>+{stats.members.toLocaleString()} member</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Zap className="w-4 h-4 text-emerald-400" />
+                  <span>{stats.discussions.toLocaleString()}+ diskusi aktif</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Shortcut Pills */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 px-4">
-            {shortcuts.map((shortcut) => (
-              <Link
-                key={shortcut.label}
-                href={shortcut.href}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
-              >
-                <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>{shortcut.label}</span>
-              </Link>
-            ))}
+            {/* Right Column — Animated Chat Preview */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Glow behind chat */}
+                <div className="absolute inset-0 bg-emerald-500/10 rounded-2xl blur-2xl" />
+                <div className="relative bg-card/60 backdrop-blur-sm border border-border rounded-2xl p-3 sm:p-4">
+                  <div className="flex items-center gap-2 px-2 pb-3 border-b border-border/50 mb-1">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs text-muted-foreground">Live preview</span>
+                    </div>
+                    <span className="text-xs text-emerald-400/80 ml-auto font-medium">Komunitas Chat</span>
+                  </div>
+                  <CommunityChatDemo />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
