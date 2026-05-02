@@ -58,7 +58,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Kelayakan Pengguna (Eligibility)</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Untuk dapat menggunakan layanan Daily Worker Hub sebagai worker maupun employer, 
+              Untuk dapat menggunakan layanan Daily Worker Hub sebagai pekerja maupun pemberi kerja, 
               Anda harus memenuhi seluruh persyaratan kelayakan yang ditetapkan di bawah ini. 
               Dengan mendaftar dan menggunakan platform, Anda menyatakan dan menjamin bahwa 
               Anda memenuhi semua persyaratan ini.
@@ -75,10 +75,10 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Identitas yang Valid:</strong> Setiap 
               pengguna wajib memberikan informasi identitas yang benar, akurat, dan 
-              lengkap pada saat pendaftaran. Worker diharuskan memverifikasi identitas 
+              lengkap pada saat pendaftaran. Pekerja diharuskan memverifikasi identitas 
               mereka melalui sistem verifikasi yang kami sediakan, yang dapat mencakup 
               verifikasi nomor WhatsApp dan upload dokumen identitas resmi (KTP, SIM, 
-              atau paspor). Employer diharuskan memverifikasi legalitas bisnis mereka 
+              atau paspor). Pemberi Kerja diharuskan memverifikasi legalitas bisnis mereka 
               sebelum dapat membuat lowongan dan melakukan deposit Dana Jaminan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -99,30 +99,30 @@ export default function TermsPage() {
               penggunaan platform yang efektif dan menghindari misunderstandings.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Employer (Pemberi Kerja):</strong> 
-              Employer adalah bisnis atau individu di sektor hospitality Bali — seperti 
+              <strong className="text-foreground">Pemberi Kerja (Pemberi Kerja):</strong> 
+              Pemberi Kerja adalah bisnis atau individu di sektor hospitality Bali — seperti 
               hotel, restoran, kafe, bar, villa, atau event venue — yang menggunakan 
-              Daily Worker Hub untuk merekrut worker harian. Tanggung jawab employer 
+              Daily Worker Hub untuk merekrut pekerja harian. Tanggung jawab pemberi kerja 
               mencakup: membuat deskripsi lowongan yang akurat dan tidak misleading, 
               menetapkan harga yang wajar dan sesuai dengan standar industri Bali, 
               melakukan deposit dana ke Dana Jaminan sebelum pekerjaan dimulai, memverifikasi 
-              attendance worker pada awal dan akhir shift, approve atau perselisihand pekerjaan 
+              attendance pekerja pada awal dan akhir shift, approve atau perselisihand pekerjaan 
               yang telah selesai dalam waktu 24 jam setelah submission, serta menjaga 
-              profesionalisme dalam semua interaksi dengan worker. Employer yang gagal 
+              profesionalisme dalam semua interaksi dengan pekerja. Pemberi Kerja yang gagal 
               memenuhi tanggung jawab ini dapat dikenai penalti termasuk suspension akun.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Worker (Pekerja Harian):</strong> 
-              Worker adalah individu yang menggunakan Daily Worker Hub untuk menemukan 
-              pekerjaan harian di sektor hospitality Bali. Tanggung jawab worker 
+              <strong className="text-foreground">Pekerja (Pekerja Harian):</strong> 
+              Pekerja adalah individu yang menggunakan Daily Worker Hub untuk menemukan 
+              pekerjaan harian di sektor hospitality Bali. Tanggung jawab pekerja 
               mencakup: menyelesaikan profil dengan informasi yang accurate dan 
               portofolio yang dapat diverifikasi, submit attendance tepat waktu pada 
               awal dan akhir shift menggunakan fitur attendance di platform, 
               menyelesaikan pekerjaan sesuai dengan standar yang disepakati dengan 
-              employer, mengkomunikasikan masalah atau ketidakmampuan menyelesaikan 
-              pekerjaan secepat mungkin agar employer punya waktu untuk contingency, 
+              pemberi kerja, mengkomunikasikan masalah atau ketidakmampuan menyelesaikan 
+              pekerjaan secepat mungkin agar pemberi kerja punya waktu untuk contingency, 
               serta menjaga profesionalisme dan etika kerja yang baik selama bekerja. 
-              Worker yang tidak memenuhi tanggung jawab dapat menghadapi penalty, 
+              Pekerja yang tidak memenuhi tanggung jawab dapat menghadapi penalty, 
               negative reviews, atau blacklisting dari platform.
             </p>
           </section>
@@ -136,33 +136,33 @@ export default function TermsPage() {
               industri hospitality:
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">No Show dan Ghosting:</strong> Worker 
-              yang accepted sebuah job namun gagal muncul di lokasi employer tanpa 
+              <strong className="text-foreground">No Show dan Ghosting:</strong> Pekerja 
+              yang accepted sebuah job namun gagal muncul di lokasi pemberi kerja tanpa 
               memberikan notice yang cukup (minimal 2 jam sebelum shift dimulai) 
               akan diberikan penalty berupa suspension sementara untuk pertama 
               pelanggaran. Violasi berulang akan mengakibatkan permanent blacklist. 
-              Employer yang setelah mengapprove worker kemudian membatalkan shift 
+              Pemberi Kerja yang setelah mengapprove pekerja kemudian membatalkan shift 
               less dari 12 jam sebelum waktunya tanpa alasan yang valid juga 
-              akan menerima penalty, karena hal ini menyebabkan worker kehilangan 
+              akan menerima penalty, karena hal ini menyebabkan pekerja kehilangan 
              kesempatan kerja lain.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Catatan Attendance Palsu:</strong> 
-              Worker yang dengan sengaja memanipulasi fitur attendance — termasuk 
+              Pekerja yang dengan sengaja memanipulasi fitur attendance — termasuk 
               menggunakan lokasi palsu (VPN untuk spoofing GPS), submit attendance 
-              behalf of worker lain, atau menggunakan foto/screenshot palsu untuk 
+              behalf of pekerja lain, atau menggunakan foto/screenshot palsu untuk 
               check-in — akan langsung di-blacklist dan Dana Jaminan yang tersimpan 
-              dapat hangus. Employer yang secara sengaja memanipulasi records untuk 
+              dapat hangus. Pemberi Kerja yang secara sengaja memanipulasi records untuk 
               menghindari pembayaran juga akan menghadapi konsekuensi yang sama. 
               Daily Worker Hub berhak memberikan historical data attendance kepada 
-              employer yang affected untuk keperluan verificação.
+              pemberi kerja yang affected untuk keperluan verificação.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Standar Kualitas Kerja:</strong> 
-              Worker diharapkan menyelesaikan pekerjaan sesuai dengan standar yang 
-              reasonable untuk posisi masing-masing. Employer yang menemukan kualitas 
+              Pekerja diharapkan menyelesaikan pekerjaan sesuai dengan standar yang 
+              reasonable untuk posisi masing-masing. Pemberi Kerja yang menemukan kualitas 
               kerja yang tidak memuaskan harus mengkomunikasikan hal ini melalui sistem 
-              platform dalam 24 jam setelah pekerjaan selesai. Worker yang secara 
+              platform dalam 24 jam setelah pekerjaan selesai. Pekerja yang secara 
               berulang menerima complaints tentang kualitas kerja — setelah mediation 
               dan kesempatan untuk improve — dapat di-blacklist. Yang tidak termasuk 
               dalam kategori ini adalah differences of opinion yang normal tentang 
@@ -172,15 +172,15 @@ export default function TermsPage() {
               <strong className="text-foreground">Harassment dan Perilaku Tidak Profesional:</strong> 
               Semua bentuk harassment — termasuk namun tidak terbatas pada harassment 
               seksual, discriminatory comments berdasarkan agama, suku, gender, atau 
-              orientasi seksual, bullying, atau intimidation — baik dari employer maupun 
-              worker adalah dilarang mutlak dan dapat dilaporkan melalui sistem perselisihan. 
+              orientasi seksual, bullying, atau intimidation — baik dari pemberi kerja maupun 
+              pekerja adalah dilarang mutlak dan dapat dilaporkan melalui sistem perselisihan. 
               Dalam kasus yang validated, pelaku akan di-blacklist secara permanen tanpa 
               kesempatan appeal, dan dalam kasus yang melibatkan ancaman fisik atau 
               seksual, kami akan menyerahkan evidence kepada otoritas yang berwenang.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Transaksi di Luar Platform:</strong> 
-              Baik employer maupun worker dilarang melakukan transaksi keuangan 
+              Baik pemberi kerja maupun pekerja dilarang melakukan transaksi keuangan 
               secara langsung di luar Sistem Dana Jaminan Daily Worker Hub untuk menghindari 
               biaya platform. Violasi ini akan mengakibatkan suspension akun dan 
               disqualifikasi dari platform, karena hal ini juga menghilangkan 
@@ -196,29 +196,29 @@ export default function TermsPage() {
               Dana Jaminan berikut yang kami jelaskan secara detail di bawah ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Deposit oleh Employer:</strong> Sebelum 
-              pekerjaan dimulai, employer wajib melakukan deposit dana ke Sistem Dana Jaminan 
-              Daily Worker Hub sebesar jumlah yang disepakati dengan worker untuk jasa 
+              <strong className="text-foreground">Deposit oleh Pemberi Kerja:</strong> Sebelum 
+              pekerjaan dimulai, pemberi kerja wajib melakukan deposit dana ke Sistem Dana Jaminan 
+              Daily Worker Hub sebesar jumlah yang disepakati dengan pekerja untuk jasa 
               pekerjaan harian tersebut. Dana ini dihold oleh platform dan tidak dapat 
-              dicairkan oleh employer selama pekerjaan sedang dalam proses. Deposit 
+              dicairkan oleh pemberi kerja selama pekerjaan sedang dalam proses. Deposit 
               dilakukan melalui metode pembayaran yang kami support — saat ini mencakup 
               transfer bank lokal Indonesia dan Xendit virtual account — dan dana deposit 
-              akan shown sebagai "pending" di dashboard employer sampai pekerjaan dimulai.
+              akan shown sebagai "pending" di dashboard pemberi kerja sampai pekerjaan dimulai.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Release Dana kepada Worker:</strong> 
-              Setelah worker menyelesaikan pekerjaan dan submit completion notice, 
-              employer memiliki jendela 24 jam untuk memverifikasi kualitas dan kuantitas 
-              pekerjaan. Jika employer puas, mereka approve release dana dan Dana Jaminan 
-              akan ditransfer ke wallet worker di platform. Worker kemudian dapat 
+              <strong className="text-foreground">Release Dana kepada Pekerja:</strong> 
+              Setelah pekerja menyelesaikan pekerjaan dan submit completion notice, 
+              pemberi kerja memiliki jendela 24 jam untuk memverifikasi kualitas dan kuantitas 
+              pekerjaan. Jika pemberi kerja puas, mereka approve release dana dan Dana Jaminan 
+              akan ditransfer ke wallet pekerja di platform. Pekerja kemudian dapat 
               melakukan withdrawal ke rekening bank mereka. Withdrawal biasanya 
               memakan waktu 1-3 hari kerja tergantung bank tujuan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Perselisihan Dana Jaminan:</strong> Jika employer 
+              <strong className="text-foreground">Perselisihan Dana Jaminan:</strong> Jika pemberi kerja 
               tidak puas dengan pekerjaan, mereka dapat raise perselisihan dalam 24 jam setelah 
               submission. Dana akan tetap dihold di Dana Jaminan sampai perselisihan resolved melalui 
-              proses mediation kami. Selama perselisihan, baik employer maupun worker dapat 
+              proses mediation kami. Selama perselisihan, baik pemberi kerja maupun pekerja dapat 
               submit bukti-bukti pendukung — foto hasil kerja, chat logs, attendance 
               records — untuk memperkuat posisi mereka. Tim mediation kami akan 
               memutuskan berdasarkan bukti yang ada. Jika perselisihan tidak dapat resolved 
@@ -227,10 +227,10 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Biaya Transaksi:</strong> Daily Worker Hub 
               mengenakan small Biaya Platform untuk setiap transaksi Dana Jaminan yang berhasil. 
-              Biaya ini deducted dari jumlah gross Dana Jaminan sebelum dana released ke worker. 
-              Besaran biaya transparan dan ditampilkan kepada employer sebelum deposit 
-              dilakukan, sehingga tidak ada biaya tersembunyi. Employer menanggung 
-              seluruh Biaya Platform agar worker menerima net amount yang disepakati.
+              Biaya ini deducted dari jumlah gross Dana Jaminan sebelum dana released ke pekerja. 
+              Besaran biaya transparan dan ditampilkan kepada pemberi kerja sebelum deposit 
+              dilakukan, sehingga tidak ada biaya tersembunyi. Pemberi Kerja menanggung 
+              seluruh Biaya Platform agar pekerja menerima net amount yang disepakati.
             </p>
           </section>
 
@@ -238,7 +238,7 @@ export default function TermsPage() {
             <h2 id="section-5" className="text-xl font-semibold text-foreground scroll-mt-24">5. Resolusi Sengketa</h2>
             <p className="text-muted-foreground leading-relaxed">
               Daily Worker Hub menyediakan proses resolusi perselisihan bertingkat untuk menangani 
-              konflik antara employer dan worker. Tujuan kami adalah menyelesaikan perselisihan 
+              konflik antara pemberi kerja dan pekerja. Tujuan kami adalah menyelesaikan perselisihan 
               secara adil, cepat, dan dengan biaya minimal bagi kedua belah pihak.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -277,19 +277,19 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               Daily Worker Hub didirikan sebagai platform yang memfasilitasi pertukaran 
               tenaga kerja di sektor hospitality, bukan sebagai pihak yang secara 
-              langsung mempekerjakan atau menyediakan worker. Keterangan ini penting 
+              langsung mempekerjakan atau menyediakan pekerja. Keterangan ini penting 
               untuk dipahami agar ekspektasi Anda terhadap platform sesuai dengan 
               kenyataan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Platform sebagai Intermediary:</strong> 
               Daily Worker Hub tidak pernah menjadi pihak dalam kontrak pekerjaan antara 
-              employer dan worker. Kami menyediakan platform untuk mempertemukan kedua 
+              pemberi kerja dan pekerja. Kami menyediakan platform untuk mempertemukan kedua 
               belah pihak, memfasilitasi pembayaran Dana Jaminan, dan menyediakan tools 
               untuk manajemen attendance dan komunikasi. Kami tidak supervisi langsung 
-              pekerjaan yang dilakukan worker di lokasi employer, tidak bertanggung 
+              pekerjaan yang dilakukan pekerja di lokasi pemberi kerja, tidak bertanggung 
               jawab atas kualitas hasil kerja, dan tidak memiliki kontrol atas 
-              lingkungan kerja di tempat employer.
+              lingkungan kerja di tempat pemberi kerja.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Force Majeure:</strong> Daily Worker Hub 
@@ -305,11 +305,11 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Ganti Rugi:</strong> Dalam tidak 
               ada circunstans where applicable law does not allow it, Daily Worker Hub, 
-              directors, employees, dan affiliates kami tidak akan liable untuk 
+              directors, pekerja, dan affiliates kami tidak akan liable untuk 
               indirect, incidental, special, consequential, atau punitive damages 
               yang arising dari penggunaan atau ketidakmampuan menggunakan platform, 
               termasuk namun tidak terbatas pada lost profits, lost data, atau lost 
-              opportunity yang terkait dengan pekerjaan yang failed atau worker yang 
+              opportunity yang terkait dengan pekerjaan yang failed atau pekerja yang 
               tidak show up. Liability kami dalam hal apapun terbatas pada jumlah 
               total biaya yang telah Anda bayarkan kepada kami dalam 12 months preceding 
               the incident yang memberikan rise kepada klaim.
@@ -328,13 +328,13 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Konten Pengguna:</strong> Pengguna 
               tetap memiliki kepemilikan atas konten yang mereka submit ke platform — 
-              termasuk deskripsi lowongan kerja yang dibuat oleh employer, foto dan 
-              portofolio worker, dan chat messages. Dengan memposting konten di 
+              termasuk deskripsi lowongan kerja yang dibuat oleh pemberi kerja, foto dan 
+              portofolio pekerja, dan chat messages. Dengan memposting konten di 
               platform, Anda memberikan Daily Worker Hub license non-exclusive, 
               worldwide, royalty-free untuk menggunakan, mereproduksi, memodifikasi, 
               dan mendistribusikan konten tersebut semata-mata untuk tujuan operasional 
               platform — misalnya menampilkan deskripsi lowongan kepada candidate yang 
-              sesuai atau menyimpan portofolio worker untuk ditampilkan kepada employer.
+              sesuai atau menyimpan portofolio pekerja untuk ditampilkan kepada pemberi kerja.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Penggunaan yang Dilarang:</strong> 

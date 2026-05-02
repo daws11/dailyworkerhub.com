@@ -7,7 +7,7 @@ WHERE article_id IN (
   SELECT id FROM community.articles 
   WHERE slug IN (
     '10-tips-menjadi-housekeeper-profesional',
-    'panduan-sistem-dana-jaminan-untuk-employer',
+    'panduan-sistem-dana-jaminan-untuk-pemberi kerja',
     'cerita-sukses-wayan-sebuah-perjalanan-dari-ojek-ke-housekeeper',
     'negosiasi-gaji-untuk-pekerja-harian-perspektif-hr'
   )
@@ -17,7 +17,7 @@ WHERE article_id IN (
 DELETE FROM community.articles 
 WHERE slug IN (
   '10-tips-menjadi-housekeeper-profesional',
-  'panduan-sistem-dana-jaminan-untuk-employer',
+  'panduan-sistem-dana-jaminan-untuk-pemberi kerja',
   'cerita-sukses-wayan-sebuah-perjalanan-dari-ojek-ke-housekeeper',
   'negosiasi-gaji-untuk-pekerja-harian-perspektif-hr'
 );
@@ -28,7 +28,7 @@ WHERE discussion_id IN (
   SELECT id FROM community.discussions 
   WHERE slug IN (
     'berapa-gaji-fair-untuk-housekeeper-di-bali-2026',
-    'tips-untuk-employer-cara-memilih-housekeeper-yang-tepat',
+    'tips-untuk-pemberi kerja-cara-memilih-housekeeper-yang-tepat',
     'discussion-tentang-attendance-gps-location',
     'sharing-pengalaman-first-time-jadi-bartender-di-rooftop-bar'
   )
@@ -38,7 +38,7 @@ WHERE discussion_id IN (
 DELETE FROM community.discussions 
 WHERE slug IN (
   'berapa-gaji-fair-untuk-housekeeper-di-bali-2026',
-  'tips-untuk-employer-cara-memilih-housekeeper-yang-tepat',
+  'tips-untuk-pemberi kerja-cara-memilih-housekeeper-yang-tepat',
   'discussion-tentang-attendance-gps-location',
   'sharing-pengalaman-first-time-jadi-bartender-di-rooftop-bar'
 );

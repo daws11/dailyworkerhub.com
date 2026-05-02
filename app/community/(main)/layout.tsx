@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: "Daily Worker Hub Community",
     template: "%s | Daily Worker Hub Community",
   },
-  description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman dengan sesama pekerja harian dan employer di Bali.",
+  description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman dengan sesama pekerja harian dan pemberi kerja di Bali.",
   openGraph: {
     title: "Daily Worker Hub Community",
     description: "Komunitas Pekerja Harian Indonesia - Diskusi, artikel, dan berbagi pengalaman.",

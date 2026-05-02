@@ -66,9 +66,9 @@ function HowItWorksTabs() {
 
   const bisnisSteps = [
     { step: "1", title: "Daftar & Verifikasi", desc: "Proses verifikasi bisnis dalam hitungan menit.", icon: FileText },
-    { step: "2", title: "Pasang Lowongan", desc: "Tentukan posisi, tanggal, jumlah worker, dan budget.", icon: Building2 },
-    { step: "3", title: "Pilih Worker", desc: "Lihat reputasi dan histori pekerja sebelum memilih.", icon: Search },
-    { step: "4", title: "Konfirmasi & Pantau", desc: "Worker check-in via QR code di lokasi.", icon: CheckCircle2 },
+    { step: "2", title: "Pasang Lowongan", desc: "Tentukan posisi, tanggal, jumlah pekerja, dan budget.", icon: Building2 },
+    { step: "3", title: "Pilih Pekerja", desc: "Lihat reputasi dan histori pekerja sebelum memilih.", icon: Search },
+    { step: "4", title: "Konfirmasi & Pantau", desc: "Pekerja check-in via QR code di lokasi.", icon: CheckCircle2 },
     { step: "5", title: "Pembayaran Otomatis", desc: "Dana ditransfer otomatis setelah shift selesai.", icon: Wallet }
   ];
 
@@ -276,12 +276,12 @@ export default function Home() {
                 </Magnet>
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
                   <motion.a
-                    href="https://app.dailyworkerhub.com/register?role=worker"
+                    href="https://app.dailyworkerhub.com/register?role=pekerja"
                     whileHover={{ scale: 1.05, backgroundColor: "var(--foreground)", color: "white" }}
                     whileTap={{ scale: 0.98 }}
                     className="border border-border text-foreground rounded-full px-8 md:px-10 h-14 text-sm md:text-base font-sub tracking-wide whitespace-nowrap bg-transparent hover:bg-foreground hover:text-white transition-colors flex items-center justify-center gap-3 w-full sm:w-auto"
                   >
-                    <span>Bergabung sebagai Worker</span>
+                    <span>Bergabung sebagai Pekerja</span>
                     <ArrowUpRight className="w-5 h-5 transition-all" />
                   </motion.a>
                 </Magnet>
@@ -314,7 +314,7 @@ export default function Home() {
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                   className="rounded-2xl md:rounded-[2rem] overflow-hidden h-[100px] sm:h-[160px] md:h-[240px] shadow-2xl relative group"
                 >
-                  <Image src="/hero-bg.webp" alt="Daily Worker" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <Image src="/hero-bg.webp" alt="Daily Pekerja" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 </motion.div>
               </div>
 
@@ -376,7 +376,7 @@ export default function Home() {
 
           {/* Feature cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {/* For Workers */}
+            {/* For Pekerja */}
             <div className="group relative p-8 rounded-2xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
               <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
                 <Users className="w-6 h-6" />
@@ -483,7 +483,7 @@ export default function Home() {
               </div>
               <h3 className="font-display text-2xl font-bold text-primary mb-4">Dana Perlindungan</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                1% dari setiap transaksi dialokasikan ke Dana Perlindungan — dana yang dirancang untuk melindungi worker ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
+                1% dari setiap transaksi dialokasikan ke Dana Perlindungan — dana yang dirancang untuk melindungi pekerja ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
               </p>
             </motion.div>
 
@@ -506,7 +506,7 @@ export default function Home() {
               </div>
               <h3 className="font-display text-2xl font-bold text-primary mb-4">Reputasi & Partisipasi</h3>
               <p className="text-muted-foreground font-sans leading-relaxed">
-                Setiap worker memiliki skor kepercayaan yang dibangun berdasarkan umpan balik dari bisnis. Sebagai anggota komunitas, worker dan bisnis dapat memberikan masukan dan voting untuk pengembangan fitur platform.
+                Setiap pekerja memiliki skor kepercayaan yang dibangun berdasarkan umpan balik dari bisnis. Sebagai anggota komunitas, pekerja dan bisnis dapat memberikan masukan dan voting untuk pengembangan fitur platform.
               </p>
             </motion.div>
           </div>
@@ -525,7 +525,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <Image src="/worker-portrait.webp" alt="Worker Fleksibel" fill className="object-cover object-top" />
+                <Image src="/pekerja-portrait.webp" alt="Pekerja Fleksibel" fill className="object-cover object-top" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
                     <div className="flex items-center gap-2 mb-3">
@@ -556,8 +556,8 @@ export default function Home() {
             </div>
 
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
-              <a href="https://app.dailyworkerhub.com/register?role=worker">
-                Bergabung sebagai Worker <ArrowRight className="w-5 h-5 ml-2" />
+              <a href="https://app.dailyworkerhub.com/register?role=pekerja">
+                Bergabung sebagai Pekerja <ArrowRight className="w-5 h-5 ml-2" />
               </a>
             </Button>
           </div>
@@ -578,7 +578,7 @@ export default function Home() {
 
             <div className="space-y-4 mb-10 text-muted-foreground font-sans text-lg">
               <p>
-                Temukan daily worker dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
+                Temukan pekerja harian dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
               </p>
               <p>
                 Absensi via QR code, pembayaran otomatis setelah shift selesai, dan monitoring kepatuhan regulasi yang terintegrasi. Semua dalam satu platform.
@@ -684,7 +684,7 @@ export default function Home() {
               </ul>
             </motion.div>
 
-            {/* Worker Pricing */}
+            {/* Pekerja Pricing */}
             <motion.div
               whileHover={{ y: -10, scale: 1.02 }}
               className="bg-primary text-white rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group/pricing"
@@ -738,7 +738,7 @@ export default function Home() {
               <span className="text-white italic font-serif font-light">Tenaga Kerja Indonesia</span>
             </h2>
             <p className="font-sans text-xl text-white/80 mb-12 max-w-2xl mx-auto relative z-10">
-              Daily Worker Hub bukan sekadar platform — ini adalah komunitas di mana worker dan bisnis saling melindungi dan membangun standar kerja yang lebih baik. Bergabunglah di tahap awal. Suara dan partisipasi kamu akan membentuk bagaimana platform ini berkembang.
+              Daily Worker Hub bukan sekadar platform — ini adalah komunitas di mana pekerja dan bisnis saling melindungi dan membangun standar kerja yang lebih baik. Bergabunglah di tahap awal. Suara dan partisipasi kamu akan membentuk bagaimana platform ini berkembang.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
               <Button size="lg" asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
@@ -748,8 +748,8 @@ export default function Home() {
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
-                <a href="https://app.dailyworkerhub.com/register?role=worker">
-                  Bergabung sebagai Worker
+                <a href="https://app.dailyworkerhub.com/register?role=pekerja">
+                  Bergabung sebagai Pekerja
                 </a>
               </Button>
             </div>
@@ -773,7 +773,7 @@ export default function Home() {
           <a href="https://app.dailyworkerhub.com/register?role=business">Untuk Bisnis</a>
         </Button>
         <Button asChild variant="outline" className="flex-1 border-primary text-primary hover:bg-primary/10 rounded-full h-12 text-sm font-sub">
-          <a href="https://app.dailyworkerhub.com/register?role=worker">Untuk Pekerja</a>
+          <a href="https://app.dailyworkerhub.com/register?role=pekerja">Untuk Pekerja</a>
         </Button>
       </div>
     </main>

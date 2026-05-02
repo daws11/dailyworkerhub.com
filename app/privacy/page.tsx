@@ -63,14 +63,14 @@ export default function PrivacyPage() {
                     dengan bisnis di Bali. Informasi pertama yang kami kumpulkan adalah data identitas
                     dasar yang Anda berikan saat mendaftar: nama lengkap sesuai KTP atau paspor, alamat
                     email aktif yang akan digunakan untuk konfirmasi akun dan notifikasi penting, nomor
-                    telepon WhatsApp yang menjadi jalur komunikasi utama antara worker dan employer, serta
+                    telepon WhatsApp yang menjadi jalur komunikasi utama antara pekerja dan pemberi kerja, serta
                     tanggal lahir untuk memverifikasi kelayakan usia pengguna.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Untuk employer atau bisnis yang mendaftarkan usahanya, kami mengumpulkan nama bisnis
+                    Untuk pemberi kerja atau bisnis yang mendaftarkan usahanya, kami mengumpulkan nama bisnis
                     sesuai dokumen legal, alamat usaha, nomor NPWP atau NIB untuk keperluan perpajakan dan
                     compliance, serta informasi rekening bank yang akan digunakan untuk menerima dan
-                    mengirim Dana Jaminan. Sementara untuk worker, kami mengumpulkan data profil tambahan
+                    mengirim Dana Jaminan. Sementara untuk pekerja, kami mengumpulkan data profil tambahan
                     seperti kategori pekerjaan hospitality yang dikuasai ( housekeeping, F&B service,
                     bartender, kitchen helper, receptionist), lokasi domisili di Bali untuk
                     pencocokan pekerjaan, serta portofolio atau sertifikat pelatihan jika tersedia.
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
                     memahami pola penggunaan platform secara agregat.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Dalam situasi tertentu, terutama saat terjadi perselisihan antara worker dan employer,
+                    Dalam situasi tertentu, terutama saat terjadi perselisihan antara pekerja dan pemberi kerja,
                     kami dapat mengumpulkan data tambahan berupa histori transaksi Dana Jaminan, record
                     attendance yang di-submit melalui platform, riwayat komunikasi melalui sistem
                     chat kami, serta bukti-bukti pendukung yang diunggah oleh kedua belah pihak untuk
@@ -114,8 +114,8 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Pemrosesan Transaksi Dana Jaminan:</strong> Informasi
                     rekening bank dan data identitas digunakan secara eksklusif untuk memproses deposit
-                    dari employer ke Dana Jaminan, hold dana di rekening Dana Jaminan, release dana ke worker
-                    setelah approval, serta memproses penarikan (withdrawal) ke rekening bank worker.
+                    dari pemberi kerja ke Dana Jaminan, hold dana di rekening Dana Jaminan, release dana ke pekerja
+                    setelah approval, serta memproses penarikan (withdrawal) ke rekening bank pekerja.
                     Setiap langkah dalam alur Dana Jaminan memerlukan validasi identitas untuk memastikan
                     dana sampai ke orang yang tepat dan sesuai dengan jumlah yang disepakati.
                   </p>
@@ -124,7 +124,7 @@ export default function PrivacyPage() {
                     dan nomor WhatsApp digunakan untuk mengirimkan confirmation transaksi Dana Jaminan
                     (deposit received, fund released, withdrawal completed), notifikasi jadwal kerja
                     dan reminder attendance, informasi lowongan kerja baru yang match dengan profil
-                    worker, pesan dari employer atau worker terkait proyek harian, serta alert keamanan
+                    pekerja, pesan dari pemberi kerja atau pekerja terkait proyek harian, serta alert keamanan
                     seperti login dari perangkat baru atau perubahan kata sandi.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -215,7 +215,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Xendit (Payment Processing):</strong> Xendit
                     adalah payment gateway yang memproses semua transaksi finansial di platform kami,
-                    termasuk deposit Dana Jaminan dari employer dan withdrawal untuk worker. Ketika Anda
+                    termasuk deposit Dana Jaminan dari pemberi kerja dan withdrawal untuk pekerja. Ketika Anda
                     melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
                     langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
                     rekening bank penuh. Xendit menangani compliance dengan standar PCI-DSS untuk
@@ -229,7 +229,7 @@ export default function PrivacyPage() {
                     FCM digunakan untuk mengirimkan push notifications ke perangkat pengguna — baik
                     via browser web maupun app mobile jika di masa depan kami mengembangkan aplikasi
                     native. Notifications ini mencakup konfirmasi Dana Jaminan (deposit received, fund
-                    released), pengingat attendance yang harus di-submit oleh worker, update status
+                    released), pengingat attendance yang harus di-submit oleh pekerja, update status
                     perselisihan resolution, serta announcement platform seperti maintenance window atau
                     fitur baru. Untuk dapat mengirim notifikasi, FCM menyimpan registration tokens
                     yang di-generate per device per browser. Tokens ini tidakterkait dengan data identitas
@@ -241,7 +241,7 @@ export default function PrivacyPage() {
                     Firebase Analytics untuk memahami perilaku pengguna di platform secara agregat.
                     Analytics ini mengumpulkan interaksi pengguna seperti page views, button clicks,
                     feature usage patterns, dan conversion events dalam alur kerja (misalnya berapa
-                    banyak employer yang berhasil menyelesaikan deposit pertama mereka). Data ini
+                    banyak pemberi kerja yang berhasil menyelesaikan deposit pertama mereka). Data ini
                     bersifat anonim dan tidak dapat digunakan untuk mengidentifikasi Anda secara
                     individual. Firebase Analytics tidak membagikan data ini ke advertiser atau
                     pihak ketiga lainnya.
@@ -289,7 +289,7 @@ export default function PrivacyPage() {
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Data Perselisihan:</strong> Jika terjadi perselisihan
-                    antara worker dan employer, data terkait perselisihan (submissions dari kedua
+                    antara pekerja dan pemberi kerja, data terkait perselisihan (submissions dari kedua
                     belah pihak, communications, bukti-bukti, dan resolusi) disimpan selama 5
                     tahun setelah perselisihan resolved untuk keperluan reference dan potential appeal.
                     Ini memastikan bahwa jika ada perselisihan lanjutan yang terkait, data pendukung
@@ -431,7 +431,7 @@ export default function PrivacyPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     Untuk pengguna yang berusia 16-18 tahun di yurisdiksi Indonesia yang menganggap
                     mereka sebagai minor, perlu memahami bahwa penggunaan platform Daily Worker Hub
-                    untuk aktivitas pekerjaan — baik sebagai worker maupun dalam hal employer yang
+                    untuk aktivitas pekerjaan — baik sebagai pekerja maupun dalam hal pemberi kerja yang
                     menjalankan bisnis — adalah aktivitas kontrak yang secara hukum mengikat di
                     bawah pengawasan tutors atau guardians yang sah. Kami highly recommend agar
                     parents atau guardians dari pengguna dalam kelompok usia ini memonitor dan

@@ -144,7 +144,7 @@ export default function CookiesPage() {
                     mengintegrasikan Firebase Analytics untuk memahami perilaku pengguna di aplikasi web
                     dan mobile. Firebase mengumpulkan data interaksi anonim yang mencakup waktu session,
                     fitur yang digunakan, error yang terjadi, dan konversi dalam alur kerja — misalnya
-                    berapa banyak employer yang berhasil membuat lowongan atau berapa banyak worker yang
+                    berapa banyak pemberi kerja yang berhasil membuat lowongan atau berapa banyak pekerja yang
                     menyelesaikan proses tarik dana pertama mereka. Data ini digunakan solely untuk tujuan
                     optimisasi produk dan tidak dibagikan ke advertiser.
                   </p>

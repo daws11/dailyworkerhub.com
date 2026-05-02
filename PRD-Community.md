@@ -20,7 +20,7 @@ Platform dibangun dengan **Next.js 14+ (App Router)** di frontend dan **Supabase
 ## 2. Product Vision & Goals
 
 ### 2.1 Vision
-> Menjadi pusat komunitas pekerja harian (daily worker) di Indonesia yang terintegrasi sepenuhnya dengan platform job board, di mana setiap pengunjung dapat langsung mencari informasi, berdiskusi, membaca artikel, atau memberikan feedback melalui satu interface yang seamless dan futuristik.
+> Menjadi pusat komunitas pekerja harian (pekerja harian) di Indonesia yang terintegrasi sepenuhnya dengan platform job board, di mana setiap pengunjung dapat langsung mencari informasi, berdiskusi, membaca artikel, atau memberikan feedback melalui satu interface yang seamless dan futuristik.
 
 ### 2.2 Goals
 | Goal | KPI |
@@ -37,8 +37,8 @@ Platform dibangun dengan **Next.js 14+ (App Router)** di frontend dan **Supabase
 
 | Segmen | Karakteristik | Kebutuhan |
 |--------|--------------|-----------|
-| **Daily Worker (Job Seeker)** | Pekerja harian/freelancer mencari info | Tips kerja, diskusi gaji, networking |
-| **Employer/Recruiter** | Pihak yang memposting lowongan | Feedback fitur, best practices hiring |
+| **Daily Pekerja (Job Seeker)** | Pekerja harian/freelancer mencari info | Tips kerja, diskusi gaji, networking |
+| **Pemberi Kerja/Recruiter** | Pihak yang memposting lowongan | Feedback fitur, best practices hiring |
 | **Content Contributor** | Expert yang ingin berbagi ilmu | Platform publikasi, reputasi |
 | **Visitor Organik** | Datang dari Google search | Jawaban cepat, artikel komprehensif |
 
@@ -442,7 +442,7 @@ dailyworkerhub.com/
   - Grid pattern overlay (opacity 0.03)
 - **Content:**
   1. **Headline:** "Komunitas Pekerja Harian Indonesia" — Inter 48px, weight 700, gradient text (`bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent`)
-  2. **Subheadline:** "Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia." — Slate 400, 18px
+  2. **Subheadline:** "Diskusi, pelajari, dan berkembang bersama ribuan pekerja harian di seluruh Indonesia." — Slate 400, 18px
   3. **Main Input Box:**
      - Width: 100%, max-width 720px
      - Height: 64px

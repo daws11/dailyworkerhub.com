@@ -80,9 +80,9 @@ Dana Dana Jaminan di Daily Worker Hub dipisahkan dari dana operasional perusahaa
 
 | Aspek | Penjelasan |
 |-------|------------|
-| **Dana di Hold** | Setiap deposit dari employer ditahan di Dana Jaminan sampai pekerjaan selesai diverifikasi |
-| **Tidak Ada Risiko Tidak Dibayar** | Worker dijamin dibayar jika menyelesaikan pekerjaan sesuai deskripsi |
-| **Refund Tersedia** | Employer bisa mengajukan refund jika terjadi perselisihan yang merugikan |
+| **Dana di Hold** | Setiap deposit dari pemberi kerja ditahan di Dana Jaminan sampai pekerjaan selesai diverifikasi |
+| **Tidak Ada Risiko Tidak Dibayar** | Pekerja dijamin dibayar jika menyelesaikan pekerjaan sesuai deskripsi |
+| **Refund Tersedia** | Pemberi Kerja bisa mengajukan refund jika terjadi perselisihan yang merugikan |
 
 ### Audit Trail
 
@@ -92,7 +92,7 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 |------|-----------|
 | **Timestamp** | Waktu pasti setiap aksi (deposit, hold, release, perselisihan) |
 | **ID Transaksi** | Identifier unik untuk setiap transaksi |
-| **Pihak Terlibat** | ID employer, ID worker |
+| **Pihak Terlibat** | ID pemberi kerja, ID pekerja |
 | **Jumlah Dana** | Nominal deposit, biaya, release |
 | **Status Transaksi** | Pending, Hold, Released, Diperseilisihkan |
 | **Bukti-bukti** | Screenshot chat, foto sebelum/sesudah, check-in/check-out |
@@ -118,7 +118,7 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 | **Identitas** | Nama, KTP, selfie | Verifikasi dan legalitas |
 | **Kontak** | Email, nomor telepon | Komunikasi |
 | **Finansial** | Rekening bank, history transaksi | Transaksi dan pembayaran |
-| **Profil** | Foto, deskripsi, keahlian, pengalaman | Matching worker dan employer |
+| **Profil** | Foto, deskripsi, keahlian, pengalaman | Matching pekerja dan pemberi kerja |
 | **Aktivitas** | Lamaran, hiring, rating, review | Platform functionality |
 | **Perangkat** | IP address, device ID | Keamanan dan troubleshooting |
 
@@ -130,7 +130,7 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 | **Improving services** | ✅ Ya — untuk meningkatkan pengalaman pengguna |
 | **Marketing** | ❌ Tidak — tanpa persetujuan eksplisit |
 | **Dijual ke pihak ketiga** | ❌ Tidak pernah |
-| **Disclose ke employer/worker** | ✅ Ya — hanya data yang relevan untuk transaksi |
+| **Disclose ke pemberi kerja/pekerja** | ✅ Ya — hanya data yang relevan untuk transaksi |
 
 ### Hak Privasi Anda
 
@@ -158,24 +158,24 @@ Setiap transaksi memiliki catatan lengkap yang tidak dapat diubah:
 
 ---
 
-## Keamanan untuk Employer
+## Keamanan untuk Pemberi Kerja
 
 | Risiko | Mitigasi |
 |--------|---------|
-| **Worker tidak kredibel** | Verifikasi KTP, rating, dan review dari employer lain |
-| **Worker no-show** | Dana Perlindungan melindungi dengan refund dan kompensasi |
-| **Worker tidak sesuai deskripsi** | Perselisihan process untuk menyelesaikan perselisihan |
+| **Pekerja tidak kredibel** | Verifikasi KTP, rating, dan review dari pemberi kerja lain |
+| **Pekerja no-show** | Dana Perlindungan melindungi dengan refund dan kompensasi |
+| **Pekerja tidak sesuai deskripsi** | Perselisihan process untuk menyelesaikan perselisihan |
 | **Dana tidak aman** | Dana di-hold Dana Jaminan, tidak ada akses langsung |
 | **Data pekerja** | Anda hanya melihat data yang relevan untuk hiring |
 
 ---
 
-## Keamanan untuk Worker
+## Keamanan untuk Pekerja
 
 | Risiko | Mitigasi |
 |--------|---------|
-| **Employer tidak bayar** | Dana di-hold Dana Jaminan, employer tidak bisa cancel setelah Anda check-in |
-| **Pembayaran terlambat** | Sistem release otomatis setelah employer approve |
+| **Pemberi Kerja tidak bayar** | Dana di-hold Dana Jaminan, pemberi kerja tidak bisa cancel setelah Anda check-in |
+| **Pembayaran terlambat** | Sistem release otomatis setelah pemberi kerja approve |
 | **Perselisihan yang tidak adil** | Tim review netral untuk memutuskan perselisihan |
 | **Data disalahgunakan** | Data dienkripsi dan tidak dibagikan tanpa persetujuan |
 | **KTP disalahgunakan** | KTP hanya digunakan untuk verifikasi, tidak disimpan sebagai salinan |
