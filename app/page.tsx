@@ -1,44 +1,56 @@
 import type { Metadata } from "next";
 import HomePage from "@/pages/Home";
+import { getFAQPageSchema } from "@/lib/seo";
+
+const homepageFaqs = [
+  {
+    question: "Apakah Daily Worker Hub legal dan aman?",
+    answer: "Ya. Semua transaksi berjalan di atas payment Dana Jaminan yang dijamin hingga shift selesai, dan pekerja maupun bisnis harus melalui proses verifikasi identitas sebelum bertransaksi. Kami mematuhi regulasi ketenagakerjaan Indonesia.",
+  },
+  {
+    question: "Bagaimana cara pembayaran bekerja?",
+    answer: "Bisnis melakukan top-up saldo lewat QRIS tanpa biaya tambahan. Saat shift dimulai, dana ditahan sebagai Dana Jaminan. Setelah pekerja check-out melalui QR di lokasi, dana otomatis cair ke wallet pekerja — tanpa perantara.",
+  },
+  {
+    question: "Apa itu Dana Perlindungan?",
+    answer: "Dana Perlindungan adalah dana komunitas dari potongan 1% setiap transaksi yang digunakan untuk bantuan darurat anggota, seperti kecelakaan kerja, keterlambatan pembayaran dari bisnis, atau perselisihan. Dikelola transparan oleh komunitas.",
+  },
+  {
+    question: "Berapa biaya platform untuk bisnis dan pekerja?",
+    answer: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
+  },
+  {
+    question: "Bagaimana proses verifikasi pekerja?",
+    answer: "Pekerja wajib mengunggah KTP, foto wajah untuk liveness check, dan data rekening bank. Kami juga menampilkan review publik dua arah — histori shift dan reputasi pekerja bisa dilihat bisnis sebelum menerima lamaran.",
+  },
+  {
+    question: "Bagaimana jika terjadi perselisihan antara pekerja dan bisnis?",
+    answer: "Tim moderasi Daily Worker Hub akan meninjau bukti dari kedua belah pihak (check-in QR, chat, foto lokasi). Selama proses berjalan, dana tetap aman di Dana Jaminan. Dalam kasus tertentu, Dana Perlindungan dapat digunakan untuk membantu pihak yang dirugikan.",
+  },
+];
 
 export const metadata: Metadata = {
-  title: "Daily Worker Hub",
+  title: "Platform Pekerja Harian Indonesia — Temukan Kerja Tanpa Calo",
   description:
-    "Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.",
+    "Platform marketplace yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Cari pekerja harian terpercaya atau pasang lowongan kerja harian — gratis untuk pekerja, tanpa biaya tersembunyi.",
   openGraph: {
-    title: "Daily Worker Hub",
+    title: "Platform Pekerja Harian Indonesia — Temukan Kerja Tanpa Calo",
     description:
-      "Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia.",
+      "Platform marketplace yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Cari pekerjaan harian atau pasang lowongan dengan sistem escrow yang aman.",
   },
   twitter: {
-    title: "Daily Worker Hub",
+    title: "Platform Pekerja Harian Indonesia — Temukan Kerja Tanpa Calo",
     description:
-      "Daily Worker Hub adalah platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia.",
+      "Platform marketplace yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia.",
+  },
+  alternates: {
+    canonical: "https://dailyworkerhub.com",
+  },
+  other: {
+    "script:ld+json": JSON.stringify(getFAQPageSchema(homepageFaqs)),
   },
 };
 
 export default function Page() {
-  return (
-    <>
-      {/* Visually hidden H1 for Googlebot — hero has the visible H1 */}
-      <div
-        role="banner"
-        style={{
-          position: "absolute",
-          width: 0,
-          height: 0,
-          overflow: "hidden",
-        }}
-      >
-        <h1>Daily Worker Hub</h1>
-        <p>
-          Daily Worker Hub adalah platform yang menghubungkan pekerja harian
-          lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian
-          atau cari pekerja terpercaya dengan mudah.
-        </p>
-      </div>
-
-      <HomePage />
-    </>
-  );
+  return <HomePage />;
 }
