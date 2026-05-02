@@ -255,14 +255,6 @@ export default function Home() {
                 />
               </motion.h1>
 
-              {/* H2 Subheadline — keyword-rich, feature snapshot */}
-              <motion.h2
-                variants={fadeUp}
-                className="text-lg sm:text-xl md:text-2xl font-semibold text-muted-foreground mb-6 md:mb-8 text-balance max-w-lg"
-              >
-                10.000+ pekerja sudah bergabung. Gratis daftar — langsung cari shift atau pasang lowongan.
-              </motion.h2>
-
               <motion.p
                 variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
@@ -354,17 +346,6 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/* PAIN POINT — agitation before purpose */}
-      {/* ============================================================ */}
-      <section className="py-16 md:py-20 px-4 md:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="font-sans text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
-            Pernah tidak dibayar setelah kerja seharian? Butuh pekerja besok pagi tapi tidak tahu harus cari ke mana? Di Daily Worker Hub, masalah itu tidak ada.
-          </p>
         </div>
       </section>
 
