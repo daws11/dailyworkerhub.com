@@ -37,11 +37,25 @@ export const metadata: Metadata = {
     title: "Platform Pekerja Harian Indonesia — Temukan Kerja Tanpa Calo",
     description:
       "Platform marketplace yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Cari pekerjaan harian atau pasang lowongan dengan sistem escrow yang aman.",
+    url: "https://dailyworkerhub.com",
+    siteName: "Daily Worker Hub",
+    locale: "id_ID",
+    type: "website",
+    images: [
+      {
+        url: "https://dailyworkerhub.com/opengraph.jpg?v=2",
+        width: 1200,
+        height: 630,
+        alt: "Daily Worker Hub - Platform Komunitas Pekerja Harian Indonesia",
+      },
+    ],
   },
   twitter: {
+    card: "summary_large_image",
     title: "Platform Pekerja Harian Indonesia — Temukan Kerja Tanpa Calo",
     description:
       "Platform marketplace yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia.",
+    images: ["https://dailyworkerhub.com/opengraph.jpg?v=2"],
   },
   alternates: {
     canonical: "https://dailyworkerhub.com",
