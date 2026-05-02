@@ -2,6 +2,7 @@ import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import Image from "next/image";
 import Link from "next/link";
 import { getPageMap } from "nextra/page-map";
+import { FAQPageSchema } from "@/components/docs/StructuredData";
 import "nextra-theme-docs/style.css";
 import "./docs.css";
 
@@ -63,15 +64,15 @@ const footer = (
         <div>
           <h4 className="font-semibold text-foreground">Produk</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><a href="/" className="hover:text-emerald-400 transition-colors">Cari Kerja</a></li>
-            <li><a href="/community" className="hover:text-emerald-400 transition-colors">Komunitas</a></li>
+            <li><a href="/" className="hover:text-emerald-400 transition-colors">Cari Pekerjaan Harian</a></li>
+            <li><a href="/community" className="hover:text-emerald-400 transition-colors">Komunitas Pekerja</a></li>
           </ul>
         </div>
         <div>
           <h4 className="font-semibold text-foreground">Resources</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><a href="/docs" className="hover:text-emerald-400 transition-colors">Panduan</a></li>
-            <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">Artikel</a></li>
+            <li><a href="/docs" className="hover:text-emerald-400 transition-colors">Panduan Platform</a></li>
+            <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">Artikel & Tips</a></li>
           </ul>
         </div>
         <div>
@@ -108,6 +109,7 @@ export default async function DocsLayout({
       feedback={undefined}
       toc={{ backToTop: "Kembali ke atas" }}
     >
+      <FAQPageSchema />
       {children}
     </Layout>
   );
