@@ -122,49 +122,22 @@ Dana proteksi yang dikelola platform untuk menangani perselisihan atau penipuan.
 
 Diagram berikut menjelaskan bagaimana keamanan dan fitur platform saling terintegrasi dalam satu transaksi:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    TRANSAKSI DI DAILY WORKER HUB                  │
-│                                                                   │
-│  1. PEMBERI KERJA POSTING LOWONGAN                                     │
-│     ├── Deskripsi, jadwal, rate, persyaratan                      │
-│     └── Budget deposit Dana Jaminan                                     │
-│                         │                                         │
-│                         ▼                                         │
-│  2. PEKERJA APPLY & DIPILIH                                        │
-│     ├── Screening berdasarkan profil & rating                     │
-│     └── Pemberi Kerja pilih pekerja terbaik                             │
-│                         │                                         │
-│                         ▼                                         │
-│  3. DEPOSIT DANA KE DANA JAMINAN                                       │
-│     ├── Pemberi Kerja deposit full amount + biaya pool                  │
-│     └── Dana dihold aman di Dana Jaminan platform                       │
-│                         │                                         │
-│                         ▼                                         │
-│  4. PEKERJAAN SELESAI & DIVERIFIKASI                              │
-│     ├── Pekerja submit completion notice                           │
-│     ├── Pemberi Kerja verify pekerjaan sesuai deskripsi               │
-│     └── Jika sesuai → proceed ke release                          │
-│                         │                                         │
-│                         ▼                                         │
-│  5. RELEASE DANA & PEMBAYARAN                                    │
-│     ├── Dana Dana Jaminan dirilis ke pekerja                             │
-│     ├── Pekerja tarik dana ke rekening bank                         │
-│     └── Dana Perlindungan biaya di deduct dari pool                  │
-│                         │                                         │
-│                         ▼                                         │
-│  6. RATING & REVIEW                                              │
-│     ├── Pemberi Kerja rate pekerja                                     │
-│     └── Pekerja rate pemberi kerja                                      │
-│                                                                   │
-│  ┌─────────────────────────────────────────────────────────────┐ │
-│  │  JIKA PERSELISIHAN:                                                 │ │
-│  │  1. Pekerja atau Pemberi Kerja mengajukan perselisihan via platform    │ │
-│  │  2. Tim Daily Worker Hub review dalam 1-3 hari kerja           │ │
-│  │  3. Dana Perlindungan digunakan jika klaim valid               │ │
-│  │  4. Keputusan diinformasikan ke kedua belah pihak            │ │
-│  └─────────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["<b>1. Pemberi Kerja Posting Lowongan</b><br/>Deskripsi, jadwal, rate, persyaratan<br/>Budget deposit Dana Jaminan"]
+    A --> B
+    B["<b>2. Pekerja Apply & Dipilih</b><br/>Screening berdasarkan profil & rating<br/>Pemberi Kerja pilih pekerja terbaik"]
+    B --> C
+    C["<b>3. Deposit Dana ke Dana Jaminan</b><br/>Pemberi Kerja transfer dana + biaya<br/>Dana ditahan aman di platform"]
+    C --> D
+    D["<b>4. Pekerjaan Selesai & Diverifikasi</b><br/>Pekerja kirim notifikasi selesai<br/>Pemberi Kerja verifikasi hasil kerja"]
+    D --> E
+    E["<b>5. Dana Dirilis & Pembayaran</b><br/>Dana Jaminan dirilis ke pekerja<br/>Pekerja tarik dana ke rekening bank"]
+    E --> F
+    F["<b>6. Rating & Review</b><br/>Pemberi Kerja menilai pekerja<br/>Pekerja menilai pemberi kerja"]
+
+    D -.-> G
+    G["<b>⚠️ Jika Perselisihan</b><br/>1. Ajukan via platform<br/>2. Tim Daily Worker Hub review 1-3 hari kerja<br/>3. Dana Perlindungan jika klaim valid<br/>4. Keputusan final"]
 ```
 
 ---

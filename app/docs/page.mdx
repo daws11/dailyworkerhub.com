@@ -147,75 +147,32 @@ Daily Worker Hub saat ini beroperasi di 7 area utama di Bali:
 
 Memahami bagaimana transaksi berlangsung dari awal hingga akhir:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              LANGKAH 1: PERSIAPAN                                │
-│                                                                  │
-│  Pemberi Kerja                                                         │
-│  ├── Deposit saldo ke Dana Jaminan (gaji + Biaya Platform + Biaya Layanan + Kontribusi Dana Perlindungan)     │
-│  └── Dana dihold aman di rekening Dana Jaminan terpisah                 │
-│                                                                   │
-│  Pekerja                                                           │
-│  ├── Registrasi dan verifikasi akun                              │
-│  ├── Lengkapi profil (foto, keahlian, ketersediaan)              │
-│  └── Search dan apply ke lowongan yang sesuai                    │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              LANGKAH 2: HIRING                                   │
-│                                                                  │
-│  Pemberi Kerja                                                         │
-│  ├── Review pelamar (profil, rating, review)                     │
-│  ├── Pilih pekerja terbaik                                        │
-│  └── Konfirmasi hiring — Dana Jaminan di-lock untuk transaksi ini │
-│                                                                   │
-│  Pekerja                                                           │
-│  ├── Terima notifikasi hiring                                    │
-│  ├── Konfirmasi ketersediaan                                     │
-│  └── Persiapkan diri (dokumen, transportasi)                    │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              LANGKAH 3: PELAKSANAAN                              │
-│                                                                  │
-│  Pekerja                                                           │
-│  ├── Check-in via aplikasi saat tiba di lokasi                   │
-│  ├── Kerjakan tugas sesuai deskripsi lowongan                     │
-│  └── Submit "Pekerjaan Selesai" saat shift berakhir              │
-│                                                                   │
-│  Pemberi Kerja                                                         │
-│  ├── Awasi pekerjaan selama shift                                 │
-│  └── Verifikasi hasil kerja saat selesai                          │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              LANGKAH 4: PEMBAYARAN                               │
-│                                                                  │
-│  Pemberi Kerja                                                         │
-│  ├── Klik "Verifikasi & Setujui Release"                          │
-│  └── Dana Dana Jaminan dirilis ke saldo pekerja                          │
-│                                                                   │
-│  Pekerja                                                           │
-│  ├── Terima notifikasi dana masuk                                 │
-│  ├── Tarik ke rekening bank (min. Rp 50.000)                  │
-│  └── Dana masuk 1-3 hari kerja                                   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              LANGKAH 5: REVIEW                                    │
-│                                                                  │
-│  Pemberi Kerja                                                         │
-│  └── Berikan rating dan review untuk pekerja                       │
-│                                                                   │
-│  Pekerja                                                           │
-│  └── Berikan rating dan review untuk pemberi kerja                     │
-│                                                                   │
-│  Rating membangun reputasi untuk transaksi berikutnya              │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph L1["<b>Langkah 1: Persiapan</b>"]
+        E1["<b>Pemberi Kerja</b><br/>Deposit saldo ke Dana Jaminan<br/>(gaji + Biaya Platform + Biaya Layanan<br/>+ Kontribusi Dana Perlindungan)<br/>Dana ditahan di rekening terpisah"]
+        W1["<b>Pekerja</b><br/>Registrasi & verifikasi akun<br/>Lengkapi profil<br/>Cari & apply lowongan"]
+    end
+    L1 --> L2
+    subgraph L2["<b>Langkah 2: Hiring</b>"]
+        E2["<b>Pemberi Kerja</b><br/>Review pelamar<br/>Pilih pekerja terbaik<br/>Konfirmasi hiring"]
+        W2["<b>Pekerja</b><br/>Terima notifikasi<br/>Konfirmasi ketersediaan"]
+    end
+    L2 --> L3
+    subgraph L3["<b>Langkah 3: Pelaksanaan</b>"]
+        W3["<b>Pekerja</b><br/>Check-in via aplikasi<br/>Kerjakan tugas sesuai deskripsi<br/>Kirim notifikasi selesai"]
+        E3["<b>Pemberi Kerja</b><br/>Awasi pekerjaan<br/>Verifikasi hasil kerja"]
+    end
+    L3 --> L4
+    subgraph L4["<b>Langkah 4: Pembayaran</b>"]
+        E4["<b>Pemberi Kerja</b><br/>Klik Verifikasi & Setujui<br/>Dana Jaminan dirilis"]
+        W4["<b>Pekerja</b><br/>Terima notifikasi dana masuk<br/>Tarik ke rekening bank<br/>(min. Rp 50.000)"]
+    end
+    L4 --> L5
+    subgraph L5["<b>Langkah 5: Review</b>"]
+        E5["<b>Pemberi Kerja</b><br/>Beri rating & review pekerja"]
+        W5["<b>Pekerja</b><br/>Beri rating & review pemberi kerja"]
+    end
 ```
 
 ---
