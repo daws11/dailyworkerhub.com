@@ -20,15 +20,15 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground">Produk</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/" className="hover:text-emerald-400">Cari Kerja</Link></li>
-              <li><Link href="/community" className="hover:text-emerald-400">Komunitas</Link></li>
+              <li><Link href="/" className="hover:text-emerald-400">Cari Pekerjaan Harian</Link></li>
+              <li><Link href="/community" className="hover:text-emerald-400">Komunitas Pekerja</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold text-foreground">Resources</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/docs" className="hover:text-emerald-400">Panduan</Link></li>
-              <li><Link href="/community/articles" className="hover:text-emerald-400">Artikel</Link></li>
+              <li><Link href="/docs" className="hover:text-emerald-400">Panduan Platform</Link></li>
+              <li><Link href="/community/articles" className="hover:text-emerald-400">Artikel & Tips</Link></li>
             </ul>
           </div>
           <div>
