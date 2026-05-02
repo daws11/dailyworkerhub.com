@@ -753,11 +753,16 @@ export default function Home() {
             <p className="font-sans text-xl text-white/80 mb-12 max-w-2xl mx-auto relative z-10">
               Daily Worker Hub bukan sekadar platform — ini adalah komunitas di mana pekerja dan bisnis saling melindungi dan membangun standar kerja yang lebih baik. Bergabunglah di tahap awal. Suara dan partisipasi kamu akan membentuk bagaimana platform ini berkembang.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10 mb-6">
               <Button size="lg" asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
-                <a href="https://app.dailyworkerhub.com/register?role=business">
-                  <span className="flex items-center gap-2">Pasang Lowongan</span>
+                <a href="/community">
+                  <span className="flex items-center gap-2">Kunjungi Komunitas</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
+                <a href="https://app.dailyworkerhub.com/register?role=business">
+                  Pasang Lowongan
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
@@ -767,7 +772,10 @@ export default function Home() {
               </Button>
             </div>
             <p className="font-sub text-sm text-white/50 mt-8 relative z-10">
-              Forum diskusi, leaderboard, dan governance poll akan tersedia di community.dailyworkerhub.com
+              Diskusi, artikel, dan feedback komunitas tersedia di{" "}
+              <a href="/community" className="text-white/70 hover:text-white underline">
+                dailyworkerhub.com/community
+              </a>
             </p>
           </motion.div>
         </div>
