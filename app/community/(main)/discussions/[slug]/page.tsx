@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getDiscussionBySlug, getDiscussionTags, getDiscussionComments } from "@/lib/community";
+import { getBreadcrumbSchema } from "@/lib/seo";
 import { DiscussionClient } from "./DiscussionClient";
 
 interface PageProps {
@@ -18,6 +19,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const description = discussion.content.substring(0, 160).replace(/[#*]/g, "");
+
+  const breadcrumbItems = [
+    { name: "Beranda", url: "https://dailyworkerhub.com" },
+    { name: "Komunitas", url: "https://dailyworkerhub.com/community" },
+    { name: "Diskusi", url: "https://dailyworkerhub.com/community/discussions" },
+    { name: discussion.title, url: `https://dailyworkerhub.com/community/discussions/${slug}` },
+  ];
 
   return {
     title: discussion.title,
@@ -37,6 +45,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     alternates: {
       canonical: `https://dailyworkerhub.com/community/discussions/${slug}`,
+    },
+    other: {
+      "script:ld+json": JSON.stringify(getBreadcrumbSchema(breadcrumbItems)),
     },
   };
 }

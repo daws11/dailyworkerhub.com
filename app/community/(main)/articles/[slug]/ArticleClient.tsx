@@ -16,7 +16,6 @@ import {
   Send,
   Calendar,
   Tag,
-  ChevronLeft,
   Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -114,14 +113,22 @@ export function ArticleClient({ article, tags = [] }: ArticleClientProps) {
         )}
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10">
-          {/* Back Button */}
-          <Link
-            href="/community/articles"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-emerald-400 mb-6 transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Kembali ke Artikel
-          </Link>
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground/70 mb-6">
+            <Link href="/" className="hover:text-foreground/80">
+              Beranda
+            </Link>
+            <span>/</span>
+            <Link href="/community" className="hover:text-foreground/80">
+              Komunitas
+            </Link>
+            <span>/</span>
+            <Link href="/community/articles" className="hover:text-foreground/80">
+              Artikel
+            </Link>
+            <span>/</span>
+            <span className="text-foreground/60 truncate max-w-[200px]">{article.title}</span>
+          </div>
 
           {/* Article Header Card */}
           <article className="bg-card border border-border rounded-2xl overflow-hidden mb-6">
@@ -279,8 +286,11 @@ export function ArticleClient({ article, tags = [] }: ArticleClientProps) {
                   <span className="text-sm text-muted-foreground/70">@{article.author?.username || "unknown"}</span>
                 </div>
                 {article.author?.bio && (
-                  <p className="text-sm text-muted-foreground">{article.author.bio}</p>
+                  <p className="text-sm text-muted-foreground mb-2">{article.author.bio}</p>
                 )}
+                <div className="flex items-center gap-4 text-xs text-muted-foreground/70">
+                  <span>Kontributor Daily Worker Hub</span>
+                </div>
                 <Button variant="link" className="text-emerald-400 p-0 h-auto mt-2 text-sm">
                   Lihat profil lengkap
                 </Button>
@@ -366,7 +376,10 @@ export function ArticleClient({ article, tags = [] }: ArticleClientProps) {
           </section>
 
           {/* Recommendations */}
-          <RecommendationList type="articles" excludeSlugs={[article.slug]} limit={3} />
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold text-foreground mb-6">Artikel Terkait</h2>
+            <RecommendationList type="articles" excludeSlugs={[article.slug]} limit={3} />
+          </section>
         </div>
       </main>
     </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getArticleBySlug, getArticleTags } from "@/lib/community";
+import { getArticleMetadata, getBreadcrumbSchema } from "@/lib/seo";
 import { ArticleClient } from "./ArticleClient";
 
 interface PageProps {
@@ -17,24 +18,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const canonical = `https://dailyworkerhub.com/community/articles/${slug}`;
+
+  const metadata = getArticleMetadata(
+    article.title,
+    article.excerpt || `Baca artikel ${article.title} di Daily Worker Hub Community`,
+    canonical,
+    {
+      image: article.cover_image || undefined,
+      publishedAt: article.published_at || undefined,
+      author: article.author?.full_name || article.author?.username || undefined,
+    }
+  );
+
+  const breadcrumbItems = [
+    { name: "Beranda", url: "https://dailyworkerhub.com" },
+    { name: "Komunitas", url: "https://dailyworkerhub.com/community" },
+    { name: "Artikel", url: "https://dailyworkerhub.com/community/articles" },
+    { name: article.title, url: canonical },
+  ];
+
+  // Merge Article schema from getArticleMetadata with BreadcrumbList schema
+  const articleSchema = (metadata.other as Record<string, string>)?.["script:ld+json"];
+  const combinedSchemas = [
+    ...(articleSchema ? [JSON.parse(articleSchema)] : []),
+    getBreadcrumbSchema(breadcrumbItems),
+  ];
+
   return {
-    title: article.title,
-    description: article.excerpt || `Baca artikel ${article.title} di Daily Worker Hub Community`,
-    openGraph: {
-      title: article.title,
-      description: article.excerpt || `Baca artikel ${article.title} di Daily Worker Hub Community`,
-      url: `https://dailyworkerhub.com/community/articles/${slug}`,
-      type: "article",
-      images: article.cover_image ? [{ url: article.cover_image }] : [{ url: "/opengraph.jpg" }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: article.title,
-      description: article.excerpt || undefined,
-      images: article.cover_image ? [article.cover_image] : ["/opengraph.jpg"],
-    },
-    alternates: {
-      canonical: `https://dailyworkerhub.com/community/articles/${slug}`,
+    ...metadata,
+    other: {
+      "script:ld+json": JSON.stringify(combinedSchemas),
     },
   };
 }
