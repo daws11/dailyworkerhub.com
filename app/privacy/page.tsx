@@ -54,6 +54,13 @@ export default function PrivacyPage() {
                 <p className="text-muted-foreground leading-relaxed">
                   Terakhir diperbarui: April 2026
                 </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Penggunaan platform Daily Worker Hub juga tunduk pada{" "}
+                  <a href="/terms" className="text-emerald-400 hover:text-emerald-300 underline">Syarat &amp; Ketentuan</a>{" "}
+                  dan{" "}
+                  <a href="/cookies" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Cookie</a>{" "}
+                  kami. Harap baca kedua kebijakan tersebut untuk pemahaman menyeluruh.
+                </p>
 
                 <section className="space-y-4">
                   <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Informasi yang Kami Kumpulkan</h2>
@@ -97,11 +104,11 @@ export default function PrivacyPage() {
 
                 <section className="space-y-4">
                   <h2 id="section-2" className="text-xl font-semibold text-foreground scroll-mt-24">2. Bagaimana Kami Menggunakan Data Anda</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Data pribadi yang kami kumpulkan digunakan primarily untuk menyediakan dan
-                    mempertahankan operasi platform marketplace Daily Worker Hub. Berikut adalah
-                    penggunaan spesifik berdasarkan kategori data:
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Data pribadi yang kami kumpulkan digunakan terutama untuk menyediakan dan
+                  mempertahankan operasi platform marketplace Daily Worker Hub. Berikut adalah
+                  penggunaan spesifik berdasarkan kategori data:
+                </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Penyediaan Layanan Inti:</strong> Nama, email,
                     dan nomor WhatsApp Anda digunakan untuk membuat dan mengelola akun, memverifikasi
@@ -164,25 +171,25 @@ export default function PrivacyPage() {
                     menjalankan kontrak ini, khususnya untuk mengoperasikan fitur Dana Jaminan di mana
                     dana kepercayaan pengguna harus dikelola dengan transparan dan aman.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Kepentingan Sah:</strong> Kami memproses
-                    certain data berdasarkan kepentingan sah kami sebagai operator platform untuk
-                    menjaga keamanan dan integritas sistem. Ini mencakup deteksi dan pencegahan fraud,
-                    monitoring penyalahgunaan layanan, backup data untuk disaster recovery, serta
-                    improvement produk berdasarkan analitik penggunaan. Kepentingan sah ini tidak
-                    berlaku jika kepentingan atau hak fundamental Anda sebagai data subject lebih
-                    mengutamakan.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Consent (Persetujuan):</strong> Untuk
-                    pemrosesan data tertentu yang tidak covered oleh kontrak atau kepentingan sah,
-                    kami meminta persetujuan eksplisit Anda. Contohnya termasuk pengiriman
-                    marketing communications tentang fitur baru atau promosi khusus, integrasi
-                    dengan layanan pihak ketiga yang optional, serta cookie analitik non-essential.
-                    Anda dapat menarik persetujuan ini kapan saja melalui pengaturan akun atau
-                    dengan menghubungi kami, dan penarikan persetujuan tidak akan memengaruhi
-                    pemrosesan yang telah dilakukan sebelumnya.
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Kepentingan Sah:</strong> Kami memproses
+                  data tertentu berdasarkan kepentingan sah kami sebagai operator platform untuk
+                  menjaga keamanan dan integritas sistem. Ini mencakup deteksi dan pencegahan penipuan,
+                  pemantauan penyalahgunaan layanan, pencadangan data untuk pemulihan bencana, serta
+                  perbaikan produk berdasarkan analitik penggunaan. Kepentingan sah ini tidak
+                  berlaku jika kepentingan atau hak mendasar Anda sebagai subjek data lebih
+                  diutamakan.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Persetujuan:</strong> Untuk
+                  pemrosesan data tertentu yang tidak tercakup oleh kontrak atau kepentingan sah,
+                  kami meminta persetujuan eksplisit Anda. Contohnya termasuk pengiriman
+                  komunikasi pemasaran tentang fitur baru atau promosi khusus, integrasi
+                  dengan layanan pihak ketiga yang opsional, serta cookie analitik non-esensial.
+                  Anda dapat menarik persetujuan ini kapan saja melalui pengaturan akun atau
+                  dengan menghubungi kami, dan penarikan persetujuan tidak akan memengaruhi
+                  pemrosesan yang telah dilakukan sebelumnya.
+                </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Kepatuhan Hukum:</strong> Dalam kondisi
                     tertentu, kami dapat diminta oleh hukum untuk memproses atau mengungkapkan data
@@ -200,30 +207,30 @@ export default function PrivacyPage() {
                     data tertentu sesuai dengan fungsinya masing-masing dan tunduk pada perjanjian
                     pemrosesan data dengan kami:
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Supabase (Database dan Authentication):</strong>
-                    Supabase adalah backend-as-a-service yang menangani penyimpanan data dan autentikasi
-                    pengguna Daily Worker Hub. Semua data profil, histori transaksi Dana Jaminan, dan records
-                    pekerjaan dikelola dalam database Supabase yang terletak di infrastruktur cloud
-                    dengan enkripsi end-to-end. Ketika Anda login ke platform, Supabase menangani
-                    proses autentikasi — memverifikasi kredensial, menghasilkan session tokens, dan
-                    mengelola refresh tokens. Supabase juga mengelola Row Level Security (RLS) yang
-                    memastikan setiap pengguna hanya dapat mengakses data yang menjadi hak mereka.
-                    Sebagai processor data, Supabase tidak menggunakan data Anda untuk tujuan mereka
-                    sendiri dan hanya memproses sesuai instruksi dari Daily Worker Hub.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Xendit (Payment Processing):</strong> Xendit
-                    adalah payment gateway yang memproses semua transaksi finansial di platform kami,
-                    termasuk deposit Dana Jaminan dari pemberi kerja dan withdrawal untuk pekerja. Ketika Anda
-                    melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
-                    langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
-                    rekening bank penuh. Xendit menangani compliance dengan standar PCI-DSS untuk
-                    keamanan data pembayaran, konversi mata uang jika diperlukan, settlement dana
-                    ke rekening bank lokal Indonesia, serta notification transaksiberhasil atau gagal.
-                    Data transaksi yang diproses Xendit mencakup jumlah, timestamp, status payment,
-                    dan referensi idempotency untuk mencegah duplicate charges.
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Supabase (Basis Data dan Autentikasi):</strong>
+                  Supabase adalah backend-as-a-service yang menangani penyimpanan data dan autentikasi
+                  pengguna Daily Worker Hub. Semua data profil, riwayat transaksi Dana Jaminan, dan catatan
+                  pekerjaan dikelola dalam basis data Supabase yang terletak di infrastruktur cloud
+                  dengan enkripsi ujung-ke-ujung. Ketika Anda login ke platform, Supabase menangani
+                  proses autentikasi — memverifikasi kredensial, menghasilkan token sesi, dan
+                  mengelola token penyegaran. Supabase juga mengelola Keamanan Tingkat Baris (RLS) yang
+                  memastikan setiap pengguna hanya dapat mengakses data yang menjadi hak mereka.
+                  Sebagai pemroses data, Supabase tidak menggunakan data Anda untuk tujuan mereka
+                  sendiri dan hanya memproses sesuai instruksi dari Daily Worker Hub.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Xendit (Pemrosesan Pembayaran):</strong> Xendit
+                  adalah gerbang pembayaran yang memproses semua transaksi keuangan di platform kami,
+                  termasuk deposit Dana Jaminan dari pemberi kerja dan penarikan untuk pekerja. Ketika Anda
+                  melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
+                  langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
+                  rekening bank penuh. Xendit menangani kepatuhan dengan standar PCI-DSS untuk
+                  keamanan data pembayaran, konversi mata uang jika diperlukan, penyelesaian dana
+                  ke rekening bank lokal Indonesia, serta pemberitahuan transaksi berhasil atau gagal.
+                  Data transaksi yang diproses Xendit mencakup jumlah, stempel waktu, status pembayaran,
+                  dan referensi idempotensi untuk mencegah tagihan ganda.
+                </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Firebase Cloud Messaging (Push Notifications):</strong>
                     FCM digunakan untuk mengirimkan push notifications ke perangkat pengguna — baik
@@ -381,44 +388,44 @@ export default function PrivacyPage() {
                     yang belum resolved. Untuk kasus-kasus ini, data akan dihapus segera setelah
                     periode retensi wajib berakhir.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Hak Portabilitas:</strong> Anda berhak
-                    untuk menerima data pribadi Anda dalam format yang terstruktur, umum digunakan,
-                    dan dapat dibaca oleh mesin — misalnya JSON atau CSV — dan Mentransfer data
-                    tersebut ke layanan lain tanpa hambatan dari kami. Hak ini berlaku untuk data
-                    yang Anda berikan kepada kami berdasarkan consent atau pelaksanaan kontrak, dan
-                    yang diproses secara otomatis.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Hak Keberatan (Objection):</strong>
-                    Anda memiliki hak untuk mengajukan keberatan terhadap pemrosesan data Anda
-                    yang didasarkan pada kepentingan sah kami, termasuk profiling yang dilakukan
-                    untuk analisis penggunaan platform. Ketika Anda mengajukan keberatan, kami
-                    akan berhenti memproses data Anda kecuali kami dapat menunjukkan alasan
-                    legitimate yang sah yang mengesampingkan interests, rights, dan freedoms
-                    Anda, atau jika pemrosesan diperlukan untuk establish, exercise, atau defend
-                    legal claims.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Cara Menggunakan Hak-Hak Anda:</strong>
-                    Untuk exercising any of these rights, silakan kirim email ke tim kami di
-                    privacy@dailyworkerhub.com dengan subjek "Data Subject Rights Request" dan
-                    sertakan: nama lengkap sesuai akun, email yang terdaftar, nomor WhatsApp
-                    yang terdaftar, deskripsi spesifik hak yang ingin Anda gunakan, dan detail
-                    tambahan yang dapat membantu kami memproses permintaan Anda. Kami akan
-                    memverifikasi identitas Anda sebelum memproses permintaan — ini adalah
-                    security measure untuk mencegah unauthorized access ke akun Anda. Respons
-                    akan diberikan dalam waktu 30 hari sesuai ketentuan UU PDP.
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Hak Portabilitas:</strong> Anda berhak
+                  untuk menerima data pribadi Anda dalam format yang terstruktur, umum digunakan,
+                  dan dapat dibaca oleh mesin — misalnya JSON atau CSV — dan mentransfer data
+                  tersebut ke layanan lain tanpa hambatan dari kami. Hak ini berlaku untuk data
+                  yang Anda berikan kepada kami berdasarkan persetujuan atau pelaksanaan kontrak, dan
+                  yang diproses secara otomatis.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Hak Keberatan:</strong>
+                  Anda memiliki hak untuk mengajukan keberatan terhadap pemrosesan data Anda
+                  yang didasarkan pada kepentingan sah kami, termasuk pembuatan profil yang dilakukan
+                  untuk analisis penggunaan platform. Ketika Anda mengajukan keberatan, kami
+                  akan berhenti memproses data Anda kecuali kami dapat menunjukkan alasan
+                  sah yang mengesampingkan kepentingan, hak, dan kebebasan
+                  Anda, atau jika pemrosesan diperlukan untuk menetapkan, menjalankan, atau membela
+                  tuntutan hukum.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Cara Menggunakan Hak-Hak Anda:</strong>
+                  Untuk menggunakan hak-hak ini, silakan kirim email ke tim kami di
+                  privacy@dailyworkerhub.com dengan subjek "Data Subject Rights Request" dan
+                  sertakan: nama lengkap sesuai akun, email yang terdaftar, nomor WhatsApp
+                  yang terdaftar, deskripsi spesifik hak yang ingin Anda gunakan, dan detail
+                  tambahan yang dapat membantu kami memproses permintaan Anda. Kami akan
+                  memverifikasi identitas Anda sebelum memproses permintaan — ini adalah
+                  langkah keamanan untuk mencegah akses tidak sah ke akun Anda. Respons
+                  akan diberikan dalam waktu 30 hari sesuai ketentuan UU PDP.
+                </p>
                 </section>
 
                 <section className="space-y-4">
                   <h2 id="section-8" className="text-xl font-semibold text-foreground scroll-mt-24">8. Privasi Anak-anak</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Daily Worker Hub adalah platform yang dirancang untuk pengguna dewasa dalam konteks
-                    pekerjaan profesional di industri hospitality. Kami secara strict tidak
-                    mengumpulkan data pribadi dari individu yang belum berusia 16 tahun.
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Daily Worker Hub adalah platform yang dirancang untuk pengguna dewasa dalam konteks
+                  pekerjaan profesional di industri hospitality. Kami secara ketat tidak
+                  mengumpulkan data pribadi dari individu yang belum berusia 16 tahun.
+                </p>
                   <p className="text-muted-foreground leading-relaxed">
                     Sejak proses pendaftaran, kami menerapkan verifikasi usia melalui input tanggal
                     lahir yang diverifikasi secara primer melalui pengakuan pengguna. Kami tidak
@@ -457,14 +464,14 @@ export default function PrivacyPage() {
                     dilindungi oleh agreement yang mensyaratkan level perlindungan data yang
                     equivalent dengan yang kami terapkan sendiri.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Untuk transfer ke negara yang belum memiliki tingkat perlindungan data yang
-                    adequate menurut pemerintah Indonesia, kami menerapkan standard contractual
-                    clauses dan mengharuskan vendor untuk certified bahwa mereka menyediakan
-                    level keamanan yang sesuai dengan standar internasional. Anda dapat meminta
-                    salinen dari safeguards yang kami terapkan untuk transfer data Anda dengan
-                    menghubungi kami di privacy@dailyworkerhub.com.
-                  </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Untuk transfer ke negara yang belum memiliki tingkat perlindungan data yang
+                  memadai menurut pemerintah Indonesia, kami menerapkan klausul kontraktual standar
+                  dan mewajibkan vendor untuk tersertifikasi bahwa mereka menyediakan
+                  tingkat keamanan yang sesuai dengan standar internasional. Anda dapat meminta
+                  salinan dari perlindungan yang kami terapkan untuk transfer data Anda dengan
+                  menghubungi kami di privacy@dailyworkerhub.com.
+                </p>
                 </section>
 
                 <section className="space-y-4">

@@ -50,9 +50,16 @@ export default function TermsPage() {
 
             <div className="flex-1 max-w-4xl">
               <div className="prose prose-invert prose-slate max-w-none space-y-6">
-        <h1 className="text-3xl font-bold text-foreground mb-8">Syarat & Ketentuan</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-8">Syarat & Ketentuan</h1>
                 <p className="text-muted-foreground leading-relaxed">
             Terakhir diperbarui: April 2026
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Kebijakan ini harus dibaca bersama dengan{" "}
+            <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Privasi</a>{" "}
+            dan{" "}
+            <a href="/cookies" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Cookie</a>{" "}
+            kami.
           </p>
 
           <section className="space-y-4">
@@ -68,8 +75,8 @@ export default function TermsPage() {
               berusia minimal 16 tahun pada saat pendaftaran. Pengguna di bawah 18 tahun 
               dianggap sebagai minor dan bertanggung jawab untuk memastikan bahwa mereka 
               memiliki persetujuan yang sah dari orang tua, wali, atau tutor hukum sebelum 
-              menggunakan platform ini untuk aktivitas komersial apapun. Daily Worker Hub 
-              tidak memverifikasi status perkakas secara aktif tetapi berhak menangguhkan 
+              menggunakan platform ini untuk aktivitas komersial apa pun. Daily Worker Hub 
+              tidak memverifikasi status kedewasaan secara aktif tetapi berhak menangguhkan 
               akun jika ditemukan pelanggaran usia.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -82,12 +89,12 @@ export default function TermsPage() {
               sebelum dapat membuat lowongan dan melakukan deposit Dana Jaminan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Status Blacklist:</strong> Pengguna 
-              yang sebelumnya telah di-blacklist dari platform Daily Worker Hub karena 
-              pelanggaran berat — termasuk namun tidak terbatas pada fraud, harassment, 
+              <strong className="text-foreground">Jenis Kelayakan Blacklist:</strong> Pengguna 
+              yang sebelumnya telah masuk daftar hitam dari platform Daily Worker Hub karena 
+              pelanggaran berat — termasuk namun tidak terbatas pada penipuan, pelecehan, 
               atau pelanggaran Dana Jaminan — tidak diizinkan untuk membuat akun baru. Setiap 
-              attempt untuk menghindari blacklist dengan membuat akun tambahan akan 
-              dianggap sebagai pelanggaran serius dan dapat tindakan hukum yang sesuai.
+              upaya untuk menghindari daftar hitam dengan membuat akun tambahan akan 
+              dianggap sebagai pelanggaran serius dan dapat dikenakan tindakan hukum yang sesuai.
             </p>
           </section>
 
@@ -96,7 +103,7 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               Daily Worker Hub membedakan antara dua jenis pengguna utama dengan hak dan 
               kewajiban yang berbeda. Memahami peran Anda sangat penting untuk 
-              penggunaan platform yang efektif dan menghindari misunderstandings.
+              penggunaan platform yang efektif dan menghindari kesalahpahaman.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Pemberi Kerja (Pemberi Kerja):</strong> 
@@ -136,47 +143,47 @@ export default function TermsPage() {
               industri hospitality:
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">No Show dan Ghosting:</strong> Pekerja 
-              yang accepted sebuah job namun gagal muncul di lokasi pemberi kerja tanpa 
-              memberikan notice yang cukup (minimal 2 jam sebelum shift dimulai) 
-              akan diberikan penalty berupa suspension sementara untuk pertama 
-              pelanggaran. Violasi berulang akan mengakibatkan permanent blacklist. 
-              Pemberi Kerja yang setelah mengapprove pekerja kemudian membatalkan shift 
-              less dari 12 jam sebelum waktunya tanpa alasan yang valid juga 
-              akan menerima penalty, karena hal ini menyebabkan pekerja kehilangan 
-             kesempatan kerja lain.
+              <strong className="text-foreground">No Show dan Menghilang:</strong> Pekerja 
+              yang menerima pekerjaan namun gagal hadir di lokasi pemberi kerja tanpa 
+              memberikan pemberitahuan yang cukup (minimal 2 jam sebelum shift dimulai) 
+              akan diberikan sanksi berupa penangguhan sementara untuk 
+              pelanggaran pertama. Pelanggaran berulang akan mengakibatkan daftar hitam permanen. 
+              Pemberi Kerja yang setelah menyetujui pekerja kemudian membatalkan shift 
+              kurang dari 12 jam sebelum waktunya tanpa alasan yang sah juga 
+              akan menerima sanksi, karena hal ini menyebabkan pekerja kehilangan 
+              kesempatan kerja lain.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Catatan Attendance Palsu:</strong> 
-              Pekerja yang dengan sengaja memanipulasi fitur attendance — termasuk 
-              menggunakan lokasi palsu (VPN untuk spoofing GPS), submit attendance 
-              behalf of pekerja lain, atau menggunakan foto/screenshot palsu untuk 
-              check-in — akan langsung di-blacklist dan Dana Jaminan yang tersimpan 
-              dapat hangus. Pemberi Kerja yang secara sengaja memanipulasi records untuk 
+              <strong className="text-foreground">Catatan Kehadiran Palsu:</strong> 
+              Pekerja yang dengan sengaja memanipulasi fitur kehadiran — termasuk 
+              menggunakan lokasi palsu (VPN untuk pemalsuan GPS), mencatat kehadiran 
+              atas nama pekerja lain, atau menggunakan foto/tangkapan layar palsu untuk 
+              check-in — akan langsung dimasukkan daftar hitam dan Dana Jaminan yang tersimpan 
+              dapat hangus. Pemberi Kerja yang secara sengaja memanipulasi catatan untuk 
               menghindari pembayaran juga akan menghadapi konsekuensi yang sama. 
-              Daily Worker Hub berhak memberikan historical data attendance kepada 
-              pemberi kerja yang affected untuk keperluan verificação.
+              Daily Worker Hub berhak memberikan data kehadiran historis kepada 
+              pemberi kerja yang terdampak untuk keperluan verifikasi.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Standar Kualitas Kerja:</strong> 
               Pekerja diharapkan menyelesaikan pekerjaan sesuai dengan standar yang 
-              reasonable untuk posisi masing-masing. Pemberi Kerja yang menemukan kualitas 
-              kerja yang tidak memuaskan harus mengkomunikasikan hal ini melalui sistem 
+              wajar untuk posisi masing-masing. Pemberi Kerja yang menemukan kualitas 
+              kerja yang tidak memuaskan harus mengomunikasikan hal ini melalui sistem 
               platform dalam 24 jam setelah pekerjaan selesai. Pekerja yang secara 
-              berulang menerima complaints tentang kualitas kerja — setelah mediation 
-              dan kesempatan untuk improve — dapat di-blacklist. Yang tidak termasuk 
-              dalam kategori ini adalah differences of opinion yang normal tentang 
-              preferensi kerja, selama pekerjaan meet minimum acceptable standards.
+              berulang menerima keluhan tentang kualitas kerja — setelah mediasi 
+              dan kesempatan untuk memperbaiki — dapat dimasukkan daftar hitam. Tidak termasuk 
+              dalam kategori ini adalah perbedaan pendapat yang normal tentang 
+              preferensi kerja, selama pekerjaan memenuhi standar minimum yang dapat diterima.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Harassment dan Perilaku Tidak Profesional:</strong> 
-              Semua bentuk harassment — termasuk namun tidak terbatas pada harassment 
-              seksual, discriminatory comments berdasarkan agama, suku, gender, atau 
-              orientasi seksual, bullying, atau intimidation — baik dari pemberi kerja maupun 
-              pekerja adalah dilarang mutlak dan dapat dilaporkan melalui sistem perselisihan. 
-              Dalam kasus yang validated, pelaku akan di-blacklist secara permanen tanpa 
-              kesempatan appeal, dan dalam kasus yang melibatkan ancaman fisik atau 
-              seksual, kami akan menyerahkan evidence kepada otoritas yang berwenang.
+              <strong className="text-foreground">Pelecehan dan Perilaku Tidak Profesional:</strong> 
+              Semua bentuk pelecehan — termasuk namun tidak terbatas pada pelecehan 
+              seksual, komentar diskriminatif berdasarkan agama, suku, gender, atau 
+              orientasi seksual, perundungan, atau intimidasi — baik dari pemberi kerja maupun 
+              pekerja dilarang mutlak dan dapat dilaporkan melalui sistem perselisihan. 
+              Dalam kasus yang terbukti, pelaku akan dimasukkan daftar hitam secara permanen tanpa 
+              kesempatan banding, dan dalam kasus yang melibatkan ancaman fisik atau 
+              seksual, kami akan menyerahkan bukti kepada otoritas yang berwenang.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Transaksi di Luar Platform:</strong> 
@@ -216,21 +223,21 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Perselisihan Dana Jaminan:</strong> Jika pemberi kerja 
-              tidak puas dengan pekerjaan, mereka dapat raise perselisihan dalam 24 jam setelah 
-              submission. Dana akan tetap dihold di Dana Jaminan sampai perselisihan resolved melalui 
-              proses mediation kami. Selama perselisihan, baik pemberi kerja maupun pekerja dapat 
-              submit bukti-bukti pendukung — foto hasil kerja, chat logs, attendance 
-              records — untuk memperkuat posisi mereka. Tim mediation kami akan 
-              memutuskan berdasarkan bukti yang ada. Jika perselisihan tidak dapat resolved 
-              secara internal, akan diarahkan ke arbitration.
+              tidak puas dengan pekerjaan, mereka dapat mengajukan perselisihan dalam 24 jam setelah 
+              pengajuan. Dana akan tetap ditahan di Dana Jaminan sampai perselisihan diselesaikan melalui 
+              proses mediasi kami. Selama perselisihan, baik pemberi kerja maupun pekerja dapat 
+              menyerahkan bukti-bukti pendukung — foto hasil kerja, riwayat percakapan, catatan 
+              kehadiran — untuk memperkuat posisi mereka. Tim mediasi kami akan 
+              memutuskan berdasarkan bukti yang ada. Jika perselisihan tidak dapat diselesaikan 
+              secara internal, akan diarahkan ke arbitrase.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Biaya Transaksi:</strong> Daily Worker Hub 
-              mengenakan small Biaya Platform untuk setiap transaksi Dana Jaminan yang berhasil. 
-              Biaya ini deducted dari jumlah gross Dana Jaminan sebelum dana released ke pekerja. 
+              mengenakan Biaya Platform kecil untuk setiap transaksi Dana Jaminan yang berhasil. 
+              Biaya ini dipotong dari jumlah kotor Dana Jaminan sebelum dana dicairkan ke pekerja. 
               Besaran biaya transparan dan ditampilkan kepada pemberi kerja sebelum deposit 
               dilakukan, sehingga tidak ada biaya tersembunyi. Pemberi Kerja menanggung 
-              seluruh Biaya Platform agar pekerja menerima net amount yang disepakati.
+              seluruh Biaya Platform agar pekerja menerima jumlah bersih yang disepakati.
             </p>
           </section>
 
@@ -244,30 +251,30 @@ export default function TermsPage() {
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Mediasi Internal:</strong> Sengketa pertama-tama 
               akan ditangani melalui proses mediasi internal yang dilakukan oleh tim 
-              customer success kami. Kedua belah pihak diminta untuk submit penjelasan 
+              customer success kami. Kedua belah pihak diminta untuk menyerahkan penjelasan 
               tertulis tentang perspektif mereka dalam waktu 48 jam setelah perselisihan 
-              initiated. Tim mediation kemudian review bukti-bukti yang submitted — 
-              termasuk attendance records, chat logs, foto, dan lainnya — dan memberikan 
-              rekomendasi resolution dalam waktu 5 hari kerja. Rekomendasi ini tidak 
+              dimulai. Tim mediasi kemudian meninjau bukti-bukti yang diserahkan — 
+              termasuk catatan kehadiran, riwayat percakapan, foto, dan lainnya — dan memberikan 
+              rekomendasi penyelesaian dalam waktu 5 hari kerja. Rekomendasi ini tidak 
               bersifat mengikat tetapi mayoritas perselisihan terselesaikan pada tahap ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Arbitrasi:</strong> Jika mediasi tidak 
-              mencapai kesepakatan, perselisihan akan naik ke tahap arbitration di mana 
+              <strong className="text-foreground">Arbitrase:</strong> Jika mediasi tidak 
+              mencapai kesepakatan, perselisihan akan naik ke tahap arbitrase di mana 
               seorang arbiter independen — yang ditunjuk oleh Daily Worker Hub dari 
-              panelprofesional yang memiliki pengalaman di industri hospitality Bali — 
+              panel profesional yang memiliki pengalaman di industri hospitality — 
               akan memberikan keputusan yang mengikat bagi kedua belah pihak. Keputusan 
-              arbiter bersifat final dan tidak dapat di-appeal melalui platform. 
-              Biaya arbitration akan dibebankan kepada pihak yanglose, kecuali 
-              arbiter memutuskan lain karena circunstans yang exceptional.
+              arbiter bersifat final dan tidak dapat diajukan banding melalui platform. 
+              Biaya arbitrase akan dibebankan kepada pihak yang kalah, kecuali 
+              arbiter memutuskan lain karena keadaan yang luar biasa.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Batasan Platform:</strong> Perlu 
-              dicatat bahwa Daily Worker Hub bertindak sebagai intermediary saja. 
-              Kami tidak menjamin outcomes tertentu dalam perselisihan dan tidak memiliki 
+              dicatat bahwa Daily Worker Hub bertindak sebagai perantara saja. 
+              Kami tidak menjamin hasil tertentu dalam perselisihan dan tidak memiliki 
               kewajiban untuk menyediakan ganti rugi di luar jumlah Dana Jaminan yang 
-              tersimpan di platform untuk transaksi yang perselisihand. Pengguna yang tidak 
-              setuju dengan keputusan arbitration masih dapat pursue remedies melalui 
+              tersimpan di platform untuk transaksi yang diperselisihkan. Pengguna yang tidak 
+              setuju dengan keputusan arbitrase masih dapat menempuh upaya hukum melalui 
               jalur hukum yang tersedia di Indonesia.
             </p>
           </section>
@@ -282,37 +289,37 @@ export default function TermsPage() {
               kenyataan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Platform sebagai Intermediary:</strong> 
+              <strong className="text-foreground">Platform sebagai Perantara:</strong> 
               Daily Worker Hub tidak pernah menjadi pihak dalam kontrak pekerjaan antara 
               pemberi kerja dan pekerja. Kami menyediakan platform untuk mempertemukan kedua 
-              belah pihak, memfasilitasi pembayaran Dana Jaminan, dan menyediakan tools 
-              untuk manajemen attendance dan komunikasi. Kami tidak supervisi langsung 
+              belah pihak, memfasilitasi pembayaran Dana Jaminan, dan menyediakan alat 
+              untuk manajemen kehadiran dan komunikasi. Kami tidak mengawasi langsung 
               pekerjaan yang dilakukan pekerja di lokasi pemberi kerja, tidak bertanggung 
               jawab atas kualitas hasil kerja, dan tidak memiliki kontrol atas 
               lingkungan kerja di tempat pemberi kerja.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Force Majeure:</strong> Daily Worker Hub 
+              <strong className="text-foreground">Keadaan Kahar:</strong> Daily Worker Hub 
               tidak bertanggung jawab atas kegagalan atau penundaan pemenuhan 
-              obligations kami yang disebabkan oleh peristiwa diluar kendali kami yang 
-              reasonable — termasuk namun tidak terbatas pada bencana alam (gempa 
-              bumi, tsunami, letusan Gunung Agung), epidemic atau pandemic yang 
-              memerlukan lockdown, kebijakan pemerintah yang secara tiba-tiba 
+              kewajiban kami yang disebabkan oleh peristiwa di luar kendali kami yang 
+              wajar — termasuk namun tidak terbatas pada bencana alam (gempa 
+              bumi, tsunami, letusan gunung berapi), wabah atau pandemi yang 
+              memerlukan karantina wilayah, kebijakan pemerintah yang secara tiba-tiba 
               melarang kegiatan bisnis tertentu, pemadaman listrik atau internet 
-              yang widespread, atau kegagalan infrastruktur pihak ketiga yang 
-              essential (seperti Xendit atau Supabase) yang berada di luar kendali kami.
+              yang meluas, atau kegagalan infrastruktur pihak ketiga yang 
+              penting (seperti Xendit atau Supabase) yang berada di luar kendali kami.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Ganti Rugi:</strong> Dalam tidak 
-              ada circunstans where applicable law does not allow it, Daily Worker Hub, 
-              directors, pekerja, dan affiliates kami tidak akan liable untuk 
-              indirect, incidental, special, consequential, atau punitive damages 
-              yang arising dari penggunaan atau ketidakmampuan menggunakan platform, 
-              termasuk namun tidak terbatas pada lost profits, lost data, atau lost 
-              opportunity yang terkait dengan pekerjaan yang failed atau pekerja yang 
-              tidak show up. Liability kami dalam hal apapun terbatas pada jumlah 
-              total biaya yang telah Anda bayarkan kepada kami dalam 12 months preceding 
-              the incident yang memberikan rise kepada klaim.
+              <strong className="text-foreground">Ganti Rugi:</strong> Dalam keadaan 
+              apa pun yang diizinkan oleh hukum yang berlaku, Daily Worker Hub, 
+              direksi, pekerja, dan afiliasi kami tidak akan bertanggung jawab atas 
+              kerugian tidak langsung, insidental, khusus, konsekuensial, atau ganti rugi 
+              hukuman yang timbul dari penggunaan atau ketidakmampuan menggunakan platform, 
+              termasuk namun tidak terbatas pada kehilangan keuntungan, kehilangan data, 
+              atau kehilangan kesempatan yang terkait dengan pekerjaan yang gagal atau pekerja 
+              yang tidak hadir. Tanggung jawab kami dalam hal apa pun terbatas pada jumlah 
+              total biaya yang telah Anda bayarkan kepada kami dalam 12 bulan sebelum 
+              kejadian yang menimbulkan klaim.
             </p>
           </section>
 
@@ -327,21 +334,21 @@ export default function TermsPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Konten Pengguna:</strong> Pengguna 
-              tetap memiliki kepemilikan atas konten yang mereka submit ke platform — 
+              tetap memiliki kepemilikan atas konten yang mereka serahkan ke platform — 
               termasuk deskripsi lowongan kerja yang dibuat oleh pemberi kerja, foto dan 
-              portofolio pekerja, dan chat messages. Dengan memposting konten di 
-              platform, Anda memberikan Daily Worker Hub license non-exclusive, 
-              worldwide, royalty-free untuk menggunakan, mereproduksi, memodifikasi, 
+              portofolio pekerja, dan pesan percakapan. Dengan memposting konten di 
+              platform, Anda memberikan Daily Worker Hub lisensi non-eksklusif, 
+              seluruh dunia, bebas royalti untuk menggunakan, mereproduksi, memodifikasi, 
               dan mendistribusikan konten tersebut semata-mata untuk tujuan operasional 
-              platform — misalnya menampilkan deskripsi lowongan kepada candidate yang 
+              platform — misalnya menampilkan deskripsi lowongan kepada kandidat yang 
               sesuai atau menyimpan portofolio pekerja untuk ditampilkan kepada pemberi kerja.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Penggunaan yang Dilarang:</strong> 
-              Anda tidak diperkenankan untuk menyalin, reproduksi, frame, scrape, 
+              Anda tidak diperkenankan untuk menyalin, mereproduksi, membingkai, mengikis, 
               atau secara sistematis mengekstrak konten platform untuk tujuan komersial 
               tanpa persetujuan tertulis dari kami. Penggunaan data atau konten platform 
-              untuk training machine learning models atau AI systems tanpa izin juga 
+              untuk melatih model pembelajaran mesin atau sistem AI tanpa izin juga 
               merupakan pelanggaran hak kekayaan intelektual kami.
             </p>
           </section>
@@ -353,44 +360,44 @@ export default function TermsPage() {
               kondisi-kondisi tertentu yang telah kami tentukan. Berikut adalah 
               penjelasan mengenai kondisi-kondisi tersebut:
             </p>
-            <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Suspension Sementara:</strong> 
               Akun dapat ditangguhkan sementara untuk investigasi jika kami 
               mencurigai adanya aktivitas yang mencurigakan — termasuk namun tidak 
-              terbatas pada login dari multiple locations yang tidak lazim, 
-              pola transaksi yang tidak sesuai dengan usage patterns normal, 
+              terbatas pada login dari berbagai lokasi yang tidak lazim, 
+              pola transaksi yang tidak sesuai dengan pola penggunaan normal, 
               atau laporan dari pengguna lain tentang perilaku yang mencurigakan. 
-              Durante periode suspension, pengguna tidak dapat login atau menggunakan 
+              Selama periode penangguhan, pengguna tidak dapat login atau menggunakan 
               fungsionalitas platform. Investigasi akan diselesaikan dalam waktu 
               maksimal 14 hari, dan akun akan dipulihkan jika investigasi membuktikan 
               bahwa tidak ada pelanggaran.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Suspension dengan Cause:</strong> 
+              <strong className="text-foreground">Penangguhan dengan Sebab:</strong> 
               Akun dapat ditangguhkan untuk durasi yang lebih panjang — mulai dari 
-              7 hari hingga 90 hari — sebagai penalty untuk pelanggaran sedang 
-              seperti repeated no-shows, failure to respond to perselisihan, atau 
-              penggunaan platform yang tidak profesional. Selama periode suspension, 
+              7 hari hingga 90 hari — sebagai sanksi untuk pelanggaran sedang 
+              seperti ketidakhadiran berulang, kegagalan menanggapi perselisihan, atau 
+              penggunaan platform yang tidak profesional. Selama periode penangguhan, 
               pengguna kehilangan akses ke fitur-fitur platform tetapi data mereka 
               tetap disimpan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Termination Permanen (Blacklist):</strong> 
-              Akun dapat dihentikan secara permanen dan pengguna di-blacklist dari 
-              platform untuk pelanggaran berat seperti: fraud atau pengkhianatan 
-              kepercayaan Dana Jaminan, harassment atau diskriminasi yang validated, 
-              manipulasi attendance atau sistem, pembuatan multiple akun untuk 
-              menghindari blacklist, atau aktivitas illegal menggunakan platform. 
-              Pengguna yang di-blacklist kehilangan akses permanen ke akun dan data 
+              <strong className="text-foreground">Penghentian Permanen (Daftar Hitam):</strong> 
+              Akun dapat dihentikan secara permanen dan pengguna dimasukkan daftar hitam dari 
+              platform untuk pelanggaran berat seperti: penipuan atau pengkhianatan 
+              kepercayaan Dana Jaminan, pelecehan atau diskriminasi yang terbukti, 
+              manipulasi kehadiran atau sistem, pembuatan banyak akun untuk 
+              menghindari daftar hitam, atau aktivitas ilegal menggunakan platform. 
+              Pengguna yang masuk daftar hitam kehilangan akses permanen ke akun dan data 
               mereka, dan tidak diizinkan untuk membuat akun baru dengan data yang sama.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Self-Termination:</strong> Pengguna 
-              dapat secara sukarela deactivate akun mereka kapan saja melalui settings 
-              menu di dashboard. Akun yang di-deactivate akan memasuki grace period 
-              30 hari di mana akun dapat di-restore. Setelah 30 hari, akun akan 
+              <strong className="text-foreground">Penghentian Mandiri:</strong> Pengguna 
+              dapat secara sukarela menonaktifkan akun mereka kapan saja melalui menu 
+              pengaturan di dasbor. Akun yang dinonaktifkan akan memasuki masa tenggang 
+              30 hari di mana akun dapat dipulihkan. Setelah 30 hari, akun akan 
               dihapus secara permanen namun data transaksi akan disimpan untuk 
-              compliance sesuai kebijakan retensi kami.
+              kepatuhan sesuai kebijakan retensi kami.
             </p>
           </section>
 
@@ -402,23 +409,23 @@ export default function TermsPage() {
               hukum Republik Indonesia tanpa memperhatikan principles of conflict of laws.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Yurisdiksi:</strong> Anda agree bahwa 
+              <strong className="text-foreground">Yurisdiksi:</strong> Anda setuju bahwa 
               setiap perselisihan yang tidak dapat diselesaikan melalui proses mediasi 
-              dan arbitration internal kami akan diajukan kepada courts yang memiliki 
-              jurisdiction di wilayah hukum Negara Republik Indonesia, spesifiknya 
-              adalah Pengadilan Negeri Jakarta Selatan sebagai courts dari first instance, 
-              kecuali untuk pengguna в других регионах Indonesia yang secara khusus 
-              agree untuk menggunakan courts lain yang lebih dekat dengan domisili mereka.
+              dan arbitrase internal kami akan diajukan kepada pengadilan yang memiliki 
+              yurisdiksi di wilayah hukum Negara Republik Indonesia, spesifiknya 
+              adalah Pengadilan Negeri Jakarta Selatan sebagai pengadilan tingkat pertama, 
+              kecuali untuk pengguna di wilayah lain di Indonesia yang secara khusus 
+              setuju untuk menggunakan pengadilan lain yang lebih dekat dengan domisili mereka.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Kepatuhan Hukum Indonesia:</strong> 
-              Daily Worker Hub dioperasikan sebagai platform yang fully compliant dengan 
+              Daily Worker Hub dioperasikan sebagai platform yang sepenuhnya patuh terhadap 
               peraturan perundang-undangan Indonesia yang berlaku, termasuk namun tidak 
               terbatas pada UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik 
               (ITE), UU No. 14 Tahun 2019 tentang Perlindungan Data Pribadi (UU PDP), 
               serta regulasi perpajakan yang berlaku untuk platform digital dan transaksi 
               Dana Jaminan. Pengguna bertanggung jawab untuk memastikan bahwa penggunaan 
-              platform mereka juga comply dengan semua hukum yang berlaku di yurisdiksi 
+              platform mereka juga mematuhi semua hukum yang berlaku di yurisdiksi 
               masing-masing.
             </p>
           </section>
@@ -426,16 +433,37 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-10" className="text-xl font-semibold text-foreground scroll-mt-24">10. Informasi Kontak</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Jika Anda memiliki pertanyaan, kekhawatiran, atau permintaan informasi lebih lanjut 
-              tentang Syarat dan Ketentuan ini, jangan ragu untuk menghubungi kami 
-              melalui kanal-kanal berikut:
+              Baik pemberi kerja maupun pekerja dilarang melakukan transaksi keuangan 
+              secara langsung di luar Sistem Dana Jaminan Daily Worker Hub untuk menghindari 
+              biaya platform. Pelanggaran ini akan mengakibatkan penangguhan akun dan 
+              diskualifikasi dari platform, karena hal ini juga menghilangkan 
+              perlindungan pembeli/penjual yang menjadi proposisi nilai inti kami.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Email:</strong> Hubungi tim customer 
               support kami di support@dailyworkerhub.com untuk pertanyaan umum tentang 
               penggunaan platform, atau di legal@dailyworkerhub.com untuk permintaan 
-              yang涉及到 aspects legal dari Syarat dan Ketentuan. Kami strive untuk 
+              yang berkaitan aspek hukum dari Syarat dan Ketentuan. Kami berupaya untuk 
               merespons dalam 2-3 hari kerja.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Dalam Platform:</strong> Untuk 
+              pertanyaan tentang akun atau perselisihan yang sedang berjalan, gunakan 
+              fitur percakapan yang tersedia di dasbor untuk terhubung dengan tim 
+              customer success kami secara langsung.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Situs Web:</strong> Kunjungi halaman 
+              Hubungi Kami di dailyworkerhub.com untuk informasi kontak lengkap 
+              termasuk alamat kantor kami, nomor telepon yang dapat 
+              dihubungi selama jam kerja (09:00-17:00 WIB), dan formulir 
+              kontak untuk permintaan spesifik.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Kami menghargai kepercayaan Anda menggunakan Daily Worker Hub sebagai 
+              mitra dalam perekrutan pekerja di industri hospitality. Kami 
+              akan terus berusaha untuk menyediakan platform yang aman, adil, 
+              dan efektif untuk seluruh pengguna kami.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Dalam Platform:</strong> Untuk 

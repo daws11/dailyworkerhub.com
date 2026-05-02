@@ -49,6 +49,11 @@ export default function CookiesPage() {
                 <p className="text-muted-foreground leading-relaxed">
                   Terakhir diperbarui: April 2026
                 </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Kebijakan ini melengkapi{" "}
+                  <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Privasi</a>{" "}
+                  kami dan menjelaskan secara spesifik bagaimana kami menggunakan cookie dan teknologi pelacakan serupa.
+                </p>
 
                 <section className="space-y-4">
                   <h2 id="section-1" className="text-xl font-semibold text-foreground scroll-mt-24">1. Apa itu Cookie?</h2>
@@ -92,17 +97,17 @@ export default function CookiesPage() {
                       </thead>
                       <tbody className="divide-y divide-border">
                         <tr>
-                          <td className="px-4 py-3 font-medium text-foreground">Essential (Wajib)</td>
+                          <td className="px-4 py-3 font-medium text-foreground">Wajib</td>
                           <td className="px-4 py-3">
                             Cookie ini mutlak diperlukan untuk operasi dasar platform, termasuk autentikasi
-                            pengguna, manajemen sesi login, security, dan fungsionalitas keranjang Dana Jaminan.
-                            Tanpa cookie ini, fitur utama seperti deposit dana, release pembayaran, dan
+                            pengguna, manajemen sesi login, keamanan, dan fungsionalitas keranjang Dana Jaminan.
+                            Tanpa cookie ini, fitur utama seperti deposit dana, pencairan pembayaran, dan
                             notifikasi push tidak akan berfungsi dengan baik.
                           </td>
                           <td className="px-4 py-3">Session / 30 hari</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 font-medium text-foreground">Analytics (Analitik)</td>
+                          <td className="px-4 py-3 font-medium text-foreground">Analitik</td>
                           <td className="px-4 py-3">
                             Cookie analitik mengumpulkan data anonim tentang bagaimana Anda menggunakan
                             platform — halaman mana yang dikunjungi, berapa lama waktu yang dihabiskan,
@@ -113,10 +118,10 @@ export default function CookiesPage() {
                           <td className="px-4 py-3">12 bulan</td>
                         </tr>
                         <tr>
-                          <td className="px-4 py-3 font-medium text-foreground">Functional (Fungsional)</td>
+                          <td className="px-4 py-3 font-medium text-foreground">Fungsional</td>
                           <td className="px-4 py-3">
                             Cookie fungsional mengingat preferensi dan pengaturan personal Anda, seperti
-                            bahasa yang dipilih, lokasi kerja yang Anda minati di Bali, kategori pekerjaan
+                            bahasa yang dipilih, lokasi kerja yang Anda minati, kategori pekerjaan
                             hospitality yang Anda cari, serta preferensi notifikasi. Cookie ini membuat
                             pengalaman Anda lebih personal dan efisien setiap kali kembali ke platform.
                           </td>
@@ -142,11 +147,18 @@ export default function CookiesPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Firebase Analytics (Google):</strong> Kami
                     mengintegrasikan Firebase Analytics untuk memahami perilaku pengguna di aplikasi web
-                    dan mobile. Firebase mengumpulkan data interaksi anonim yang mencakup waktu session,
+                    dan mobile. Firebase mengumpulkan data interaksi anonim yang mencakup waktu sesi,
                     fitur yang digunakan, error yang terjadi, dan konversi dalam alur kerja — misalnya
                     berapa banyak pemberi kerja yang berhasil membuat lowongan atau berapa banyak pekerja yang
-                    menyelesaikan proses tarik dana pertama mereka. Data ini digunakan solely untuk tujuan
-                    optimisasi produk dan tidak dibagikan ke advertiser.
+                    menyelesaikan proses tarik dana pertama mereka. Data ini digunakan semata-mata untuk tujuan
+                    optimalisasi produk dan tidak dibagikan ke pengiklan.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    <strong className="text-foreground">Firebase Cloud Messaging (FCM):</strong> Untuk
+                    mengirimkan push notification — seperti konfirmasi deposit Dana Jaminan, status pembayaran,
+                    atau pengingat jadwal kerja — kami menggunakan FCM yang mungkin menyimpan token unik
+                    di perangkat Anda. Token ini memungkinkan kami mengirim notifikasi meskipun tab
+                    browser tertutup, selama Anda telah memberikan izin notifikasi.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
                     <strong className="text-foreground">Supabase:</strong> Sebagai backend platform kami,
