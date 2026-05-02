@@ -13,7 +13,7 @@ type Row = {
 
 const rows: Row[] = [
   { feature: "Akses terbuka — siapa pun bisa daftar tanpa perantara", dwh: true, staffinc: false, myrobin: false, calo: false },
-  { feature: "Biaya Platform 2% — 3x lebih rendah dari komisi calo", dwh: true, staffinc: false, myrobin: false, calo: false },
+  { feature: "Biaya Platform 3,5% — tetap jauh di bawah komisi calo (10–15%)", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Dana Perlindungan komunitas (dana darurat anggota)", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Suara & partisipasi worker dalam kebijakan platform", dwh: true, staffinc: false, myrobin: false, calo: false },
   { feature: "Transparansi upah publik sebelum apply (rate/jam terbuka)", dwh: true, staffinc: false, myrobin: false, calo: false },

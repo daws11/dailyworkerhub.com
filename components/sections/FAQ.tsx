@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "Berapa biaya platform untuk bisnis dan pekerja?",
-    a: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 2% + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
+    a: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
   },
   {
     q: "Bagaimana proses verifikasi pekerja?",

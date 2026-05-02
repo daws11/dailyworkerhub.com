@@ -31,17 +31,18 @@ Dana Jaminan adalah mekanisme pihak ketiga yang menahan dana sampai kondisi tert
 Sebelum pekerjaan dimulai, employer deposit dana ke dalam Sistem Dana Jaminan:
 
 1. Employer memilih worker dan mengkonfirmasi hiring
-2. Sistem menghitung total deposit: **Gaji harian × Jumlah hari + Biaya Platform + Kontribusi Dana Perlindungan + Biaya Gateway Xendit (VA)**
+2. Sistem menghitung total deposit: **Gaji harian × Jumlah hari + Biaya Platform + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan + Biaya Gateway Xendit (VA)**
 3. Employer melakukan transfer melalui Virtual Account Xendit (BCA, BRI, Mandiri) atau E-Wallet (GoPay, OVO, Dana)
 4. Dana masuk ke saldo Dana Jaminan dan ditahan sampai pekerjaan selesai
 
 | Komponen | Penjelasan | Contoh (Gaji Rp 250.000/hari × 2 hari) |
 |----------|-----------|----------------------------------------|
 | **Gaji Worker** | Besaran bayaran yang disepakati | Rp 500.000 |
-| **Biaya Platform** | Biaya operasional DWH | Rp 10.000 (2%) |
-| **Kontribusi Dana Perlindungan** | Masuk ke pool perlindungan komunitas | Rp 5.000 (1%) |
+| **Biaya Platform (3,5%)** | Operasional server, tim support & review | Rp 17.500 |
+| **Biaya Layanan Dana Jaminan** | Penanganan dana, audit trail, keamanan | Rp 5.000 (flat) |
+| **Kontribusi Dana Perlindungan (1%)** | Masuk ke pool perlindungan komunitas | Rp 5.000 |
 | **Biaya Gateway Xendit — VA** | Biaya Virtual Account (pihak ketiga) | Rp 4.000 |
-| **Total Deposit** | Jumlah yang harus dibayar employer | Rp 519.000 |
+| **Total Deposit** | Jumlah yang harus dibayar employer | Rp 531.500 |
 
 ### Langkah 2: Worker Melaksanakan Pekerjaan
 
@@ -82,8 +83,13 @@ Setelah employer approve, dana dikeluarkan dari Dana Jaminan:
 |---------|--------|---------|
 | Worker klik "Tarik Dana" | Segera | Masukkan jumlah yang ingin dicairkan |
 | Verifikasi pencairan | 1x24 jam | Sistem verifikasi bank detail |
-| Dana dikirim ke bank | 1-3 hari kerja | Bergantung pada bank (BCA biasanya lebih cepat) |
-| Biaya Gateway Xendit — Payout | Dipotong otomatis | Rp 2.500 (biaya Xendit, bukan biaya platform) |
+| Dana dikirim ke bank — Reguler | 1-3 hari kerja | Rp 2.500 (biaya gateway Xendit) |
+| Dana dikirim ke bank — Instant | ≤ 1 jam | Rp 5.000 (opsi prioritas, termasuk biaya Xendit Instant) |
+
+| Layanan | Durasi | Biaya | Catatan |
+|---------|--------|-------|---------|
+| **Pencairan Reguler** | 1–3 hari kerja | Rp 2.500 | Biaya gateway Xendit |
+| **Pencairan Instant** | **≤ 1 jam** | **Rp 5.000** | Opsi prioritas, termasuk biaya Xendit Instant |
 
 > **Peringatan:** Pencairan hanya bisa dilakukan ke rekening bank atas nama Anda sendiri yang sudah diverifikasi. Rekening atas nama orang lain tidak akan diterima oleh sistem.
 
@@ -148,60 +154,74 @@ Dana Jaminan dipisahkan dari dana operasional Daily Worker Hub:
 
 ## Rincian Biaya Transaksi
 
-Setiap transaksi di Daily Worker Hub memiliki **tiga lapis biaya yang transparan**.
+Setiap transaksi di Daily Worker Hub memiliki struktur biaya yang **transparan**.
 Semua biaya ditampilkan kepada employer **sebelum** deposit dilakukan — tidak ada biaya tersembunyi.
 
----
+| Komponen | Penjelasan | Dibebankan ke | Contoh (Gaji Rp 500.000) |
+|----------|-----------|---------------|--------------------------|
+| **Gaji Worker** | Bayaran yang disepakati | — | Rp 500.000 |
+| **Biaya Platform** | Operasional server, tim support & review | Employer | Rp 17.500 (3,5%) |
+| **Biaya Layanan Dana Jaminan** | Penanganan dana, audit trail, keamanan transaksi | Employer | Rp 5.000 (flat) |
+| **Kontribusi Dana Perlindungan** | Pool perlindungan komunitas | Employer | Rp 5.000 (1%) |
+| **Biaya Gateway Xendit — VA** | Virtual Account BCA/BRI/Mandiri | Employer | Rp 4.000 |
+| **Total Deposit Employer** | | | **Rp 531.500** |
 
-### Lapis 1: Biaya Platform (2%) — Pendapatan Daily Worker Hub
-
-Biaya ini adalah satu-satunya pendapatan platform, digunakan untuk:
-
-- Menjalankan server dan infrastruktur
-- Tim support dan review perselisihan
-- Pengembangan fitur baru
-- Verifikasi akun dan sistem keamanan
-
-> **Sebagai perbandingan:** Komisi agency/calo tradisional bisa mencapai 10-15% dari gaji harian. Biaya platform DWH hanya 2% — jauh lebih rendah.
-
----
-
-### Lapis 2: Kontribusi Dana Perlindungan (1%) — Pool Komunitas
-
-Dana ini **tidak masuk ke platform**. Dana ini masuk ke pool perlindungan bersama yang melindungi **semua** anggota komunitas dari perselisihan, penipuan, atau kerugian.
+> **Sebagai perbandingan:** Komisi calo/agency tradisional mencapai 10–15% dari gaji harian. Dengan struktur di atas, **total biaya employer hanya 6,3%** — dan worker tetap menerima gaji 100% utuh.
 
 [Pelajari Dana Perlindungan →](/docs/fitur/dana-perlindungan)
 
 ---
 
-### Lapis 3: Biaya Gateway Xendit — Pihak Ketiga
+### Biaya Pihak Ketiga: Gateway Xendit
 
-Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan Daily Worker Hub. Platform tidak mengambil keuntungan dari biaya ini.
+Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan Daily Worker Hub. Kami tidak mengambil keuntungan dari biaya ini.
 
 | Jenis | Tahap | Besaran | Yang Membayar |
 |-------|-------|---------|---------------|
 | **Biaya Penerimaan Dana (Virtual Account)** | Employer deposit | Rp 4.000 | Employer |
-| **Biaya Transfer Bank (Payout)** | Worker tarik dana | Rp 2.500 | Worker |
+| **Biaya Transfer Bank — Reguler (Payout)** | Worker tarik dana | Rp 2.500 | Worker |
+| **Biaya Transfer Bank — Instant (Payout)** | Worker tarik dana prioritas | Rp 5.000 | Worker |
 
-> **Catatan:** Biaya gateway Xendit di atas adalah biaya pihak ketiga sesuai [dokumentasi resmi Xendit](https://www.xendit.co/en-id/pricing/). Daily Worker Hub tidak mengenakan markup apapun.
+> **Catatan:** Biaya gateway Xendit di atas adalah biaya pihak ketiga sesuai [dokumentasi resmi Xendit](https://www.xendit.co/en-id/pricing/). Daily Worker Hub tidak mengenakan markup satu rupiah pun.
 
 ---
 
 ### Contoh Perhitungan Lengkap
 
 | Komponen | Perhitungan | Jumlah | Masuk Ke |
-|----------|------------|--------|----------|
+|----------|-------------|--------|----------|
 | Gaji Worker (Rp 200.000/hari × 3 hari) | — | Rp 600.000 | Worker |
-| Biaya Platform (2%) | Rp 600.000 × 0,02 | Rp 12.000 | DWH |
+| Biaya Platform (3,5%) | Rp 600.000 × 0,035 | Rp 21.000 | DWH |
+| Biaya Layanan Dana Jaminan (flat) | Flat | Rp 5.000 | DWH |
 | Kontribusi Dana Perlindungan (1%) | Rp 600.000 × 0,01 | Rp 6.000 | Pool Komunitas |
 | Biaya Gateway Xendit — VA | Flat | Rp 4.000 | Xendit |
-| **Total Deposit Employer** | — | **Rp 622.000** | — |
+| **Total Deposit Employer** | — | **Rp 636.000** | — |
 | | | | |
 | **Worker Menerima (net)** | — | **Rp 600.000** | Worker |
-| Biaya Gateway Xendit — Payout (saat tarik) | Flat | Rp 2.500 | Xendit |
-| **Worker Bersih (setelah tarik ke bank)** | — | **Rp 597.500** | Worker |
+| Biaya Gateway Xendit — Payout (reguler) | Flat | Rp 2.500 | Xendit |
+| **Worker Bersih (setelah tarik reguler)** | — | **Rp 597.500** | Worker |
 
-> **Ringkasan:** Dari total Rp 622.000 yang dibayar employer, platform hanya menerima **Rp 12.000 (1,9%)**. Sisanya: Rp 600.000 ke worker, Rp 6.000 ke pool komunitas, Rp 6.500 ke gateway Xendit.
+> **Ringkasan:** Dari total Rp 636.000 yang dibayar employer, Daily Worker Hub hanya menerima **Rp 26.000 (4,1%)** untuk operasional platform dan penanganan dana. Sisanya: Rp 600.000 ke worker, Rp 6.000 ke pool komunitas, Rp 4.000 ke Xendit.
+
+---
+
+## Mengapa Struktur Biaya Ini?
+
+Kami percaya transparansi adalah fondasi kepercayaan. Berikut bagaimana setiap rupiah dibagi pada transaksi Rp 500.000:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Rp 500.000  → Gaji Worker (94%)                            │
+│  Rp  17.500  → Biaya Platform (3,3%)                        │
+│  Rp   5.000  → Biaya Layanan Dana Jaminan (0,9%)            │
+│  Rp   5.000  → Dana Perlindungan Komunitas (0,9%)           │
+│  Rp   4.000  → Biaya Gateway Xendit — VA (0,8%)             │
+│  ─────────────────────────────────────────────────────────  │
+│  Rp 531.500  → Total yang dibayar employer                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+> **Sebagai perbandingan:** Komisi calo tradisional mencapai 10–15% dari gaji harian. Dengan Daily Worker Hub, worker tetap menerima **94% upah utuh**, sementara employer membayar total **6,3%** untuk keamanan, perlindungan, dan transparansi penuh.
 
 ---
 
@@ -213,10 +233,11 @@ Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan 
 | **Dana Ditahan** | Selama pekerjaan berlangsung | Sistem (otomatis) |
 | **Verifikasi & Approval** | 1-24 jam setelah worker submit | Employer |
 | **Rilis ke Saldo Worker** | Segera setelah approval | Sistem (otomatis) |
-| **Tarik ke Bank** | 1-3 hari kerja | Worker (manual) |
+| **Tarik ke Bank — Reguler** | 1-3 hari kerja | Worker (manual) |
+| **Tarik ke Bank — Instant** | ≤ 1 jam | Worker (manual) |
 | **Perselisihan** | Dana tetap ditahan sampai selesai | Tim review |
 
-**Total Estimasi Transaksi Normal:** 3-5 hari dari deposit sampai dana masuk rekening worker.
+**Total Estimasi Transaksi Normal:** 3-5 hari dari deposit sampai dana masuk rekening worker (reguler), atau ≤ 1 jam dengan Pencairan Instant.
 
 ---
 
@@ -282,11 +303,11 @@ Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan 
 |---------|--------|
 | **Posting** | Hotel Sari Bali membutuhkan 3 waiter untuk shift malam (18:00-24:00), rate Rp 175.000/hari |
 | **Apply** | 5 worker mendaftar, employer memilih 3 worker terbaik berdasarkan rating |
-| **Deposit** | Employer deposit: 3 worker × Rp 175.000 + Biaya Platform 2% + Kontribusi Dana Perlindungan 1% + Biaya VA = Rp 540.750 |
+| **Deposit** | Employer deposit: 3 worker × Rp 175.000 + Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1% + Biaya VA = Rp 557.625 |
 | **Pekerjaan** | 3 worker hadir tepat waktu dan menyelesaikan shift sesuai jadwal |
 | **Verifikasi** | Employer verify pada hari berikutnya (14 jam setelah shift) |
 | **Rilis** | Masing-masing worker menerima Rp 175.000 di saldo platform |
-| **Tarik** | Ketiga worker tarik ke rekening masing-masing (dipotong biaya payout Xendit Rp 2.500) |
+| **Tarik** | Ketiga worker tarik ke rekening masing-masing (dipotong biaya payout Xendit Rp 2.500 reguler) |
 | **Rating** | Employer memberi rating 5/5, worker memberi rating 4/5 untuk employer |
 
 **Hasil:** Dana sampai ke rekening worker dalam 4 hari dari deposit. Win-win untuk semua.
@@ -297,7 +318,7 @@ Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan 
 |---------|--------|
 | **Posting** | Restoran Bali Timur membutuhkan 1 chef untuk acara khusus |
 | **Hire** | Employer memilih chef berpengalaman dengan rating 4.8 |
-| **Deposit** | Employer deposit: Rp 400.000 + Biaya Platform + Kontribusi Dana Perlindungan + Biaya VA = Rp 412.000 |
+| **Deposit** | Employer deposit: Rp 400.000 + Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1% + Biaya VA = Rp 427.000 |
 | **Masalah** | Chef datang 2 jam terlambat dan tidak mengikuti resep yang diminta |
 | **Perselisihan** | Employer mengajukan perselisihan karena kualitas kerja tidak sesuai |
 | **Review** | Tim Daily Worker Hub mereview: bukti foto makanan, chat kesepakatan resep |
@@ -311,7 +332,7 @@ Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan 
 | Langkah | Detail |
 |---------|--------|
 | **Posting** | Villa Sunset membutuhkan housekeeping untuk 2 hari |
-| **Hire** | Employer deposit: Rp 160.000 × 2 hari + biaya = Rp 329.600 |
+| **Hire** | Employer deposit: Rp 160.000 × 2 hari + biaya = Rp 343.400 |
 | **Masalah** | Worker tidak hadir di hari pertama tanpa konfirmasi |
 | **Perselisihan** | Employer mengajukan perselisihan |
 | **Review** | Tim memverifikasi: worker tidak check-in di platform, tidak ada chat atau notifikasi |
@@ -344,6 +365,18 @@ A: Tidak ada batasan atas. Minimum deposit adalah Rp 100.000 per transaksi.
 
 **Q: Bank apa saja yang didukung untuk penarikan?**
 A: Saat ini kami mendukung BCA, BRI, dan Mandiri melalui gateway Xendit. Kami sedang mengembangkan dukungan untuk BNI dan e-wallet via Xendit (OVO, GoPay, Dana).
+
+**Q: Kenapa ada Biaya Layanan Dana Jaminan?**
+A: Biaya ini menutupi operasional penanganan Dana Jaminan Anda: tim review perselisihan, enkripsi AES-256, audit trail permanen, dan pemisahan rekening Dana Jaminan yang diaudit. Tanpa biaya ini, platform tidak dapat menjamin keamanan dana Anda dengan standar saat ini.
+
+**Q: Apakah Daily Worker Hub mengambil keuntungan dari biaya Xendit?**
+A: **Tidak.** Biaya Xendit (VA Rp 4.000, Payout Rp 2.500) adalah biaya pihak ketiga yang kami teruskan sepenuhnya tanpa markup satu rupiah pun.
+
+**Q: Apakah biaya bisa lebih murah?**
+A: Ya. Untuk employer dengan volume transaksi di atas Rp 10.000.000/bulan atau transaksi recurring jangka panjang, silakan hubungi tim kami melalui support@dailyworkerhub.com untuk diskusi rate khusus.
+
+**Q: Apa bedanya Pencairan Reguler dan Instant?**
+A: Pencairan Reguler menggunakan jadwal settlement standar bank (1–3 hari kerja) dengan biaya Rp 2.500. Pencairan Instant menggunakan fitur Xendit Instant Payout yang memproses dana dalam 1 jam dengan biaya tambahan Rp 5.000. Pilihan ada di tangan worker.
 
 ---
 
