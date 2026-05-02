@@ -245,7 +245,7 @@ export default function Home() {
               </motion.div>
 
               <motion.h1
-                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-6 md:mb-8 text-balance"
+                className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-6 text-balance"
                 initial={{ opacity: 1, y: 0 }}
               >
                 <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-2">Daily Worker Hub</span>
@@ -255,11 +255,27 @@ export default function Home() {
                 />
               </motion.h1>
 
+              {/* H2 Subheadline — keyword-rich, feature snapshot */}
+              <motion.h2
+                variants={fadeUp}
+                className="text-lg sm:text-xl md:text-2xl font-semibold text-muted-foreground mb-6 md:mb-8 text-balance max-w-lg"
+              >
+                10.000+ pekerja sudah bergabung. Gratis daftar — langsung cari shift atau pasang lowongan.
+              </motion.h2>
+
               <motion.p
                 variants={fadeUp}
                 className="text-base sm:text-lg md:text-xl text-muted-foreground font-sans font-light leading-[1.6] md:leading-[1.7] mb-8 md:mb-12 text-balance max-w-lg"
               >
                 Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha yang membutuhkan tenaga kerja di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.
+              </motion.p>
+
+              {/* Cost microcopy — above fold */}
+              <motion.p
+                variants={fadeUp}
+                className="text-sm text-muted-foreground/70 mb-8 md:mb-12"
+              >
+                Gratis untuk pekerja. Bisnis hanya bayar 3,5% per transaksi — tanpa biaya tersembunyi.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
@@ -350,6 +366,17 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* PAIN POINT — agitation before purpose */}
+      {/* ============================================================ */}
+      <section className="py-16 md:py-20 px-4 md:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="font-sans text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
+            Pernah tidak dibayar setelah kerja seharian? Butuh pekerja besok pagi tapi tidak tahu harus cari ke mana? Di Daily Worker Hub, masalah itu tidak ada.
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
       {/* PURPOSE — tentang Daily Worker Hub */}
       {/* ============================================================ */}
       <section className="py-20 md:py-28 px-4 md:px-8 relative z-10 overflow-hidden">
@@ -412,18 +439,25 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          {/* Traction microcopy */}
+          <p className="text-center mt-12 text-sm text-muted-foreground/70">
+            Saat ini, 10.000+ pekerja sudah terverifikasi dan 500+ bisnis aktif menggunakan platform kami — semuanya tanpa perantara.
+          </p>
         </div>
       </section>
 
       {/* ============================================================ */}
       {/* LOGO MARQUEE — social proof */}
       {/* ============================================================ */}
-      {/* <LogoMarquee /> */}
-
-      {/* ============================================================ */}
       {/* STATS COUNTER — traksi komunitas */}
       {/* ============================================================ */}
-      {/* <StatsCounter /> */}
+      <StatsCounter />
+
+      {/* ============================================================ */}
+      {/* LOGO MARQUEE — social proof */}
+      {/* ============================================================ */}
+      <LogoMarquee />
 
       {/* ============================================================ */}
       {/* VALUE PROPOSITION SECTION */}
@@ -550,9 +584,12 @@ export default function Home() {
               <p>
                 Daily Worker Hub dirancang untuk mereka yang memiliki komitmen lain — pelajar, mahasiswa, pekerja paruh waktu, atau siapa pun yang ingin mendapatkan penghasilan tambahan tanpa harus terikat kontrak penuh waktu.
               </p>
-              <p>
-                Ambil shift sesuai waktu luangmu. Tidak ada minimum jam kerja. Tidak ada kewajiban harian. Yang kamu butuhkan: smartphone, koneksi internet, dan kemauan untuk bekerja.
-              </p>
+              <ul className="list-disc pl-5 space-y-2 text-base">
+                <li>Ambil shift sesuai waktu luangmu — tidak ada minimum jam kerja.</li>
+                <li>Tidak ada kewajiban harian atau kontrak jangka panjang.</li>
+                <li>Yang kamu butuhkan: smartphone, koneksi internet, dan kemauan untuk bekerja.</li>
+                <li>Dibayar langsung setelah shift selesai — tanpa nunggu mingguan.</li>
+              </ul>
             </div>
 
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">
@@ -580,9 +617,12 @@ export default function Home() {
               <p>
                 Temukan pekerja harian dengan rekam jejak yang terverifikasi. Sistem kami menyediakan informasi kehadiran, skor kepercayaan, dan histori kerja — sehingga Anda dapat membuat keputusan rekrutmen yang lebih baik.
               </p>
-              <p>
-                Absensi via QR code, pembayaran otomatis setelah shift selesai, dan monitoring kepatuhan regulasi yang terintegrasi. Semua dalam satu platform.
-              </p>
+              <ul className="list-disc pl-5 space-y-2 text-base">
+                <li>Absensi via QR code — pantau kehadiran real-time di lokasi.</li>
+                <li>Pembayaran otomatis setelah shift selesai — tanpa follow-up manual.</li>
+                <li>Monitoring kepatuhan regulasi terintegrasi dalam satu platform.</li>
+                <li>Sistem rating & review dua arah untuk menjaga kualitas.</li>
+              </ul>
             </div>
 
             <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base md:text-lg font-sub shadow-xl w-full sm:w-auto">

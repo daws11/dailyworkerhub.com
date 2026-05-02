@@ -14,7 +14,7 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     name: "Rahmat S.",
-    role: "Server, Jakarta",
+    role: "Server Harian",
     initials: "RS",
     quote:
       "Akhirnya bisa kerja tanpa dipotong calo. Upah utuh masuk ke rekening, dan saya bisa pilih shift sesuai jadwal kuliah.",
@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Dewi A.",
-    role: "Barista harian, Bandung",
+    role: "Barista Harian",
     initials: "DA",
     quote:
       "Sistem review-nya adil. Saya punya portofolio digital sendiri sekarang — bisnis yang cocok langsung hubungi saya.",
@@ -30,7 +30,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Fajar P.",
-    role: "Helper event, Surabaya",
+    role: "Helper Event",
     initials: "FP",
     quote:
       "Proteksi dari Dana Perlindungan bikin saya tenang. Waktu cedera ringan kemarin, komunitas benar-benar bantu.",
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
   },
   {
     name: "Bu Sari",
-    role: "Owner Warung Sari, Yogyakarta",
+    role: "Owner Warung Sari",
     initials: "BS",
     quote:
       "Dapat staff harian dalam hitungan jam, bukan hari. Semua pekerja sudah terverifikasi, jadi saya tidak was-was.",
