@@ -559,7 +559,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl">
                 <div className="absolute inset-0 bg-primary/10"></div>
-                <Image src="/pekerja-portrait.webp" alt="Pekerja Fleksibel" fill className="object-cover object-top" />
+                <Image src="/worker-portrait.webp" alt="Pekerja Fleksibel" fill className="object-cover object-top" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-primary/10 flex flex-col justify-end p-8 pb-12 md:p-12 text-white">
                   <div className="mb-4 relative z-10">
                     <div className="flex items-center gap-2 mb-3">
