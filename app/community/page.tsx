@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link"
 import Image from "next/image"
-import { MessageSquare, FileText, BookOpen, Vote, Sparkles, Search, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, Zap } from "lucide-react"
+import { MessageSquare, FileText, BookOpen, Vote, Sparkles, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, Zap } from "lucide-react"
 import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTimeAgo } from "@/lib/community"
 import { CommunityNavbar } from "@/components/layout/community/CommunityNavbar"
 import CommunityChatDemo from "@/components/community/CommunityChatDemo"
+import { CommunitySearch } from "@/components/community/CommunitySearch"
 
 export const metadata: Metadata = {
   title: "Komunitas Pekerja Harian Indonesia - Daily Worker Hub",
@@ -30,6 +31,25 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://dailyworkerhub.com/community",
+  },
+  other: {
+    "script:ld+json": JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Komunitas Pekerja Harian Indonesia",
+      description: "Bergabunglah dengan komunitas pekerja harian Indonesia. Diskusi, pelajari tips karier, berbagi pengalaman, dan berkembang bersama ribuan daily worker di seluruh Indonesia.",
+      url: "https://dailyworkerhub.com/community",
+      isPartOf: {
+        "@type": "WebSite",
+        name: "Daily Worker Hub",
+        url: "https://dailyworkerhub.com",
+      },
+      about: {
+        "@type": "Thing",
+        name: "Komunitas Pekerja Harian Indonesia",
+        description: "Pusat komunitas untuk pekerja harian lepas dan pelaku usaha di Indonesia",
+      },
+    }),
   },
 };
 
@@ -63,29 +83,17 @@ export default async function CommunityPage() {
               {/* Headline */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
                 <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                  Komunitas Pekerja Harian Indonesia
+                  Lebih dari Forum — Bangun Kariermu di Sini
                 </span>
               </h1>
 
               {/* Subheadline */}
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-xl">
-                Diskusi, pelajari, dan berkembang bersama ribuan daily worker di seluruh Indonesia.
+                {stats.members.toLocaleString()}+ pekerja harian sudah berbagi tips, temukan mentor, dan buka peluang baru setiap hari.
               </p>
 
               {/* Search */}
-              <div className="w-full max-w-xl">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative flex items-center bg-card border border-border rounded-2xl h-12 sm:h-14 md:h-16 px-4 sm:px-6 focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300">
-                    <Search className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground mr-3 sm:mr-4 flex-shrink-0" />
-                    <input
-                      type="text"
-                      placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
-                      className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm sm:text-base"
-                    />
-                  </div>
-                </div>
-              </div>
+              <CommunitySearch />
 
               {/* Shortcut Pills */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mt-5 sm:mt-6">
