@@ -442,14 +442,14 @@ export default function Home() {
       {/* ============================================================ */}
       {/* LOGO MARQUEE — social proof */}
       {/* ============================================================ */}
-      {/* STATS COUNTER — traksi komunitas */}
+      {/* STATS COUNTER — sementara nonaktif (belum launch) */}
       {/* ============================================================ */}
-      <StatsCounter />
+      {/* <StatsCounter /> */}
 
       {/* ============================================================ */}
-      {/* LOGO MARQUEE — social proof */}
+      {/* LOGO MARQUEE — sementara nonaktif (belum launch) */}
       {/* ============================================================ */}
-      <LogoMarquee />
+      {/* <LogoMarquee /> */}
 
       {/* ============================================================ */}
       {/* VALUE PROPOSITION SECTION */}
