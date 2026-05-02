@@ -209,17 +209,14 @@ Biaya ini adalah biaya dari gateway pembayaran **Xendit**, **BUKAN** pendapatan 
 
 Kami percaya transparansi adalah fondasi kepercayaan. Berikut bagaimana setiap rupiah dibagi pada transaksi Rp 500.000:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Rp 500.000  → Gaji Pekerja (94%)                            │
-│  Rp  17.500  → Biaya Platform (3,3%)                        │
-│  Rp   5.000  → Biaya Layanan Dana Jaminan (0,9%)            │
-│  Rp   5.000  → Dana Perlindungan Komunitas (0,9%)           │
-│  Rp   4.000  → Biaya Gateway Xendit (VA) (0,8%)               │
-│  ──────────────────────────────────────────────────────────  │
-│  Rp 531.500  → Total yang dibayar pemberi kerja              │
-└─────────────────────────────────────────────────────────────┘
-```
+| Alokasi | Jumlah | Persentase | Masuk Ke |
+|---------|--------|-----------|----------|
+| **Gaji Pekerja** | Rp 500.000 | 94% | Pekerja |
+| **Biaya Platform** | Rp 17.500 | 3,3% | DWH |
+| **Biaya Layanan Dana Jaminan** | Rp 5.000 | 0,9% | DWH |
+| **Dana Perlindungan Komunitas** | Rp 5.000 | 0,9% | Pool Komunitas |
+| **Biaya Gateway Xendit (VA)** | Rp 4.000 | 0,8% | Xendit |
+| **Total Deposit Employer** | **Rp 531.500** | **100%** | — |
 
 > **Sebagai perbandingan:** Komisi calo tradisional mencapai 10–15% dari gaji harian. Dengan Daily Worker Hub, pekerja tetap menerima **94% upah utuh**, sementara pemberi kerja membayar total **6,3%** untuk keamanan, perlindungan, dan transparansi penuh.
 
@@ -255,38 +252,22 @@ Kami percaya transparansi adalah fondasi kepercayaan. Berikut bagaimana setiap r
 
 ### Proses Perselisihan
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 ALUR PENYELESAIAN PERSELISIHAN               │
-│                                                               │
-│  1. Ajukan Perselisihan                                      │
-│     ├── Pihak yang dirugikan klik "Ajukan Perselisihan"     │
-│     ├── Tulis penjelasan dan lampirkan bukti                 │
-│     └── Dana tetap ditahan di Dana Jaminan sampai selesai   │
-│                         │                                     │
-│                         ▼                                     │
-│  2. Peninjauan oleh Tim Daily Worker Hub                        │
-│     ├── Tim mereview bukti dari kedua belah pihak            │
-│     ├── Waktu peninjauan: 1-3 hari kerja                     │
-│     ├── Tim mungkin meminta informasi tambahan               │
-│     └── Komunikasi via platform chat                         │
-│                         │                                     │
-│                         ▼                                     │
-│  3. Keputusan                                                │
-│     ├── Dana dikembalikan ke Pemberi Kerja                         │
-│     ├── Dana dirilis ke Pekerja                                │
-│     └── Dana dibagi sesuai proporsi yang adil                │
-│                         │                                     │
-│                         ▼                                     │
-│  4. Pelaksanaan Keputusan                                    │
-│     ├── Dana diproses sesuai keputusan                       │
-│     └── Dana Perlindungan digunakan jika diperlukan          │
-│                         │                                     │
-│                         ▼                                     │
-│  5. Tidak Puas dengan Keputusan?                             │
-│     ├── Ajukan banding dalam 7 hari                          │
-│     └── Peninjauan ulang oleh tim berbeda                    │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["<b>1. Ajukan Perselisihan</b><br/>Pihak dirugikan klik 'Ajukan Perselisihan'<br/>Tulis penjelasan dan lampirkan bukti<br/>Dana tetap ditahan di Dana Jaminan"]
+    A --> B
+    B["<b>2. Peninjauan Tim Daily Worker Hub</b><br/>Tim mereview bukti kedua belah pihak<br/>Waktu: 1-3 hari kerja<br/>Komunikasi via platform chat"]
+    B --> C
+    C{"<b>3. Keputusan</b>"}
+    C -->|"Dana dikembalikan"| C1["Ke Pemberi Kerja"]
+    C -->|"Dana dirilis"| C2["Ke Pekerja"]
+    C -->|"Dana dibagi"| C3["Proporsi adil"]
+    C1 --> D
+    C2 --> D
+    C3 --> D
+    D["<b>4. Pelaksanaan Keputusan</b><br/>Dana diproses sesuai keputusan<br/>Dana Perlindungan digunakan jika perlu"]
+    D --> E
+    E["<b>5. Tidak Puas?</b><br/>Ajukan banding dalam 7 hari<br/>Peninjauan ulang oleh tim berbeda"]
 ```
 
 > **Peringatan:** Perselisihan hanya bisa diajukan dalam waktu 7 hari setelah pekerjaan selesai. Setelah 7 hari, transaksi dianggap selesai dan dana dirilis ke pekerja.
