@@ -270,14 +270,6 @@ export default function Home() {
                 Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha yang membutuhkan tenaga kerja di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.
               </motion.p>
 
-              {/* Cost microcopy — above fold */}
-              <motion.p
-                variants={fadeUp}
-                className="text-sm text-muted-foreground/70 mb-8 md:mb-12"
-              >
-                Gratis untuk pekerja. Bisnis hanya bayar 3,5% per transaksi — tanpa biaya tersembunyi.
-              </motion.p>
-
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-10 md:mb-12">
                 <Magnet strength={isMobile ? 0.05 : 0.2}>
                   <motion.a
