@@ -209,7 +209,7 @@ export default function TermsPage() {
               pekerjaan harian tersebut. Dana ini dihold oleh platform dan tidak dapat 
               dicairkan oleh pemberi kerja selama pekerjaan sedang dalam proses. Deposit 
               dilakukan melalui metode pembayaran yang kami support — saat ini mencakup 
-              transfer bank lokal Indonesia dan Xendit virtual account — dan dana deposit 
+              transfer bank lokal Indonesia dan virtual account — dan dana deposit 
               akan shown sebagai "pending" di dashboard pemberi kerja sampai pekerjaan dimulai.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -307,7 +307,7 @@ export default function TermsPage() {
               memerlukan karantina wilayah, kebijakan pemerintah yang secara tiba-tiba 
               melarang kegiatan bisnis tertentu, pemadaman listrik atau internet 
               yang meluas, atau kegagalan infrastruktur pihak ketiga yang 
-              penting (seperti Xendit atau Supabase) yang berada di luar kendali kami.
+              penting (seperti penyedia pembayaran atau infrastruktur) yang berada di luar kendali kami.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Ganti Rugi:</strong> Dalam keadaan 

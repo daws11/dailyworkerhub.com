@@ -220,15 +220,15 @@ export default function PrivacyPage() {
                   sendiri dan hanya memproses sesuai instruksi dari Daily Worker Hub.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Xendit (Pemrosesan Pembayaran):</strong> Xendit
-                  adalah gerbang pembayaran yang memproses semua transaksi keuangan di platform kami,
+                  <strong className="text-foreground">Penyedia Pembayaran Pihak Ketiga:</strong> 
+                  Penyedia pembayaran kami adalah gerbang pembayaran yang memproses semua transaksi keuangan di platform kami,
                   termasuk deposit Dana Jaminan dari pemberi kerja dan penarikan untuk pekerja. Ketika Anda
                   melakukan deposit, data pembayaran (nomor kartu atau rekening virtual) diproses
-                  langsung oleh Xendit — Daily Worker Hub tidak pernah menyimpan data kartu atau
-                  rekening bank penuh. Xendit menangani kepatuhan dengan standar PCI-DSS untuk
+                  langsung oleh penyedia pembayaran kami — Daily Worker Hub tidak pernah menyimpan data kartu atau
+                  rekening bank penuh. Penyedia pembayaran menangani kepatuhan dengan standar PCI-DSS untuk
                   keamanan data pembayaran, konversi mata uang jika diperlukan, penyelesaian dana
                   ke rekening bank lokal Indonesia, serta pemberitahuan transaksi berhasil atau gagal.
-                  Data transaksi yang diproses Xendit mencakup jumlah, stempel waktu, status pembayaran,
+                  Data transaksi yang diproses mencakup jumlah, stempel waktu, status pembayaran,
                   dan referensi idempotensi untuk mencegah tagihan ganda.
                 </p>
                   <p className="text-muted-foreground leading-relaxed">

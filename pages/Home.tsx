@@ -687,7 +687,7 @@ export default function Home() {
                   <span className="font-bold text-primary text-xl">6%</span>
                 </li>
                 <li className="flex justify-between items-center border-b border-border pb-4">
-                  <span className="font-medium text-muted-foreground">Biaya top-up (QRIS)</span>
+                  <span className="font-medium text-muted-foreground">Biaya top-up</span>
                   <span className="font-bold text-primary text-xl">Rp 0</span>
                 </li>
                 <li className="flex justify-between items-center pb-2">

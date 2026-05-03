@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: "Bagaimana cara pembayaran bekerja?",
-    a: "Bisnis melakukan top-up saldo lewat QRIS tanpa biaya tambahan. Saat shift dimulai, dana ditahan sebagai Dana Jaminan. Setelah pekerja check-out melalui QR di lokasi, dana otomatis cair ke wallet pekerja — tanpa perantara.",
+    a: "Bisnis melakukan top-up saldo tanpa biaya tambahan. Saat shift dimulai, dana ditahan sebagai Dana Jaminan. Setelah pekerja check-out melalui aplikasi di lokasi, dana otomatis cair ke wallet pekerja — tanpa perantara.",
   },
   {
     q: "Apa itu Dana Perlindungan?",
@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "Berapa biaya platform untuk bisnis dan pekerja?",
-    a: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up QRIS, dan tidak ada biaya tersembunyi.",
+    a: "Pekerja: 0% komisi potongan upah. Bisnis: Biaya Platform 3,5% + Biaya Layanan Dana Jaminan + Kontribusi Dana Perlindungan 1%. Tidak ada biaya langganan, tidak ada biaya top-up, dan tidak ada biaya tersembunyi.",
   },
   {
     q: "Bagaimana proses verifikasi pekerja?",
