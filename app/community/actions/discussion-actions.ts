@@ -9,7 +9,7 @@ export async function createDiscussion(formData: FormData) {
 
   const title = formData.get('title') as string
   const content = formData.get('content') as string
-  const categoryId = formData.get('category_id') as string
+  const category = formData.get('category') as string
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
@@ -23,14 +23,13 @@ export async function createDiscussion(formData: FormData) {
     .substring(0, 100)
 
   const { data, error } = await supabase
-    .schema('community')
-    .from('discussions')
+    .from('community_discussions')
     .insert({
       title,
       content,
       slug: `${slug}-${Date.now().toString(36)}`,
       author_id: user.id,
-      category_id: categoryId || null,
+      category: category || null,
     })
     .select()
     .single()
@@ -49,7 +48,7 @@ export async function updateDiscussion(discussionId: string, formData: FormData)
 
   const title = formData.get('title') as string
   const content = formData.get('content') as string
-  const categoryId = formData.get('category_id') as string
+  const category = formData.get('category') as string
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
@@ -57,12 +56,11 @@ export async function updateDiscussion(discussionId: string, formData: FormData)
   }
 
   const { data, error } = await supabase
-    .schema('community')
-    .from('discussions')
+    .from('community_discussions')
     .update({
       title,
       content,
-      category_id: categoryId || null,
+      category: category || null,
     })
     .eq('id', discussionId)
     .eq('author_id', user.id)
@@ -87,8 +85,7 @@ export async function deleteDiscussion(discussionId: string) {
   }
 
   const { error } = await supabase
-    .schema('community')
-    .from('discussions')
+    .from('community_discussions')
     .delete()
     .eq('id', discussionId)
     .eq('author_id', user.id)
@@ -113,8 +110,7 @@ export async function createComment(discussionId: string, formData: FormData) {
   }
 
   const { data: comment, error } = await supabase
-    .schema('community')
-    .from('comments')
+    .from('community_comments')
     .insert({
       content,
       discussion_id: discussionId,
@@ -128,13 +124,6 @@ export async function createComment(discussionId: string, formData: FormData) {
     console.error('Error creating comment:', error)
     throw new Error('Failed to create comment')
   }
-
-  // Update comments_count on the discussion
-  await supabase
-    .schema('community')
-    .from('discussions')
-    .update({ comments_count: supabase.rpc('increment', { x: 1 }) })
-    .eq('id', discussionId)
 
   revalidatePath(`/community/discussions/${discussionId}`)
   return comment

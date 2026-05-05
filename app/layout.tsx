@@ -5,6 +5,8 @@ import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/footer";
 import Script from "next/script";
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 import "./globals.css";
 import { getOrganizationSchema, getWebSiteSchema } from "@/lib/seo";
 
@@ -62,13 +64,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <Script
           id="theme-init"
@@ -84,14 +89,16 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Providers>
-          <TooltipProvider>
-            {children}
-            <Footer />
-            <Toaster />
-            <Analytics />
-          </TooltipProvider>
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            <TooltipProvider>
+              {children}
+              <Footer />
+              <Toaster />
+              <Analytics />
+            </TooltipProvider>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

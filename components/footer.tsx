@@ -2,9 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 export function Footer() {
   const pathname = usePathname()
+  const t = useTranslations("footer")
   if (pathname?.startsWith("/docs")) return null
 
   return (
@@ -14,34 +16,34 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Platform terpercaya untuk pekerja harian di Indonesia.
+              {t("tagline")}
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground">Produk</h4>
+            <h4 className="font-semibold text-foreground">{t("products")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/" className="hover:text-emerald-400">Cari Pekerjaan Harian</Link></li>
-              <li><Link href="/community" className="hover:text-emerald-400">Komunitas Pekerja</Link></li>
+              <li><Link href="/" className="hover:text-emerald-400">{t("findJobs")}</Link></li>
+              <li><Link href="/community" className="hover:text-emerald-400">{t("workerCommunity")}</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground">Resources</h4>
+            <h4 className="font-semibold text-foreground">{t("resources")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/docs" className="hover:text-emerald-400">Panduan Platform</Link></li>
-              <li><Link href="/community/articles" className="hover:text-emerald-400">Artikel & Tips</Link></li>
+              <li><Link href="/docs" className="hover:text-emerald-400">{t("platformGuide")}</Link></li>
+              <li><Link href="/community/articles" className="hover:text-emerald-400">{t("articlesTips")}</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold text-foreground">Legal</h4>
+            <h4 className="font-semibold text-foreground">{t("legal")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/privacy" className="hover:text-emerald-400">Kebijakan Privasi</Link></li>
-              <li><Link href="/terms" className="hover:text-emerald-400">Syarat & Ketentuan</Link></li>
-              <li><Link href="/cookies" className="hover:text-emerald-400">Kebijakan Cookie</Link></li>
+              <li><Link href="/privacy" className="hover:text-emerald-400">{t("privacyPolicy")}</Link></li>
+              <li><Link href="/terms" className="hover:text-emerald-400">{t("termsConditions")}</Link></li>
+              <li><Link href="/cookies" className="hover:text-emerald-400">{t("cookiePolicy")}</Link></li>
             </ul>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
-          © {new Date().getFullYear()} Daily Worker Hub. All rights reserved.
+          &copy; {new Date().getFullYear()} Daily Worker Hub. {t("rightsReserved")}
         </div>
       </div>
     </footer>

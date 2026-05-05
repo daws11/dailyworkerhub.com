@@ -1,18 +1,69 @@
-import { updateSession } from './lib/supabase/middleware'
+import createMiddleware from 'next-intl/middleware'
+import { type NextRequest, NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
+import type { Database } from './lib/supabase/types'
+import { routing } from './i18n/routing'
+
+const cookieDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined
+
+const intlMiddleware = createMiddleware(routing)
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (images, etc.)
-     */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
 
-export async function middleware(request: any) {
-  return await updateSession(request)
+export async function middleware(request: NextRequest) {
+  const intlResponse = intlMiddleware(request)
+
+  const supabase = createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            request.cookies.set(name, value)
+            intlResponse.cookies.set(name, value, {
+              ...options,
+              ...(cookieDomain ? { domain: cookieDomain } : {}),
+            })
+          })
+        },
+      },
+    }
+  )
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+  const user = session?.user ?? null
+
+  const protectedPaths = [
+    '/app',
+    '/community/admin',
+    '/community/discussions/new',
+    '/community/articles/editor',
+  ]
+  const protectedWildcardPatterns = [
+    /^\/community\/discussions\/[^/]+\/edit$/,
+  ]
+
+  const isProtectedPath = protectedPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  ) || protectedWildcardPatterns.some((pattern) =>
+    pattern.test(request.nextUrl.pathname)
+  )
+
+  if (isProtectedPath && !user) {
+    const appLoginUrl = new URL('https://app.dailyworkerhub.com/login')
+    appLoginUrl.searchParams.set('redirect', `${request.nextUrl.origin}${request.nextUrl.pathname}`)
+    return NextResponse.redirect(appLoginUrl)
+  }
+
+  return intlResponse
 }

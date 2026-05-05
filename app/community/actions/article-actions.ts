@@ -10,7 +10,7 @@ export async function createArticle(formData: FormData) {
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const excerpt = formData.get('excerpt') as string
-  const categoryId = formData.get('category_id') as string
+  const category = formData.get('category') as string
   const coverImage = formData.get('cover_image') as string
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -25,17 +25,16 @@ export async function createArticle(formData: FormData) {
     .substring(0, 100)
 
   const { data, error } = await supabase
-    .schema('community')
-    .from('articles')
+    .from('community_articles')
     .insert({
       title,
       content,
       excerpt: excerpt || content.substring(0, 200),
       slug: `${slug}-${Date.now().toString(36)}`,
       author_id: user.id,
-      category_id: categoryId || null,
+      category: category || null,
       cover_image: coverImage || null,
-      status: 'draft',
+      is_published: false,
       read_time: Math.ceil(content.split(/\s+/).length / 200),
     })
     .select()
@@ -59,10 +58,9 @@ export async function publishArticle(articleId: string) {
   }
 
   const { data, error } = await supabase
-    .schema('community')
-    .from('articles')
+    .from('community_articles')
     .update({
-      status: 'published',
+      is_published: true,
       published_at: new Date().toISOString(),
     })
     .eq('id', articleId)
@@ -85,7 +83,7 @@ export async function updateArticle(articleId: string, formData: FormData) {
   const title = formData.get('title') as string
   const content = formData.get('content') as string
   const excerpt = formData.get('excerpt') as string
-  const categoryId = formData.get('category_id') as string
+  const category = formData.get('category') as string
   const coverImage = formData.get('cover_image') as string
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -94,13 +92,12 @@ export async function updateArticle(articleId: string, formData: FormData) {
   }
 
   const { data, error } = await supabase
-    .schema('community')
-    .from('articles')
+    .from('community_articles')
     .update({
       title,
       content,
       excerpt: excerpt || content.substring(0, 200),
-      category_id: categoryId || null,
+      category: category || null,
       cover_image: coverImage || null,
       read_time: Math.ceil(content.split(/\s+/).length / 200),
     })

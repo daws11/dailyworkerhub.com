@@ -95,7 +95,7 @@ export function DiscussionClient({ discussion, tags = [], comments = [] }: Discu
       }
 
       const { data: discussionData } = await supabase
-        .from("discussions")
+        .from("community_discussions")
         .select("author_id")
         .eq("id", discussion.id)
         .single<{ author_id: string }>();
@@ -117,7 +117,7 @@ export function DiscussionClient({ discussion, tags = [], comments = [] }: Discu
       }
 
       const { error } = await supabase
-        .from("discussions")
+        .from("community_discussions")
         .update({ updated_at: new Date().toISOString() } as never)
         .eq("id", discussion.id);
 

@@ -6,21 +6,18 @@ import { Menu, X, ArrowRight, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 const APP_URL = "https://app.dailyworkerhub.com";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Cara Kerja", href: "/#how-it-works" },
-  { label: "Biaya", href: "/#pricing" },
-  { label: "Komunitas", href: "/community" },
-];
 
 export function MainNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("nav");
 
   useEffect(() => {
     const supabase = createClient();
@@ -45,6 +42,13 @@ export function MainNavbar() {
 
   const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
 
+  const navLinks = [
+    { label: t("home"), href: "/" },
+    { label: t("howItWorks"), href: "/#how-it-works" },
+    { label: t("pricing"), href: "/#pricing" },
+    { label: t("community"), href: "/community" },
+  ];
+
   const DesktopAuthButtons = () => (
     <>
       {!loading && user ? (
@@ -67,14 +71,14 @@ export function MainNavbar() {
             asChild
             className="border-border text-foreground hover:bg-foreground hover:text-white rounded-full px-6 font-sub tracking-wide transition-all duration-300"
           >
-            <a href={`${APP_URL}/login`}>Masuk</a>
+            <a href={`${APP_URL}/login`}>{t("login")}</a>
           </Button>
           <Button
             asChild
             className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-6 font-sub tracking-wide shadow-lg shadow-secondary/25 group"
           >
             <a href={`${APP_URL}/register?role=business`}>
-              Pasang Lowongan
+              {t("postJob")}
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
@@ -103,7 +107,7 @@ export function MainNavbar() {
             }}
             className="w-full flex items-center justify-center px-6 py-3 border border-border rounded-full font-sub text-base hover:bg-muted transition-colors"
           >
-            Keluar
+            {t("logout")}
           </button>
         </>
       ) : (
@@ -113,14 +117,14 @@ export function MainNavbar() {
             onClick={() => setMobileOpen(false)}
             className="w-full flex items-center justify-center px-6 py-3 border border-border rounded-full font-sub text-base hover:bg-muted transition-colors"
           >
-            Masuk
+            {t("login")}
           </a>
           <a
             href={`${APP_URL}/register?role=business`}
             onClick={() => setMobileOpen(false)}
             className="w-full flex items-center justify-center px-6 py-3 bg-secondary text-white rounded-full font-sub text-base shadow-lg shadow-secondary/25"
           >
-            Pasang Lowongan
+            {t("postJob")}
             <ArrowRight className="w-4 h-4 ml-2" />
           </a>
           <a
@@ -128,7 +132,7 @@ export function MainNavbar() {
             onClick={() => setMobileOpen(false)}
             className="w-full flex items-center justify-center px-6 py-3 border border-primary text-primary rounded-full font-sub text-base hover:bg-primary/5 transition-colors"
           >
-            Bergabung sebagai Worker
+            {t("joinAsWorker")}
           </a>
         </>
       )}
@@ -154,18 +158,19 @@ export function MainNavbar() {
 
           <div className="flex items-center gap-8 font-sub text-sm uppercase tracking-wider">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="hover:text-primary dark:hover:text-primary transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <LanguageSwitcher />
             <DesktopAuthButtons />
           </div>
         </div>
@@ -179,15 +184,16 @@ export function MainNavbar() {
         className="flex md:hidden fixed top-0 left-0 right-0 z-50 px-4 py-4 backdrop-blur-md bg-background/70 text-foreground border-b border-border/50"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
-          <a href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <img src="/logo-new.png" alt="Daily Worker Hub" className="h-8 w-auto object-contain" />
             <span className="font-display font-bold text-lg tracking-tight">
               Daily Worker Hub
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
+            <LanguageSwitcher />
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <button className="p-2 hover:bg-accent rounded-lg transition-colors">
@@ -204,7 +210,7 @@ export function MainNavbar() {
                         alt="Daily Worker Hub"
                         className="h-8 w-auto object-contain"
                       />
-                      <span className="font-display font-bold text-lg">Menu</span>
+                      <span className="font-display font-bold text-lg">{t("menu")}</span>
                     </div>
                   </div>
 
@@ -212,14 +218,14 @@ export function MainNavbar() {
                   <div className="flex-1 overflow-y-auto py-4">
                     <div className="px-4 space-y-1">
                       {navLinks.map((link) => (
-                        <a
+                        <Link
                           key={link.label}
                           href={link.href}
                           onClick={() => setMobileOpen(false)}
                           className="block px-4 py-3 text-lg font-sub rounded-lg hover:bg-muted transition-colors"
                         >
                           {link.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>

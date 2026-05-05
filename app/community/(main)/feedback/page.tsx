@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Plus, Search, X, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { toast } from "sonner";
 import { FeedbackCardSkeleton } from "@/components/skeleton/FeedbackCardSkeleton";
 
 export default function FeedbackPage() {
+  const t = useTranslations("community");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState<FeedbackStatus>("all");
   const [sortBy, setSortBy] = useState<FeedbackSortBy>("votes");
@@ -140,9 +142,9 @@ export default function FeedbackPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Feedback & Saran</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">{t("feedbackTitle")}</h1>
             <p className="text-muted-foreground">
-              Bagikan ide dan request fitur untuk meningkatkan platform
+              {t("feedbackDescription")}
             </p>
           </div>
 
@@ -151,7 +153,7 @@ export default function FeedbackPage() {
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Cari feedback..."
+                placeholder={t("searchFeedback")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 bg-card border-border text-foreground placeholder:text-muted-foreground"
@@ -171,7 +173,7 @@ export default function FeedbackPage() {
               trigger={
                 <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
                   <Plus className="w-4 h-4 mr-2" />
-                  Kirim Feedback
+                  {t("submitFeedback")}
                 </Button>
               }
             />
@@ -191,10 +193,10 @@ export default function FeedbackPage() {
               onChange={(e) => setSelectedCategory(e.target.value || null)}
               className="px-3 py-2 text-sm bg-card border border-border rounded-lg text-foreground/80"
             >
-              <option value="">Semua Kategori</option>
-              <option value="feature">Feature</option>
-              <option value="bug">Bug</option>
-              <option value="improvement">Improvement</option>
+              <option value="">{t("allCategories")}</option>
+              <option value="feature">{t("featureRequest")}</option>
+              <option value="bug">{t("bugReport")}</option>
+              <option value="improvement">{t("improvement")}</option>
             </select>
           </div>
 
@@ -202,10 +204,10 @@ export default function FeedbackPage() {
           {statsData?.data && (
             <div className="flex flex-wrap gap-6 mb-8 p-4 bg-card border border-border rounded-xl">
               {[
-                { label: "Total Feedback", value: statsData.data.total },
-                { label: "Under Review", value: statsData.data.under_review },
-                { label: "Planned", value: statsData.data.planned },
-                { label: "Completed", value: statsData.data.completed },
+                { label: t("totalFeedback"), value: statsData.data.total },
+                { label: t("underReview"), value: statsData.data.under_review },
+                { label: t("planned"), value: statsData.data.planned },
+                { label: t("completed"), value: statsData.data.completed },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl font-bold text-emerald-400">{stat.value}</div>
@@ -229,13 +231,13 @@ export default function FeedbackPage() {
 
             {error && (
               <div className="text-center py-16">
-                <p className="text-red-400 mb-4">Gagal memuat feedback. Silakan coba lagi.</p>
+                <p className="text-red-400 mb-4">{t("feedbackLoadError")}</p>
                 <Button
                   variant="outline"
                   onClick={() => window.location.reload()}
                   className="border-border text-foreground/80 hover:bg-muted"
                 >
-                  Muat Ulang
+                  {t("reload")}
                 </Button>
               </div>
             )}
@@ -268,15 +270,15 @@ export default function FeedbackPage() {
             {!isLoading && !error && filteredFeedback.length === 0 && (
               <div className="text-center py-16">
                 <MessageSquare className="w-12 h-12 text-muted-foreground/60 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground/80 mb-2">Tidak ada feedback</h3>
-                <p className="text-muted-foreground/70 mb-6">Jadilah yang pertama memberikan feedback</p>
+                <h3 className="text-lg font-semibold text-foreground/80 mb-2">{t("noFeedbackFound")}</h3>
+                <p className="text-muted-foreground/70 mb-6">{t("beFirstFeedback")}</p>
                 <FeedbackForm
                   open={isFeedbackFormOpen}
                   onOpenChange={setIsFeedbackFormOpen}
                   trigger={
                     <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
                       <Plus className="w-4 h-4 mr-2" />
-                      Kirim Feedback
+                      {t("submitFeedback")}
                     </Button>
                   }
                 />

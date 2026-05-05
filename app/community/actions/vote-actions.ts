@@ -11,48 +11,29 @@ export async function toggleVote(targetType: 'discussion' | 'comment' | 'feedbac
     throw new Error('Unauthorized')
   }
 
-  // Check for existing vote
   const { data: existingVote } = await supabase
-    .schema('community')
     .from('votes')
     .select('*')
     .eq('user_id', user.id)
     .eq('target_type', targetType)
     .eq('target_id', targetId)
-    .single()
+    .maybeSingle()
 
   if (existingVote) {
-    // Remove vote (toggle off)
     await supabase
-      .schema('community')
       .from('votes')
       .delete()
       .eq('id', existingVote.id)
 
-    // Update the target's like/vote count
-    if (targetType === 'discussion') {
-      await supabase
-        .schema('community')
-        .from('discussions')
-        .update({ likes_count: supabase.rpc('decrement', { x: 1 }) })
-        .eq('id', targetId)
-    } else if (targetType === 'comment') {
-      await supabase
-        .schema('community')
-        .from('comments')
-        .update({ likes_count: supabase.rpc('decrement', { x: 1 }) })
-        .eq('id', targetId)
-    } else if (targetType === 'feedback') {
-      await supabase
-        .schema('community')
-        .from('feedback_items')
-        .update({ votes_count: supabase.rpc('decrement', { x: 1 }) })
-        .eq('id', targetId)
-    }
-  } else {
-    // Add vote
+    const tableName = targetType === 'discussion' ? 'community_discussions' : targetType === 'comment' ? 'community_comments' : 'feedback_items'
+    const countField = targetType === 'feedback' ? 'votes_count' : 'likes_count'
+
     await supabase
-      .schema('community')
+      .from(tableName)
+      .update({ [countField]: (existingVote.value > 0 ? -1 : 0) })
+      .eq('id', targetId)
+  } else {
+    await supabase
       .from('votes')
       .insert({
         user_id: user.id,
@@ -61,29 +42,24 @@ export async function toggleVote(targetType: 'discussion' | 'comment' | 'feedbac
         value: 1,
       })
 
-    // Update the target's like/vote count
-    if (targetType === 'discussion') {
-      await supabase
-        .schema('community')
-        .from('discussions')
-        .update({ likes_count: supabase.rpc('increment', { x: 1 }) })
-        .eq('id', targetId)
-    } else if (targetType === 'comment') {
-      await supabase
-        .schema('community')
-        .from('comments')
-        .update({ likes_count: supabase.rpc('increment', { x: 1 }) })
-        .eq('id', targetId)
-    } else if (targetType === 'feedback') {
-      await supabase
-        .schema('community')
-        .from('feedback_items')
-        .update({ votes_count: supabase.rpc('increment', { x: 1 }) })
-        .eq('id', targetId)
-    }
+    const tableName = targetType === 'discussion' ? 'community_discussions' : targetType === 'comment' ? 'community_comments' : 'feedback_items'
+    const countField = targetType === 'feedback' ? 'votes_count' : 'likes_count'
+
+    const { data: current } = await supabase
+      .from(tableName)
+      .select(countField)
+      .eq('id', targetId)
+      .single()
+
+    const newCount = (current?.[countField] || 0) + 1
+
+    await supabase
+      .from(tableName)
+      .update({ [countField]: newCount })
+      .eq('id', targetId)
   }
 
-  revalidatePath(`/community/${targetType === 'discussion' ? 'discussions' : targetType === 'comment' ? 'discussions' : 'feedback'}/${targetId}`)
+  revalidatePath(`/community/${targetType === 'discussion' ? 'discussions' : targetType === 'comment' ? 'discussions' : 'feedback'}`)
 }
 
 export async function createFeedback(formData: FormData) {
@@ -99,7 +75,6 @@ export async function createFeedback(formData: FormData) {
   }
 
   const { data, error } = await supabase
-    .schema('community')
     .from('feedback_items')
     .insert({
       title,

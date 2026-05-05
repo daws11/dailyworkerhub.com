@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import HomePage from "@/pages/Home";
+import HomePage from "@/components/Home";
 import { getFAQPageSchema } from "@/lib/seo";
 
 const homepageFaqs = [

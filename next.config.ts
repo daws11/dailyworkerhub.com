@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
 import nextra from "nextra";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextra = nextra({
   defaultShowCopyCode: true,
   search: true,
   staticImage: true,
 });
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const securityHeaders = [
   {
@@ -92,4 +95,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextra(nextConfig);
+export default withNextra(withNextIntl(nextConfig));

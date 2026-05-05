@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
@@ -33,7 +34,10 @@ const tocItems: TocItem[] = [
   { id: "section-5", title: "5. Pembaruan Kebijakan Cookie" },
 ];
 
-export default function CookiesPage() {
+export default async function CookiesPage() {
+  const t = await getTranslations("legal");
+  const ft = await getTranslations("footer");
+
   return (
     <div className="min-h-screen bg-background">
       <MainNavbar />
@@ -45,13 +49,13 @@ export default function CookiesPage() {
 
             <div className="flex-1 max-w-4xl">
               <div className="prose prose-invert prose-slate max-w-none space-y-6">
-                <h1 className="text-3xl font-bold text-foreground mb-8">Kebijakan Cookie</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-8">{t("cookiesTitle")}</h1>
                 <p className="text-muted-foreground leading-relaxed">
-                  Terakhir diperbarui: April 2026
+                  {t("lastUpdated")}: April 2026
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
                   Kebijakan ini melengkapi{" "}
-                  <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Privasi</a>{" "}
+                  <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">{ft("privacyPolicy")}</a>{" "}
                   kami dan menjelaskan secara spesifik bagaimana kami menggunakan cookie dan teknologi pelacakan serupa.
                 </p>
 

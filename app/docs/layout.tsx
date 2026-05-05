@@ -2,6 +2,7 @@ import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import Image from "next/image";
 import Link from "next/link";
 import { getPageMap } from "nextra/page-map";
+import { getTranslations } from "next-intl/server";
 import { FAQPageSchema } from "@/components/docs/StructuredData";
 import "nextra-theme-docs/style.css";
 import "./docs.css";
@@ -27,76 +28,78 @@ function Logo() {
 const navLinkClass =
   "px-4 py-2 text-sm rounded-lg transition-colors text-muted-foreground hover:text-foreground hover:bg-muted/50";
 
-const navbar = (
-  <Navbar
-    logo={<Logo />}
-    logoLink="/"
-
-  >
-    <div className="hidden md:flex items-center gap-1">
-      <a href="/community/discussions" className={navLinkClass}>Diskusi</a>
-      <a href="/community/articles" className={navLinkClass}>Artikel</a>
-      <a href="/docs" className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">Docs</a>
-      <a href="/community/feedback" className={navLinkClass}>Feedback</a>
-    </div>
-    <div className="ml-3 flex items-center gap-3">
-      <a href="/login" className={navLinkClass}>Masuk</a>
-      <a
-        href="/register"
-        className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
-      >
-        Daftar
-      </a>
-    </div>
-  </Navbar>
-);
-
-const footer = (
-  <Footer>
-    <div className="max-w-7xl mx-auto px-6 py-8 border-t border-border">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-        <div>
-          <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Platform terpercaya untuk pekerja harian di Indonesia.
-          </p>
-        </div>
-        <div>
-          <h4 className="font-semibold text-foreground">Produk</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><a href="/" className="hover:text-emerald-400 transition-colors">Cari Pekerjaan Harian</a></li>
-            <li><a href="/community" className="hover:text-emerald-400 transition-colors">Komunitas Pekerja</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-semibold text-foreground">Resources</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><a href="/docs" className="hover:text-emerald-400 transition-colors">Panduan Platform</a></li>
-            <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">Artikel & Tips</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-semibold text-foreground">Legal</h4>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><a href="/privacy" className="hover:text-emerald-400 transition-colors">Kebijakan Privasi</a></li>
-            <li><a href="/terms" className="hover:text-emerald-400 transition-colors">Syarat & Ketentuan</a></li>
-            <li><a href="/cookies" className="hover:text-emerald-400 transition-colors">Kebijakan Cookie</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
-        © {new Date().getFullYear()} Daily Worker Hub. All rights reserved.
-      </div>
-    </div>
-  </Footer>
-);
-
 export default async function DocsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pageMap = await getPageMap("/docs");
+  const t = await getTranslations("nav");
+  const ft = await getTranslations("footer");
+
+  const navbar = (
+    <Navbar
+      logo={<Logo />}
+      logoLink="/"
+
+    >
+      <div className="hidden md:flex items-center gap-1">
+        <a href="/community/discussions" className={navLinkClass}>{t("discussions")}</a>
+        <a href="/community/articles" className={navLinkClass}>{t("articles")}</a>
+        <a href="/docs" className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">{t("docs")}</a>
+        <a href="/community/feedback" className={navLinkClass}>{t("feedback")}</a>
+      </div>
+      <div className="ml-3 flex items-center gap-3">
+        <a href="/login" className={navLinkClass}>{t("login")}</a>
+        <a
+          href="/register"
+          className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+        >
+          {t("register")}
+        </a>
+      </div>
+    </Navbar>
+  );
+
+  const footer = (
+    <Footer>
+      <div className="max-w-7xl mx-auto px-6 py-8 border-t border-border">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {ft("tagline")}
+            </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground">{ft("products")}</h4>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li><a href="/" className="hover:text-emerald-400 transition-colors">{ft("findJobs")}</a></li>
+              <li><a href="/community" className="hover:text-emerald-400 transition-colors">{ft("workerCommunity")}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground">{ft("resources")}</h4>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li><a href="/docs" className="hover:text-emerald-400 transition-colors">{ft("platformGuide")}</a></li>
+              <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">{ft("articlesTips")}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-foreground">{ft("legal")}</h4>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li><a href="/privacy" className="hover:text-emerald-400 transition-colors">{ft("privacyPolicy")}</a></li>
+              <li><a href="/terms" className="hover:text-emerald-400 transition-colors">{ft("termsConditions")}</a></li>
+              <li><a href="/cookies" className="hover:text-emerald-400 transition-colors">{ft("cookiePolicy")}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground/70">
+          &copy; {new Date().getFullYear()} Daily Worker Hub. {ft("rightsReserved")}
+        </div>
+      </div>
+    </Footer>
+  );
 
   return (
     <Layout
@@ -107,7 +110,7 @@ export default async function DocsLayout({
       sidebar={{ defaultMenuCollapseLevel: 99, autoCollapse: false, toggleButton: true }}
       editLink={false}
       feedback={undefined}
-      toc={{ backToTop: "Kembali ke atas" }}
+      toc={{ backToTop: t("backToTop") }}
     >
       <FAQPageSchema />
       {children}

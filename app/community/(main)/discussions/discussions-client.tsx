@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { formatDistanceToNow } from "date-fns";
@@ -70,6 +71,7 @@ type SortOption = "newest" | "popular" | "trending" | "votes";
 const DISCUSSIONS_PER_PAGE = 20;
 
 export function DiscussionsPageClient() {
+  const t = useTranslations("community");
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -190,11 +192,11 @@ export function DiscussionsPageClient() {
       setTotalCount(mappedDiscussions.length);
     } catch (err) {
       console.error("Error fetching discussions:", err);
-      setError("Gagal memuat diskusi. Silakan coba lagi.");
+      setError(t("errorLoadingDiscussions"));
     } finally {
       setLoading(false);
     }
-  }, [selectedCategory, searchQuery, sortBy, page]);
+  }, [t, selectedCategory, searchQuery, sortBy, page]);
 
   useEffect(() => {
     fetchCategories();
@@ -257,7 +259,7 @@ export function DiscussionsPageClient() {
         throw new Error(error.message);
       }
 
-      toast.success("Diskusi berhasil dihapus");
+      toast.success(t("discussionDeleted"));
 
       setDeleteDiscussionId(null);
       fetchDiscussions();
@@ -279,9 +281,9 @@ export function DiscussionsPageClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Forum Diskusi</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">{t("discussionForum")}</h1>
             <p className="text-muted-foreground">
-              Diskusikan pertanyaan, berbagi pengalaman, dan belajar dari komunitas
+              {t("forumDescription")}
             </p>
           </div>
 
@@ -291,7 +293,7 @@ export function DiscussionsPageClient() {
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Cari diskusi..."
+                placeholder={t("searchDiscussions")}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -324,7 +326,7 @@ export function DiscussionsPageClient() {
                 className={sortBy === "newest" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <Clock className="w-4 h-4 mr-2" />
-                Terbaru
+                {t("newest")}
               </Button>
               <Button
                 variant={sortBy === "popular" ? "default" : "outline"}
@@ -336,7 +338,7 @@ export function DiscussionsPageClient() {
                 className={sortBy === "popular" ? "bg-emerald-500 text-slate-950" : "border-border text-foreground/80"}
               >
                 <ArrowUp className="w-4 h-4 mr-2" />
-                Populer
+                {t("popular")}
               </Button>
               <Button
                 variant={sortBy === "trending" ? "default" : "outline"}
@@ -379,7 +381,7 @@ export function DiscussionsPageClient() {
             <Link href="/community/discussions/new">
               <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
                 <Plus className="w-4 h-4 mr-2" />
-                Buat Diskusi
+                {t("startDiscussion")}
               </Button>
             </Link>
           </div>
@@ -398,7 +400,7 @@ export function DiscussionsPageClient() {
                     : "bg-muted text-muted-foreground hover:bg-muted"
                 }`}
               >
-                Semua
+                {t("all")}
               </button>
               {categories.map((cat) => (
                 <button
@@ -437,7 +439,7 @@ export function DiscussionsPageClient() {
                 <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
                 <p className="text-muted-foreground mb-4">{error}</p>
                 <Button onClick={() => fetchDiscussions()} variant="outline" className="border-border">
-                  Coba Lagi
+                  {t("retry")}
                 </Button>
               </div>
             </div>
@@ -501,21 +503,21 @@ export function DiscussionsPageClient() {
 
                         <span className="flex items-center gap-1">
                           <MessageCircle className="w-3 h-3" />
-                          {discussion.comments_count} komentar
+                          {discussion.comments_count} {t("comments")}
                         </span>
 
                         <span className="flex items-center gap-1">
                           <TrendingUp className="w-3 h-3" />
-                          {discussion.view_count} views
+                          {discussion.view_count} {t("views")}
                         </span>
 
                         <button
                           onClick={(e) => handleDeleteClick(e, discussion.id)}
                           className="flex items-center gap-1 text-muted-foreground/70 hover:text-red-400 transition-colors ml-auto"
-                          aria-label="Hapus diskusi"
+                          aria-label={t("deleteDiscussion")}
                         >
                           <Trash2 className="w-3 h-3" />
-                          <span>Hapus</span>
+                          <span>{t("delete")}</span>
                         </button>
                       </div>
                     </div>
@@ -528,12 +530,12 @@ export function DiscussionsPageClient() {
                   <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
                     <MessageCircle className="w-8 h-8 text-muted-foreground/70" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground/80 mb-2">Tidak ada diskusi</h3>
-                  <p className="text-muted-foreground/70 mb-6">Jadilah yang pertama membuat diskusi di komunitas ini</p>
+                  <h3 className="text-lg font-semibold text-foreground/80 mb-2">{t("noDiscussions")}</h3>
+                  <p className="text-muted-foreground/70 mb-6">{t("beFirst")}</p>
                   <Link href="/community/discussions/new">
                     <Button className="bg-emerald-500 text-slate-950 hover:bg-emerald-400">
                       <Plus className="w-4 h-4 mr-2" />
-                      Buat Diskusi Pertama
+                      {t("startFirstDiscussion")}
                     </Button>
                   </Link>
                 </div>
@@ -549,10 +551,10 @@ export function DiscussionsPageClient() {
                     disabled={page === 1}
                     className="border-border text-foreground/80"
                   >
-                    Previous
+                    {t("previousPage")}
                   </Button>
                   <span className="text-sm text-muted-foreground px-4">
-                    Halaman {page} dari {totalPages}
+                    {t("pageOf", { current: page, total: totalPages })}
                   </span>
                   <Button
                     variant="outline"
@@ -561,7 +563,7 @@ export function DiscussionsPageClient() {
                     disabled={page === totalPages}
                     className="border-border text-foreground/80"
                   >
-                    Next
+                    {t("nextPage")}
                   </Button>
                 </div>
               )}
@@ -572,21 +574,21 @@ export function DiscussionsPageClient() {
           <AlertDialog open={!!deleteDiscussionId} onOpenChange={(open) => !open && handleDeleteCancel()}>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Hapus Diskusi?</AlertDialogTitle>
+                <AlertDialogTitle>{t("deleteDiscussionTitle")}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Tindakan ini tidak dapat dibatalkan. Diskusi yang dihapus tidak dapat dikembalikan.
+                  {t("deleteDiscussionDescription")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={handleDeleteCancel} disabled={isDeleting}>
-                  Batal
+                  {t("cancel")}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDeleteConfirm}
                   disabled={isDeleting}
                   className="bg-red-500 hover:bg-red-600 text-white"
                 >
-                  {isDeleting ? "Menghapus..." : "Hapus"}
+                  {isDeleting ? t("deleting") : t("delete")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

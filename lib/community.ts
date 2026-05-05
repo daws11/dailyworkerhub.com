@@ -133,7 +133,7 @@ export async function getPopularDiscussions(limit = 5): Promise<Discussion[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_discussions')
+    .from('discussions')
     .select('*')
     .eq('is_deleted', false)
     .order('likes_count', { ascending: false })
@@ -159,7 +159,7 @@ export async function getRecentDiscussions(limit = 10): Promise<Discussion[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_discussions')
+    .from('discussions')
     .select('*')
     .eq('is_deleted', false)
     .order('created_at', { ascending: false })
@@ -280,7 +280,7 @@ export async function getDiscussionBySlug(slug: string): Promise<{
   const supabase = await createClient()
 
   const { data: item, error } = await supabase
-    .from('community_discussions')
+    .from('discussions')
     .select('*')
     .eq('slug', slug)
     .eq('is_deleted', false)
@@ -394,7 +394,7 @@ export async function getUserDiscussions(authorId: string): Promise<Array<{
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_discussions')
+    .from('discussions')
     .select('id, slug, title, category, likes_count, comments_count, views_count, is_pinned, created_at')
     .eq('author_id', authorId)
     .eq('is_deleted', false)
@@ -419,7 +419,7 @@ export async function getUserComments(authorId: string): Promise<Array<{
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_comments')
+    .from('comments')
     .select('id, discussion_id, article_id, content, likes_count, created_at')
     .eq('author_id', authorId)
     .eq('is_deleted', false)
@@ -438,8 +438,8 @@ export async function getCommunityStats(): Promise<CommunityStats> {
   const supabase = await createClient()
 
   const [discussionsResult, articlesResult, profilesResult] = await Promise.all([
-    supabase.from('community_discussions').select('id', { count: 'exact', head: true }).eq('is_deleted', false),
-    supabase.from('community_articles').select('id', { count: 'exact', head: true }).eq('is_published', true).eq('is_deleted', false),
+    supabase.from('discussions').select('id', { count: 'exact', head: true }).eq('is_deleted', false),
+    supabase.from('articles').select('id', { count: 'exact', head: true }).eq('is_published', true).eq('is_deleted', false),
     supabase.from('profiles').select('id', { count: 'exact', head: true }),
   ])
 
@@ -492,7 +492,7 @@ export async function getDiscussionComments(discussionId: string): Promise<Comme
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('community_comments')
+    .from('comments')
     .select('*')
     .eq('discussion_id', discussionId)
     .eq('is_deleted', false)

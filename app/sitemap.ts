@@ -22,6 +22,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/privacy`, lastModified: new Date() },
     { url: `${baseUrl}/terms`, lastModified: new Date() },
     { url: `${baseUrl}/cookies`, lastModified: new Date() },
+    // English routes for sub-path i18n
+    { url: `${baseUrl}/en`, lastModified: new Date() },
+    { url: `${baseUrl}/en/community`, lastModified: new Date() },
+    { url: `${baseUrl}/en/privacy`, lastModified: new Date() },
+    { url: `${baseUrl}/en/terms`, lastModified: new Date() },
+    { url: `${baseUrl}/en/cookies`, lastModified: new Date() },
   ]
 
   const docRoutes = [
@@ -40,12 +46,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articleRoutes = (articlesResult.data || []).map((a: SitemapEntry) => ({
     url: `${baseUrl}/community/articles/${a.slug}`,
-    lastModified: new Date(a.updated_at)
+    lastModified: new Date(a.updated_at),
+    alternates: {
+      languages: {
+        id: `${baseUrl}/community/articles/${a.slug}`,
+        en: `${baseUrl}/en/community/articles/${a.slug}`,
+      },
+    },
   }))
 
   const discussionRoutes = (discussionsResult.data || []).map((d: SitemapEntry) => ({
     url: `${baseUrl}/community/discussions/${d.slug}`,
-    lastModified: new Date(d.updated_at)
+    lastModified: new Date(d.updated_at),
   }))
 
   return [...routes, ...docRoutes, ...articleRoutes, ...discussionRoutes]

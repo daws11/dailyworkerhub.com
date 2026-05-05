@@ -43,7 +43,7 @@ export default function EditDiscussionPage() {
 
         // Fetch discussion data from Supabase
         const { data: discussion, error: fetchError } = await supabase
-          .from("discussions")
+          .from("community_discussions")
           .select("id, slug, title, content")
           .eq("slug", slug)
           .single()

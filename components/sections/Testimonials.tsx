@@ -29,35 +29,11 @@ const testimonials: Testimonial[] = [
     type: "pekerja",
   },
   {
-    name: "Fajar P.",
-    role: "Helper Event",
-    initials: "FP",
-    quote:
-      "Proteksi dari Dana Perlindungan bikin saya tenang. Waktu cedera ringan kemarin, komunitas benar-benar bantu.",
-    type: "pekerja",
-  },
-  {
     name: "Bu Sari",
     role: "Owner Warung Sari",
     initials: "BS",
     quote:
       "Dapat staff harian dalam hitungan jam, bukan hari. Semua pekerja sudah terverifikasi, jadi saya tidak was-was.",
-    type: "bisnis",
-  },
-  {
-    name: "Pak Hendra",
-    role: "Manager Hotel Kenanga",
-    initials: "PH",
-    quote:
-      "Biaya jauh lebih transparan dibanding agensi. Check-in lewat QR bikin absensi shift jauh lebih mudah dipantau.",
-    type: "bisnis",
-  },
-  {
-    name: "Mbak Rina",
-    role: "Owner Cafe Senja",
-    initials: "MR",
-    quote:
-      "Kualitas worker-nya konsisten. Review dua arah bikin kami sama-sama termotivasi menjaga standar.",
     type: "bisnis",
   },
 ];
@@ -90,9 +66,7 @@ export function Testimonials() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -6 }}
-              className={`glass-card rounded-3xl p-8 flex flex-col h-full relative ${
-                i >= 3 ? "hidden md:flex" : ""
-              }`}
+              className="glass-card rounded-3xl p-8 flex flex-col h-full relative"
               style={{ transformStyle: "preserve-3d" }}
             >
               <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />

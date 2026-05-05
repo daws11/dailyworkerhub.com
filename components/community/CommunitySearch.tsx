@@ -3,10 +3,12 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function CommunitySearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const t = useTranslations("community");
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -29,7 +31,7 @@ export function CommunitySearch() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari diskusi, artikel, atau tanyakan sesuatu..."
+            placeholder={t("searchPlaceholder")}
             className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm sm:text-base"
           />
         </div>

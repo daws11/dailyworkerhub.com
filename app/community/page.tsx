@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link"
 import Image from "next/image"
 import { MessageSquare, FileText, BookOpen, Vote, Sparkles, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, Zap } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import { getFeaturedArticles, getPopularDiscussions, getCommunityStats, formatTimeAgo } from "@/lib/community"
 import { CommunityNavbar } from "@/components/layout/community/CommunityNavbar"
 import CommunityChatDemo from "@/components/community/CommunityChatDemo"
@@ -53,20 +54,22 @@ export const metadata: Metadata = {
   },
 };
 
-const shortcuts = [
-  { label: "Diskusi Terbaru", icon: MessageSquare, href: "/community/discussions?sort=newest" },
-  { label: "Artikel Populer", icon: TrendingUp, href: "/community/articles?sort=popular" },
-  { label: "Panduan Karir", icon: BookOpen, href: "/docs/getting-started" },
-  { label: "Feedback Produk", icon: Vote, href: "/community/feedback" },
-  { label: "Cari Lowongan", icon: Briefcase, href: "/" },
-]
-
 export default async function CommunityPage() {
+  const t = await getTranslations("community")
+
   const [articles, discussions, stats] = await Promise.all([
     getFeaturedArticles(3),
     getPopularDiscussions(5),
     getCommunityStats(),
   ])
+
+  const shortcuts = [
+    { label: t("newestDiscussions"), icon: MessageSquare, href: "/community/discussions?sort=newest" },
+    { label: t("popularArticles"), icon: TrendingUp, href: "/community/articles?sort=popular" },
+    { label: t("careerGuide"), icon: BookOpen, href: "/docs/getting-started" },
+    { label: t("productFeedback"), icon: Vote, href: "/community/feedback" },
+    { label: t("findJobs"), icon: Briefcase, href: "/" },
+  ]
 
   const hasData = articles.length > 0 || discussions.length > 0
 
@@ -83,13 +86,13 @@ export default async function CommunityPage() {
               {/* Headline */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6">
                 <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                  Lebih dari Forum — Bangun Kariermu di Sini
+                  {t("heroTitle")}
                 </span>
               </h1>
 
               {/* Subheadline */}
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-xl">
-                {stats.members.toLocaleString()}+ pekerja harian sudah berbagi tips, temukan mentor, dan buka peluang baru setiap hari.
+                {stats.members.toLocaleString()} {t("heroSubtitle")}
               </p>
 
               {/* Search */}
@@ -142,7 +145,7 @@ export default async function CommunityPage() {
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <span className="text-xs text-muted-foreground">Live preview</span>
                     </div>
-                    <span className="text-xs text-emerald-400/80 ml-auto font-medium">Komunitas Chat</span>
+                    <span className="text-xs text-emerald-400/80 ml-auto font-medium">{t("liveChat")}</span>
                   </div>
                   <CommunityChatDemo />
                 </div>
@@ -157,10 +160,10 @@ export default async function CommunityPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-wrap justify-center gap-8 sm:gap-16">
             {[
-              { label: "Diskusi", value: stats.discussions, suffix: "+" },
-              { label: "Artikel", value: stats.articles, suffix: "" },
-              { label: "Member", value: stats.members, suffix: "+" },
-              { label: "Feedback Terjawab", value: stats.feedbackAnswered, suffix: "" },
+              { label: t("discussions"), value: stats.discussions, suffix: "+" },
+              { label: t("articles"), value: stats.articles, suffix: "" },
+              { label: t("members"), value: stats.members, suffix: "+" },
+              { label: t("feedbackAnswered"), value: stats.feedbackAnswered, suffix: "" },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-2 text-sm">
                 <span className="text-emerald-400 font-semibold text-lg">
@@ -178,12 +181,12 @@ export default async function CommunityPage() {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-foreground">Artikel Terkini</h2>
+            <h2 className="text-2xl font-semibold text-foreground">{t("latestArticles")}</h2>
             <Link
               href="/community/articles"
               className="text-sm text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1"
             >
-              Lihat semua
+              {t("viewAll")}
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -235,7 +238,7 @@ export default async function CommunityPage() {
                           <span>•</span>
                         </>
                       )}
-                      {article.read_time && <span>{article.read_time} menit baca</span>}
+                      {article.read_time && <span>{article.read_time} {t("minRead")}</span>}
                       {article.published_at && (
                         <>
                           <span>•</span>
@@ -250,13 +253,13 @@ export default async function CommunityPage() {
           ) : (
             <div className="text-center py-12 text-muted-foreground/70">
               <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>Belum ada artikel. Jadilah yang pertama menulis!</p>
+              <p>{t("noArticlesYet")}</p>
               <Link
                 href="/community/articles/editor"
                 className="inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
               >
                 <Sparkles className="w-4 h-4" />
-                Tulis Artikel
+                {t("writeArticle")}
               </Link>
             </div>
           )}
@@ -267,12 +270,12 @@ export default async function CommunityPage() {
       <section className="py-16 bg-card/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-foreground">Diskusi Populer</h2>
+            <h2 className="text-2xl font-semibold text-foreground">{t("popularDiscussions")}</h2>
             <Link
               href="/community/discussions"
               className="text-sm text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1"
             >
-              Lihat semua
+              {t("viewAll")}
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -344,13 +347,13 @@ export default async function CommunityPage() {
           ) : (
             <div className="text-center py-12 text-muted-foreground/70">
               <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>Belum ada diskusi. Mulai percakapan baru!</p>
+              <p>{t("noDiscussionsYet")}</p>
               <Link
                 href="/community/discussions/new"
                 className="inline-flex items-center gap-2 mt-4 px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
               >
                 <Sparkles className="w-4 h-4" />
-                Buat Diskusi
+                {t("startDiscussion")}
               </Link>
             </div>
           )}
@@ -361,17 +364,17 @@ export default async function CommunityPage() {
       <section className="py-16 bg-gradient-to-r from-emerald-900/20 to-card border-y border-emerald-500/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-semibold text-foreground mb-4">
-            Punya pertanyaan spesifik?
+            {t("haveQuestion")}
           </h2>
           <p className="text-muted-foreground mb-8">
-            Mulai diskusi sekarang dan dapatkan jawaban dari komunitas.
+            {t("startDiscussionCTA")}
           </p>
           <Link
             href="/community/discussions/new"
             className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
-            Buat Diskusi
+            {t("startDiscussion")}
           </Link>
         </div>
       </section>

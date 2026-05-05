@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, User, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 
 interface CommunityNavbarProps {
   active?: "discussions" | "articles" | "docs" | "feedback";
@@ -15,18 +16,12 @@ interface CommunityNavbarProps {
 
 const APP_URL = "https://app.dailyworkerhub.com";
 
-const navItems = [
-  { label: "Diskusi", href: "/community/discussions", key: "discussions", match: "/community/discussions" },
-  { label: "Artikel", href: "/community/articles", key: "articles", match: "/community/articles" },
-  { label: "Docs", href: "/docs", key: "docs", match: "/docs" },
-  { label: "Feedback", href: "/community/feedback", key: "feedback", match: "/community/feedback" },
-] as const;
-
 export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityNavbarProps) {
   const pathname = usePathname() ?? "";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("nav");
 
   useEffect(() => {
     const supabase = createClient();
@@ -57,19 +52,26 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
   const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
   const avatarUrl = user?.user_metadata?.avatar_url || null;
 
+  const navItems = [
+    { label: t("discussions"), href: "/community/discussions", key: "discussions", match: "/community/discussions" },
+    { label: t("articles"), href: "/community/articles", key: "articles", match: "/community/articles" },
+    { label: t("docs"), href: "/docs", key: "docs", match: "/docs" },
+    { label: t("feedback"), href: "/community/feedback", key: "feedback", match: "/community/feedback" },
+  ] as const;
+
   const AuthButtons = () => (
     <>
       <Link
         href={`${APP_URL}/login`}
         className="px-4 py-2 text-sm text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
       >
-        Masuk
+        {t("login")}
       </Link>
       <Link
         href={`${APP_URL}/register`}
         className="px-4 py-2 text-sm font-medium rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
       >
-        Daftar
+        {t("register")}
       </Link>
     </>
   );
@@ -97,7 +99,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
       <button
         onClick={handleLogout}
         className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted/50 transition-colors"
-        title="Keluar"
+        title={t("logout")}
       >
         <LogOut className="w-4 h-4" />
       </button>
@@ -134,7 +136,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
             }}
             className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
           >
-            Keluar
+            {t("logout")}
           </button>
         </>
       ) : (
@@ -144,14 +146,14 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
             onClick={() => setMobileOpen(false)}
             className="w-full flex items-center justify-center px-4 py-2.5 border border-border rounded-full font-sub text-sm hover:bg-muted transition-colors"
           >
-            Masuk
+            {t("login")}
           </Link>
           <Link
             href={`${APP_URL}/register`}
             onClick={() => setMobileOpen(false)}
             className="w-full flex items-center justify-center px-4 py-2.5 bg-emerald-500 text-slate-950 rounded-full font-sub text-sm font-medium hover:bg-emerald-400 transition-colors"
           >
-            Daftar
+            {t("register")}
           </Link>
         </>
       )}
@@ -237,7 +239,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
                       height={28}
                       className="h-7 w-auto object-contain"
                     />
-                    <span className="font-semibold text-foreground">Menu</span>
+                    <span className="font-semibold text-foreground">{t("menu")}</span>
                   </div>
                 </div>
 
