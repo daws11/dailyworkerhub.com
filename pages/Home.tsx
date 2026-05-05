@@ -248,7 +248,6 @@ export default function Home() {
                 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-bold text-foreground leading-[1.1] md:leading-[1.05] tracking-tight mb-4 md:mb-6 text-balance"
                 initial={{ opacity: 1, y: 0 }}
               >
-                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary mb-2">Daily Worker Hub</span>
                 <ScrubText
                   text="Temukan Pekerja Harian Terpercaya, Tanpa Perantara."
                   variant="reveal"
@@ -431,94 +430,6 @@ export default function Home() {
       {/* LOGO MARQUEE — sementara nonaktif (belum launch) */}
       {/* ============================================================ */}
       {/* <LogoMarquee /> */}
-
-      {/* ============================================================ */}
-      {/* VALUE PROPOSITION SECTION */}
-      {/* ============================================================ */}
-      <section className="py-24 md:py-32 px-4 md:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
-              Bukan Sekadar Marketplace.<br />
-              <span className="font-serif italic text-foreground dark:text-white/80 font-light">Ini Komunitas.</span>
-            </h2>
-            <p className="font-sans text-lg text-muted-foreground max-w-2xl mx-auto">
-              Platform yang menghubungkan pekerja dan bisnis — dengan perlindungan, transparansi, dan suara yang didengar.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1: Akses Terbuka */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              whileHover="hover"
-              variants={tiltVariants}
-              transition={{ duration: 0.6 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
-                initial={false}
-              />
-              <div className="w-16 h-16 rounded-full bg-primary/5 dark:bg-primary/20 flex items-center justify-center text-secondary dark:text-white/70 mb-8">
-                <Users className="w-8 h-8" />
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Akses Tanpa Perantara</h3>
-              <p className="text-muted-foreground font-sans leading-relaxed">
-                Tidak perlu mengenal calo atau bergabung dengan grup tertentu untuk mendapatkan pekerjaan harian. Daftar, verifikasi, dan mulai ambil shift — semuanya melalui satu platform.
-              </p>
-            </motion.div>
-
-            {/* Card 2: Dana Perlindungan */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              whileHover="hover"
-              variants={tiltVariants}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
-                initial={false}
-              />
-              <div className="w-16 h-16 rounded-full bg-primary/5 dark:bg-primary/20 flex items-center justify-center text-secondary dark:text-white/70 mb-8">
-                <ShieldCheck className="w-8 h-8" />
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Dana Perlindungan</h3>
-              <p className="text-muted-foreground font-sans leading-relaxed">
-                1% dari setiap transaksi dialokasikan ke Dana Perlindungan — dana yang dirancang untuk melindungi pekerja ketika terjadi kecelakaan atau keterlambatan pembayaran. Bisnis tidak sekadar merekrut, tetapi berpartisipasi dalam ekosistem yang lebih aman.
-              </p>
-            </motion.div>
-
-            {/* Card 3: Reputasi & Partisipasi */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              whileHover="hover"
-              variants={tiltVariants}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="glass-card rounded-[2rem] p-8 md:p-12 transition-shadow hover:shadow-2xl cursor-default relative overflow-hidden group/card"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none"
-                initial={false}
-              />
-              <div className="w-16 h-16 rounded-full bg-primary/5 dark:bg-primary/20 flex items-center justify-center text-secondary dark:text-white/70 mb-8">
-                <MessageCircle className="w-8 h-8" />
-              </div>
-              <h3 className="font-display text-2xl font-bold text-primary mb-4">Reputasi & Partisipasi</h3>
-              <p className="text-muted-foreground font-sans leading-relaxed">
-                Setiap pekerja memiliki skor kepercayaan yang dibangun berdasarkan umpan balik dari bisnis. Sebagai anggota komunitas, pekerja dan bisnis dapat memberikan masukan dan voting untuk pengembangan fitur platform.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* ============================================================ */}
       {/* SIDE INCOME SECTION */}
