@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPageMap } from "nextra/page-map";
 import { getTranslations } from "next-intl/server";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { FAQPageSchema } from "@/components/docs/StructuredData";
 import "nextra-theme-docs/style.css";
 import "./docs.css";
@@ -50,6 +51,7 @@ export default async function DocsLayout({
         <a href="/community/feedback" className={navLinkClass}>{t("feedback")}</a>
       </div>
       <div className="ml-3 flex items-center gap-3">
+        <LanguageSwitcher />
         <a href="/login" className={navLinkClass}>{t("login")}</a>
         <a
           href="/register"

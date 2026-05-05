@@ -8,6 +8,7 @@ import { Menu, User, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createClient } from "@/lib/supabase/client";
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 interface CommunityNavbarProps {
   active?: "discussions" | "articles" | "docs" | "feedback";
@@ -199,6 +200,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
           </div>
 
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             {!loading && (user ? <UserInfo /> : <AuthButtons />)}
           </div>
         </div>
@@ -222,6 +224,7 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
           </Link>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <LanguageSwitcher />
             <SheetTrigger asChild>
               <button className="p-2 hover:bg-accent rounded-lg transition-colors">
                 <Menu className="w-5 h-5" />
