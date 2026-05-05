@@ -12,40 +12,57 @@ export const config = {
 
 const SPECIAL_PREFIXES = ['/docs', '/terms', '/privacy', '/cookies']
 
-function matchesSpecialRoute(pathname: string): boolean {
+function isSpecialRoute(pathname: string): boolean {
   return SPECIAL_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)
-  )
-}
-
-function isSpecialLocaleRoute(pathname: string): boolean {
-  return SPECIAL_PREFIXES.some((p) =>
-    pathname.startsWith(`${p}/id`) || pathname.startsWith(`${p}/en`)
   )
 }
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Docs/legal routes: redirect root to locale-specific path
-  if (matchesSpecialRoute(pathname) && !isSpecialLocaleRoute(pathname)) {
+  // Special routes (docs, legal): own locale handling
+  if (isSpecialRoute(pathname)) {
     const locale = request.cookies.get('NEXT_LOCALE')?.value || 'id'
     const section = SPECIAL_PREFIXES.find((p) =>
       pathname === p || pathname.startsWith(`${p}/`)
     )!
+
+    if (pathname.startsWith(`${section}/id`) || pathname.startsWith(`${section}/en`)) {
+      const response = NextResponse.next({ request })
+      return attachSupabaseCookies(request, response)
+    }
+
     const subPath = pathname === section ? '' : pathname.slice(section.length)
     const target = subPath
       ? `${section}/${locale}${subPath}`
       : `${section}/${locale}`
     const response = NextResponse.redirect(new URL(target, request.url))
-    return addSupabaseCookies(request, response)
+    return attachSupabaseCookies(request, response)
+  }
+
+  // Main app routes: handle /en/ prefix manually
+  const isEnPrefix = pathname.startsWith('/en') && 
+    (pathname === '/en' || pathname.startsWith('/en/'))
+
+  if (isEnPrefix) {
+    // Strip /en prefix, set locale cookie, rewrite internally
+    const targetPath = pathname === '/en' ? '/' : pathname.slice(3) || '/'
+    const rewritten = NextResponse.rewrite(new URL(targetPath, request.url))
+    rewritten.cookies.set('NEXT_LOCALE', 'en', {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'lax',
+      ...(cookieDomain ? { domain: cookieDomain } : {}),
+    })
+    return attachSupabaseCookies(request, rewritten)
   }
 
   const response = NextResponse.next({ request })
-  return addSupabaseCookies(request, response)
+  return attachSupabaseCookies(request, response)
 }
 
-async function addSupabaseCookies(
+async function attachSupabaseCookies(
   request: NextRequest,
   response: NextResponse
 ): Promise<NextResponse> {

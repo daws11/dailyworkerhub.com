@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Kebijakan Cookie - Daily Worker Hub",
     description: "Kebijakan Cookie Daily Worker Hub - Pelajari bagaimana kami menggunakan cookie dan teknologi pelacakan lainnya.",
-    url: "https://dailyworkerhub.com/cookies",
+    url: "https://dailyworkerhub.com/cookies/id",
     siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
     images: ["/opengraph.jpg"],
   },
   alternates: {
-    canonical: "https://dailyworkerhub.com/cookies",
+    canonical: "https://dailyworkerhub.com/cookies/id",
   },
 };
 
@@ -34,10 +33,7 @@ const tocItems: TocItem[] = [
   { id: "section-5", title: "5. Pembaruan Kebijakan Cookie" },
 ];
 
-export default async function CookiesPage() {
-  const t = await getTranslations("legal");
-  const ft = await getTranslations("footer");
-
+export default function CookiesIdPage() {
   return (
     <div className="min-h-screen bg-background">
       <MainNavbar />
@@ -49,13 +45,13 @@ export default async function CookiesPage() {
 
             <div className="flex-1 max-w-4xl">
               <div className="prose prose-invert prose-slate max-w-none space-y-6">
-                <h1 className="text-3xl font-bold text-foreground mb-8">{t("cookiesTitle")}</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-8">Kebijakan Cookie</h1>
                 <p className="text-muted-foreground leading-relaxed">
-                  {t("lastUpdated")}: April 2026
+                  Terakhir diperbarui: April 2026
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
                   Kebijakan ini melengkapi{" "}
-                  <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">{ft("privacyPolicy")}</a>{" "}
+                  <a href="/privacy/id" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Privasi</a>{" "}
                   kami dan menjelaskan secara spesifik bagaimana kami menggunakan cookie dan teknologi pelacakan serupa.
                 </p>
 
@@ -173,13 +169,6 @@ export default async function CookiesPage() {
                     untuk tujuan pelacakan komersial.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    <strong className="text-foreground">Firebase Cloud Messaging (FCM):</strong> Untuk
-                    mengirimkan push notification — seperti konfirmasi deposit Dana Jaminan, status pembayaran,
-                    atau pengingat jadwal kerja — kami menggunakan FCM yang mungkin menyimpan token unik
-                    di perangkat Anda. Token ini memungkinkan kami mengirim notifikasi even when browser
-                    tab tertutup, selama Anda telah memberikan izin notifikasi.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
                     Setiap layanan pihak ketiga memiliki kebijakan cookie dan privasi mereka sendiri yang
                     beroperasi secara independen dari kebijakan ini. Kami sangat menyarankan Anda untuk
                     membaca kebijakan privasi masing-masing pihak ketiga tersebut agar memahami bagaimana
@@ -214,11 +203,11 @@ export default async function CookiesPage() {
                     Anda juga dapat menghapus semua cookie yang tersimpan melalui opsi "Manage Website Data".
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    Perlu diketahui bahwa menonaktifkan cookie essential akansangat memengaruhi fungsi platform.
+                    Perlu diketahui bahwa menonaktifkan cookie essential akan sangat memengaruhi fungsi platform.
                     Misalnya, Anda tidak akan bisa tetap login, Sistem Dana Jaminan tidak dapat memverifikasi sesi
                     transaksi, dan deposit dana tidak dapat diproses dengan aman. Untuk pengalaman terbaik,
                     kami merekomendasikan untuk menerima cookie essential dari Daily Worker Hub sambil
-                    memblokir cookie analitik dan fungsional pihak ketiga jika Anda concerned tentang
+                    memblokir cookie analitik dan fungsional pihak ketiga jika Anda khawatir tentang
                     privasi.
                   </p>
                 </section>
@@ -249,7 +238,7 @@ export default async function CookiesPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     Kami sangat mendorong Anda untuk secara berkala meninjau kebijakan ini, terutama
                     sebelum membuat transaksi Dana Jaminan besar atau menghubungkan metode pembayaran baru ke
-                    akun Daily Worker Hub Anda. Jika Anda memiliki pertanyaan atau concerns tentang kebijakan
+                    akun Daily Worker Hub Anda. Jika Anda memiliki pertanyaan atau kekhawatiran tentang kebijakan
                     cookie kami, silakan hubungi tim kami melalui halaman Kontak yang tersedia di platform.
                   </p>
                 </section>

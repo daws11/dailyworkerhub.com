@@ -11,6 +11,7 @@ import { ScrubText } from "@/components/animations/ScrubText";
 import { FloatingElements } from "@/components/animations/FloatingElements";
 import { LogoMarquee, StatsCounter, Testimonials, FAQ, ComparisonTable } from "@/components/sections";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 // Animation variants
 const fadeUp = {
@@ -663,10 +664,10 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10 mb-6">
               <Button size="lg" asChild className="bg-secondary hover:bg-secondary/90 text-white rounded-full px-10 h-14 sm:h-16 text-base sm:text-lg font-sub shadow-xl group w-full sm:w-auto flex justify-center items-center gap-3">
-                <a href="/community">
+                <Link href="/community">
                   <span className="flex items-center gap-2">{t("visitCommunity")}</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 sm:px-10 h-14 sm:h-16 text-base sm:text-lg font-sub bg-transparent w-full sm:w-auto flex justify-center items-center">
                 <a href="https://app.dailyworkerhub.com/register?role=business">
@@ -681,9 +682,9 @@ export default function Home() {
             </div>
             <p className="font-sub text-sm text-white/50 mt-8 relative z-10">
               {t("communityLinkLabel")}{" "}
-              <a href="/community" className="text-white/70 hover:text-white underline">
+              <Link href="/community" className="text-white/70 hover:text-white underline">
                 dailyworkerhub.com/community
-              </a>
+              </Link>
             </p>
           </motion.div>
         </div>

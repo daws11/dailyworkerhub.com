@@ -1,0 +1,13 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - img [ref=e5]
+    - heading "Halaman Tidak Ditemukan" [level=2] [ref=e8]
+    - paragraph [ref=e9]: Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.
+    - link "Kembali ke Beranda" [ref=e10] [cursor=pointer]:
+      - /url: /
+      - img [ref=e11]
+      - text: Kembali ke Beranda
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e19] [cursor=pointer]:
+    - img [ref=e20]
+  - alert [ref=e23]

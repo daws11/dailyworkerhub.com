@@ -22,6 +22,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/privacy`, lastModified: new Date() },
     { url: `${baseUrl}/terms`, lastModified: new Date() },
     { url: `${baseUrl}/cookies`, lastModified: new Date() },
+    { url: `${baseUrl}/privacy/id`, lastModified: new Date() },
+    { url: `${baseUrl}/privacy/en`, lastModified: new Date() },
+    { url: `${baseUrl}/terms/id`, lastModified: new Date() },
+    { url: `${baseUrl}/terms/en`, lastModified: new Date() },
+    { url: `${baseUrl}/cookies/id`, lastModified: new Date() },
+    { url: `${baseUrl}/cookies/en`, lastModified: new Date() },
+    // English locale-prefixed routes
+    { url: `${baseUrl}/en`, lastModified: new Date() },
+    { url: `${baseUrl}/en/community`, lastModified: new Date() },
+    { url: `${baseUrl}/en/community/articles`, lastModified: new Date() },
+    { url: `${baseUrl}/en/community/discussions`, lastModified: new Date() },
+    { url: `${baseUrl}/en/community/feedback`, lastModified: new Date() },
   ]
 
   const docRoutes = [

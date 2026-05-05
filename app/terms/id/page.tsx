@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Syarat & Ketentuan - Daily Worker Hub",
     description: "Syarat dan Ketentuan Daily Worker Hub - Aturan dan ketentuan penggunaan platform marketplace pekerja harian Indonesia.",
-    url: "https://dailyworkerhub.com/terms",
+    url: "https://dailyworkerhub.com/terms/id",
     siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
     images: ["/opengraph.jpg"],
   },
   alternates: {
-    canonical: "https://dailyworkerhub.com/terms",
+    canonical: "https://dailyworkerhub.com/terms/id",
   },
 };
 
@@ -39,10 +38,7 @@ const tocItems: TocItem[] = [
   { id: "section-10", title: "10. Informasi Kontak" },
 ];
 
-export default async function TermsPage() {
-  const t = await getTranslations("legal");
-  const ft = await getTranslations("footer");
-
+export default function TermsIdPage() {
   return (
     <div className="min-h-screen bg-background">
       <MainNavbar />
@@ -54,15 +50,15 @@ export default async function TermsPage() {
 
             <div className="flex-1 max-w-4xl">
               <div className="prose prose-invert prose-slate max-w-none space-y-6">
-            <h1 className="text-3xl font-bold text-foreground mb-8">{t("termsTitle")}</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-8">Syarat & Ketentuan</h1>
                 <p className="text-muted-foreground leading-relaxed">
-            {t("lastUpdated")}: April 2026
+            Terakhir diperbarui: April 2026
           </p>
           <p className="text-muted-foreground leading-relaxed">
             Kebijakan ini harus dibaca bersama dengan{" "}
-            <a href="/privacy" className="text-emerald-400 hover:text-emerald-300 underline">{ft("privacyPolicy")}</a>{" "}
+            <a href="/privacy/id" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Privasi</a>{" "}
             dan{" "}
-            <a href="/cookies" className="text-emerald-400 hover:text-emerald-300 underline">{ft("cookiePolicy")}</a>{" "}
+            <a href="/cookies/id" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Cookie</a>{" "}
             kami.
           </p>
 
@@ -437,11 +433,9 @@ export default async function TermsPage() {
           <section className="space-y-4">
             <h2 id="section-10" className="text-xl font-semibold text-foreground scroll-mt-24">10. Informasi Kontak</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Baik pemberi kerja maupun pekerja dilarang melakukan transaksi keuangan 
-              secara langsung di luar Sistem Dana Jaminan Daily Worker Hub untuk menghindari 
-              biaya platform. Pelanggaran ini akan mengakibatkan penangguhan akun dan 
-              diskualifikasi dari platform, karena hal ini juga menghilangkan 
-              perlindungan pembeli/penjual yang menjadi proposisi nilai inti kami.
+              Jika Anda memiliki pertanyaan, keluhan, atau ingin melaporkan pelanggaran 
+              Syarat dan Ketentuan, silakan hubungi kami melalui saluran komunikasi 
+              yang tersedia di bawah ini.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Email:</strong> Hubungi tim customer 
@@ -468,25 +462,6 @@ export default async function TermsPage() {
               mitra dalam perekrutan pekerja di industri hospitality. Kami 
               akan terus berusaha untuk menyediakan platform yang aman, adil, 
               dan efektif untuk seluruh pengguna kami.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Dalam Platform:</strong> Untuk 
-              pertanyaan tentang akun atau perselisihan yang sedang berjalan, gunakan 
-              fitur chat yang tersedia di dashboard untuk connected dengan tim 
-              customer success kami secara langsung.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">Website:</strong> Kunjungi halaman 
-              Hubungi Kami di dailyworkerhub.com untuk informasi kontak lengkap 
-              termasuk alamat kantor kami di Bali, nomor telepon yang dapat 
-              dihubungi selama jam kerja (09:00-17:00 WITA), dan formulir 
-              kontak untuk request spesifik.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Kami appreciate kepercayaan Anda menggunakan Daily Worker Hub sebagai 
-              partner dalam perekrutan pekerja di industri hospitality Bali. Kami 
-              akan terus berusaha untuk menyediakan platform yang aman, adil, 
-              dan efektif для seluruh pengguna kami.
             </p>
           </section>
               </div>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { MainNavbar } from "@/components/layout/MainNavbar";
 import { LegalToc, type TocItem } from "@/components/legal/LegalToc";
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Kebijakan Privasi - Daily Worker Hub",
     description: "Kebijakan Privasi Daily Worker Hub - Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.",
-    url: "https://dailyworkerhub.com/privacy",
+    url: "https://dailyworkerhub.com/privacy/id",
     siteName: "Daily Worker Hub",
     images: [{ url: "/opengraph.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
     images: ["/opengraph.jpg"],
   },
   alternates: {
-    canonical: "https://dailyworkerhub.com/privacy",
+    canonical: "https://dailyworkerhub.com/privacy/id",
   },
 };
 
@@ -39,10 +38,7 @@ const tocItems: TocItem[] = [
   { id: "section-10", title: "10. Cara Menghubungi Kami" },
 ];
 
-export default async function PrivacyPage() {
-  const t = await getTranslations("legal");
-  const ft = await getTranslations("footer");
-
+export default function PrivacyIdPage() {
   return (
     <div className="min-h-screen bg-background">
       <MainNavbar />
@@ -54,15 +50,15 @@ export default async function PrivacyPage() {
 
             <div className="flex-1 max-w-4xl">
               <div className="prose prose-invert prose-slate max-w-none space-y-6">
-                <h1 className="text-3xl font-bold text-foreground mb-8">{t("privacyTitle")}</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-8">Kebijakan Privasi</h1>
                 <p className="text-muted-foreground leading-relaxed">
-                  {t("lastUpdated")}: April 2026
+                  Terakhir diperbarui: April 2026
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
                   Penggunaan platform Daily Worker Hub juga tunduk pada{" "}
-                  <a href="/terms" className="text-emerald-400 hover:text-emerald-300 underline">{ft("termsConditions")}</a>{" "}
+                  <a href="/terms/id" className="text-emerald-400 hover:text-emerald-300 underline">Syarat &amp; Ketentuan</a>{" "}
                   dan{" "}
-                  <a href="/cookies" className="text-emerald-400 hover:text-emerald-300 underline">{ft("cookiePolicy")}</a>{" "}
+                  <a href="/cookies/id" className="text-emerald-400 hover:text-emerald-300 underline">Kebijakan Cookie</a>{" "}
                   kami. Harap baca kedua kebijakan tersebut untuk pemahaman menyeluruh.
                 </p>
 

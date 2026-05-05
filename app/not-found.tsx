@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/navigation";
+
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -7,12 +9,12 @@ export default function NotFound() {
         <p className="text-muted-foreground mb-6">
           Maaf, halaman yang Anda cari tidak ada.
         </p>
-        <a
+        <Link
           href="/"
           className="inline-flex items-center justify-center rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6"
         >
           Kembali ke Beranda
-        </a>
+        </Link>
       </div>
     </div>
   );

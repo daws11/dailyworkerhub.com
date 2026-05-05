@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import Image from "next/image"
 import { MessageSquare, FileText, BookOpen, Vote, Sparkles, TrendingUp, Briefcase, ChevronRight, ArrowUp, MessageCircle, Eye, Zap } from "lucide-react"
 import { getTranslations } from "next-intl/server"

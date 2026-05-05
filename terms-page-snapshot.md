@@ -1,0 +1,46 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - heading "404" [level=1] [ref=e4]
+    - heading "Halaman Tidak Ditemukan" [level=2] [ref=e5]
+    - paragraph [ref=e6]: Maaf, halaman yang Anda cari tidak ada.
+    - link "Kembali ke Beranda" [ref=e7] [cursor=pointer]:
+      - /url: /
+  - contentinfo [ref=e8]:
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - heading "Daily Worker Hub" [level=3] [ref=e12]
+          - paragraph [ref=e13]: Trusted platform for daily workers in Indonesia.
+        - generic [ref=e14]:
+          - heading "Products" [level=4] [ref=e15]
+          - list [ref=e16]:
+            - listitem [ref=e17]:
+              - link "Find Daily Jobs" [ref=e18] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e19]:
+              - link "Worker Community" [ref=e20] [cursor=pointer]:
+                - /url: /community
+        - generic [ref=e21]:
+          - heading "Resources" [level=4] [ref=e22]
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Platform Guide" [ref=e25] [cursor=pointer]:
+                - /url: /docs
+            - listitem [ref=e26]:
+              - link "Articles & Tips" [ref=e27] [cursor=pointer]:
+                - /url: /community/articles
+        - generic [ref=e28]:
+          - heading "Legal" [level=4] [ref=e29]
+          - list [ref=e30]:
+            - listitem [ref=e31]:
+              - link "Privacy Policy" [ref=e32] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e33]:
+              - link "Terms & Conditions" [ref=e34] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e35]:
+              - link "Cookie Policy" [ref=e36] [cursor=pointer]:
+                - /url: /cookies
+      - generic [ref=e37]: © 2026 Daily Worker Hub. All rights reserved.
+  - region "Notifications alt+T"
+  - alert [ref=e38]

@@ -2,6 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,39 +16,13 @@ const FLAGS: Record<string, string> = {
   en: "🇬🇧",
 };
 
-const SPECIAL_PREFIXES = ["/docs", "/terms", "/privacy", "/cookies"];
-
 export function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname() || "/";
+  const router = useRouter();
 
   const switchTo = (newLocale: "id" | "en") => {
-    // Set cookie for server-side locale detection
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-
-    // Compute target URL
-    let target = pathname;
-
-    // Check if current path is a special route (docs/terms/privacy/cookies)
-    const specialPrefix = SPECIAL_PREFIXES.find(
-      (p) => pathname === p || pathname.startsWith(`${p}/`)
-    );
-
-    if (specialPrefix) {
-      // /docs/en/getting-started → /docs/id/getting-started
-      const afterPrefix = pathname.slice(specialPrefix.length);
-      const afterLocale = afterPrefix.replace(/^\/(id|en)/, '');
-      target = `${specialPrefix}/${newLocale}${afterLocale}`;
-    } else if (newLocale === "en") {
-      // Add /en/ prefix for English
-      target = `/en${pathname}`;
-      if (target.endsWith("/")) target = target.slice(0, -1);
-    } else {
-      // Remove /en/ prefix for Indonesian (default locale)
-      target = pathname.replace(/^\/en/, "") || "/";
-    }
-
-    window.location.href = target;
+    router.push(pathname, { locale: newLocale });
   };
 
   return (
