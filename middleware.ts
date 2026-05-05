@@ -10,19 +10,45 @@ export const config = {
   ],
 }
 
+const SPECIAL_PREFIXES = ['/docs', '/terms', '/privacy', '/cookies']
+
+function matchesSpecialRoute(pathname: string): boolean {
+  return SPECIAL_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  )
+}
+
+function isSpecialLocaleRoute(pathname: string): boolean {
+  return SPECIAL_PREFIXES.some((p) =>
+    pathname.startsWith(`${p}/id`) || pathname.startsWith(`${p}/en`)
+  )
+}
+
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  // Redirect /docs and /docs/* to /docs/{locale}/...
-  if (pathname.startsWith('/docs') && !pathname.startsWith('/docs/id') && !pathname.startsWith('/docs/en')) {
+  // Docs/legal routes: redirect root to locale-specific path
+  if (matchesSpecialRoute(pathname) && !isSpecialLocaleRoute(pathname)) {
     const locale = request.cookies.get('NEXT_LOCALE')?.value || 'id'
-    const subPath = pathname === '/docs' ? '' : pathname.slice(5)
-    const target = subPath ? `/docs/${locale}${subPath}` : `/docs/${locale}`
-    return NextResponse.redirect(new URL(target, request.url))
+    const section = SPECIAL_PREFIXES.find((p) =>
+      pathname === p || pathname.startsWith(`${p}/`)
+    )!
+    const subPath = pathname === section ? '' : pathname.slice(section.length)
+    const target = subPath
+      ? `${section}/${locale}${subPath}`
+      : `${section}/${locale}`
+    const response = NextResponse.redirect(new URL(target, request.url))
+    return addSupabaseCookies(request, response)
   }
 
   const response = NextResponse.next({ request })
+  return addSupabaseCookies(request, response)
+}
 
+async function addSupabaseCookies(
+  request: NextRequest,
+  response: NextResponse
+): Promise<NextResponse> {
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -33,7 +59,6 @@ export async function middleware(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set(name, value)
             response.cookies.set(name, value, {
               ...options,
               ...(cookieDomain ? { domain: cookieDomain } : {}),
@@ -59,15 +84,18 @@ export async function middleware(request: NextRequest) {
     /^\/community\/discussions\/[^/]+\/edit$/,
   ]
 
-  const isProtectedPath = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  ) || protectedWildcardPatterns.some((pattern) =>
-    pattern.test(request.nextUrl.pathname)
+  const isProtectedPath = protectedPaths.some((p) =>
+    request.nextUrl.pathname.startsWith(p)
+  ) || protectedWildcardPatterns.some((p) =>
+    p.test(request.nextUrl.pathname)
   )
 
   if (isProtectedPath && !user) {
     const appLoginUrl = new URL('https://app.dailyworkerhub.com/login')
-    appLoginUrl.searchParams.set('redirect', `${request.nextUrl.origin}${request.nextUrl.pathname}`)
+    appLoginUrl.searchParams.set(
+      'redirect',
+      `${request.nextUrl.origin}${request.nextUrl.pathname}`
+    )
     return NextResponse.redirect(appLoginUrl)
   }
 

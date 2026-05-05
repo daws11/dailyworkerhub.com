@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,25 +9,45 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { usePathname, useRouter } from "next/navigation";
 
 const FLAGS: Record<string, string> = {
   id: "🇮🇩",
   en: "🇬🇧",
 };
 
-function setLocaleCookie(locale: string) {
-  document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
-}
+const SPECIAL_PREFIXES = ["/docs", "/terms", "/privacy", "/cookies"];
 
 export function LanguageSwitcher() {
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
 
   const switchTo = (newLocale: "id" | "en") => {
-    setLocaleCookie(newLocale);
-    window.location.reload();
+    // Set cookie for server-side locale detection
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+
+    // Compute target URL
+    let target = pathname;
+
+    // Check if current path is a special route (docs/terms/privacy/cookies)
+    const specialPrefix = SPECIAL_PREFIXES.find(
+      (p) => pathname === p || pathname.startsWith(`${p}/`)
+    );
+
+    if (specialPrefix) {
+      // /docs/en/getting-started → /docs/id/getting-started
+      const afterPrefix = pathname.slice(specialPrefix.length);
+      const afterLocale = afterPrefix.replace(/^\/(id|en)/, '');
+      target = `${specialPrefix}/${newLocale}${afterLocale}`;
+    } else if (newLocale === "en") {
+      // Add /en/ prefix for English
+      target = `/en${pathname}`;
+      if (target.endsWith("/")) target = target.slice(0, -1);
+    } else {
+      // Remove /en/ prefix for Indonesian (default locale)
+      target = pathname.replace(/^\/en/, "") || "/";
+    }
+
+    window.location.href = target;
   };
 
   return (
