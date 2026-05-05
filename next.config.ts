@@ -95,4 +95,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextra(withNextIntl(nextConfig));
+export default withNextIntl(withNextra(nextConfig));

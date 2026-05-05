@@ -1,12 +1,8 @@
-import createMiddleware from 'next-intl/middleware'
 import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import type { Database } from './lib/supabase/types'
-import { routing } from './i18n/routing'
 
 const cookieDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN || undefined
-
-const intlMiddleware = createMiddleware(routing)
 
 export const config = {
   matcher: [
@@ -15,7 +11,7 @@ export const config = {
 }
 
 export async function middleware(request: NextRequest) {
-  const intlResponse = intlMiddleware(request)
+  const response = NextResponse.next({ request })
 
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -28,7 +24,7 @@ export async function middleware(request: NextRequest) {
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
             request.cookies.set(name, value)
-            intlResponse.cookies.set(name, value, {
+            response.cookies.set(name, value, {
               ...options,
               ...(cookieDomain ? { domain: cookieDomain } : {}),
             })
@@ -65,5 +61,5 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(appLoginUrl)
   }
 
-  return intlResponse
+  return response
 }
