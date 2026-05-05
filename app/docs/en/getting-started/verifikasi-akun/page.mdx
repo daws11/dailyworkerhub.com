@@ -1,27 +1,193 @@
+---
+title: Account Verification
+description: Complete guide to the identity verification process on Daily Worker Hub — KTP verification, phone verification, and two-factor authentication
+---
+
 # Account Verification
 
-## Why Verify?
+After registering, every Daily Worker Hub user must go through a verification process to ensure security and trust within the platform ecosystem. Verification protects both workers and employers from fake accounts and fraudulent activity.
 
-Verification builds trust between workers and businesses. Verified users get:
-- Higher visibility in search results
-- Access to more job opportunities
-- Higher trust score
-- Priority dispute resolution
+---
 
-## Verification Process
+## Why Is Verification Required?
 
-### For Workers
-1. Upload a clear photo of your KTP or passport
-2. Take a live selfie for face matching
-3. Enter your bank account details
-4. Wait for verification (typically 1-2 business days)
+| Reason | Explanation |
+|--------|------------|
+| **Trust** | Employers are more confident hiring verified workers |
+| **Security** | Reduces the risk of fake accounts, identity theft, and fraud |
+| **Legality** | Supports lawful and regulation-compliant operations |
+| **Transparency** | Builds a professional and accountable work ecosystem |
 
-### For Businesses
-1. Upload business registration documents (NIB, NPWP)
-2. Verify business address
-3. Provide bank account for escrow deposits
-4. Wait for verification (typically 2-3 business days)
+> **Note:** Unverified accounts have limitations — they cannot apply to job listings or receive Security Deposit funds.
 
-## Next Step
+---
 
-Once verified, learn how to navigate the [Dashboard](/docs/en/getting-started/navigasi-dashboard).
+## Types of Verification
+
+### 1. Email Verification
+
+**Status:** Automatically performed during registration
+
+**Steps:**
+1. Open the email used during registration
+2. Click the verification link from Daily Worker Hub (valid for 24 hours)
+3. Account is automatically activated after email is verified
+
+**Troubleshooting:**
+- Verification email not received → Check Spam/Promotions folder
+- Link has expired → Request a resend on the Login page
+- Wrong email during registration → Create a new account with the correct email
+
+### 2. Phone Number Verification
+
+**Status:** Required after email verification
+
+**Steps:**
+1. Enter an active phone number (Indonesia: 08xx-xxxx-xxxx)
+2. System sends a 6-digit OTP code via SMS
+3. Enter the OTP code within 60 seconds
+4. Phone number is verified if the code matches
+
+**Phone Number Requirements:**
+- Must be an Indonesian number (+62)
+- Active and able to receive SMS
+- Not registered with another Daily Worker Hub account
+- WhatsApp active is recommended for additional communication
+
+**Troubleshooting:**
+- OTP not received → Wait 60 seconds, request a new OTP
+- Number already registered → Use a different number or contact support
+- OTP is wrong → Make sure to enter 6 digits correctly, without spaces
+
+### 3. Identity Verification (KTP)
+
+**Status:** Required for all users before transacting
+
+**KTP Verification Steps:**
+
+1. Open the **"Profile"** menu → **"Identity Verification"**
+2. Prepare your **original KTP** (Kartu Tanda Penduduk)
+3. Take a clear photo of the front of the KTP:
+   - Ensure text is readable (name, NIK, address, photo)
+   - Background is visible (not blurry)
+   - No glare or shadows
+4. Take a photo of the back of the KTP (if it contains important information)
+5. Take a **selfie** holding the KTP at chest level
+6. Submit and wait for the verification process (1x24 hours)
+
+**KTP Requirements:**
+- Original KTP (not a scan/screen photo)
+- Still valid (not expired)
+- Information is clear and readable
+- Name matches the registered account name
+
+**Tips for Good KTP Photos:**
+
+| Tip | Explanation |
+|------|------------|
+| **Even lighting** | Avoid glare or shadows that cover text |
+| **Camera perpendicular** | Not tilted, no distortion |
+| **Full KTP in frame** | All edges of the KTP visible |
+| **Selfie with KTP** | Both face and KTP clearly visible |
+
+> **Warning:** KTPs that are unclear, blurry, or expired will be rejected by the verification system.
+
+### 4. Bank Account Verification
+
+**Status:** Required for workers before first withdrawal
+
+**Steps:**
+1. Open the **"Balance"** menu → **"Add Account"**
+2. Select bank: BCA, BRI, or Mandiri
+3. Enter:
+   - Account number (13-16 digits)
+   - Account holder name (must match the name on KTP)
+   - Bank branch
+4. System will send a small **test deposit** (Rp 1,000-5,000)
+5. Verify the deposit amount to confirm ownership
+6. Account is linked after successful verification
+
+**Supported Banks:**
+
+| Bank | Minimum Balance | Estimated Withdrawal | Notes |
+|------|-------------|------------------|---------|
+| **BCA** | Rp 50,000 | 1-2 business days | Fastest processing |
+| **BRI** | Rp 50,000 | 1-3 business days | — |
+| **Mandiri** | Rp 50,000 | 1-3 business days | — |
+
+> **Note:** We do not yet support BNI, BTPN/Jenius, or other digital banks. We are currently in development.
+
+### 5. Two-Factor Authentication (2FA)
+
+**Status:** Recommended (highly advised for security)
+
+**Activation Steps:**
+1. Open the **"Settings"** menu → **"Security"**
+2. Click **"Enable 2FA"**
+3. Scan the QR code with an authenticator app:
+   - **Google Authenticator** (Android / iOS)
+   - **Authy** (Android / iOS / Desktop)
+4. Enter the 6-digit code from the app to confirm
+5. Save **backup codes** in a safe place
+
+**When 2FA Is Required:**
+
+| Action | Requires 2FA? |
+|------|-----------|
+| Login from a new device | ✅ Yes |
+| First time depositing balance | ✅ Yes |
+| Release Security Deposit | ✅ Yes |
+| Withdraw to bank account | ✅ Yes |
+| Change phone number | ✅ Yes |
+| Change password | ✅ Yes |
+| Login from a recognized device | ❌ No |
+
+---
+
+## Verification Status
+
+Check verification status in the **"Profile"** → **"Verification Status"** menu:
+
+| Verification | Status | Limitations Without This Verification |
+|-----------|--------|------------------------------|
+| **Email** | ✅ Verified / ❌ Not Yet | Cannot login |
+| **Phone Number** | ✅ Verified / ❌ Not Yet | Cannot apply or post job listings |
+| **KTP** | ✅ Verified / ❌ Not Yet | Cannot transact with Security Deposit |
+| **Bank Account** | ✅ Verified / ❌ Not Yet | Cannot withdraw funds |
+| **2FA** | ✅ Active / ❌ Inactive | None (but highly recommended) |
+
+---
+
+## Verification FAQ
+
+**Q: Is verification free?**
+A: Yes, all verification processes are free. No fees are charged.
+
+**Q: How long does KTP verification take?**
+A: Typically 1x24 business hours. During busy periods (weekends, holidays), it may take longer.
+
+**Q: Is my KTP data safe?**
+A: Yes. KTP data is encrypted with AES-256 and only used for identity verification. We do not share your personal data with third parties.
+
+**Q: Can I verify with a SIM or Passport?**
+A: Currently only KTP is accepted for identity verification on the platform.
+
+**Q: Do employers also need verification?**
+A: Yes. Employers must verify email, phone number, and identity (KTP). Bank account is not required for employers.
+
+**Q: What if my KTP has expired?**
+A: You need to renew your KTP first before completing verification. Accounts with expired KTPs will have limited access.
+
+**Q: Can I verify from a desktop?**
+A: Yes, all verification processes can be done from a desktop browser. However, for KTP photos and selfies, you need to upload photo files from your device.
+
+---
+
+## Next Steps
+
+| After Verification | Learn |
+|-------------------|---------|
+| Worker — Ready to search for jobs | [How to Search for Jobs](/docs/en/platform-guide/cara-mencari-lowongan) |
+| Worker — Preparation before applying | [Basic Preparation](/docs/en/getting-started/persiapan-dasar) |
+| Employer — Start recruiting | [How to Post Jobs](/docs/en/platform-guide/cara-posting-lowongan) |
+| Employer — Understand the payment system | [Security Deposit System](/docs/en/fitur/sistem-dana-jaminan) |

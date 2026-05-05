@@ -1,20 +1,207 @@
-# Security & Privacy
+---
+title: Security and Privacy
+description: Complete guide to data security and privacy on Daily Worker Hub — encryption, account protection, two-factor authentication, and security best practices
+---
 
-## Data Protection
+# Security and Privacy
 
-Daily Worker Hub uses industry-standard security measures to protect your data:
+Daily Worker Hub prioritizes the security of your data and transactions. The platform is built with enterprise-level security infrastructure to ensure that personal information, financial data, and every transaction are maximally protected.
 
-### Encryption
-- **TLS 1.3** for all data in transit
-- **AES-256** encryption for sensitive data at rest
-- **bcrypt** hashing for passwords
+---
 
-### Access Control
-- **Row Level Security (RLS)** — You can only access your own data
-- **Two-Factor Authentication (2FA)** available via WhatsApp
-- **Session management** with automatic timeouts
+## Security Infrastructure
 
-### Compliance
-- Compliant with Indonesia's Personal Data Protection Law (UU PDP)
-- Regular security audits and penetration testing
-- Transparent data retention policies
+### Data Encryption
+
+| Layer | Technology | What It Protects |
+|---------|-----------|----------------|
+| **Data in Transit** | TLS 1.3 / SSL | All communication between the app and server |
+| **Data at Rest** | AES-256 | Transaction data, balances, KTP, passwords |
+| **Payment Data** | PCI-DSS Level 1 | Card information and payment data |
+
+> **Note:** AES-256 is the same encryption standard used by major banks and international financial institutions.
+
+### Fund Segregation
+
+Security Deposit funds at Daily Worker Hub are separated from the company's operational funds:
+
+| Aspect | Explanation |
+|-------|------------|
+| **Separate Account** | Security Deposit funds are stored in a dedicated account different from the operational account |
+| **Inaccessible for Operations** | Security Deposit funds cannot be used for company operational expenses |
+| **Independent Audit** | Security Deposit accounts are periodically audited by an independent party |
+| **Transparency** | Security Deposit balances can be viewed by interested users |
+
+---
+
+## Account Protection
+
+### Two-Factor Authentication (2FA)
+
+2FA is an additional security layer that protects your account from unauthorized access.
+
+**How 2FA Works:**
+
+1. You log in with email and password (factor 1: something you know)
+2. System requests a 6-digit code from an authenticator app (factor 2: something you have)
+3. Login succeeds only if both factors match
+
+**Actions Requiring 2FA:**
+
+| Action | Requires 2FA? |
+|------|-----------|
+| Login from a new device | ✅ Yes |
+| Deposit Security Deposit balance | ✅ Yes |
+| Release Security Deposit | ✅ Yes |
+| Withdraw to bank account | ✅ Yes |
+| Change phone number | ✅ Yes |
+| Change password | ✅ Yes |
+| Change email | ✅ Yes |
+| Change bank account | ✅ Yes |
+| Delete account | ✅ Yes |
+
+### Account Security Practices
+
+| Practice | ✅ Recommended | ❌ Must Avoid |
+|---------|---------------------|------------------|
+| **Password** | Minimum 12 characters, combination of upper/lowercase/numbers/symbols | Simple passwords like "123456" or birthdates |
+| **Password Management** | Use a password manager (1Password, Bitwarden) | Write passwords in notes or share with others |
+| **Device** | Login only from secure personal devices | Login from internet cafes, public devices, or shared computers |
+| **WiFi** | Use secure connections (home WiFi, VPN) | Login via insecure public WiFi |
+| **OTP/2FA Code** | Keep codes confidential, do not give to anyone | Share codes with others, including those claiming to be from the support team |
+
+> **Warning:** The Daily Worker Hub team will never ask for your password, OTP, or 2FA code. If anyone claims to be from the support team and asks for this information, it is a phishing attempt.
+
+---
+
+## Transaction Protection
+
+### Security Deposit Protection
+
+| Aspect | Explanation |
+|-------|------------|
+| **Funds on Hold** | Every deposit from employers is held in the Security Deposit until the work is verified as complete |
+| **No Risk of Non-Payment** | Workers are guaranteed payment if they complete the work according to the description |
+| **Refund Available** | Employers can request a refund if a dispute arises that causes them harm |
+
+### Audit Trail
+
+Every transaction has a complete, immutable record:
+
+| Data | Description |
+|------|-----------|
+| **Timestamp** | Exact time of every action (deposit, hold, release, dispute) |
+| **Transaction ID** | Unique identifier for each transaction |
+| **Parties Involved** | Employer ID, Worker ID |
+| **Fund Amount** | Deposit amount, fees, release |
+| **Transaction Status** | Pending, Hold, Released, Disputed |
+| **Evidence** | Chat screenshots, before/after photos, check-in/check-out |
+
+### Fraud Prevention
+
+| Mechanism | How It Works |
+|-----------|-----------|
+| **KTP Verification** | All users have their identity verified before transacting |
+| **Account Verification** | Bank accounts must be in the same name as the KTP |
+| **Behavioral Analysis** | System detects suspicious patterns in real-time |
+| **Transaction Limits** | Minimum and maximum limits per transaction |
+| **Manual Review** | High-value transactions are manually reviewed |
+
+---
+
+## Data Privacy
+
+### Data Collected
+
+| Data Category | Example | Purpose |
+|--------------|--------|--------|
+| **Identity** | Name, KTP, selfie | Verification and legality |
+| **Contact** | Email, phone number | Communication |
+| **Financial** | Bank account, transaction history | Transactions and payments |
+| **Profile** | Photo, description, skills, experience | Matching workers and employers |
+| **Activity** | Applications, hiring, ratings, reviews | Platform functionality |
+| **Device** | IP address, device ID | Security and troubleshooting |
+
+### Data Usage
+
+| Usage | Permitted? |
+|-----------|-----------|
+| **Platform operations** | ✅ Yes — to run core features |
+| **Improving services** | ✅ Yes — to enhance user experience |
+| **Marketing** | ❌ No — without explicit consent |
+| **Sold to third parties** | ❌ Never |
+| **Disclosed to employers/workers** | ✅ Yes — only data relevant to the transaction |
+
+### Your Privacy Rights
+
+| Right | Explanation |
+|-----|------------|
+| **Access** | You can view all data we hold about you |
+| **Correction** | You can correct inaccurate data |
+| **Deletion** | You can request data deletion (with certain conditions) |
+| **Portability** | You can request a copy of your data in a readable format |
+| **Objection** | You can object to the use of data for certain purposes |
+
+> **To exercise your privacy rights**, please send an email to [privacy@dailyworkerhub.com](mailto:privacy@dailyworkerhub.com) with the subject "Privacy Rights Request".
+
+---
+
+## Data Storage and Retention
+
+| Data Type | Storage Duration | Reason |
+|-----------|-------------------|--------|
+| **Security Deposit Transactions** | 7 years | Legal requirements and audit trail |
+| **Active account data** | As long as the account is active | Platform functionality |
+| **Inactive account data** | 2 years after last login | Possible reactivation |
+| **Logins and activity** | 1 year | Security and troubleshooting |
+| **Verification documents (KTP)** | During active account + 1 year | Verification requirements |
+
+---
+
+## Security for Employers
+
+| Risk | Mitigation |
+|--------|---------|
+| **Uncredible workers** | KTP verification, ratings, and reviews from other employers |
+| **Worker no-show** | Protection Fund protects with refund and compensation |
+| **Work not matching description** | Dispute process to resolve conflicts |
+| **Funds not secure** | Funds held in Security Deposit, no direct access |
+| **Worker data** | You only see data relevant to hiring |
+
+---
+
+## Security for Workers
+
+| Risk | Mitigation |
+|--------|---------|
+| **Employer doesn't pay** | Funds held in Security Deposit, employer cannot cancel after you check in |
+| **Late payment** | Automatic release system after employer approves |
+| **Unfair disputes** | Neutral review team to decide disputes |
+| **Data misused** | Data encrypted and not shared without consent |
+| **KTP misused** | KTP only used for verification, not stored as copies |
+
+---
+
+## Reporting Security Issues
+
+If you find a security vulnerability or become a victim of fraud:
+
+| Type | How to Report |
+|-------|---------------|
+| **Bug/Vulnerability** | Email [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
+| **Fraud/Scam** | File a dispute through the platform, or email [fraud@dailyworkerhub.com](mailto:fraud@dailyworkerhub.com) |
+| **Phishing** | Screenshot and email to [security@dailyworkerhub.com](mailto:security@dailyworkerhub.com) |
+| **Lost Funds** | Contact [support@dailyworkerhub.com](mailto:support@dailyworkerhub.com) with subject "URGENT — Lost Funds" |
+
+> **Note:** For bug or vulnerability reports, we appreciate responsible disclosures and may provide acknowledgment or rewards depending on severity.
+
+---
+
+## Next Steps
+
+| Topic | Learn |
+|-------|---------|
+| Security Deposit System | [Security Deposit System](/docs/en/fitur/sistem-dana-jaminan) |
+| Protection fund | [Protection Fund](/docs/en/fitur/dana-perlindungan) |
+| Account verification | [Account Verification](/docs/en/getting-started/verifikasi-akun) |
+| Security FAQ | [FAQ](/docs/en/faq) |
