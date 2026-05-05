@@ -8,7 +8,7 @@ const withNextra = nextra({
   staticImage: true,
 });
 
-const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+const withNextIntl = createNextIntlPlugin();
 
 const securityHeaders = [
   {
