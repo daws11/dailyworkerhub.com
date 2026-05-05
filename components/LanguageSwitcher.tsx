@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { usePathname, useRouter } from "next/navigation";
+
+const FLAGS: Record<string, string> = {
+  id: "🇮🇩",
+  en: "🇬🇧",
+};
 
 function setLocaleCookie(locale: string) {
   document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
@@ -28,8 +32,8 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Globe className="w-4 h-4" />
+        <Button variant="ghost" size="icon" className="rounded-full text-base">
+          {FLAGS[locale] || FLAGS["id"]}
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>
@@ -38,13 +42,13 @@ export function LanguageSwitcher() {
           onClick={() => switchTo("id")}
           className={locale === "id" ? "bg-muted" : ""}
         >
-          🇮🇩 Bahasa Indonesia
+          🇮🇩 Bahasa Indonesia {locale === "id" && "✓"}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => switchTo("en")}
           className={locale === "en" ? "bg-muted" : ""}
         >
-          🇬🇧 English
+          🇬🇧 English {locale === "en" && "✓"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

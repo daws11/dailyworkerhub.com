@@ -4,16 +4,17 @@ import { routing } from './routing'
 import { cookies, headers } from 'next/headers'
 
 export default getRequestConfig(async () => {
-  const cookieStore = await cookies()
-  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value
+  const headersList = await headers()
+  const cookieHeader = headersList.get('cookie') || ''
+  const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/)
+  const localeCookie = localeMatch ? localeMatch[1] : null
   
   let locale = localeCookie
 
   if (!locale) {
-    const headersList = await headers()
     const acceptLanguage = headersList.get('accept-language')
     if (acceptLanguage) {
-      const preferred = acceptLanguage.split(',')[0]?.split('-')[0]
+      const preferred = acceptLanguage.split(',')[0]?.trim()?.split('-')[0] || ''
       if (hasLocale(routing.locales, preferred)) {
         locale = preferred
       }

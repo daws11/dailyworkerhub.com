@@ -70,17 +70,17 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/docs/fitur/escrow-system/:path*",
-        destination: "/docs/fitur/sistem-dana-jaminan/:path*",
+        destination: "/docs/id/fitur/sistem-dana-jaminan/:path*",
         permanent: true,
       },
       {
         source: "/docs/fitur/dispute-resolution/:path*",
-        destination: "/docs/fitur/penyelesaian-perselisihan/:path*",
+        destination: "/docs/id/fitur/penyelesaian-perselisihan/:path*",
         permanent: true,
       },
       {
         source: "/docs/fitur/protection-pool/:path*",
-        destination: "/docs/fitur/dana-perlindungan/:path*",
+        destination: "/docs/id/fitur/dana-perlindungan/:path*",
         permanent: true,
       },
     ];

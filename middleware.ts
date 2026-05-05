@@ -11,6 +11,16 @@ export const config = {
 }
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+
+  // Redirect /docs and /docs/* to /docs/{locale}/...
+  if (pathname.startsWith('/docs') && !pathname.startsWith('/docs/id') && !pathname.startsWith('/docs/en')) {
+    const locale = request.cookies.get('NEXT_LOCALE')?.value || 'id'
+    const subPath = pathname === '/docs' ? '' : pathname.slice(5)
+    const target = subPath ? `/docs/${locale}${subPath}` : `/docs/${locale}`
+    return NextResponse.redirect(new URL(target, request.url))
+  }
+
   const response = NextResponse.next({ request })
 
   const supabase = createServerClient<Database>(

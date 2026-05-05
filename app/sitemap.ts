@@ -25,17 +25,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   const docRoutes = [
-    { url: `${baseUrl}/docs`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/getting-started`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/getting-started/persiapan-dasar`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/getting-started/membuat-akun`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/platform-guide`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/platform-guide/cara-mencari-lowongan`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/platform-guide/cara-posting-lowongan`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur/dana-perlindungan`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur/sistem-dana-jaminan`, lastModified: new Date() },
-    { url: `${baseUrl}/docs/fitur/penyelesaian-perselisihan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/getting-started`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/getting-started/persiapan-dasar`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/getting-started/membuat-akun`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/platform-guide`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/platform-guide/cara-mencari-lowongan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/platform-guide/cara-posting-lowongan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/fitur`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/fitur/dana-perlindungan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/fitur/sistem-dana-jaminan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/id/fitur/penyelesaian-perselisihan`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/getting-started`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/getting-started/basic-preparation`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/platform-guide`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/platform-guide/how-to-find-jobs`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/fitur`, lastModified: new Date() },
+    { url: `${baseUrl}/docs/en/fitur/escrow-system`, lastModified: new Date() },
   ]
 
   const articleRoutes = (articlesResult.data || []).map((a: SitemapEntry) => ({

@@ -1,10 +1,9 @@
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
-import Image from "next/image";
-import Link from "next/link";
 import { getPageMap } from "nextra/page-map";
-import { getTranslations } from "next-intl/server";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { FAQPageSchema } from "@/components/docs/StructuredData";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import Image from "next/image";
 import "nextra-theme-docs/style.css";
 import "./docs.css";
 
@@ -29,29 +28,25 @@ function Logo() {
 const navLinkClass =
   "px-4 py-2 text-sm rounded-lg transition-colors text-muted-foreground hover:text-foreground hover:bg-muted/50";
 
-export default async function DocsLayout({
-  children,
-}: {
+interface DocsLayoutProps {
   children: React.ReactNode;
-}) {
-  const pageMap = await getPageMap("/docs");
+  lang: "id" | "en";
+}
+
+export default async function DocsLocaleLayout({ children, lang }: DocsLayoutProps) {
+  const pageMap = await getPageMap(`/docs/${lang}`);
   const t = await getTranslations("nav");
   const ft = await getTranslations("footer");
 
   const navbar = (
-    <Navbar
-      logo={<Logo />}
-      logoLink="/"
-
-    >
+    <Navbar logo={<Logo />} logoLink="/">
       <div className="hidden md:flex items-center gap-1">
         <a href="/community/discussions" className={navLinkClass}>{t("discussions")}</a>
         <a href="/community/articles" className={navLinkClass}>{t("articles")}</a>
-        <a href="/docs" className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">{t("docs")}</a>
+        <a href={`/docs/${lang}`} className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">{t("docs")}</a>
         <a href="/community/feedback" className={navLinkClass}>{t("feedback")}</a>
       </div>
       <div className="ml-3 flex items-center gap-3">
-        <LanguageSwitcher />
         <a href="/login" className={navLinkClass}>{t("login")}</a>
         <a
           href="/register"
@@ -69,9 +64,7 @@ export default async function DocsLayout({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <h3 className="text-lg font-bold text-foreground">Daily Worker Hub</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {ft("tagline")}
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">{ft("tagline")}</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground">{ft("products")}</h4>
@@ -83,7 +76,7 @@ export default async function DocsLayout({
           <div>
             <h4 className="font-semibold text-foreground">{ft("resources")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><a href="/docs" className="hover:text-emerald-400 transition-colors">{ft("platformGuide")}</a></li>
+              <li><a href={`/docs/${lang}`} className="hover:text-emerald-400 transition-colors">{ft("platformGuide")}</a></li>
               <li><a href="/community/articles" className="hover:text-emerald-400 transition-colors">{ft("articlesTips")}</a></li>
             </ul>
           </div>
@@ -108,7 +101,10 @@ export default async function DocsLayout({
       pageMap={pageMap}
       navbar={navbar}
       footer={footer}
-
+      i18n={[
+        { locale: "id", name: "Bahasa Indonesia" },
+        { locale: "en", name: "English" },
+      ]}
       sidebar={{ defaultMenuCollapseLevel: 99, autoCollapse: false, toggleButton: true }}
       editLink={false}
       feedback={undefined}
