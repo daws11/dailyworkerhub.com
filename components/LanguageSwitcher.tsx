@@ -2,7 +2,6 @@
 
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,27 +17,33 @@ const FLAGS: Record<string, string> = {
 
 const SPECIAL_PREFIXES = ["docs", "terms", "privacy", "cookies"];
 
+function computeTargetUrl(pathname: string, newLocale: string): string {
+  // /docs/en/getting-started → /docs/id/getting-started
+  const specialPrefix = SPECIAL_PREFIXES.find(
+    (p) => pathname === `/${p}` || pathname.startsWith(`/${p}/`)
+  );
+  if (specialPrefix) {
+    const afterSection = pathname.slice(specialPrefix.length + 1);
+    const afterLocale = afterSection.replace(/^\/(id|en)/, "");
+    return `/${specialPrefix}/${newLocale}${afterLocale}`;
+  }
+
+  // /id/community → /community (switch to English default) or stay
+  // /community → /id/community (switch to Indonesian) or stay
+  const stripped = pathname.replace(/^\/id/, "") || "/";
+  if (newLocale === "id") {
+    return `/id${stripped}`;
+  }
+  return stripped;
+}
+
 export function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname() || "/";
-  const router = useRouter();
 
   const switchTo = (newLocale: "id" | "en") => {
-    // Special routes: locale is in SECOND path segment (/docs/en, /terms/id)
-    // Manually swap the locale in the URL
-    const specialPrefix = SPECIAL_PREFIXES.find(
-      (p) => pathname === `/${p}` || pathname.startsWith(`/${p}/`)
-    );
-    if (specialPrefix) {
-      const afterSection = pathname.slice(specialPrefix.length + 1); // '/en' or '/en/getting-started'
-      const afterLocale = afterSection.replace(/^\/(id|en)/, "");
-      const target = `/${specialPrefix}/${newLocale}${afterLocale}`;
-      window.location.href = target;
-      return;
-    }
-
-    // Regular routes: use next-intl router (handles /en/ prefix)
-    router.push(pathname, { locale: newLocale });
+    const target = computeTargetUrl(pathname, newLocale);
+    window.location.href = target;
   };
 
   return (
