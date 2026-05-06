@@ -30,7 +30,14 @@ export async function middleware(request: NextRequest) {
       (p) => pathname.startsWith(`${p}/id`) || pathname.startsWith(`${p}/en`)
     )
     if (hasLocale) {
+      const locale = pathname.includes('/id/') || pathname.endsWith('/id') ? 'id' : 'en'
       const response = NextResponse.next({ request })
+      response.cookies.set('NEXT_LOCALE', locale, {
+        path: '/',
+        maxAge: 31536000,
+        sameSite: 'lax',
+        ...(cookieDomain ? { domain: cookieDomain } : {}),
+      })
       return attachSupabaseCookies(request, response)
     }
 
@@ -53,19 +60,23 @@ export async function middleware(request: NextRequest) {
   if (isIdPrefix) {
     const targetPath = pathname === '/id' ? '/' : pathname.slice(3) || '/'
     const url = new URL(targetPath, request.url)
-    // Pass locale via header for server-side detection
     const rewritten = NextResponse.rewrite(url)
     rewritten.headers.set('X-LOCALE', 'id')
     rewritten.cookies.set('NEXT_LOCALE', 'id', {
       path: '/',
       maxAge: 31536000,
       sameSite: 'lax',
-      ...(cookieDomain ? { domain: cookieDomain } : {}),
     })
     return attachSupabaseCookies(request, rewritten)
   }
 
+  // Default locale (en): ensure cookie is set to 'en' and clear any stale 'id' cookie
   const response = NextResponse.next({ request })
+  response.cookies.set('NEXT_LOCALE', 'en', {
+    path: '/',
+    maxAge: 31536000,
+    sameSite: 'lax',
+  })
   return attachSupabaseCookies(request, response)
 }
 
@@ -83,6 +94,8 @@ async function attachSupabaseCookies(
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
+            // Don't override NEXT_LOCALE set by middleware
+            if (name === 'NEXT_LOCALE') return
             response.cookies.set(name, value, {
               ...options,
               ...(cookieDomain ? { domain: cookieDomain } : {}),
