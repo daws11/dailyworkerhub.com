@@ -101,10 +101,6 @@ export default async function DocsLocaleLayout({ children, lang }: DocsLayoutPro
       pageMap={pageMap}
       navbar={navbar}
       footer={footer}
-      i18n={[
-        { locale: "id", name: "Bahasa Indonesia" },
-        { locale: "en", name: "English" },
-      ]}
       sidebar={{ defaultMenuCollapseLevel: 99, autoCollapse: false, toggleButton: true }}
       editLink={false}
       feedback={undefined}
