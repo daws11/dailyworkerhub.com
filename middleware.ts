@@ -23,16 +23,21 @@ export async function middleware(request: NextRequest) {
 
   // Special routes (docs, legal): own locale handling
   if (isSpecialRoute(pathname)) {
-    const locale = request.cookies.get('NEXT_LOCALE')?.value || 'id'
-    const section = SPECIAL_PREFIXES.find((p) =>
-      pathname === p || pathname.startsWith(`${p}/`)
-    )!
+    const locale = request.cookies.get('NEXT_LOCALE')?.value || 'en'
 
-    if (pathname.startsWith(`${section}/id`) || pathname.startsWith(`${section}/en`)) {
+    // Already has locale in path? pass through
+    const hasLocale = SPECIAL_PREFIXES.some(
+      (p) => pathname.startsWith(`${p}/id`) || pathname.startsWith(`${p}/en`)
+    )
+    if (hasLocale) {
       const response = NextResponse.next({ request })
       return attachSupabaseCookies(request, response)
     }
 
+    // Redirect root to locale-specific path
+    const section = SPECIAL_PREFIXES.find((p) =>
+      pathname === p || pathname.startsWith(`${p}/`)
+    )!
     const subPath = pathname === section ? '' : pathname.slice(section.length)
     const target = subPath
       ? `${section}/${locale}${subPath}`
@@ -41,15 +46,14 @@ export async function middleware(request: NextRequest) {
     return attachSupabaseCookies(request, response)
   }
 
-  // Main app routes: handle /en/ prefix manually
-  const isEnPrefix = pathname.startsWith('/en') && 
-    (pathname === '/en' || pathname.startsWith('/en/'))
+  // Main app routes: handle /id/ prefix (Indonesian, non-default)
+  const isIdPrefix =
+    pathname === '/id' || pathname.startsWith('/id/')
 
-  if (isEnPrefix) {
-    // Strip /en prefix, set locale cookie, rewrite internally
-    const targetPath = pathname === '/en' ? '/' : pathname.slice(3) || '/'
+  if (isIdPrefix) {
+    const targetPath = pathname === '/id' ? '/' : pathname.slice(3) || '/'
     const rewritten = NextResponse.rewrite(new URL(targetPath, request.url))
-    rewritten.cookies.set('NEXT_LOCALE', 'en', {
+    rewritten.cookies.set('NEXT_LOCALE', 'id', {
       path: '/',
       maxAge: 31536000,
       sameSite: 'lax',

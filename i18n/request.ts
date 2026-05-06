@@ -1,14 +1,14 @@
 import { getRequestConfig } from 'next-intl/server'
 import { hasLocale } from 'next-intl'
 import { routing } from './routing'
-import { cookies, headers } from 'next/headers'
+import { headers } from 'next/headers'
 
 export default getRequestConfig(async () => {
   const headersList = await headers()
   const cookieHeader = headersList.get('cookie') || ''
   const localeMatch = cookieHeader.match(/NEXT_LOCALE=([^;]+)/)
   const localeCookie = localeMatch ? localeMatch[1] : null
-  
+
   let locale = localeCookie
 
   if (!locale) {
