@@ -100,16 +100,21 @@ export default async function CommunityPage() {
 
               {/* Shortcut Pills */}
               <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mt-5 sm:mt-6">
-                {shortcuts.map((shortcut) => (
-                  <Link
-                    key={shortcut.label}
-                    href={shortcut.href}
-                    className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300"
-                  >
-                    <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span>{shortcut.label}</span>
-                  </Link>
-                ))}
+                {shortcuts.map((shortcut) => {
+                  const isSpecial = shortcut.href.startsWith('/docs') || shortcut.href.startsWith('/terms') || shortcut.href.startsWith('/privacy') || shortcut.href.startsWith('/cookies');
+                  const className = "flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-muted-foreground bg-muted/50 border border-border rounded-full hover:bg-muted hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300";
+                  return isSpecial ? (
+                    <a key={shortcut.label} href={shortcut.href} className={className}>
+                      <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span>{shortcut.label}</span>
+                    </a>
+                  ) : (
+                    <Link key={shortcut.label} href={shortcut.href} className={className}>
+                      <shortcut.icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span>{shortcut.label}</span>
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Social Proof */}

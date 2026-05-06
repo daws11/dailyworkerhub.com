@@ -43,7 +43,7 @@ export default async function DocsLocaleLayout({ children, lang }: DocsLayoutPro
       <div className="hidden md:flex items-center gap-1">
         <Link href="/community/discussions" className={navLinkClass}>{t("discussions")}</Link>
         <Link href="/community/articles" className={navLinkClass}>{t("articles")}</Link>
-        <Link href={`/docs/${lang}`} className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">{t("docs")}</Link>
+        <a href={`/docs/${lang}`} className="px-4 py-2 text-sm rounded-lg transition-colors text-foreground bg-muted/50">{t("docs")}</a>
         <Link href="/community/feedback" className={navLinkClass}>{t("feedback")}</Link>
       </div>
       <div className="ml-3 flex items-center gap-3">
@@ -76,16 +76,16 @@ export default async function DocsLocaleLayout({ children, lang }: DocsLayoutPro
           <div>
             <h4 className="font-semibold text-foreground">{ft("resources")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href={`/docs/${lang}`} className="hover:text-emerald-400 transition-colors">{ft("platformGuide")}</Link></li>
+              <li><a href={`/docs/${lang}`} className="hover:text-emerald-400 transition-colors">{ft("platformGuide")}</a></li>
               <li><Link href="/community/articles" className="hover:text-emerald-400 transition-colors">{ft("articlesTips")}</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold text-foreground">{ft("legal")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/privacy" className="hover:text-emerald-400 transition-colors">{ft("privacyPolicy")}</Link></li>
-              <li><Link href="/terms" className="hover:text-emerald-400 transition-colors">{ft("termsConditions")}</Link></li>
-              <li><Link href="/cookies" className="hover:text-emerald-400 transition-colors">{ft("cookiePolicy")}</Link></li>
+              <li><a href="/privacy" className="hover:text-emerald-400 transition-colors">{ft("privacyPolicy")}</a></li>
+              <li><a href="/terms" className="hover:text-emerald-400 transition-colors">{ft("termsConditions")}</a></li>
+              <li><a href="/cookies" className="hover:text-emerald-400 transition-colors">{ft("cookiePolicy")}</a></li>
             </ul>
           </div>
         </div>

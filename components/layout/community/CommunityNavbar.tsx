@@ -183,18 +183,16 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
           <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = resolveActive(item.key, item.match);
-              return (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={`px-4 py-2 text-sm rounded-lg transition-colors ${
-                    isActive
-                      ? "text-foreground bg-muted/50"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+              const isSpecial = item.href.startsWith('/docs') || item.href.startsWith('/terms') || item.href.startsWith('/privacy') || item.href.startsWith('/cookies');
+              const className = `px-4 py-2 text-sm rounded-lg transition-colors ${
+                isActive
+                  ? "text-foreground bg-muted/50"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              }`;
+              return isSpecial ? (
+                <a key={item.key} href={item.href} className={className}>{item.label}</a>
+              ) : (
+                <Link key={item.key} href={item.href} className={className}>{item.label}</Link>
               );
             })}
           </div>
@@ -251,19 +249,16 @@ export function CommunityNavbar({ active, badgeLabel = "Community" }: CommunityN
                   <div className="px-3 space-y-0.5">
                     {navItems.map((item) => {
                       const isActive = resolveActive(item.key, item.match);
-                      return (
-                        <Link
-                          key={item.key}
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          className={`block px-3 py-2.5 text-sm rounded-lg transition-colors ${
-                            isActive
-                              ? "text-foreground bg-muted/50 font-medium"
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
+                      const isSpecial = item.href.startsWith('/docs') || item.href.startsWith('/terms') || item.href.startsWith('/privacy') || item.href.startsWith('/cookies');
+                      const className = `block px-3 py-2.5 text-sm rounded-lg transition-colors ${
+                        isActive
+                          ? "text-foreground bg-muted/50 font-medium"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      }`;
+                      return isSpecial ? (
+                        <a key={item.key} href={item.href} onClick={() => setMobileOpen(false)} className={className}>{item.label}</a>
+                      ) : (
+                        <Link key={item.key} href={item.href} onClick={() => setMobileOpen(false)} className={className}>{item.label}</Link>
                       );
                     })}
                   </div>

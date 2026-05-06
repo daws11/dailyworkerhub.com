@@ -29,16 +29,16 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground">{t("resources")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/docs" className="hover:text-emerald-400">{t("platformGuide")}</Link></li>
+              <li><a href="/docs" className="hover:text-emerald-400">{t("platformGuide")}</a></li>
               <li><Link href="/community/articles" className="hover:text-emerald-400">{t("articlesTips")}</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold text-foreground">{t("legal")}</h4>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/privacy" className="hover:text-emerald-400">{t("privacyPolicy")}</Link></li>
-              <li><Link href="/terms" className="hover:text-emerald-400">{t("termsConditions")}</Link></li>
-              <li><Link href="/cookies" className="hover:text-emerald-400">{t("cookiePolicy")}</Link></li>
+              <li><a href="/privacy" className="hover:text-emerald-400">{t("privacyPolicy")}</a></li>
+              <li><a href="/terms" className="hover:text-emerald-400">{t("termsConditions")}</a></li>
+              <li><a href="/cookies" className="hover:text-emerald-400">{t("cookiePolicy")}</a></li>
             </ul>
           </div>
         </div>
