@@ -42,6 +42,12 @@ export function LanguageSwitcher() {
   const pathname = usePathname() || "/";
 
   const switchTo = (newLocale: "id" | "en") => {
+    // Set/clear cookie before navigating
+    if (newLocale === "en") {
+      document.cookie = "NEXT_LOCALE=; path=/; max-age=0";
+    } else {
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    }
     const target = computeTargetUrl(pathname, newLocale);
     window.location.href = target;
   };

@@ -36,7 +36,6 @@ export async function middleware(request: NextRequest) {
         path: '/',
         maxAge: 31536000,
         sameSite: 'lax',
-        ...(cookieDomain ? { domain: cookieDomain } : {}),
       })
       return attachSupabaseCookies(request, response)
     }
@@ -70,13 +69,8 @@ export async function middleware(request: NextRequest) {
     return attachSupabaseCookies(request, rewritten)
   }
 
-  // Default locale (en): ensure cookie is set to 'en' and clear any stale 'id' cookie
+  // Default locale (en): no cookie needed — absence = default
   const response = NextResponse.next({ request })
-  response.cookies.set('NEXT_LOCALE', 'en', {
-    path: '/',
-    maxAge: 31536000,
-    sameSite: 'lax',
-  })
   return attachSupabaseCookies(request, response)
 }
 
