@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     default: "Daily Worker Hub",
     template: "%s — Daily Worker Hub",
   },
-  description: "Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.",
-  keywords: ["pekerja harian", "lowongan kerja", "bisnis", "recruitment", "Indonesia", "daily worker", "hire worker"],
+  description: "A marketplace platform connecting daily freelance workers with businesses in Indonesia. Find daily jobs or hire trusted workers with ease.",
+  keywords: ["daily worker", "hire worker", "freelance", "Indonesia", "daily jobs", "recruitment"],
   icons: {
     icon: [
       { url: "/logo-new.png", type: "image/png" },
@@ -42,23 +42,23 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Daily Worker Hub",
-    description: "Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.",
+    description: "A marketplace platform connecting daily freelance workers with businesses in Indonesia. Find daily jobs or hire trusted workers with ease.",
     type: "website",
-    locale: "id_ID",
+    locale: "en_US",
     siteName: "Daily Worker Hub",
     images: [
       {
         url: "/opengraph.jpg?v=2",
         width: 1200,
         height: 630,
-        alt: "Daily Worker Hub - Platform Komunitas Pekerja Harian Indonesia",
+        alt: "Daily Worker Hub — Indonesia's Daily Worker Community Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Daily Worker Hub",
-    description: "Platform yang menghubungkan pekerja harian lepas dengan pelaku usaha di Indonesia. Temukan pekerjaan harian atau cari pekerja terpercaya dengan mudah.",
+    description: "A marketplace platform connecting daily freelance workers with businesses in Indonesia.",
     images: ["/opengraph.jpg?v=2"],
     site: "@dailyworkerhub",
   },

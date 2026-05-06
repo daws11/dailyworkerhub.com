@@ -208,16 +208,16 @@ export function getBreadcrumbSchema(items: Array<{ name: string; url: string }>)
   };
 }
 
-export function getFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
+export function getFAQPageSchema(faqs: Array<{ question: string | Record<string, string>; answer: string | Record<string, string> }>, locale = 'en') {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
-      name: faq.question,
+      name: typeof faq.question === 'object' ? (faq.question[locale] || faq.question.en) : faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer,
+        text: typeof faq.answer === 'object' ? (faq.answer[locale] || faq.answer.en) : faq.answer,
       },
     })),
   };

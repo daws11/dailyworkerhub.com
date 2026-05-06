@@ -52,7 +52,10 @@ export async function middleware(request: NextRequest) {
 
   if (isIdPrefix) {
     const targetPath = pathname === '/id' ? '/' : pathname.slice(3) || '/'
-    const rewritten = NextResponse.rewrite(new URL(targetPath, request.url))
+    const url = new URL(targetPath, request.url)
+    // Pass locale via header for server-side detection
+    const rewritten = NextResponse.rewrite(url)
+    rewritten.headers.set('X-LOCALE', 'id')
     rewritten.cookies.set('NEXT_LOCALE', 'id', {
       path: '/',
       maxAge: 31536000,
